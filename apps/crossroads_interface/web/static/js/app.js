@@ -8,6 +8,7 @@
 function run() {
     test1();
     alertCMS();
+    phoenixEventListener();
 }
 
 function test1() {
@@ -18,4 +19,16 @@ function test1() {
     });
 }
 
-window.onload = run;
+function phoenixEventListener() {
+    document.addEventListener("phoenixEvent", function(e) {
+        console.info("Event is: ", e);
+        console.info("Custom data is: ", e.detail);
+    });
+}
+
+function domReady(callback) {
+    document.addEventListener("DOMContentLoaded", callback);
+}
+
+run();
+//domReady(run);
