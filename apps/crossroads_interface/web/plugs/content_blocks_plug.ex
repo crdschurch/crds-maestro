@@ -9,7 +9,9 @@ defmodule CrossroadsInterface.Plug.ContentBlocks do
     case Pages.get_content_blocks() do
       {:ok, _, content_blocks} -> 
         conn |> assign(:content_blocks, Map.get(content_blocks, "contentBlocks", []))
-      _ -> conn |> assign(:content_blocks, [])
+
+      _ ->
+        conn |> assign(:content_blocks, [])
     end
   end
 end
