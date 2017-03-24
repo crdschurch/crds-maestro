@@ -9,7 +9,7 @@ defmodule CrossroadsContentPagesTest do
 
   test "get site config returns a 404 response" do
     with_mock HTTPoison, [get: fn(url, _headers, _options) -> FakeHttp.get(url) end] do
-      {result, status, _body} =  Pages.get_site_config(12)
+      {result, status, _body} = Pages.get_site_config(12)
       assert status == 404
       assert result == :error
     end
