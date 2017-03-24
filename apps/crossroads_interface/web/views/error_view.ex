@@ -20,7 +20,12 @@ defmodule CrossroadsInterface.ErrorView do
     #end
     # Fall through to the legacy crds-angular appliction and let
     # it handle the route.
-    render("index.html", assigns)
+    #conn = assigns[:conn]
+    #payload = case Pages.get_page("/servererror/", false) do
+      #{:ok, 200, body} -> Enum.at(body["pages"], 0)["content"]
+      #{_, _, body} -> "<h2> #{body} </h2>"
+    #end
+    render("404.html", assigns)
   end
 
   def render("500.html", assigns) do

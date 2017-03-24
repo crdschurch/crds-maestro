@@ -28,8 +28,9 @@ defmodule CrossroadsInterface.Router do
     pipe_through :browser
 
     forward "/connect", CrdsConnectController, :index
-
+    get "/notfound", NotfoundController, :notfound
     forward "/", LegacyController, :index
+    
   end
 
 end

@@ -1,9 +1,14 @@
 {
+    "scripts": {
+        "build-prod": "./node_modules/brunch/bin/brunch build --production",
+        "watch": "./node_modules/brunch/bin/brunch watch --stdin",
+        "build": "./node_modules/brunch/bin/brunch build"
+    },
     "repository": {},
     "dependencies": {
+        "crds-styles": "crdschurch/crds-styles#development",
         "phoenix": "file:../../deps/phoenix",
-        "phoenix_html": "file:../../deps/phoenix_html",
-        "crds-styles": "crdschurch/crds-styles#development"
+        "phoenix_html": "file:../../deps/phoenix_html"
     },
     "scripts": {
         "test": "node_modules/jasmine-es6/bin/jasmine.js JASMINE_CONFIG_PATH=test/support/jasmine.json"
