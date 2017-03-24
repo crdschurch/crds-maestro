@@ -2,7 +2,6 @@ defmodule CrossroadsInterface.CrdsConnectControllerTest do
   use CrossroadsInterface.ConnCase
   alias CrossroadsContent.Pages
   import Mock
-  @moduletag timeout: 10000
 
   @content_block_call %{"contentBlocks" => [%{"id" => 1, "title" => "generalError"}]}
 

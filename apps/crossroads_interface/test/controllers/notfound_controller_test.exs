@@ -3,8 +3,6 @@ defmodule CrossroadsInterface.NotfoundControllerTest do
   alias CrossroadsContent.Pages
   import Mock
 
-  @moduletag timeout: 5000
-
   @content_block_call %{"contentBlocks" => [%{"id" => 1, "title" => "generalError"}]}
   @system_page_response %{"systemPages" => [%{"bodyClasses" => nil,
                                               "card" => "summary",
