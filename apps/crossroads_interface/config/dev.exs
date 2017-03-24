@@ -11,11 +11,8 @@ config :crossroads_content,
 # watchers to your application. For example, we use it
 # with brunch.io to recompile .js and .css sources.
 config :crossroads_interface, CrossroadsInterface.Endpoint,
+  url: [host: "localhost", port: 4000],
   http: [port: 4000],
-  https: [port: 4443,
-    otp_app: :crossroads_interface,
-    keyfile: "priv/keys/localhost.key",
-    certfile: "priv/keys/localhost.cert"],
   debug_errors: false,
   code_reloader: true,
   check_origin: false,
