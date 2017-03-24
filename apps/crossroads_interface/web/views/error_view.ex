@@ -25,7 +25,6 @@ defmodule CrossroadsInterface.ErrorView do
       #{:ok, 200, body} -> Enum.at(body["pages"], 0)["content"]
       #{_, _, body} -> "<h2> #{body} </h2>"
     #end
-    IEx.pry()
     render("404.html", assigns)
   end
 
