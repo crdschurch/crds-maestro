@@ -1,10 +1,11 @@
 function run() {
     test1();
+    phoenixEventListener();
     invokeAlertCms();
 }
 
 function invokeAlertCms() {
-    if(typeof alertCms !== 'undefined'){
+    if (typeof alertCms !== 'undefined') {
         alertCms();
     }
 }
@@ -19,4 +20,16 @@ function test1() {
     }
 }
 
-window.onload = run;
+function phoenixEventListener() {
+    document.addEventListener("phoenixEvent", function (e) {
+        console.info("Event is: ", e);
+        console.info("Custom data is: ", e.detail);
+    });
+}
+
+function domReady(callback) {
+    document.addEventListener("DOMContentLoaded", callback);
+}
+
+run();
+//domReady(run);

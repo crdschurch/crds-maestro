@@ -9,10 +9,10 @@ config :ssl, protocol_version: :"tlsv1.2"
 
 config :crossroads_content,
   http: HTTPoison,
-  content_server: "/proxy/content"
+  content_server: System.get_env("CRDS_CMS_ENDPOINT")
 
 config :crossroads_interface,
-  api_url: "/proxy/gateway/"
+  api_url: System.get_env("CRDS_API_ENDPOINT")
 
 # Configures the endpoint
 config :crossroads_interface, CrossroadsInterface.Endpoint,
