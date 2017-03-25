@@ -1,5 +1,5 @@
 ## Name of the node
--name crossroads_interface<%= System.get_env("PHOENIX_NAME_EXTENSION") %>@127.0.0.1
+-name crossroads_interface<%= System.get_env("MAESTRO_NAME_EXTENSION") %>@127.0.0.1
 
 ## Cookie for distributed erlang
 -setcookie rOA/*.wer9WCzxXsr$,=!eu~oPRhKjgAG!$A}S)VrIw>Rx;h:*yT:H>F)(ZOlj|s
