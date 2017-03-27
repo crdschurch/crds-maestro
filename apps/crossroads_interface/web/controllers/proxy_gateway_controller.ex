@@ -21,7 +21,7 @@ defmodule CrossroadsInterface.ProxyGatewayController do
     |> send_response(conn)
   end
 
-  def handle_gateway_proxy(%{:method => "PUT", :request_path => "/proxy/gateway" <> request_path} = conn, params) do
+  def handle_gateway_proxy(%{:method => "PUT", :request_path => "/proxy/gateway" <> _request_path} = conn, _params) do
     conn
     |> put_resp_content_type("application/json")
     |> send_resp(200, "")

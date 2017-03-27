@@ -14,7 +14,7 @@ defmodule CrossroadsInterface.LegacyController do
     |> redirect( to: "/notfound")
   end
   
-  def index(conn, params) do
+  def index(conn, _params) do
     render conn, "app_root.html", %{ "js_files": [
         "/js/legacy/ang.js",
         "/js/legacy/core.js",
