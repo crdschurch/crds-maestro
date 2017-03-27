@@ -19,8 +19,8 @@ defmodule CrossroadsInterface.NotfoundControllerTest do
 
   test "GET /notfound", %{conn: conn} do
     with_mocks([ {Pages, [], [get_content_blocks: fn() -> {:ok, 200, @content_block_call} end]},
-                 {Pages, [], [get_system_page: fn(anything) -> {:ok, 200, @system_page_response} end]},
-                 {Pages, [], [get_page: fn(url, stage) -> {:error, 404, "error"} end ]},
+                 {Pages, [], [get_system_page: fn(_anything) -> {:ok, 200, @system_page_response} end]},
+                 {Pages, [], [get_page: fn(_url, _stage) -> {:error, 404, "error"} end ]},
                  {Pages, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
 
       conn = get conn, "/notfound"
@@ -31,8 +31,8 @@ defmodule CrossroadsInterface.NotfoundControllerTest do
   @tag :skip # not applicable since we mock CMS content
   test "GET /notfound has 404 title", %{conn: conn} do
 with_mocks([ {Pages, [], [get_content_blocks: fn() -> {:ok, 200, @content_block_call} end]},
-                 {Pages, [], [get_system_page: fn(anything) -> {:ok, 200, @system_page_response} end]},
-                 {Pages, [], [get_page: fn(url, stage) -> {:error, 404, "error"} end ]},
+                 {Pages, [], [get_system_page: fn(_anything) -> {:ok, 200, @system_page_response} end]},
+                 {Pages, [], [get_page: fn(_url, _stage) -> {:error, 404, "error"} end ]},
                  {Pages, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
 
       expectedText = "404 Page Not Found"

@@ -66,7 +66,7 @@ defmodule CrossroadsContentPagesTest do
     with_mock HTTPoison, [get: fn(url, _headers, _options) -> FakeHttp.get(url) end] do
       {result, status, body} = Pages.get_page("/habitat/", false)
       assert status == 200
-      assert result = :ok
+      assert result == :ok
       page = Enum.at(body["pages"], 0)
       assert page["id"] == 268
     end
