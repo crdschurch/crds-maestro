@@ -1,8 +1,10 @@
-import something from '../../web/static/js/phoenixEventListener';
+import phoenixListener from '../../web/static/js/phoenixEventListener';
 
 describe('phoenixEventListener()', function() {
 
-    it("should do something", function() {
-        expect(something()).toBe('something');
+    it("should add an event listener", function() {
+        spyOn(document, 'addEventListener');
+        phoenixListener();
+        expect(document.addEventListener).toHaveBeenCalled();
     });
 });

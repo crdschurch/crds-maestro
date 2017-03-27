@@ -1,2 +1,1 @@
-<%= raw(filter_content_blocks(@content_blocks, "sharedGlobalHeader")["content"]) %>
-<script type="text/javascript" src="js/app.js"></script>
+<div data-header></div>
