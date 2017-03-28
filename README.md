@@ -1,4 +1,4 @@
-# Crossroads Microclient Implementation in Elixir/Phoenix
+# Maestro - Crossroads Microclient Implementation in Elixir/Phoenix
 
 ## Environment Setup
 
@@ -13,9 +13,9 @@ There is a great [guide on the phoenix site](http://www.phoenixframework.org/doc
 This is environment specific, please visit [https://nodejs.org/en/](https://nodejs.org/en/) for instructions on installing on your operating system. 
 
 ## Up and running
-1. Clone the project to your local machine: `git clone https://github.com/crdschurch/crossroads-phoenix.git`
+1. Clone the project to your local machine: `git clone https://github.com/crdschurch/crds-maestro.git`
   
-2. Check out the development branch: `cd crossroads-phoenix && git checkout development`
+2. Check out the development branch: `cd crds-maestro && git checkout development`
 
 3. Install Phoenix dependencies by running the following command: `mix deps.get && cd apps/crossroads_interface && mix deps.get`
 
@@ -23,33 +23,32 @@ This is environment specific, please visit [https://nodejs.org/en/](https://node
   >which lets us break it into smaller pieces. 
   >The phoenix portion is in the `apps/crossroads_interface` directory and probably where you will be working most of the time. 
 
-4. Install javascript dependencies by running the following command in the crossroads_interface/ directory: `npm install`
+4. Install javascript dependencies in the `crossroads_interface` directory: `npm install`
 
-5. Create a local build for whatever microclient you want to include.  Currently their are microclient branches in the repositories for crds-angular, crds-embed, and crds-connect named: `feature-release/phoenix`.  So for crds-angular, do the following in some local directory $YOUR_DIRECTORY:
-```git clone https://github.com/crdschurch/crds-angular.git
-cd crds-angular
-git checkout feature-release/phoenix
-cd crossroads.net
-npm install
-gulp build
+5. Build your microclients separately from crds-maestro.  Just clone the repo in some other local directory (which I'll refer to as $MICROCLIENT_HOME) as you normally would and follow the    instructions provided in the repo to build the microclient.  Currently their are microclient branches in the repositories for crds-angular, crds-embed, and crds-connect named: `feature-release/phoenix`.  So for crds-angular, do the following in some local directory $MICROCLIENT_HOME:
+  ```
+  MICROCLIENT_HOME=~/microclients
+  cd $MICROCLIENT_HOME
+  git clone https://github.com/crdschurch/crds-angular.git
+  cd crds-angular
+  git checkout feature-release/phoenix
+  cd crossroads.net
+  npm install
+  gulp build
+  ```
+
+6. Link the assets of your microclient into the maestro project.  Each microclient will have it's own directory under `crossroads_interface/priv/static/js`, with a name that matches the controller created in Phoenix for the microclient.
+
+So to link the assets for crds-angular and crds-connect:
 ```
+ cd crds-maestro/apps/crossroads_interface
+ mkdir -p priv/static/js
+ ln -s $MICROCLIENT_HOME/crds-angular/crossroads.net/assets priv/static/js/legacy
+ ln -s $MICROCLIENT_HOME/crds-connect/dist priv/static/js/crds_connect
+ ```
 
-6. Copy or link the assets of your microclient into the project: `ln -s $YOUR_DIRECTORY/crds-angular/crossroads.net/assets priv/static/js/legacy`
 
-  >Each microclient will have it's own directory under `crossroads_interface/priv/static/js`.  For crds-angular, it is `legacy`.
-
-7. Kick of the build and the server: `MIX_ENV=dev mix phoenix.server`
-
-  >Windows users will need to run `set MIX_ENV=dev` and then run `mix phoenix.server`
-  >`MIX_ENV=dev` is necessary because we need some way to tell the Microclients that we are running in the context of our phoenix application. This way webpack will put our build files in the correct assets folder for phoenix to serve. 
+8. Kick of the build and the server: `mix phoenix.server`
 
 >You may be prompted to install rebar3.  If so, select Y to continue.
 
-## Things still left TODO
-- [ ] Handle authentication more globally. Maybe the Phoneix server handles it and uses Session storage? Maybe we just create a framework and add it to the example JS repo.
-- [x] Setup the Phoenix app to proxy requests the .NET server.
-- [x] Setup the Phoenix app to proxy CMS request to the CMS Server.
-- [ ] Determine how to reliably route between MicroClients
-- [ ] Create a future proof, framework agnostic, shareable header and footer
-- [ ] Write a guide for adding/editing a microclient 
-- [ ] Deployment

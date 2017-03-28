@@ -31,4 +31,4 @@
         <% end %>
     <% end %>
 
-    <!--<script>require("web/static/js/app").App.run()</script>-->
+    <script>require("web/static/js/app").App.run()</script>

@@ -1,3 +1,6 @@
 export default function() {
-    return "something";
+    document.addEventListener("phoenixEvent", function(e) {
+        console.info("Event is: ", e);
+        console.info("Custom data is: ", e.detail);
+    });
 }
