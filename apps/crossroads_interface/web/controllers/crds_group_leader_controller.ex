@@ -7,6 +7,7 @@ defmodule CrossroadsInterface.CrdsGroupLeaderController do
   Handles all requests to /group-leader
   """
   plug :put_layout, "no_sidebar.html"
+  plug CrossroadsInterface.Plug.BaseHref, "/group-leader"
 
   def index(conn, _params) do
     render conn, "app_root.html", %{ "js_files": [
@@ -15,7 +16,7 @@ defmodule CrossroadsInterface.CrdsGroupLeaderController do
         "/js/group-leader/styles.bundle.js",
         "/js/group-leader/vendor.bundle.js",
         "/js/group-leader/main.bundle.js"
-      ], "base_href": "/group-leader" }
+      ]}
   end
 
 end
