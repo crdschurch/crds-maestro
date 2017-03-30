@@ -1,4 +1,5 @@
 use Mix.Config
+require IEx
 
 config :crossroads_content,
-  content_server: "https://contentint.crossroads.net/"
+  content_server: ""
