@@ -32,3 +32,11 @@
     <% end %>
 
     <script>require("web/static/js/app").App.run()</script>
+
+    <script>
+  (function(){
+    var options = { el: '[data-header]', cmsEndpoint: 'https://contentint.crossroads.net/', contentBlockTitle: 'sharedGlobalHeaderTemp' };
+    var header = new CRDS.SharedHeader(options);
+        header.render();
+  })();
+  </script>
