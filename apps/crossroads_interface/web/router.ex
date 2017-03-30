@@ -27,10 +27,10 @@ defmodule CrossroadsInterface.Router do
   scope "/", CrossroadsInterface do
     pipe_through :browser
 
+    forward "/group-leader", CrdsGroupLeaderController, :index
     forward "/connect", CrdsConnectController, :index
     get "/notfound", NotfoundController, :notfound
     forward "/", LegacyController, :index
-    
   end
 
 end
