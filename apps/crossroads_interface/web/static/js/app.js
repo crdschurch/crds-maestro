@@ -1,4 +1,4 @@
-// import { SharedHeader } from 'crds-shared-header/dist/bundle';
+import { SharedHeader } from 'crds-shared-header/dist/bundle';
 import phoenixEventListener from './phoenixEventListener';
 
 export var App = {
