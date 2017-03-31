@@ -14,6 +14,9 @@ config :crossroads_content,
 config :crossroads_interface,
   api_url: System.get_env("CRDS_API_ENDPOINT")
 
+config :crossroads_interface,
+  cookie_prefix: System.get_env("CRDS_ENV")
+
 # Configures the endpoint
 config :crossroads_interface, CrossroadsInterface.Endpoint,
   url: [host: "localhost"],
