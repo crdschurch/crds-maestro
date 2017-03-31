@@ -36,8 +36,8 @@
     <script>
         (function(){
             var options = { 
-                cmsEndpoint: '<%= System.get_env("CRDS_CMS_ENDPOINT") %>', 
-                appEndpoint: '<%= System.get_env("CRDS_API_ENDPOINT") %>',
+                cmsEndpoint: '<%= Application.get_env(:crossroads_content, :content_server) %>', 
+                appEndpoint: '<%= Application.get_env(:crossroads_interface, :api_url) %>',
                 contentBlockTitle: 'sharedGlobalHeader' };
             var header = new CRDS.SharedHeader(options);
             header.render();
