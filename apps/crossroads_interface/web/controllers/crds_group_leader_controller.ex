@@ -11,11 +11,11 @@ defmodule CrossroadsInterface.CrdsGroupLeaderController do
 
   def index(conn, _params) do
     render conn, "app_root.html", %{ "js_files": [
-        "/js/group-leader/inline.bundle.js",
-        "/js/group-leader/polyfills.bundle.js",
-        "/js/group-leader/styles.bundle.js",
-        "/js/group-leader/vendor.bundle.js",
-        "/js/group-leader/main.bundle.js"
+        "/js/group_leader/inline.bundle.js",
+        "/js/group_leader/polyfills.bundle.js",
+        "/js/group_leader/styles.bundle.js",
+        "/js/group_leader/vendor.bundle.js",
+        "/js/group_leader/main.bundle.js"
       ]}
   end
 
