@@ -8,7 +8,7 @@ defmodule CrossroadsInterface.CrdsConnectController do
   """
 
   plug CrossroadsInterface.Plug.BaseHref, "/connect"
-  plug :put_layout, "no_sidebar.html"
+  plug :put_layout, "screen_width.html"
 
   def index(conn, _params) do
     render conn, "app_root.html", %{ "js_files": [
