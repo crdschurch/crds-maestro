@@ -5,6 +5,11 @@
 # is restricted to this project.
 use Mix.Config
 
+config :crossroads_interface,
+  image_url: System.get_env("CRDS_IMAGE_ENDPOINT"),
+  app_url: System.get_env("CRDS_APP_ENDPOINT"),
+  cookie_prefix: System.get_env("CRDS_COOKIE_PREFIX")
+
 config :ssl, protocol_version: :"tlsv1.2"
 
 config :crossroads_content,
