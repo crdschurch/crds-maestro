@@ -36,8 +36,8 @@
     <script>
         (function(){
             var options = {
-                cmsEndpoint: '<%= Application.get_env(:crossroads_content, :content_server) %>',
-                appEndpoint: '<%= Application.get_env(:crossroads_interface, :app_url) %>',
+                cmsEndpoint: '<%= Application.get_env(:crossroads_interface, :content_proxy) %>',
+                appEndpoint: 'https://<%= @conn.host %>:<%= @conn.port %>/',
                 imgEndpoint: '<%= Application.get_env(:crossroads_interface, :image_url) %>',
                 crdsCookiePrefix: '<%= Application.get_env(:crossroads_interface, :cookie_prefix) %>',
                 contentBlockTitle: 'sharedGlobalHeader' };

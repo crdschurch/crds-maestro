@@ -2,7 +2,6 @@ use Mix.Config
 
 config :crossroads_interface,
   image_url: "https://gatewayint.crossroads.net/gateway/api/image/profile/",
-  app_url: "https://int.crossroads.net/",
   cookie_prefix: "int"
 
 config :crossroads_content,
