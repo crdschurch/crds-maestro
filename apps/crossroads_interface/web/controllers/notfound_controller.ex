@@ -10,9 +10,9 @@ defmodule CrossroadsInterface.NotfoundController do
       {_, _, body} -> "<h2> #{body} </h2>"
     end
     conn
-    |> render("404.html", %{ payload: payload, 
+    |> render("404.html", %{ payload: payload,
       "css_files": [
-        "/js/legacy/core.css"
+        "/js/legacy/legacy.css"
       ]
     })
   end

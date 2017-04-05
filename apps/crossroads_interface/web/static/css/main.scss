@@ -1,16 +1,18 @@
-$icon-font-path: "/assets/";
-//@import 'node_modules/crds-styles/assets/stylesheets/bootstrap';
-.wf-loading {
-    visibility: hidden;
-}
+.crds-styles {
+    $icon-font-path: "/assets/";
 
-@import 'node_modules/crds-styles/assets/stylesheets/variables';
-@import 'node_modules/crds-styles/assets/stylesheets/overrides';
-@import 'node_modules/crds-styles/assets/stylesheets/functions';
-@import 'node_modules/crds-styles/assets/stylesheets/mixins';
-@import 'node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
-@import 'node_modules/crds-styles/assets/stylesheets/base/modules';
-@import 'node_modules/crds-styles/assets/stylesheets/components/modules';
-@import 'node_modules/crds-styles/assets/stylesheets/layouts/modules';
-@import 'node_modules/crds-styles/assets/stylesheets/themes/modules';
-@import 'node_modules/crds-styles/assets/stylesheets/utilities/modules';
+    .wf-loading {
+        visibility: hidden;
+    }
+
+    @import 'node_modules/crds-styles/assets/stylesheets/variables';
+    @import 'node_modules/crds-styles/assets/stylesheets/overrides';
+    @import 'node_modules/crds-styles/assets/stylesheets/functions';
+    @import 'node_modules/crds-styles/assets/stylesheets/mixins';
+    @import 'node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
+    @import 'node_modules/crds-styles/assets/stylesheets/base/modules';
+    @import 'node_modules/crds-styles/assets/stylesheets/components/modules';
+    @import 'node_modules/crds-styles/assets/stylesheets/layouts/modules';
+    @import 'node_modules/crds-styles/assets/stylesheets/themes/modules';
+    @import 'node_modules/crds-styles/assets/stylesheets/utilities/modules';
+}

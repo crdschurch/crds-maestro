@@ -5,7 +5,9 @@
     <%= render_existing @view_module, "head.html", assigns %>
   </head>
   <body>
-    <%= render CrossroadsInterface.SharedView, "header.html", %{content_blocks: @content_blocks, conn: @conn } %>
+    <div class="crds-styles">
+      <%= render CrossroadsInterface.SharedView, "header.html", %{content_blocks: @content_blocks, conn: @conn } %>
+    </div>
     <%= render @view_module, @view_template, assigns %>
     <%= render CrossroadsInterface.SharedView, "footer.html", %{content_blocks: @content_blocks } %>
     <%= render CrossroadsInterface.SharedView, "common_body.html", assigns %>
