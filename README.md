@@ -52,3 +52,23 @@ So to link the assets for crds-angular and crds-connect:
 
 >You may be prompted to install rebar3.  If so, select Y to continue.
 
+## Server Setup
+The following steps are needed to configure the Maestro application to run on a Ubuntu server after a Phoenix / Elixir / Distillery package has been created.
+
+1. Create a service account (maestro)
+2. Configure the SSL Certificates on the server to allow the maestro user / group to have read access
+3. Create a directory for the Maestro application
+```
+sudo mkdir /var/maestro
+sudo chown -R maestro:maestro /var/maestro
+sudo chmod 755 /var/maestro
+```
+4. Configure startup script (assuming Ubuntu 14.04 upstart)
+* Copy the `config/maestro.conf` from this repository to `/etc/init`
+* Edit `/etc/init` as appropriate
+* Run `sudo initctl reload-configuration` for Upstart to reload configuration
+
+5. Create a releases directory under `/var/maestro`
+6. Extract maestro release.tar.gz file to `/var/maestor/releases/DATE_TIME` folder
+7. Create a symbolic link from `/var/maestro/current` to `/var/maestor/releases/DATE_TIME`
+8. Start the service using `sudo service maestro start`

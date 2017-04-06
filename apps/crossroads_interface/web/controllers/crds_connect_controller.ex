@@ -16,7 +16,7 @@ defmodule CrossroadsInterface.CrdsConnectController do
         "/js/crds_connect/vendor.js",
         "/js/crds_connect/app.js"
       ], "css_files": [
-        "/js/legacy/core.css"
+        "/js/legacy/legacy.css"
       ]}
   end
 
