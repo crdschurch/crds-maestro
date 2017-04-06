@@ -9,7 +9,8 @@ config :crossroads_interface,
   image_url: "#{System.get_env("CRDS_GATEWAY_PROXY")}api/image/profile/",
   cookie_prefix: System.get_env("CRDS_ENV"),
   content_proxy: System.get_env("CRDS_CMS_PROXY"),
-  api_url: System.get_env("CRDS_GATEWAY_ENDPOINT")
+  api_url: System.get_env("CRDS_GATEWAY_ENDPOINT"),
+  app_url: System.get_env("CRDS_APP_ENDPOINT")
 
 
 config :ssl, protocol_version: :"tlsv1.2"
