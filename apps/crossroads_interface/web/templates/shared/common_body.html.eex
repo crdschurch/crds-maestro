@@ -1,3 +1,5 @@
+    <%= raw render CrossroadsInterface.SharedView, "cr.svg", assigns %>
+
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MFS4MJ"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
