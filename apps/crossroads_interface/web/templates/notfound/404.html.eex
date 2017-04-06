@@ -1,3 +1,7 @@
 <div class="crds-legacy-styles">
-  <%= raw(assigns[:payload]) %>
+  <div class="container">
+    <div class="row">
+      <%= raw(assigns[:payload]) %>
+    </div>
+  </div>
 </div>
