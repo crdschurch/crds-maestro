@@ -3,8 +3,9 @@
   <head>
     <%= render CrossroadsInterface.SharedView, "common_head.html", assigns %>
     <%= render_existing @view_module, "head.html", assigns %>
+    <%= render_existing CrossroadsInterface.SharedView, @meta_template, assigns %>
   </head>
-  <body>
+  <body class="crds-legacy-styles">
     <%= render @view_module, @view_template, assigns %>
     <%= render CrossroadsInterface.SharedView, "common_body.html", assigns %>
     <%= render_existing @view_module, "body.html", assigns %>

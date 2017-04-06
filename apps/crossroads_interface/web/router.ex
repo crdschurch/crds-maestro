@@ -12,6 +12,7 @@ defmodule CrossroadsInterface.Router do
     plug CrossroadsInterface.Plug.PageType
     plug CrossroadsInterface.Plug.Payload
     plug CrossroadsInterface.Plug.BaseHref
+    plug CrossroadsInterface.Plug.PutMetaTemplate
   end
 
   pipeline :api do
