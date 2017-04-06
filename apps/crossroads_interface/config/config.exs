@@ -6,9 +6,9 @@
 use Mix.Config
 
 config :crossroads_interface,
-  image_url: "#{System.get_env("CRDS_GATEWAY_PROXY")}/api/image/profile/",
+  image_url: "#{System.get_env("CRDS_GATEWAY_PROXY")}api/image/profile/",
   cookie_prefix: System.get_env("CRDS_ENV"),
-  content_proxy: System.get_env("CRDS_CONTENT_PROXY"),
+  content_proxy: System.get_env("CRDS_CMS_PROXY"),
   api_url: System.get_env("CRDS_GATEWAY_ENDPOINT")
 
 
