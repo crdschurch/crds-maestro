@@ -2,8 +2,8 @@ defmodule CrossroadsInterface.LegacyController do
   use CrossroadsInterface.Web, :controller
   require IEx
   @moduledoc"""
-  This controller is called from the fall through route in the router. 
-  The purpose is to handle serving up the 'legacy' angular application using 
+  This controller is called from the fall through route in the router.
+  The purpose is to handle serving up the 'legacy' angular application using
   the legacy template
   """
 
@@ -13,7 +13,7 @@ defmodule CrossroadsInterface.LegacyController do
     conn
     |> redirect( to: "/notfound")
   end
-  
+
   def index(conn, _params) do
     render conn, "app_root.html", %{ "js_files": [
         "/js/legacy/ang.js",
@@ -31,8 +31,7 @@ defmodule CrossroadsInterface.LegacyController do
         "/js/legacy/formlybuilder.js",
         "/js/legacy/main.js"
       ], "css_files": [
-       "/css/main.css",
-       "/js/legacy/core.css"
+       "/js/legacy/legacy.css"
       ], "base_href": "/"}
   end
 end

@@ -1,3 +1,5 @@
+    <%= raw render CrossroadsInterface.SharedView, "cr.svg", assigns %>
+
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MFS4MJ"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -35,10 +37,10 @@
 
     <script>
         (function(){
-            var options = { 
-                cmsEndpoint: '<%= Application.get_env(:crossroads_content, :content_server) %>', 
+            var options = {
+                cmsEndpoint: '<%= Application.get_env(:crossroads_content, :content_server) %>',
                 appEndpoint: '<%= Application.get_env(:crossroads_interface, :api_url) %>',
-                crdsCookiePrefix: '<%= Application.get_env(:crossroads_interface, :cookie_prefix) %>',                
+                crdsCookiePrefix: '<%= Application.get_env(:crossroads_interface, :cookie_prefix) %>',
                 contentBlockTitle: 'sharedGlobalHeader' };
             var header = new CRDS.SharedHeader(options);
             header.render();

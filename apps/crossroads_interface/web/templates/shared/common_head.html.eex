@@ -36,7 +36,7 @@
     <link rel="manifest" href="//crossroads-media.s3.amazonaws.com/images/favicon/manifest.json">
     <link rel="shortcut icon" href="//crossroads-media.s3.amazonaws.com/images/favicon/favicon.ico">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
     <link rel="stylesheet" href="/css/app.css"/>
 
     <style>
@@ -82,4 +82,3 @@
 
     <base href="<%= @base_href %>">
 
-    <%= raw render CrossroadsInterface.SharedView, "cr.svg", assigns %>
