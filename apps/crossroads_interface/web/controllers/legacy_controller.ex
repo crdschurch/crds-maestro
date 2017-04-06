@@ -7,6 +7,7 @@ defmodule CrossroadsInterface.LegacyController do
   the legacy template
   """
 
+  plug CrossroadsInterface.Plug.PutMetaTemplate, "angular_meta_tags.html"
   plug :put_layout, "no_header_or_footer.html"
 
   def index(conn, %{ "resolve" => "true" }) do
