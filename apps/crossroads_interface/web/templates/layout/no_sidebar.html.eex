@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="crossroads">
   <head>
+    <%= render_existing CrossroadsInterface.SharedView, @meta_template, assigns %>
     <%= render CrossroadsInterface.SharedView, "common_head.html", assigns %>
     <%= render_existing @view_module, "head.html", assigns %>
-    <%= render_existing CrossroadsInterface.SharedView, @meta_template, assigns %>
   </head>
   <body>
     <div class="crds-styles">
