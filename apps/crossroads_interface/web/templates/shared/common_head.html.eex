@@ -42,38 +42,29 @@
     <link rel="stylesheet" href="/css/app.css"/>
 
     <style>
-        @-webkit-keyframes spinnerRotate {
-            100% {
-                -webkit-transform: rotate(360deg);
-            }
-        }
+    @-webkit-keyframes spinnerRotate {
+      100% {
+        -webkit-transform: rotate(360deg);
+      }
+    }
 
-        @keyframes spin {
-            100% {
-                transform: rotate(360deg);
-            }
-        }
+    @keyframes spin {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
 
-        .preloader {
-            position: fixed;
-            width: 75px;
-            height: 75px;
-            background: transparent;
-            margin: 0 auto;
-            -webkit-animation: spin 700ms linear infinite;
-            animation: spin 700ms linear infinite;
-            display: block;
-            top: calc(20% - 37.5px);
-            left: calc(50% - 37.5px);
-        }
-
-        .preloader-wrapper {
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-        }
+    .preloader {
+      width: 75px;
+      height: 75px;
+      background: transparent;
+      margin: 110px auto;
+      -webkit-animation: spin 700ms linear infinite;
+      animation: spin 700ms linear infinite;
+      display: block;
+      top: calc(20% - 37.5px);
+      left: calc(50% - 37.5px);
+    }
     </style>
 
     <%= if assigns[:css_files] do %>
