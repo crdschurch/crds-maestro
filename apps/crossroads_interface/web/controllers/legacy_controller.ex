@@ -26,6 +26,7 @@ defmodule CrossroadsInterface.LegacyController do
         "/js/legacy/give.js",
         "/js/legacy/media.js",
         "/js/legacy/search.js",
+        "/js/legacy/load-image.all.min.js",
         "/js/legacy/govolunteer.js",
         "/js/legacy/formbuilder.js",
         "/js/legacy/childcare.js",
