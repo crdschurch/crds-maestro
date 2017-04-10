@@ -140,7 +140,6 @@
 
     <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script type="text/javascript" src="<%= static_path(@conn, "/js/legacy/load-image.all.min.js") %>" defer> </script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.0/TweenMax.min.js" defer></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.7.4/jquery.fullPage.min.js" defer></script>
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
@@ -152,6 +151,8 @@
     <script src="<%= static_path(@conn, "/js/legacy/ang.js") %>"></script>
     <script src="<%= static_path(@conn, "/js/legacy/core.js")%>" 
             type="text/javascript"  defer></script>
+    <script src="<%= static_path(@conn, "/js/legacy/load-image.all.min.js") %>"
+            type="text/javascript"  defer> </script>
     <script src="<%= static_path(@conn, "/js/legacy/common.js")%>"
             type="text/javascript"  defer></script>
     <script src="<%= static_path(@conn, "/js/legacy/profile.js")%>"
