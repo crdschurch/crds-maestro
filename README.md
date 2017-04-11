@@ -49,7 +49,7 @@ So to link the assets for crds-angular and crds-connect:
  
  Windows Users:
  
- ### In Windows command window (run as administrator):
+ #### In Windows command window (run as administrator):
  ```
  cd crds-maestro/apps/crossroads_interface/priv
  mkdir static/js
@@ -58,15 +58,15 @@ So to link the assets for crds-angular and crds-connect:
  mklink crds_connect $MICROCLIENT_HOME/crds-connect/dist 
  cd ..
  ```
- ### In Bash Shell:
- ---
+ #### In Bash Shell:
+  ```
   cd crds-maestro/apps/crossroads_interface/priv
  mkdir static/js
  cd static/js
  ln -s $MICROCLIENT_HOME/crds-angular/crossroads.net/assets legacy 
  ln -s $MICROCLIENT_HOME/crds-connect/dist  crds_connect  
  cd ..
- ---
+  ```
 
 
 8. Kick of the build and the server: `mix phoenix.server`
