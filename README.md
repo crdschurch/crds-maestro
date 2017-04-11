@@ -54,8 +54,8 @@ So to link the assets for crds-angular and crds-connect:
  cd crds-maestro/apps/crossroads_interface/priv
  mkdir static/js
  cd static/js
- mklink legacy $MICROCLIENT_HOME/crds-angular/crossroads.net/assets
- mklink crds_connect $MICROCLIENT_HOME/crds-connect/dist 
+ mklink /d legacy $MICROCLIENT_HOME/crds-angular/crossroads.net/assets
+ mklink /d crds_connect $MICROCLIENT_HOME/crds-connect/dist 
  cd ..
  ```
  #### In Bash Shell:
