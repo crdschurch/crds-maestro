@@ -12,6 +12,9 @@ There is a great [guide on the phoenix site](http://www.phoenixframework.org/doc
 ### Install node.js >= 5.0.0
 This is environment specific, please visit [https://nodejs.org/en/](https://nodejs.org/en/) for instructions on installing on your operating system. 
 
+### Windows Only
+Install Visual C++ build tools with your visual studio install and install the windows 10 SDK
+
 ## Up and running
 1. Clone the project to your local machine: `git clone https://github.com/crdschurch/crds-maestro.git`
   
@@ -56,7 +59,7 @@ So to link the assets for crds-angular and crds-connect:
  cd static/js
  mklink /d legacy $MICROCLIENT_HOME/crds-angular/crossroads.net/assets
  mklink /d crds_connect $MICROCLIENT_HOME/crds-connect/dist 
- cd ..
+ cd ../../../
  ```
  #### In Bash Shell:
   ```
@@ -65,7 +68,7 @@ So to link the assets for crds-angular and crds-connect:
  cd static/js
  ln -s $MICROCLIENT_HOME/crds-angular/crossroads.net/assets legacy 
  ln -s $MICROCLIENT_HOME/crds-connect/dist  crds_connect  
- cd ..
+ cd ../../../
   ```
 
 
