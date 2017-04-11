@@ -18,7 +18,7 @@ defmodule CrossroadsInterface.CrdsConnectControllerTest do
                                               "type" => "website",
                                               "uRL" => "/register"}]}
 
-  test "GET /connect", %{conn: conn} do
+  test "GET /connect should return 200 status", %{conn: conn} do
     with_mocks([ {Pages, [], [get_content_blocks: fn() -> {:ok, 200, @content_block_call} end]},
                  {Pages, [], [get_system_page: fn("connect") -> {:ok, 200, @system_page_response} end]},
                  {Pages, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
@@ -26,5 +26,15 @@ defmodule CrossroadsInterface.CrdsConnectControllerTest do
       assert html_response(conn, 200)
     end
   end
+
+  test "GET /connect should set redirectUrl cookie", %{conn: conn} do
+    with_mocks([ {Pages, [], [get_content_blocks: fn() -> {:ok, 200, @content_block_call} end]},
+                 {Pages, [], [get_system_page: fn("connect") -> {:ok, 200, @system_page_response} end]},
+                 {Pages, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
+      conn = get conn, "/connect"
+      assert conn.resp_cookies == %{"redirectUrl" => %{http_only: false, value: "/connect"}}
+    end
+  end
+  
 end
 
