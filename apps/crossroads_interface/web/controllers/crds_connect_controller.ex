@@ -11,13 +11,15 @@ defmodule CrossroadsInterface.CrdsConnectController do
   plug :put_layout, "screen_width.html"
 
   def index(conn, _params) do
-    render conn, "app_root.html", %{ "js_files": [
-        "/js/crds_connect/polyfills.js",
-        "/js/crds_connect/vendor.js",
-        "/js/crds_connect/app.js"
-      ], "css_files": [
-        "/js/legacy/legacy.css"
-      ]}
+    conn
+      |> put_resp_cookie("redirectUrl", conn.request_path, http_only: false)
+      |> render("app_root.html", %{ "js_files": [
+          "/js/crds_connect/polyfills.js",
+          "/js/crds_connect/vendor.js",
+          "/js/crds_connect/app.js"
+        ], "css_files": [
+          "/js/legacy/legacy.css"
+        ]})
   end
 
 end
