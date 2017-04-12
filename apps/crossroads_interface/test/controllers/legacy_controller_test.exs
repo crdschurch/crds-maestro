@@ -27,6 +27,24 @@ defmodule CrossroadsInterface.LegacyControllerTest do
       assert html_response(conn, 200)
     end
   end
+
+  test "GET /signin", %{conn: conn} do
+    with_mocks([ {Pages, [], [get_content_blocks: fn() -> {:ok, 200, @content_block_call} end]},
+                 {Pages, [], [get_system_page: fn("") -> {:ok, 200, @system_page_response} end]},
+                 {Pages, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
+      conn = get conn, "/signin"
+      assert html_response(conn, 200)
+    end
+  end
+
+  test "GET /signout", %{conn: conn} do
+    with_mocks([ {Pages, [], [get_content_blocks: fn() -> {:ok, 200, @content_block_call} end]},
+                 {Pages, [], [get_system_page: fn("") -> {:ok, 200, @system_page_response} end]},
+                 {Pages, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
+      conn = get conn, "/signout"
+      assert html_response(conn, 200)
+    end
+  end
 end
 
 
