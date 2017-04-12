@@ -15,10 +15,6 @@ config :crossroads_interface,
 
 config :ssl, protocol_version: :"tlsv1.2"
 
-config :crossroads_content,
-  http: HTTPoison,
-  cms_server_endpoint: System.get_env("CRDS_CMS_SERVER_ENDPOINT")
-
 # Configures the endpoint
 config :crossroads_interface, CrossroadsInterface.Endpoint,
   url: [host: "localhost"],

@@ -6,10 +6,6 @@ config :crossroads_interface,
   cookie_prefix: "int",
   app_client_endpoint: "/"
 
-config :crossroads_content,
-  http: HTTPoison,
-  cms_server_endpoint: "https://contentint.crossroads.net/"
-
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #

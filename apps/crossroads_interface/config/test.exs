@@ -10,9 +10,5 @@ config :crossroads_interface, CrossroadsInterface.Endpoint,
   http: [port: 4001],
   server: false
 
-config :crossroads_content,
-  http: HTTPoison,
-  cms_server_endpoint: ""
-
 # Print only warnings and errors during test
 config :logger, level: :warn
