@@ -10,13 +10,9 @@ defmodule CrossroadsInterface.LegacyController do
   plug CrossroadsInterface.Plug.PutMetaTemplate, "angular_meta_tags.html"
   plug :put_layout, "no_header_or_footer.html"
 
-  def index(conn, %{ "resolve" => "true" }) do
+  defp renderSite(conn, params) do
     conn
-    |> redirect( to: "/notfound")
-  end
-
-  def index(conn, _params) do
-    render conn, "app_root.html", %{ "js_files": [
+    |> render("app_root.html", %{ "js_files": [
         "/js/legacy/ang.js",
         "/js/legacy/core.js",
         "/js/legacy/common.js",
@@ -34,6 +30,27 @@ defmodule CrossroadsInterface.LegacyController do
         "/js/legacy/main.js"
       ], "css_files": [
        "/js/legacy/legacy.css"
-      ], "base_href": "/"}
+      ], "base_href": "/"})
+  end
+
+  def index(conn, %{ "resolve" => "true" }) do
+    conn
+    |> redirect( to: "/notfound")
+  end
+
+  def index(conn, _params) do
+    conn
+      |> put_resp_cookie("redirectUrl", conn.request_path, http_only: false)
+      |> renderSite( conn: conn, params: _params)
+  end
+
+  def signout(conn, _params) do
+    conn
+      |> renderSite( conn: conn, params: _params)
+  end
+
+  def signin(conn, _params) do
+    conn
+      |> renderSite( conn: conn, params: _params)
   end
 end

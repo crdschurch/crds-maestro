@@ -31,6 +31,8 @@ defmodule CrossroadsInterface.Router do
     forward "/group-leader", CrdsGroupLeaderController, :index
     forward "/connect", CrdsConnectController, :index
     get "/notfound", NotfoundController, :notfound
+    get "/signout", LegacyController, :signout
+    get "/signin", LegacyController, :signin
     forward "/", LegacyController, :index
   end
 
