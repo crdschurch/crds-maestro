@@ -1,5 +1,6 @@
 defmodule CrossroadsInterface.Router do
   use CrossroadsInterface.Web, :router
+  alias CrossroadsInterface.Plug
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -13,6 +14,7 @@ defmodule CrossroadsInterface.Router do
     plug CrossroadsInterface.Plug.Payload
     plug CrossroadsInterface.Plug.BaseHref
     plug CrossroadsInterface.Plug.PutMetaTemplate
+    plug CrossroadsInterface.Plug.Authorized
   end
 
   pipeline :api do
@@ -31,6 +33,7 @@ defmodule CrossroadsInterface.Router do
     forward "/group-leader", CrdsGroupLeaderController, :index
     forward "/connect", CrdsConnectController, :index
     get "/notfound", NotfoundController, :notfound
+    get "/foobars", FoobarController, :index
     forward "/", LegacyController, :index
   end
 

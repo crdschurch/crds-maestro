@@ -1,0 +1,5 @@
+<%= if assigns[:authorized] do %>
+  <h1> Authorized </h1>
+<% else %>
+  <h1> Unauthorized </h1>
+<% end %> 
