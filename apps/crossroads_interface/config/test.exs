@@ -12,7 +12,7 @@ config :crossroads_interface, CrossroadsInterface.Endpoint,
 
 config :crossroads_content,
   http: HTTPoison,
-  content_server: ""
+  cms_server_endpoint: ""
 
 # Print only warnings and errors during test
 config :logger, level: :warn
