@@ -6,18 +6,14 @@
 use Mix.Config
 
 config :crossroads_interface,
-  image_url: "#{System.get_env("CRDS_GATEWAY_PROXY")}api/image/profile/",
+  image_client_endpoint: "#{System.get_env("CRDS_GATEWAY_CLIENT_ENDPOINT")}api/image/profile/",
   cookie_prefix: System.get_env("CRDS_ENV"),
-  content_proxy: System.get_env("CRDS_CMS_PROXY"),
-  api_url: System.get_env("CRDS_GATEWAY_ENDPOINT"),
-  app_url: System.get_env("CRDS_APP_ENDPOINT")
+  cms_client_endpoint: System.get_env("CRDS_CMS_CLIENT_ENDPOINT"),
+  gateway_server_endpoint: System.get_env("CRDS_GATEWAY_SERVER_ENDPOINT"),
+  app_client_endpoint: System.get_env("CRDS_APP_CLIENT_ENDPOINT")
 
 
 config :ssl, protocol_version: :"tlsv1.2"
-
-config :crossroads_content,
-  http: HTTPoison,
-  content_server: System.get_env("CRDS_CMS_ENDPOINT")
 
 # Configures the endpoint
 config :crossroads_interface, CrossroadsInterface.Endpoint,
