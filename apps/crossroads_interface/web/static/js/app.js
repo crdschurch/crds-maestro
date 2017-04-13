@@ -3,7 +3,6 @@ import phoenixEventListener from './phoenixEventListener';
 
 export var App = {
     run: function() {
-        console.log("Hello!");
         test1();
         phoenixEventListener();
         invokeAlertCms();
