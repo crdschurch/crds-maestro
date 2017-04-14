@@ -1,14 +1,13 @@
 use Mix.Config
 
-config :crossroads_interface,
-  image_url: "https://gatewayint.crossroads.net/gateway/api/image/profile/",
-  content_proxy: "https://contentint.crossroads.net/",
-  cookie_prefix: "int",
-  app_url: "/"
-
 config :crossroads_content,
-  http: HTTPoison,
-  content_server: "https://contentint.crossroads.net/"
+  cms_server_endpoint: "https://contentint.crossroads.net/"
+
+config :crossroads_interface,
+  image_client_endpoint: "https://gatewayint.crossroads.net/gateway/api/image/profile/",
+  cms_client_endpoint: "https://contentint.crossroads.net/",
+  cookie_prefix: "int",
+  app_client_endpoint: "/"
 
 # For development, we disable any cache and enable
 # debugging and code reloading.

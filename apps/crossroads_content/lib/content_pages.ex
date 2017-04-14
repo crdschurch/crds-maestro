@@ -7,7 +7,7 @@ defmodule CrossroadsContent.Pages do
   require Logger
   require IEx
 
-  @base_url Application.get_env(:crossroads_content, :content_server)
+  @base_url Application.get_env(:crossroads_content, :cms_server_endpoint)
 
   @spec get_site_config(number) :: {:ok | :error, number, map}
   def get_site_config(id) do

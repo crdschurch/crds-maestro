@@ -34,16 +34,3 @@
     <% end %>
 
     <script>require("web/static/js/app").App.run()</script>
-
-    <script>
-        (function(){
-            var options = {
-                cmsEndpoint: '<%= Application.get_env(:crossroads_interface, :content_proxy) %>',
-                appEndpoint: '<%= Application.get_env(:crossroads_interface, :app_url) %>',
-                imgEndpoint: '<%= Application.get_env(:crossroads_interface, :image_url) %>',
-                crdsCookiePrefix: '<%= Application.get_env(:crossroads_interface, :cookie_prefix) %>',
-                contentBlockTitle: 'sharedGlobalHeader' };
-            var header = new CRDS.SharedHeader(options);
-            header.render();
-        })();
-    </script>

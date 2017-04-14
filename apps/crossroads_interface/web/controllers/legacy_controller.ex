@@ -40,17 +40,13 @@ defmodule CrossroadsInterface.LegacyController do
 
   def index(conn, _params) do
     conn
-      |> put_resp_cookie("redirectUrl", conn.request_path, http_only: false)
+      |> put_resp_cookie("redirectUrl", "/", http_only: false)
       |> renderSite( conn: conn, params: _params)
   end
 
-  def signout(conn, _params) do
+  def noRedirect(conn, _params) do
     conn
       |> renderSite( conn: conn, params: _params)
   end
 
-  def signin(conn, _params) do
-    conn
-      |> renderSite( conn: conn, params: _params)
-  end
 end
