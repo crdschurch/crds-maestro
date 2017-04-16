@@ -12,7 +12,7 @@ defmodule CrossroadsInterface.CrdsConnectController do
 
   def index(conn, _params) do
     conn
-      |> put_resp_cookie("redirectUrl", conn.request_path, http_only: false)
+      |> put_resp_cookie("redirectUrl", "/connect", http_only: false)
       |> render("app_root.html", %{ "js_files": [
           "/js/crds_connect/polyfills.js",
           "/js/crds_connect/vendor.js",

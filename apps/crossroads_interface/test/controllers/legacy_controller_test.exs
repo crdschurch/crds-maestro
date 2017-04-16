@@ -18,12 +18,29 @@ defmodule CrossroadsInterface.LegacyControllerTest do
                                               "type" => "website",
                                               "uRL" => "/register"}]}
 
-
   test "GET /", %{conn: conn} do
-    with_mocks([ {Pages, [], [get_content_blocks: fn() -> {:ok, 200, @content_block_call} end]},
-                 {Pages, [], [get_system_page: fn("") -> {:ok, 200, @system_page_response} end]},
-                 {Pages, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
+    with_mocks([ {Pages, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
+                  {Pages, [], [get_system_page: fn("") -> {:ok, 200, fake_system_page("")} end]},
+                  {Pages, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
       conn = get conn, "/"
+      assert html_response(conn, 200)
+    end
+  end
+
+  test "GET /signin", %{conn: conn} do
+    with_mocks([ {Pages, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
+                  {Pages, [], [get_system_page: fn("signin") -> {:ok, 200, fake_system_page("signin")} end]},
+                  {Pages, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
+      conn = get conn, "/signin"
+      assert html_response(conn, 200)
+    end
+  end
+
+  test "GET /signout", %{conn: conn} do
+    with_mocks([ {Pages, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
+                  {Pages, [], [get_system_page: fn("signout") -> {:ok, 200, fake_system_page("signout")} end]},
+                  {Pages, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
+      conn = get conn, "/signout"
       assert html_response(conn, 200)
     end
   end
