@@ -5,6 +5,9 @@
 # is restricted to this project.
 use Mix.Config
 
+config :crossroads_content,
+  cms_server_endpoint: System.get_env("CRDS_CMS_SERVER_ENDPOINT")
+
 config :crossroads_interface,
   image_client_endpoint: "#{System.get_env("CRDS_GATEWAY_CLIENT_ENDPOINT")}api/image/profile/",
   cookie_prefix: System.get_env("CRDS_ENV"),
