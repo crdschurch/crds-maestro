@@ -11,6 +11,7 @@ config :crossroads_content,
 config :crossroads_interface,
   image_client_endpoint: "#{System.get_env("CRDS_GATEWAY_CLIENT_ENDPOINT")}api/image/profile/",
   cookie_prefix: System.get_env("CRDS_ENV"),
+  cookie_domain: System.get_env("CRDS_COOKIE_DOMAIN"),
   cms_client_endpoint: System.get_env("CRDS_CMS_CLIENT_ENDPOINT"),
   gateway_server_endpoint: System.get_env("CRDS_GATEWAY_SERVER_ENDPOINT"),
   app_client_endpoint: System.get_env("CRDS_APP_CLIENT_ENDPOINT")
