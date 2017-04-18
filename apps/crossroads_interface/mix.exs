@@ -36,6 +36,7 @@ defmodule CrossroadsInterface.Mixfile do
      {:cowboy, "~> 1.0"},
      {:crossroads_content, in_umbrella: true},
      {:mix_test_watch, "~> 0.2", only: :dev},
-     {:mock, "~> 0.2.0", only: :test}]
+     {:mock, "~> 0.2.0", only: :test},
+     {:plug_redirect, "~> 0.0"}]
   end
 end
