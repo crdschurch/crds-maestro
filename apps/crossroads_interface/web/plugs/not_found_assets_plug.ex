@@ -7,13 +7,16 @@ defmodule CrossroadsInterface.Plug.NotFoundAssetsPlug do
 
   plug :return_not_found_if_not_found
 
-  def return_not_found_if_not_found(conn, _) do
-    requested_asset = Enum.at(conn.path_info, -1)
+  def init(default), do: default
+
+  defp return_not_found_if_not_found(conn, _) do
+    requested_asset = conn.request_path #Enum.at(conn.path_info, -1)
     is_match = Regex.match?(@regex_asset, requested_asset)
     if (is_match) do
       send_resp(conn, 404, "")
       |> halt
+    else
+      conn
     end
-    conn
   end
 end
