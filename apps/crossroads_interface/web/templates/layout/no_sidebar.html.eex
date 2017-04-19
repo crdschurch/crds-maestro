@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="crossroads">
+  <head>
+    <%= render_existing CrossroadsInterface.SharedView, @meta_template, assigns %>
+    <%= render CrossroadsInterface.SharedView, "common_head.html", assigns %>
+    <%= render_existing @view_module, "head.html", assigns %>
+  </head>
+  <body>
+    <div class="crds-styles">
+      <%= render CrossroadsInterface.SharedView, "header.html", %{content_blocks: @content_blocks, conn: @conn } %>
+    </div>
+
+    <div class="crds-legacy-styles">
+      <!-- NO SIDEBAR LAYOUT -->
+      <div class="container main animated fadeIn">
+        <div class="row">
+          <div class="col-md-12">
+            <%= render @view_module, @view_template, assigns %>
+          </div>
+        </div>
+      </div>
+      <%= render CrossroadsInterface.SharedView, "footer.html", %{content_blocks: @content_blocks } %>
+      <%= render CrossroadsInterface.SharedView, "common_body.html", assigns %>
+      <%= render_existing @view_module, "body.html", assigns %>
+    </div>
+  </body>
+</html>

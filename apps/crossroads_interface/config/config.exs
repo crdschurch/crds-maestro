@@ -5,14 +5,19 @@
 # is restricted to this project.
 use Mix.Config
 
-config :ssl, protocol_version: :"tlsv1.2"
-
 config :crossroads_content,
-  http: HTTPoison,
-  content_server: "https://contentint.crossroads.net/"
+  cms_server_endpoint: System.get_env("CRDS_CMS_SERVER_ENDPOINT")
 
 config :crossroads_interface,
-  api_url: "http://silbervm:49380/"
+  image_client_endpoint: "#{System.get_env("CRDS_GATEWAY_CLIENT_ENDPOINT")}api/image/profile/",
+  cookie_prefix: System.get_env("CRDS_ENV"),
+  cookie_domain: System.get_env("CRDS_COOKIE_DOMAIN"),
+  cms_client_endpoint: System.get_env("CRDS_CMS_CLIENT_ENDPOINT"),
+  gateway_server_endpoint: System.get_env("CRDS_GATEWAY_SERVER_ENDPOINT"),
+  app_client_endpoint: System.get_env("CRDS_APP_CLIENT_ENDPOINT")
+
+
+config :ssl, protocol_version: :"tlsv1.2"
 
 # Configures the endpoint
 config :crossroads_interface, CrossroadsInterface.Endpoint,

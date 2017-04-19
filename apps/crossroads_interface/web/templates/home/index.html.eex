@@ -1,1 +1,0 @@
-<%= render CrossroadsInterface.SharedView, @page_type, %{content_blocks: @content_blocks, payload: @payload } %>

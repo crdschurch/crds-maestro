@@ -24,6 +24,25 @@ defmodule CrossroadsInterface.ConnCase do
 
       # The default endpoint for testing
       @endpoint CrossroadsInterface.Endpoint
+
+      def fake_content_blocks() do
+        %{"contentBlocks" => [%{"id" => 1, "title" => "generalError"}]}
+      end
+
+      def fake_system_page(stateName) do
+        %{"systemPages" => [%{"bodyClasses" => nil,
+                                              "card" => "summary",
+                                              "className" => "SystemPage",
+                                              "created" => "2015-09-24T13:52:49-04:00",
+                                              "description" => "We are glad you are here. Let's get your account set up!",
+                                              "id" => 59,
+                                              "keywords" => nil,
+                                              "legacyStyles" => "1",
+                                              "stateName" => stateName,
+                                              "title" => "Register",
+                                              "type" => "website",
+                                              "uRL" => "/register"}]}
+      end
     end
   end
 

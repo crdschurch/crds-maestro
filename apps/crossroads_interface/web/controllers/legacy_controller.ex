@@ -1,30 +1,52 @@
 defmodule CrossroadsInterface.LegacyController do
   use CrossroadsInterface.Web, :controller
+  require IEx
   @moduledoc"""
-  This controller is called from the fall through route in the router. 
-  The purpose is to handle serving up the 'legacy' angular application using 
+  This controller is called from the fall through route in the router.
+  The purpose is to handle serving up the 'legacy' angular application using
   the legacy template
   """
 
-  plug :put_layout, "legacy.html"
+  plug CrossroadsInterface.Plug.PutMetaTemplate, "angular_meta_tags.html"
+  plug :put_layout, "no_header_or_footer.html"
 
-  def index(conn, _params) do
-    render conn, "index.html", %{ "js_files": [
-        "/js/ang.js",
-        "/js/core.js",
-        "/js/common.js",
-        "/js/profile.js",
-        "/js/trips.js",
-        "/js/camps.js",
-        "/js/media.js",
-        "/js/search.js",
-        "/js/govolunteer.js",
-        "/js/formbuilder.js",
-        "/js/childcare.js",
-        "/js/formlybuilder.js",
-        "/js/main.js"
+  defp renderSite(conn, params) do
+    conn
+    |> render("app_root.html", %{ "js_files": [
+        "/js/legacy/ang.js",
+        "/js/legacy/core.js",
+        "/js/legacy/common.js",
+        "/js/legacy/profile.js",
+        "/js/legacy/trips.js",
+        "/js/legacy/camps.js",
+        "/js/legacy/give.js",
+        "/js/legacy/media.js",
+        "/js/legacy/search.js",
+        "/js/legacy/load-image.all.min.js",
+        "/js/legacy/govolunteer.js",
+        "/js/legacy/formbuilder.js",
+        "/js/legacy/childcare.js",
+        "/js/legacy/formlybuilder.js",
+        "/js/legacy/main.js"
       ], "css_files": [
-       "/css/main.css"
-      ], "base_href": "/"}
+       "/js/legacy/legacy.css"
+      ], "base_href": "/"})
   end
+
+  def index(conn, %{ "resolve" => "true" }) do
+    conn
+    |> redirect( to: "/notfound")
+  end
+
+  def index(conn, _params) do    
+    conn
+      |> CrossroadsInterface.Plug.RedirectCookie.call("/")
+      |> renderSite( conn: conn, params: _params)
+  end
+
+  def noRedirect(conn, _params) do
+    conn
+      |> renderSite( conn: conn, params: _params)
+  end
+
 end

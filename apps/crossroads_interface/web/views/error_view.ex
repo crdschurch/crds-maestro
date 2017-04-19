@@ -1,10 +1,10 @@
 defmodule CrossroadsInterface.ErrorView do
   use CrossroadsInterface.Web, :view
   require IEx
-  alias CrossroadsContent.Pages
+  # alias CrossroadsContent.Pages
 
   def render("404.html", assigns) do
-    conn = assigns[:conn]
+    # conn = assigns[:conn]
     #params = conn.query_stringL #headers = conn.req_headers
     #case Pages.get_page(conn.request_path <> "/", false) do
       #{:ok, 200, %{ "pages" => [first | rest]}} ->
@@ -20,16 +20,22 @@ defmodule CrossroadsInterface.ErrorView do
     #end
     # Fall through to the legacy crds-angular appliction and let
     # it handle the route.
-    render("index.html", assigns)
+    #conn = assigns[:conn]
+    #payload = case Pages.get_page("/servererror/", false) do
+      #{:ok, 200, body} -> Enum.at(body["pages"], 0)["content"]
+      #{_, _, body} -> "<h2> #{body} </h2>"
+    #end
+    render("404.html", assigns)
   end
 
   def render("500.html", assigns) do
-    conn = assigns[:conn]
-    payload = case Pages.get_page("/servererror/", false) do
-      {:ok, 200, body} -> Enum.at(body["pages"], 0)["content"]
-      {_, _, body} -> "<h2> #{body} </h2>"
-    end
-    render("server_error.html", %{payload: payload, conn: conn})
+    #conn = assigns[:conn]
+    #payload = case Pages.get_page("/servererror/", false) do
+      #{:ok, 200, body} -> Enum.at(body["pages"], 0)["content"]
+      #{_, _, body} -> "<h2> #{body} </h2>"
+    #end
+    #render("server_error.html", %{payload: payload, conn: conn})
+    render("index.html", assigns)
   end
 
   # In case no render clause matches or no

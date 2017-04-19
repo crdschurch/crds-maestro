@@ -1,3 +1,5 @@
+<div class="crds-legacy-styles">
 <footer class="hidden-print">
   <%= raw(filter_content_blocks(@content_blocks, "footer")["content"]) %>
 </footer>
+</div>

@@ -12,6 +12,7 @@ defmodule CrossroadsInterface.Router do
     plug CrossroadsInterface.Plug.PageType
     plug CrossroadsInterface.Plug.Payload
     plug CrossroadsInterface.Plug.BaseHref
+    plug CrossroadsInterface.Plug.PutMetaTemplate
   end
 
   pipeline :api do
@@ -27,15 +28,13 @@ defmodule CrossroadsInterface.Router do
   scope "/", CrossroadsInterface do
     pipe_through :browser
 
-    forward "/angular2", AngularController, :index
-
-    post "/login", AuthenticationController, :login
-
-    get "/", LegacyController, :index
+    forward "/group-leader", CrdsGroupLeaderController, :index
+    forward "/connect", CrdsConnectController, :index
+    get "/notfound", NotfoundController, :notfound
+    get "/signout", LegacyController, :noRedirect
+    get "/signin", LegacyController, :noRedirect
+    get "/register", LegacyController, :noRedirect
+    forward "/", LegacyController, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", CrossroadsInterface do
-  #   pipe_through :api
-  # end
 end
