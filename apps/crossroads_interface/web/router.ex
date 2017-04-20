@@ -13,6 +13,7 @@ defmodule CrossroadsInterface.Router do
     plug CrossroadsInterface.Plug.Payload
     plug CrossroadsInterface.Plug.BaseHref
     plug CrossroadsInterface.Plug.PutMetaTemplate
+    plug CrossroadsInterface.Plug.Authorized
   end
 
   pipeline :api do
@@ -34,6 +35,7 @@ defmodule CrossroadsInterface.Router do
     get "/signout", LegacyController, :noRedirect
     get "/signin", LegacyController, :noRedirect
     get "/register", LegacyController, :noRedirect
+    get "/", HomepageController, :index
     forward "/", LegacyController, :index
   end
 
