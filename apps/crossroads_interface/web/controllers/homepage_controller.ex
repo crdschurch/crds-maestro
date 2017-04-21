@@ -6,17 +6,18 @@ defmodule CrossroadsInterface.HomepageController do
   plug :put_layout, "screen_width.html"
 
   def index(conn, _params) do
-      IEx.pry
-    payload = case Pages.get_page("/", false) do
-      {:ok, 200, body} -> Enum.at(body["pages"], 0)["content"]
-      {_, _, body} -> "<h2> #{body} </h2>"
+    if conn.assigns[:authorized] do
+      conn
+      |> render("authorized_index.html",
+                "css_files": [
+                  "/js/legacy/legacy.css"
+                ])
+    else
+      conn
+      |> render("not_authorized_index.html",
+                "css_files": [
+                  "/js/legacy/legacy.css"
+                ])
     end
-    conn
-    |> render("index.html", %{ payload: payload,
-      "css_files": [
-        "/js/legacy/legacy.css"
-      ]
-    })
-    render conn, "index.html"
   end
 end

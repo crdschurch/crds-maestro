@@ -1,0 +1,11 @@
+<div class="crds-legacy-styles homepage">
+    <div class="container-fluid main animated fadeIn">
+        <div class="row">
+            <div class="col-md-12">
+              <h1>Welcome authenticated user. Here is a fun picture to look at:</h1>
+              <img src="http://blog.protectedstatic.com/wp-content/uploads/2007/05/pointers.png"/>
+            </div>
+        </div>
+    </div>    
+</div>
+

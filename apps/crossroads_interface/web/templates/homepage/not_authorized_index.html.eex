@@ -2,9 +2,8 @@
     <div class="container-fluid main animated fadeIn">
         <div class="row">
             <div class="col-md-12">
-                <%= raw(assigns[:payload]) %>
+              <h1>Welcome unathenticated user</h1>
             </div>
         </div>
     </div>    
 </div>
-

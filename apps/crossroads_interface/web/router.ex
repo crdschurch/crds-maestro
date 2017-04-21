@@ -35,7 +35,7 @@ defmodule CrossroadsInterface.Router do
     get "/signout", LegacyController, :noRedirect
     get "/signin", LegacyController, :noRedirect
     get "/register", LegacyController, :noRedirect
-    get "/", HomepageController, :index
+    get "/homepage", HomepageController, :index
     forward "/", LegacyController, :index
   end
 

@@ -13,5 +13,4 @@ defmodule CrossroadsInterface.Plug.Authorized do
       assign(conn, :authorized, false)
     end
   end
-
 end
