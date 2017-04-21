@@ -29,7 +29,7 @@ defmodule CrossroadsInterface.Plug.Meta do
     |> assign(:meta_url, Map.get(system_page, "uRL", "/"))
     |> assign(:meta_type, Map.get(system_page, "type", "website"))
     |> assign(:meta_image, find_image(system_page))
-    |> assign(:meta_card, Map.get(system_page, "card"))
+    |> assign(:meta_card, Map.get(system_page, "card", ""))
     |> assign(:meta_siteconfig_title, Map.get(site_config, "title", "Crossroads"))
     |> assign(:meta_siteconfig_locale, Map.get(site_config, "locale", "en_US"))
     |> assign(:meta_siteconfig_facebook, Map.get(site_config, "facebook", ""))
