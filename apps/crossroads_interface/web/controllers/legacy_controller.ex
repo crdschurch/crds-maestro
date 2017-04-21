@@ -1,7 +1,6 @@
 defmodule CrossroadsInterface.LegacyController do
   use CrossroadsInterface.Web, :controller
   require IEx
-  require Logger
   @moduledoc"""
   This controller is called from the fall through route in the router.
   The purpose is to handle serving up the 'legacy' angular application using
@@ -40,7 +39,6 @@ defmodule CrossroadsInterface.LegacyController do
   end
 
   def index(conn, _params) do    
-    Logger.debug("in the legacy controller")
     conn
       |> CrossroadsInterface.Plug.RedirectCookie.call("/")
       |> renderSite( conn: conn, params: _params)
