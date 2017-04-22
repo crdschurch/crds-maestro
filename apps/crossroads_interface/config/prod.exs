@@ -25,8 +25,13 @@ config :crossroads_interface, CrossroadsInterface.Endpoint,
   cache_static_manifest: "priv/static/manifest.json",
   server: true
 
-# Do not print debug messages in production
-config :logger, level: :info
+# Save debug logs to file
+config :logger,
+  backends: [{LoggerFileBackend, :debug_log}]
+
+config :logger, :debug_log,
+  path: "./maestro-logs/maestro-debug.log",
+  level: :debug
 
 # Check `Plug.SSL` for all available options in `force_ssl`.
 
