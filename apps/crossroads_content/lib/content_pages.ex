@@ -89,9 +89,13 @@ defmodule CrossroadsContent.Pages do
   defp make_call(path, state) do
     response = case HTTPoison.get("#{@base_url}/api/#{path}",["Accept": "application/json"], [recv_timeout: :infinity]) do
       {:ok, %HTTPoison.Response{status_code: 404, body: body}} ->
-        {:error, 404, Poison.decode!(body)}
-      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-        {:ok, 200, Poison.decode!(body)}
+        {:error, 404, decode_request(Poison.decode(body))}
+      {:ok, %HTTPoison.Response{status_code: 200, body: body, headers: headers}} ->
+        if determine_headers(headers) do
+          {:error, 400, %{}}
+        else 
+          {:ok, 200, decode_request(Poison.decode(body))}
+        end
       {:error, %HTTPoison.Error{reason: reason}} ->
         {:error, 500, %{error: reason}}
       {_, _} ->
@@ -100,4 +104,21 @@ defmodule CrossroadsContent.Pages do
     state = Map.put(state, path, response)
     {:reply, response, state}
   end
+
+  defp determine_headers(headers) do
+    case Enum.filter(headers, &is_html/1) do
+      [] -> false
+      _  -> true
+    end
+
+  end
+
+  defp is_html({"Content-Type", type}) do
+    type == "text/html"
+  end
+  defp is_html(header), do: false
+  
+  defp decode_request({:ok, valid} = body), do: valid
+  defp decode_request({:error, _} = body), do: %{}
+
 end
