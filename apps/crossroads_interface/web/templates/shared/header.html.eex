@@ -1,5 +1,6 @@
-<div class="crds-styles">
 <div data-header></div>
+<script src="<%= static_path(@conn, "/js/app.js ") %>"></script>
+<script>require("web/static/js/app").App.run()</script>
 <script>
     (function(){
         var options = {
@@ -12,4 +13,3 @@
         header.render();
     })();
 </script>
-</div>

@@ -38,7 +38,7 @@ defmodule CrossroadsInterface.LegacyController do
     |> redirect( to: "/notfound")
   end
 
-  def index(conn, _params) do
+  def index(conn, _params) do    
     conn
       |> CrossroadsInterface.Plug.RedirectCookie.call("/")
       |> renderSite( conn: conn, params: _params)
