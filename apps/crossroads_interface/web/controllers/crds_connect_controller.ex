@@ -8,6 +8,7 @@ defmodule CrossroadsInterface.CrdsConnectController do
   """
 
   plug CrossroadsInterface.Plug.BaseHref, "/connect"
+  plug CrossroadsInterface.Plug.Meta
   plug :put_layout, "screen_width.html"
 
   def index(conn, _params) do

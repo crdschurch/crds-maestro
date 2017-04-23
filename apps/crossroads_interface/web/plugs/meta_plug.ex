@@ -3,7 +3,6 @@ defmodule CrossroadsInterface.Plug.Meta do
   Get all required and optional META tag properties from the CMS
   and supply them to the template.
   """
-  require IEx
   import Plug.Conn
   alias CrossroadsContent.Pages
 
@@ -39,7 +38,6 @@ defmodule CrossroadsInterface.Plug.Meta do
   defp find_image(%{"image" => image}) do
     Map.get(image, "filename", "")
   end
-
   defp find_image(no_image) do
     ""
   end
@@ -52,7 +50,6 @@ defmodule CrossroadsInterface.Plug.Meta do
       %{}
     end
   end
-
   defp match_system_pages({:error, resp_code, body}) do
     %{}
   end
@@ -61,7 +58,6 @@ defmodule CrossroadsInterface.Plug.Meta do
     body
     |> Map.get("siteConfig", %{})
   end
-
   defp match_site_config({:ok, resp_code, body}) do
     %{}
   end

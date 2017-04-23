@@ -87,7 +87,7 @@ defmodule CrossroadsContent.Pages do
 
   @doc false
   defp make_call(path, state) do
-    response = case HTTPoison.get("#{@base_url}/api/#{path}",["Accept": "application/json"], [recv_timeout: :infinity]) do
+    response = case HTTPoison.get("#{@base_url}/api/#{path}",["Accept": "application/json"], [recv_timeout: 8000]) do
       {:ok, %HTTPoison.Response{status_code: 404, body: body}} ->
         {:error, 404, Poison.decode!(body)}
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->

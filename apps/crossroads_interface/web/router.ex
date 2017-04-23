@@ -7,7 +7,6 @@ defmodule CrossroadsInterface.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug CrossroadsInterface.Plug.Meta
     plug CrossroadsInterface.Plug.ContentBlocks
     plug CrossroadsInterface.Plug.PageType
     plug CrossroadsInterface.Plug.Payload
@@ -27,7 +26,6 @@ defmodule CrossroadsInterface.Router do
 
   scope "/", CrossroadsInterface do
     pipe_through :browser
-
     forward "/group-leader", CrdsGroupLeaderController, :index
     forward "/connect", CrdsConnectController, :index
     get "/notfound", NotfoundController, :notfound

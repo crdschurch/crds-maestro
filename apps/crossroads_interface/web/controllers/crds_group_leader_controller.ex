@@ -8,6 +8,7 @@ defmodule CrossroadsInterface.CrdsGroupLeaderController do
   """
   plug :put_layout, "no_sidebar.html"
   plug CrossroadsInterface.Plug.BaseHref, "/group-leader"
+  plug CrossroadsInterface.Plug.Meta
 
   def index(conn, _params) do
     conn

@@ -1,16 +1,25 @@
 defmodule CrossroadsInterface.LegacyController do
   use CrossroadsInterface.Web, :controller
   require IEx
+  require Logger
   @moduledoc"""
   This controller is called from the fall through route in the router.
   The purpose is to handle serving up the 'legacy' angular application using
   the legacy template
   """
 
+  alias CrossroadsInterface.Headers
+
   plug CrossroadsInterface.Plug.PutMetaTemplate, "angular_meta_tags.html"
   plug :put_layout, "no_header_or_footer.html"
 
-  defp renderSite(conn, params) do
+  defp renderSite(conn, true, params) do
+    conn
+    |> put_resp_content_type("application/json")
+    |> send_resp(404, "")
+  end
+
+  defp renderSite(conn, false, params) do
     conn
     |> render("app_root.html", %{ "js_files": [
         "/js/legacy/ang.js",
@@ -39,14 +48,15 @@ defmodule CrossroadsInterface.LegacyController do
   end
 
   def index(conn, _params) do
+    accepts_json = Headers.accepts_json conn.req_headers
     conn
-      |> CrossroadsInterface.Plug.RedirectCookie.call("/")
-      |> renderSite( conn: conn, params: _params)
+    |> CrossroadsInterface.Plug.RedirectCookie.call("/")
+    |> renderSite(accepts_json, conn: conn, params: _params)
   end
 
   def noRedirect(conn, _params) do
     conn
-      |> renderSite( conn: conn, params: _params)
+    |> renderSite(false, conn: conn, params: _params)
   end
 
 end
