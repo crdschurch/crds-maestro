@@ -6,7 +6,7 @@
     <%= render_existing @view_module, "head.html", assigns %>
   </head>
   <body>
-     <div class="crds-styles">
+    <div class="crds-styles">
       <%= render CrossroadsInterface.SharedView, "header.html", %{content_blocks: @content_blocks, conn: @conn } %>
     </div>
 

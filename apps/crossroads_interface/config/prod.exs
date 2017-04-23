@@ -26,7 +26,7 @@ config :crossroads_interface, CrossroadsInterface.Endpoint,
   server: true
 
 # Do not print debug messages in production
-  config :logger, level: :info
+config :logger, level: :info
 
 # Check `Plug.SSL` for all available options in `force_ssl`.
 
