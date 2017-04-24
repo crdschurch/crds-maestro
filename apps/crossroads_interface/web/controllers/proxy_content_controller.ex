@@ -22,15 +22,6 @@ defmodule CrossroadsInterface.ProxyContentController do
   end
 
   @doc """
-  Handle when a request comes in for content blocks.
-  This is not currently capturing 'categories'
-  """
-  def handle_content_proxy(%{:request_path => "/proxy/content/api/contentblock"} = conn, _params) do
-    {_, code, body} =  CrossroadsContent.Pages.get_content_blocks()
-    conn |> send_response(code, Poison.encode(body))
-  end
-
-  @doc """
   Handle when a request for the site config comes in
   """
   def handle_content_proxy(%{:request_path => "/proxy/content//api/SiteConfig/" <> site_id} = conn, _params) do

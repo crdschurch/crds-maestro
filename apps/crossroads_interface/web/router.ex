@@ -18,11 +18,11 @@ defmodule CrossroadsInterface.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/proxy", CrossroadsInterface do
-    pipe_through :api
-    forward "/gateway", ProxyGatewayController, :handle_gateway_proxy
-    forward "/content", ProxyContentController, :handle_content_proxy
-  end
+ # scope "/proxy", CrossroadsInterface do
+    #pipe_through :api
+    #forward "/gateway", ProxyGatewayController, :handle_gateway_proxy
+    #forward "/content", ProxyContentController, :handle_content_proxy
+  #end
 
   scope "/", CrossroadsInterface do
     pipe_through :browser

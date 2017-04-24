@@ -20,7 +20,7 @@ install using Chocolatey with the command `choco install python2`
 
 ## Up and running
 1. Clone the project to your local machine: `git clone https://github.com/crdschurch/crds-maestro.git`
-  
+
 2. Check out the development branch: `cd crds-maestro && git checkout development`
 
 3. Install Phoenix dependencies by running the following command: `mix deps.get && cd apps/crossroads_interface && mix deps.get`
