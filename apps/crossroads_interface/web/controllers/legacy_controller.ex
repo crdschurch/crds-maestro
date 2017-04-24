@@ -10,35 +10,27 @@ defmodule CrossroadsInterface.LegacyController do
   plug CrossroadsInterface.Plug.PutMetaTemplate, "angular_meta_tags.html"
   plug :put_layout, "no_header_or_footer.html"
 
-  alias CrossroadsInterface.Headers
-
-  defp renderSite(conn, true, params) do
+  defp renderSite(conn, params) do
     conn
-    |> put_resp_content_type("application/json")
-    |> send_resp(404, "")
-  end
-
-  defp renderSite(conn, false, params) do
-   conn
-   |> render("app_root.html", %{ "js_files": [
-      "/js/legacy/ang.js",
-      "/js/legacy/core.js",
-      "/js/legacy/common.js",
-      "/js/legacy/profile.js",
-      "/js/legacy/trips.js",
-      "/js/legacy/camps.js",
-      "/js/legacy/give.js",
-      "/js/legacy/media.js",
-      "/js/legacy/search.js",
-      "/js/legacy/load-image.all.min.js",
-      "/js/legacy/govolunteer.js",
-      "/js/legacy/formbuilder.js",
-      "/js/legacy/childcare.js",
-      "/js/legacy/formlybuilder.js",
-      "/js/legacy/main.js"
-    ], "css_files": [
-      "/js/legacy/legacy.css"
-    ], "base_href": "/"})
+    |> render("app_root.html", %{ "js_files": [
+        "/js/legacy/ang.js",
+        "/js/legacy/core.js",
+        "/js/legacy/common.js",
+        "/js/legacy/profile.js",
+        "/js/legacy/trips.js",
+        "/js/legacy/camps.js",
+        "/js/legacy/give.js",
+        "/js/legacy/media.js",
+        "/js/legacy/search.js",
+        "/js/legacy/load-image.all.min.js",
+        "/js/legacy/govolunteer.js",
+        "/js/legacy/formbuilder.js",
+        "/js/legacy/childcare.js",
+        "/js/legacy/formlybuilder.js",
+        "/js/legacy/main.js"
+      ], "css_files": [
+       "/js/legacy/legacy.css"
+      ], "base_href": "/"})
   end
 
   def index(conn, %{ "resolve" => "true" }) do
@@ -46,16 +38,15 @@ defmodule CrossroadsInterface.LegacyController do
     |> redirect( to: "/notfound")
   end
 
-  def index(conn, params) do
-    accepts_json = Headers.accepts_json conn.req_headers
+  def index(conn, _params) do    
     conn
       |> CrossroadsInterface.Plug.RedirectCookie.call("/")
-      |> renderSite(accepts_json, conn: conn, params: params)
+      |> renderSite( conn: conn, params: _params)
   end
 
   def noRedirect(conn, _params) do
     conn
-      |> renderSite(false, conn: conn, params: _params)
+      |> renderSite( conn: conn, params: _params)
   end
 
 end
