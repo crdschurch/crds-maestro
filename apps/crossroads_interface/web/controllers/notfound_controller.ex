@@ -12,6 +12,7 @@ defmodule CrossroadsInterface.NotfoundController do
       {_, _, body} -> "<h2> #{body} </h2>"
     end
     conn
+    |> put_status(404)
     |> render("404.html", %{ payload: payload,
       "css_files": [
         "/js/legacy/legacy.css"
