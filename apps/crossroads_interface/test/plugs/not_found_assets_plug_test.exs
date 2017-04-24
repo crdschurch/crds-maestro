@@ -28,5 +28,10 @@ defmodule CrossroadsInterface.NotFoundAssetsPlugTest do
       assert local_conn.status == conn.status
     end
     
+    test "it should return 'not found' for a .php file" , %{conn: conn} do
+      local_conn = CrossroadsInterface.Plug.NotFoundAssetsPlug.call(conn(:get, "/shouldnotbehere.php"),%{})
+      assert local_conn.status == 404
+    end
+
   end
 end
