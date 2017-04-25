@@ -19,12 +19,12 @@ defmodule CrossroadsContent.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-   [applications: [:logger, :httpoison],
+   [applications: [:logger, :httpoison, :cachex],
     mod: {CrossroadsContent, []}]
   end
 
   defp deps do
-    [
+    [ {:cachex, "~> 2.1"},
       {:httpoison, "~> 0.9.0"},
       {:poison, "~> 2.0"},
       {:mock, "~> 0.2.0", only: :test}
