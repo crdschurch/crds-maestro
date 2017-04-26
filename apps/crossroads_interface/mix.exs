@@ -34,7 +34,7 @@ defmodule CrossroadsInterface.Mixfile do
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:logger_file_backend, "0.0.9"},
      {:gettext, "~> 0.9"},
-     {:cowboy, "~> 1.0"},     
+     {:cowboy, "~> 1.0"},
      {:crossroads_content, in_umbrella: true},
      {:mix_test_watch, "~> 0.2", only: :dev},
      {:mock, "~> 0.2.0", only: :test}]

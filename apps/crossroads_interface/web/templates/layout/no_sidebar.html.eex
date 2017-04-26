@@ -6,9 +6,10 @@
     <%= render_existing @view_module, "head.html", assigns %>
   </head>
   <body>
-    <%= render CrossroadsInterface.SharedView, "common_body.html", assigns %>
-    <%= render_existing @view_module, "body.html", assigns %>
-    <%= render CrossroadsInterface.SharedView, "header.html", %{content_blocks: @content_blocks, conn: @conn } %>
+    <div class="crds-styles">
+      <%= render CrossroadsInterface.SharedView, "header.html", %{content_blocks: @content_blocks, conn: @conn } %>
+    </div>
+
     <div class="crds-legacy-styles">
       <!-- NO SIDEBAR LAYOUT -->
       <div class="container main animated fadeIn">
@@ -18,8 +19,9 @@
           </div>
         </div>
       </div>
+      <%= render CrossroadsInterface.SharedView, "footer.html", %{content_blocks: @content_blocks } %>
+      <%= render CrossroadsInterface.SharedView, "common_body.html", assigns %>
+      <%= render_existing @view_module, "body.html", assigns %>
     </div>
-    <%= render CrossroadsInterface.SharedView, "footer.html", %{content_blocks: @content_blocks } %>
-    <%= render CrossroadsInterface.SharedView, "js_files.html", assigns %>
   </body>
 </html>
