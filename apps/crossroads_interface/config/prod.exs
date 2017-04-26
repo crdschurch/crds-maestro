@@ -26,7 +26,12 @@ config :crossroads_interface, CrossroadsInterface.Endpoint,
   server: true
 
 # Do not print debug messages in production
-config :logger, level: :info
+config :logger,
+  backends: [{LoggerFileBackend, :debug_log}]
+
+config :logger, :debug_log,
+  path: "/var/log/maestro/maestro#{ConfigHelper.get_suffix()}.log",
+  level: :debug
 
 # Check `Plug.SSL` for all available options in `force_ssl`.
 
