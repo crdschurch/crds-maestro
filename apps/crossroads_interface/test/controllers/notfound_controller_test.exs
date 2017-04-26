@@ -24,7 +24,7 @@ defmodule CrossroadsInterface.NotfoundControllerTest do
                  {Pages, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
 
       conn = get conn, "/notfound"
-      assert html_response(conn, 200)
+      assert html_response(conn, 404)
      end
   end
 
@@ -37,7 +37,7 @@ with_mocks([ {Pages, [], [get_content_blocks: fn() -> {:ok, 200, @content_block_
 
       expectedText = "404 Page Not Found"
       conn = get conn, "/notfound"
-      assert html_response(conn, 200) =~ expectedText
+      assert html_response(conn, 404) =~ expectedText
     end
   end
   
