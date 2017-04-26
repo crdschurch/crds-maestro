@@ -103,7 +103,9 @@ defmodule CrossroadsContent.Pages do
         {_, _} ->
           {:error, 0, %{error: "unknown response"}}
       end
-      Cachex.set(:cms_cache, path, response)
+      if elem(response, 0) == :ok do
+        Cachex.set(:cms_cache, path, response)
+      end      
     end
     state = Map.put(state, path, response)
     {:reply, response, state}
