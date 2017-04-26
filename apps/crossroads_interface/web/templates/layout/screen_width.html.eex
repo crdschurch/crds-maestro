@@ -8,7 +8,7 @@
   <body>
     <%= render CrossroadsInterface.SharedView, "common_body.html", assigns %>
     <%= render_existing @view_module, "body.html", assigns %>
-    <%= render CrossroadsInterface.SharedView, "header.html", %{content_blocks: @content_blocks, conn: @conn } %>    
+    <%= render CrossroadsInterface.SharedView, "header.html", %{content_blocks: @content_blocks, conn: @conn } %>
     <%= render @view_module, @view_template, assigns %>
     <%= render CrossroadsInterface.SharedView, "footer.html", %{content_blocks: @content_blocks } %> 
     <%= render CrossroadsInterface.SharedView, "js_files.html", assigns %>

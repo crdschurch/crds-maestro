@@ -7,7 +7,7 @@
   </head>
   <body class="crds-legacy-styles">
     <%= render CrossroadsInterface.SharedView, "common_body.html", assigns %>
-    <%= render_existing @view_module, "body.html", assigns %>  
+    <%= render_existing @view_module, "body.html", assigns %>
     <%= render @view_module, @view_template, assigns %>
     <%= render CrossroadsInterface.SharedView, "js_files.html", assigns %>
   </body>
