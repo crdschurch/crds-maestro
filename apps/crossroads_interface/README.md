@@ -17,7 +17,7 @@ If at any point you need to turn off debugging, the following steps should be he
   * navigate to `/var/maestro/crossroads.net/current/releases/{{current_release}}/`
   * open sys.config as a super user (sudo vim sys.config)
   * You should see a line like `{path,<<"/var/log/maestro/maestro.log">>},{level,debug}]}]}`
-  * To turn off logging, change to the following: `{path,<<"var/log/maestro/maestro.log >> /dev/null">>},{level,debug}]}]}`
+  * To turn off logging, change to the following: `{path,<<"/dev/null">>},{level,debug}]}]}`
   * To change the level of debugging, change `{level,debug}` (most amount of logging) to `{level,info}` (middle amount) or `{level,error}` (lease amount)
 ## Learn more
 
