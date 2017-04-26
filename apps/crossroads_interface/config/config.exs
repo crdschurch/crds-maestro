@@ -28,7 +28,9 @@ defmodule ConfigHelper do
 end
 
 config :crossroads_content,
-  cms_server_endpoint: System.get_env("CRDS_CMS_SERVER_ENDPOINT")
+  cms_server_endpoint: System.get_env("CRDS_CMS_SERVER_ENDPOINT"),
+  cms_cache_ttl: 10 * 60 * 1000,
+  cms_timeout: 10 * 60 * 1000
 
 config :crossroads_interface,
   image_client_endpoint: "#{System.get_env("CRDS_GATEWAY_CLIENT_ENDPOINT")}api/image/profile/",

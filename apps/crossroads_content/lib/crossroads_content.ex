@@ -1,5 +1,4 @@
 defmodule CrossroadsContent do
-
   use Application
 
   @doc false
@@ -12,5 +11,10 @@ defmodule CrossroadsContent do
 
     opts = [strategy: :one_for_one]
     Supervisor.start_link(children, opts)
+    Supervisor.start_link(
+      [
+        worker(Cachex, [:cms_cache, [default_ttl: Application.get_env(:crossroads_content, :cms_cache_ttl)]])
+      ], opts
+    )
   end
 end
