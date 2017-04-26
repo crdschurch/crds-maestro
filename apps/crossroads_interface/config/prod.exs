@@ -13,7 +13,7 @@ use Mix.Config
 # which you typically run after static files are built.
 
 config :crossroads_content,
-  cms_server_endpoint: System.get_env("CRDS_CMS_CLIENT_ENDPOINT")
+  cms_server_endpoint: System.get_env("CRDS_CMS_SERVER_ENDPOINT")
 
 config :crossroads_interface, CrossroadsInterface.Endpoint,
   url: [host: System.get_env("MAESTRO_HOSTNAME"), port: System.get_env("MAESTRO_PORT")],
@@ -30,7 +30,7 @@ config :logger,
   backends: [{LoggerFileBackend, :debug_log}]
 
 config :logger, :debug_log,
-  path: "./maestro-logs/maestro-debug.log",
+  path: "/var/log/maestro/maestro#{ConfigHelper.get_suffix()}.log",
   level: :debug
 
 # Check `Plug.SSL` for all available options in `force_ssl`.
