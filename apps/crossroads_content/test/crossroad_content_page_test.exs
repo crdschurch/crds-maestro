@@ -7,6 +7,11 @@ defmodule CrossroadsContentPagesTest do
 
   import Mock
 
+  setup do
+    Cachex.clear(:cms_cache)
+    :ok
+  end
+  
   test "get site config returns a 404 response" do
     with_mock HTTPoison, [get: fn(url, _headers, _options) -> FakeHttp.get(url) end] do
       {result, status, _body} = Pages.get_site_config(12)
@@ -73,16 +78,14 @@ defmodule CrossroadsContentPagesTest do
   end
 
   test "it should set cached value on new call" do
-    with_mock HTTPoison, [get: fn(url,_headers, _options) -> FakeHttp.get(url) end] do
-      Cachex.clear(:cms_cache)
+    with_mock HTTPoison, [get: fn(url,_headers, _options) -> FakeHttp.get(url) end] do      
       Pages.get_content_blocks
       assert Cachex.exists?(:cms_cache, "ContentBlock")
     end
   end
 
   test "it should return cached value when available" do
-    with_mock HTTPoison, [get: fn(url,_headers, _options) -> FakeHttp.get(url) end] do
-      Cachex.clear(:cms_cache)
+    with_mock HTTPoison, [get: fn(url,_headers, _options) -> FakeHttp.get(url) end] do      
       cached_response = {:ok, 200, "cached_body"}
       Cachex.set(:cms_cache, "ContentBlock", cached_response)
       {result, status, body} = Pages.get_content_blocks
@@ -93,8 +96,7 @@ defmodule CrossroadsContentPagesTest do
   end
 
   test "it should not cache an error" do
-    with_mock HTTPoison, [get: fn(url, _headers, _options) -> FakeHttp.get(url) end] do
-      Cachex.clear(:cms_cache)
+    with_mock HTTPoison, [get: fn(url, _headers, _options) -> FakeHttp.get(url) end] do      
       Pages.get_site_config(500)
       assert Cachex.empty?(:cms_cache)
     end
