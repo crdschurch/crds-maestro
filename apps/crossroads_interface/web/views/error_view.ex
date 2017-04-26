@@ -7,7 +7,7 @@ defmodule CrossroadsInterface.ErrorView do
   end
 
   def render("500.html", assigns) do
-    render("500", assigns)
+    "500"
   end
 
   # In case no render clause matches or no
