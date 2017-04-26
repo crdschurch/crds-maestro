@@ -1,5 +1,4 @@
 use Mix.Config
-import ConfigHelper, only: [get_suffix: 0]
 
 # For production, we configure the host to read the PORT
 # from the system environment. Therefore, you will need
@@ -31,7 +30,7 @@ config :logger,
   backends: [{LoggerFileBackend, :debug_log}]
 
 config :logger, :debug_log,
-  path: "/var/log/maestro/maestro#{get_suffix()}.log",
+  path: "/var/log/maestro/maestro#{ConfigHelper.get_suffix()}.log",
   level: :debug
 
 # Check `Plug.SSL` for all available options in `force_ssl`.
