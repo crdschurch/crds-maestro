@@ -14,10 +14,13 @@ This is environment specific, please visit [https://nodejs.org/en/](https://node
 
 ### Windows Only
 Install Visual C++ build tools with your visual studio install and install the windows 10 SDK
+Ensure that you have Python 2.7 installed on your machine. You can download Python
+2.7 from [www.python.org](https://www.python.org/downloads/release/python-2713/) or
+install using Chocolatey with the command `choco install python2`
 
 ## Up and running
 1. Clone the project to your local machine: `git clone https://github.com/crdschurch/crds-maestro.git`
-  
+
 2. Check out the development branch: `cd crds-maestro && git checkout development`
 
 3. Install Phoenix dependencies by running the following command: `mix deps.get && cd apps/crossroads_interface && mix deps.get`
