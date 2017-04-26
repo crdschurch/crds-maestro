@@ -92,4 +92,12 @@ defmodule CrossroadsContentPagesTest do
     end
   end
 
+  test "it should not cache an error" do
+    with_mock HTTPoison, [get: fn(url, _headers, _options) -> FakeHttp.get(url) end] do
+      Cachex.clear(:cms_cache)
+      Pages.get_site_config(500)
+      assert Cachex.empty?(:cms_cache)
+    end
+  end
+
 end
