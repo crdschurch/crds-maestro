@@ -6,7 +6,7 @@ defmodule CrossroadsInterface.Plug.Authorized do
 
   def call(conn, default) do
     session_cookie = Application.get_env(:crossroads_interface, :cookie_prefix) <> "sessionId"
-    if (conn.req_cookies[session_cookie] != nil && is_authorized?(conn, session_cookie)) do
+    if (conn.req_cookies[session_cookie] != nil && is_authorized?(conn, conn.req_cookies[session_cookie])) do
       assign(conn, :authorized, true)
     else 
       assign(conn, :authorized, false)

@@ -5,6 +5,7 @@ config :crossroads_content,
 
 config :crossroads_interface,
   image_client_endpoint: "https://gatewayint.crossroads.net/gateway/api/image/profile/",
+  gateway_server_endpoint: "https://gatewayint.crossroads.net/gateway/",
   cms_client_endpoint: "https://contentint.crossroads.net/",
   cookie_prefix: "",
   cookie_domain: "",
