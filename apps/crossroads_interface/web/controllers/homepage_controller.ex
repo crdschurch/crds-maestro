@@ -3,6 +3,8 @@ defmodule CrossroadsInterface.HomepageController do
   alias CrossroadsContent.Pages
   require IEx
 
+  plug CrossroadsInterface.Plug.Meta
+  plug CrossroadsInterface.Plug.ContentBlocks
   plug :put_layout, "screen_width.html"
 
   def index(conn, _params) do
