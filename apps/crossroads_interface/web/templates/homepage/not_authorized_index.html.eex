@@ -1,0 +1,9 @@
+<div class="crds-legacy-styles homepage">
+    <div class="container-fluid main animated fadeIn">
+        <div class="row">
+            <div class="col-md-12">
+              <h1>Welcome unauthenticated user</h1>
+            </div>
+        </div>
+    </div>    
+</div>

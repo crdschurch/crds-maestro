@@ -14,6 +14,6 @@ defmodule CrossroadsInterface.ProxyHttp do
   Make a get request to the api server.
   """
   def gateway_get(path, headers) do
-    HTTPoison.get("#{@gateway_server_endpoint}#{path}", headers, [recv_timeout: :infinity])
+    HTTPoison.get("#{@gateway_server_endpoint}#{path}", headers, [recv_timeout: :infinity, ssl: [versions: [:"tlsv1.2"]]])
   end
 end
