@@ -15,7 +15,8 @@ defmodule CrossroadsInterface.Plug.Authorized do
 
   defp is_authorized?(conn, session_cookie) do
     method = :get
-    request_url = "https://int.crossroads.net/proxy/gateway/api/authenticated"
+    gateway_server_endpoint = Application.get_env(:crossroads_interface, :gateway_server_endpoint)
+    request_url = gateway_server_endpoint <> "api/authenticated"
     body = ""
     headers = [{"Authorization", session_cookie}]
     options = []
