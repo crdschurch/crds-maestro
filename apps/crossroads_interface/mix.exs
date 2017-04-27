@@ -22,7 +22,7 @@ defmodule CrossroadsInterface.Mixfile do
 
   def application do
     [mod: {CrossroadsInterface, []},
-     applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext, :crossroads_content, :ssl]]
+     applications: [:phoenix, :phoenix_html, :logger_file_backend, :cowboy, :logger, :gettext, :crossroads_content, :ssl]]
   end
 
   defp elixirc_paths(:test), do: ["lib", "web", "test/support"]
@@ -32,6 +32,7 @@ defmodule CrossroadsInterface.Mixfile do
     [{:phoenix, "~> 1.1.3"},
      {:phoenix_html, "~> 2.3"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
+     {:logger_file_backend, "0.0.9"},
      {:gettext, "~> 0.9"},
      {:cowboy, "~> 1.0"},
      {:crossroads_content, in_umbrella: true},
