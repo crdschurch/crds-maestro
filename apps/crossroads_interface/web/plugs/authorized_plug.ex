@@ -16,12 +16,11 @@ defmodule CrossroadsInterface.Plug.Authorized do
   defp is_authorized?(conn, session_cookie) do
     method = :get
     gateway_server_endpoint = Application.get_env(:crossroads_interface, :gateway_server_endpoint)
-    request_url = gateway_server_endpoint <> "api/authenticated"
+    request_path = "api/authenticated"
     body = ""
     headers = [{"Authorization", session_cookie}]
     options = []
-
-    {_response_status, response} = CrossroadsInterface.ProxyHttp.gateway_get(request_url, headers)
+    {_response_status, response} = CrossroadsInterface.ProxyHttp.gateway_get(request_path, headers)
     case response.status_code do
       200 -> true
       _ -> false
