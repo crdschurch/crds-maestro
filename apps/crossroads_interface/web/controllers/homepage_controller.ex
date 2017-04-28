@@ -1,7 +1,6 @@
 defmodule CrossroadsInterface.HomepageController do
   use CrossroadsInterface.Web, :controller
   alias CrossroadsContent.Pages
-  require IEx
 
   plug CrossroadsInterface.Plug.Meta
   plug CrossroadsInterface.Plug.ContentBlocks
