@@ -3,6 +3,21 @@ defmodule CrossroadsInterface.AuthorizedPlugTest do
   alias CrossroadsInterface.Plug.Authorized
   import Mock
 
+  test "should call the gateway with the cookie value", %{conn: conn} do
+    Application.put_env(:crossroads_interface, :cookie_prefix, "int")
+    with_mock CrossroadsInterface.ProxyHttp, [gateway_get: fn(_url, _headers) -> {:ok, %HTTPoison.Response{body: "", headers: "", status_code: 200}} end] do
+
+     cookie_value = "@verySp#C!$lc)0k!e"
+     conn = conn
+        |> put_req_cookie("intsessionId", cookie_value)
+        |> fetch_cookies()
+        |> Authorized.call([])
+
+      headers = [{"Authorization", cookie_value}]
+      assert called CrossroadsInterface.ProxyHttp.gateway_get("api/authenticated", headers)
+    end
+  end
+
   test "should return true when a sessionId cookie is present and cookie is still valid", %{conn: conn} do
     Application.put_env(:crossroads_interface, :cookie_prefix, "int")
     with_mock CrossroadsInterface.ProxyHttp, [gateway_get: fn(_url, _headers) -> {:ok, %HTTPoison.Response{body: "", headers: "", status_code: 200}} end] do
