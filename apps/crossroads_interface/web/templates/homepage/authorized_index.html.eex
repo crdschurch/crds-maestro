@@ -2,8 +2,7 @@
     <div class="container-fluid main animated fadeIn">
         <div class="row">
             <div class="col-md-12">
-              <h1>Welcome authenticated user. Here is a fun picture to look at:</h1>
-              <img src="http://blog.protectedstatic.com/wp-content/uploads/2007/05/pointers.png"/>
+              <%= raw(CrossroadsInterface.SharedView.filter_content_blocks(@content_blocks, "userHomePage")["content"]) %>
             </div>
         </div>
     </div>    

@@ -1,10 +1,12 @@
 defmodule CrossroadsInterface.HomepageController do
   use CrossroadsInterface.Web, :controller
   alias CrossroadsContent.Pages
-  require IEx
+  alias CrossroadsInterface.Plug
 
-  plug CrossroadsInterface.Plug.Meta
-  plug CrossroadsInterface.Plug.ContentBlocks
+  plug Plug.Meta
+  plug Plug.ContentBlocks
+  plug Plug.BodyClass, "crds-legacy-styles"
+
   plug :put_layout, "screen_width.html"
 
   def index(conn, _params) do
