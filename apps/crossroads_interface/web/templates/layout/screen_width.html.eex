@@ -5,7 +5,7 @@
     <%= render CrossroadsInterface.SharedView, "common_head.html", assigns %>
     <%= render_existing @view_module, "head.html", assigns %>
   </head>
-  <body>
+  <body class="<%= @body_class %>">
     <%= render CrossroadsInterface.SharedView, "common_body.html", assigns %>
     <%= render_existing @view_module, "body.html", assigns %>
     <%= render CrossroadsInterface.SharedView, "header.html", %{content_blocks: @content_blocks, conn: @conn } %>
