@@ -102,4 +102,14 @@ defmodule CrossroadsContentPagesTest do
     end
   end
 
+  test "get all media series" do
+    with_mock HTTPoison, [get: fn(url,_headers, _options) -> FakeHttp.get(url) end] do
+      {result, status, body} = Pages.get_series_all
+      assert status == 200
+      assert result == :ok
+      # series_list = body["series"]
+      # assert Enum.at(series_list, 0)["id"] == 1
+    end
+  end  
+
 end
