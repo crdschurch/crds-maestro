@@ -2,7 +2,10 @@ use Mix.Config
 
 
 config :crossroads_content,
-  http: CrossroadsContent.FakeHttp
+  cms_server_endpoint: ""
+
+config :crossroads_interface,
+  gateway_server_endpoint: ""
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.

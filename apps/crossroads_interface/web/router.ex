@@ -7,35 +7,35 @@ defmodule CrossroadsInterface.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-#    plug CrossroadsInterface.Plug.Meta
-    #plug CrossroadsInterface.Plug.ContentBlocks
-    #plug CrossroadsInterface.Plug.PageType
-    #plug CrossroadsInterface.Plug.Payload
-    #plug CrossroadsInterface.Plug.BaseHref
+    plug CrossroadsInterface.Plug.PageType
+    plug CrossroadsInterface.Plug.Payload
+    plug CrossroadsInterface.Plug.BaseHref
+    plug CrossroadsInterface.Plug.PutMetaTemplate
+    plug CrossroadsInterface.Plug.Authorized
+    plug CrossroadsInterface.Plug.BodyClass
   end
 
   pipeline :api do
     plug :accepts, ["json"]
   end
 
-  scope "/proxy", CrossroadsInterface do
-    pipe_through :api
-    forward "/gateway", ProxyGatewayController, :handle_gateway_proxy
-    forward "/content", ProxyContentController, :handle_content_proxy
-  end
+ # scope "/proxy", CrossroadsInterface do
+    #pipe_through :api
+    #forward "/gateway", ProxyGatewayController, :handle_gateway_proxy
+    #forward "/content", ProxyContentController, :handle_content_proxy
+  #end
 
   scope "/", CrossroadsInterface do
     pipe_through :browser
 
-    forward "/angular2", AngularController, :index
-
-    post "/login", AuthenticationController, :login
-
-    get "/", LegacyController, :index
+    forward "/group-leader", CrdsGroupLeaderController, :index
+    forward "/connect", CrdsConnectController, :index
+    get "/notfound", NotfoundController, :notfound
+    get "/signout", LegacyController, :noRedirect
+    get "/signin", LegacyController, :noRedirect
+    get "/register", LegacyController, :noRedirect
+    get "/homepage", HomepageController, :index
+    forward "/", LegacyController, :index
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", CrossroadsInterface do
-  #   pipe_through :api
-  # end
 end

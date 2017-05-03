@@ -9,7 +9,6 @@ defmodule CrossroadsInterface.Plug.Payload do
   end
 
   def call(conn, default) do
-    IEx.pry
     assign(conn, :payload, "")
   end
 end

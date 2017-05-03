@@ -1,5 +1,4 @@
 use Mix.Config
 
 config :crossroads_content,
-  content_server: "https://contentint.crossroads.net/",
-  http: HTTPoison
+  cms_server_endpoint: "https://contentint.crossroads.net/"

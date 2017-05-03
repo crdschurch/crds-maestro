@@ -1,0 +1,77 @@
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-MFS4MJ');</script>
+    <!-- End Google Tag Manager -->
+
+    <style>
+        /* Allow angular.js to be loaded in body, hiding cloaked elements until
+         * templates compile.  The !important is important given that there may be
+         * other selectors that are more specific or come later and might alter display.
+         */
+
+        [ng\:cloak],
+        [ng-cloak],
+        .ng-cloak {
+            display: none !important;
+        }
+    </style>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="//crossroads-media.s3.amazonaws.com/images/favicon/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="//crossroads-media.s3.amazonaws.com/images/favicon/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="//crossroads-media.s3.amazonaws.com/images/favicon/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="//crossroads-media.s3.amazonaws.com/images/favicon/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="//crossroads-media.s3.amazonaws.com/images/favicon/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="//crossroads-media.s3.amazonaws.com/images/favicon/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="//crossroads-media.s3.amazonaws.com/images/favicon/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="//crossroads-media.s3.amazonaws.com/images/favicon/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="//crossroads-media.s3.amazonaws.com/images/favicon/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="//crossroads-media.s3.amazonaws.com/images/favicon/favicon-32x32.png" sizes="32x32">
+    <link rel="icon" type="image/png" href="//crossroads-media.s3.amazonaws.com/images/favicon/favicon-194x194.png" sizes="194x194">
+    <link rel="icon" type="image/png" href="//crossroads-media.s3.amazonaws.com/images/favicon/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="//crossroads-media.s3.amazonaws.com/images/favicon/android-chrome-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="//crossroads-media.s3.amazonaws.com/images/favicon/favicon-16x16.png" sizes="16x16">
+    <link rel="manifest" href="//crossroads-media.s3.amazonaws.com/images/favicon/manifest.json">
+    <link rel="shortcut icon" href="//crossroads-media.s3.amazonaws.com/images/favicon/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>"/> 
+
+    <style>
+    @-webkit-keyframes spinnerRotate {
+      100% {
+        -webkit-transform: rotate(360deg);
+      }
+    }
+
+    @keyframes spin {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .preloader {
+      width: 75px;
+      height: 75px;
+      background: transparent;
+      margin: 110px auto;
+      -webkit-animation: spin 700ms linear infinite;
+      animation: spin 700ms linear infinite;
+      display: block;
+      top: calc(20% - 37.5px);
+      left: calc(50% - 37.5px);
+    }
+    </style>
+
+    <%= if assigns[:css_files] do %>
+        <%= for script_file <- @css_files do %>
+            <link href="<%= static_path(@conn, script_file)%>" type="text/css" rel="stylesheet"> </script>
+        <% end %>
+    <% end %>
+
+    <base href="<%= @base_href %>">
+

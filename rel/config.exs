@@ -23,7 +23,7 @@ use Mix.Releases.Config,
 
 environment :dev do
   set dev_mode: true
-  set include_erts: false
+  set include_erts: true
   set cookie: :"r8!lTWka(QML}IW<rwtUSV,?G9yu8/A}.<=}[pZRq.*3H(<3Z}2<Pdg})/s>d0!4"
 end
 
@@ -31,7 +31,9 @@ environment :prod do
   set include_erts: true
   set include_src: false
   set cookie: :"rOA/*.wer9WCzxXsr$,=!eu~oPRhKjgAG!$A}S)VrIw>Rx;h:*yT:H>F)(ZOlj|s"
+  set vm_args: "config/runway.args"
 end
+
 
 # You may define one or more releases in this file.
 # If you have not set a default release, or selected one

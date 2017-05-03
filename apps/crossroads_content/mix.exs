@@ -3,7 +3,7 @@ defmodule CrossroadsContent.Mixfile do
 
   def project do
     [app: :crossroads_content,
-     version: append_revision("0.1.0"),
+     version: "0.0.1",
      build_path: "../../_build",
      config_path: "../../config/config.exs",
      deps_path: "../../deps",
@@ -19,23 +19,25 @@ defmodule CrossroadsContent.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-   [applications: [:logger, :httpoison],
+   [applications: [:logger, :httpoison, :cachex],
     mod: {CrossroadsContent, []}]
   end
 
   defp deps do
-    [
+    [ {:cachex, "~> 2.1"},
       {:httpoison, "~> 0.9.0"},
-      {:poison, "~> 2.0"}
+      {:poison, "~> 2.0"},
+      {:mock, "~> 0.2.0", only: :test}
     ]
   end
 
   def append_revision(version) do
-    "#{version}+#{revision}"
+    "#{version}+#{revision()}"
   end
 
   defp revision() do
-    System.cmd("git", ["rev-parse", "--short", "HEAD"])
+    "git"
+    |> System.cmd(["rev-parse", "--short", "HEAD"])
     |> elem(0)
     |> String.rstrip
   end

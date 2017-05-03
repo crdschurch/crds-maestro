@@ -1,109 +1,15 @@
-<header class="hidden-print" id="top-header">
-  <div class="overlay-container"></div>
-  <!-- Brand Bar -->
-
-  <%= render CrossroadsInterface.SharedView, "brand_bar.html" %>
-  <div id="menu" class="menu">
-    <div class="container">
-      <div class="row">
-         <div class="col-xs-12 menu__container">
-          <div class=""><!--removed class navbar-header-->
-            <!--HAMBURGER MENU-->
-            <div ng-class="{show: menu.isMobileShowing}">
-              <button type="button" class="nav__side--toggle navbar-left hidden-md hidden-lg hidden-xl" ng-click="app.openAside('left', true)">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-              </button>
-            </div>
-
-            <!--LOGO-->
-            <a class="navbar-brand logo" href="/">
-              <svg viewBox="0 0 800.416 115.217" class="icon-logo">
-                <use xlink:href="#logo"></use>
-              </svg>
-            </a>
-
-            <!--MOBILE SEARCH ICON-->
-            <div ng-class="{show: menu.isMobileShowing}">
-              <a class="pull-right hidden-md hidden-lg hidden-xl mobile-search" href="/search">
-                <svg viewBox="0 0 32 32" class="icon icon-large icon-search3"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search3"></use></svg>
-              </a>
-            </div>
-
-            <!--PROFILE ICON AND DROPDOWN-->
-            <div class="pull-right hidden-xs hidden-sm" dropdown on-toggle="toggled(open)">
-              <a href="#" id="user-dropdown" class="mobile-account" ng-if="$root.username != undefined" dropdown-toggle title="{{$root.username}}">
-                <profile-picture-view class="nav-profile-image"/>
-              </a>
-              <ul class="dropdown-menu ng-cloak" aria-labelledby="user-dropdown" ng-show="$root.username != undefined" ng-cloak>
-                <li>
-                  <a ui-sref="profile.personal">{{$root.username}}</a>
-                </li>
-                <li role="separator" class="divider"></li>
-                <li>
-                  <a ui-sref="profile.personal">My Profile</a>
-                </li>
-                <li>
-                  <a ui-sref="giving_history">Giving History</a>
-                </li>
-                <li>
-                  <a ui-sref="serve-signup">Sign Up to Serve</a>
-                </li>
-                <li>
-                  <a ui-sref="grouptool.mygroups">My Groups</a>
-                </li>
-                <li>
-                  <a ui-sref="mytrips">My Trips</a>
-                </li>
-                <li>
-                  <a ui-sref="camps-dashboard">My Camps</a>
-                </li>
-                <li>
-                  <a ui-sref="childcare-dashboard">Childcare</a>
-                </li>
-                <li>
-                  <a ui-sref="logout" class="ng-cloak">Sign Out</a>
-                </li>
-              </ul>
-            </div>
-
-            <!--LOGIN BUTTON AND DROPDOWN-->
-            <ul class="pull-right navbar--login list-unstyled hidden-xs hidden-sm">
-
-              <!-- TODO: Show if user is not logged in -->
-              <li class="" >
-                <button class="btn btn-standard dropdown-toggle"
-                        data-toggle="dropdown"
-                        id="login-form-toggle"
-                        aria-haspopup="true"
-                        aria-expanded="false">
-                  <span>Sign In</span>
-                </button>
-                <ul class="navbar--login__dropdown list-unstyled col-md-3 soft-top soft-sides dropdown-menu"
-                    role="menu" 
-                    aria-labelledby="dropdownMenu1">
-                  <li role="presentation">
-                    <div class="navbar--register__container">
-                      <div class="dd_menu">
-                        <!-- TODO: Create some reusable Login form -->
-                        <%= render CrossroadsInterface.SharedView, "login_register_form.html", %{content_blocks: @content_blocks, conn: @conn} %>
-                        <!-- <login-form register-url="register"></login-form> -->
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </li>
-              <li>
-              </li>
-            </ul>
-
-            <!--MAIN NAV MENU-->
-            <%= raw(filter_content_blocks(@content_blocks, "mainNavMenu")["content"]) %>
-          </div>
-        </div><!--/col-->
-      </div><!--/row-->
-    </div><!--/container-->
-  </div><!--/#menu-->
-</header>
+<div class="crds-styles">
+  <div data-header></div>
+  <script>
+      (function(){
+          var options = {
+              cmsEndpoint: '<%= Application.get_env(:crossroads_interface, :cms_client_endpoint) %>',
+              appEndpoint: '<%= Application.get_env(:crossroads_interface, :app_client_endpoint) %>',
+              imgEndpoint: '<%= Application.get_env(:crossroads_interface, :image_client_endpoint) %>',
+              crdsCookiePrefix: '<%= Application.get_env(:crossroads_interface, :cookie_prefix) %>',
+              contentBlockTitle: 'sharedGlobalHeader' };
+          var header = new CRDS.SharedHeader(options);
+          header.render();
+      })();
+  </script>
+</div>

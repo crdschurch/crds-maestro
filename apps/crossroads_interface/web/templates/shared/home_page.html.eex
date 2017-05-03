@@ -1,5 +1,7 @@
 <div class="homepage">
-  <%= render CrossroadsInterface.SharedView, "header.html", %{content_blocks: @content_blocks } %>
+  <div class="crds-styles">
+    <%= render CrossroadsInterface.SharedView, "header.html", %{content_blocks: @content_blocks } %>
+  </div>
   <div class="container-fluid main animated fadeIn">
     <div class="row">
       <div class="col-md-12">

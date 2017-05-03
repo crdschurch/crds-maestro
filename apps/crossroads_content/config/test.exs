@@ -1,5 +1,5 @@
 use Mix.Config
+require IEx
 
 config :crossroads_content,
-  content_server: System.get_env("CRDS_CMS_ENDPOINT"),
-  http: CrossroadsContent.FakeHttp
+  cms_server_endpoint: ""
