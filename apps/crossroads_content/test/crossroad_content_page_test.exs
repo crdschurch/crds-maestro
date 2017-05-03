@@ -106,9 +106,19 @@ defmodule CrossroadsContentPagesTest do
     with_mock HTTPoison, [get: fn(url,_headers, _options) -> FakeHttp.get(url) end] do
       {result, status, body} = Pages.get_series_all
       assert status == 200
+      assert result == :ok      
+      series_list = body["series"]
+      assert Enum.at(series_list, 0)["id"] == 242
+    end
+  end  
+
+  test "get digital program" do
+    with_mock HTTPoison, [get: fn(url,_headers, _options) -> FakeHttp.get(url) end] do
+      {result, status, body} = Pages.get_digital_program
+      assert status == 200
       assert result == :ok
-      # series_list = body["series"]
-      # assert Enum.at(series_list, 0)["id"] == 1
+      features = body["features"]
+      assert Enum.at(features, 0)["id"] == 7
     end
   end  
 

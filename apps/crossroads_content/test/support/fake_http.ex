@@ -51,7 +51,17 @@ defmodule CrossroadsContent.FakeHttp do
 
   def get("/api/Page/?link=/habitat/") do
     {:ok, %HTTPoison.Response{ status_code: 200, body: "{\"pages\":[{\"id\":268,\"submitButtonText\":null,\"clearButtonText\":null,\"onCompleteMessage\":null,\"showClearButton\":null,\"disableSaveSubmissions\":null,\"enableLiveValidation\":null,\"hideFieldLabels\":null,\"displayErrorMessagesAtTop\":null,\"disableAuthenicatedFinishAction\":null,\"disableCsrfSecurityToken\":null,\"pageType\":\"CenteredContentPage\",\"link\":\"\\/habitat\\/\",\"metaKeywords\":null,\"bodyClasses\":null,\"legacyStyles\":\"1\",\"type\":\"website\",\"card\":\"summary\",\"inheritSideBar\":\"1\",\"uRLSegment\":\"habitat\",\"title\":\"Habitat\",\"menuTitle\":null,\"content\":\"<h1 class=\\\"page-header\\\">ReachOut: Habitat<\\/h1><h2 class=\\\"subheading\\\">Serving Habitat for Humanity<\\/h2><div>\\n<p>We believe simple, decent, affordable housing for all people is something God cares about deeply.\\u00a0<\\/p>\\n<div>\\n<p>Our city has one of the lowest home ownership rates in the country. Only 42% of residents in our city own their homes, compared to 68% nationally. Statistically speaking, home ownership leads to significant increases in family stability, financial security and a sense of belonging to the community. And all of those things increase the likelihood that children can escape a cycle of poverty.<\\/p>\\n<\\/div>\\n<p>Check back soon for projects that will be available this spring and summer.\\u00a0<\\/p>\\n<\\/div>\",\"metaDescription\":null,\"extraMeta\":null,\"showInMenus\":\"1\",\"showInSearch\":\"1\",\"sort\":\"30\",\"hasBrokenFile\":\"0\",\"hasBrokenLink\":\"0\",\"reportClass\":null,\"canViewType\":\"\",\"canEditType\":\"\",\"version\":\"15\",\"sideBar\":139,\"fields\":[{\"id\":362,\"name\":\"EditableFormStep_00e32\",\"title\":\"First Page\",\"default\":null,\"sort\":\"1\",\"required\":\"0\",\"customErrorMessage\":null,\"customRules\":null,\"customSettings\":null,\"migrated\":\"1\",\"extraClass\":null,\"rightTitle\":null,\"showOnLoad\":\"1\",\"model\":null,\"header\":null,\"description\":null,\"label\":null,\"footer\":null,\"buttonText\":null,\"version\":\"3\",\"parent\":268,\"created\":\"2016-09-19T14:03:08-04:00\",\"className\":\"EditableFormStep\"}],\"created\":\"2015-08-24T14:06:05-04:00\",\"className\":\"CenteredContentPage\"}]}"  }}
+  end    
+    
+# TODO match on any date
+#  #{  } -- string interpolation
+  def get("/api/series?endDate__GreaterThanOrEqual=2017-05-03&endDate__sort=ASC") do
+    {:ok, %HTTPoison.Response{ status_code: 200, body: "{\"series\":[{\"id\":242,\"title\":\"Test Series 1\",\"description\":\"<p>Old McDonald had a farm...<\/p>\",\"startDate\":\"2017-03-17\",\"endDate\":\"2018-03-17\",\"trailerLink\":null,\"version\":\"10\",\"image\":{\"id\":12467,\"name\":\"032713_LW_oakley.jpg\",\"title\":\"032713_LW_oakley\",\"filename\":\"https:\/\/crds-cms-uploads.imgix.net\/media\/messages\/stills\/032713_LW_oakley.jpg\",\"content\":\"NULL\",\"showInSearch\":\"1\",\"cloudStatus\":\"Live\",\"cloudSize\":\"0\",\"cloudMetaJson\":\"NULL\",\"parent\":833,\"owner\":1,\"derivedImages\":[839,888,3144],\"created\":\"2016-01-25T19:54:00-05:00\",\"className\":\"CloudImage\"},\"created\":\"2017-03-17T08:59:25-04:00\",\"className\":\"Series\"}]}" }}
   end
+
+  def get("/api/features") do
+    {:ok, %HTTPoison.Response{ status_code: 200, body: "{\"features\":[{\"id\":7,\"title\":\"Be a Giver\"}]}" }}
+  end  
 
   def get(url) do
     Logger.debug("getting url... #{url}")

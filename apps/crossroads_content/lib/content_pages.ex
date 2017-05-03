@@ -19,6 +19,11 @@ defmodule CrossroadsContent.Pages do
     GenServer.call(__MODULE__, {:content_blocks}, @timeout)
   end
 
+  @spec get_digital_program :: {:ok | :error, number, map}
+  def get_digital_program do
+    GenServer.call(__MODULE__, {:digital_program}, @timeout)
+  end 
+
   @spec get_series_all :: {:ok | :error, number, map}
   def get_series_all do
     GenServer.call(__MODULE__, {:series_all}, @timeout)
@@ -62,6 +67,12 @@ defmodule CrossroadsContent.Pages do
   end
 
   @doc false
+  def handle_call({:digital_program}, _from, state) do
+    path = "features"
+    make_call(path, state)
+  end
+
+  @doc false
   def handle_call({:system_page, state_name}, _from, state) do
     path = "SystemPage/?StateName=#{state_name}"
     make_call(path, state)
@@ -98,10 +109,10 @@ defmodule CrossroadsContent.Pages do
   #end
 
   @doc false
-  defp make_call(path, state) do
+  defp make_call(path, state) do  
     {status, response} = Cachex.get(:cms_cache, path)
     if status == :missing do
-      response = case HTTPoison.get("#{@base_url}/api/#{path}",["Accept": "application/json"], [recv_timeout: @timeout]) do
+      response = case HTTPoison.get("#{@base_url}/api/#{path}",["Accept": "application/json"], [recv_timeout: @timeout]) do        
         {:ok, %HTTPoison.Response{status_code: 404, body: body}} ->
           {:error, 404, decode_request(Poison.decode(body))}
         {:ok, %HTTPoison.Response{status_code: 200, body: body, headers: headers}} ->
@@ -110,6 +121,8 @@ defmodule CrossroadsContent.Pages do
           else 
             {:ok, 200, decode_request(Poison.decode(body))}
           end
+        {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+          {:ok, 200, decode_request(Poison.decode(body))}
         {:error, %HTTPoison.Error{reason: reason}} ->
           {:error, 500, %{error: reason}}
         {_, _} ->
@@ -134,8 +147,8 @@ defmodule CrossroadsContent.Pages do
   defp is_html({"Content-Type", type}) do
     type == "text/html"
   end
-  defp is_html(header), do: false
-  
+
+  defp is_html(header), do: false  
   defp decode_request({:ok, valid} = body), do: valid
   defp decode_request({:error, _} = body), do: %{}
 
