@@ -10,12 +10,16 @@ defmodule CrossroadsInterface.MediaController do
   plug :put_layout, "screen_width.html"
 
   def index(conn, _params) do
-
+    payload = case Pages.get_series_all do
+      {:ok, 200, body} -> Enum.at(body["series"], 0)["title"]
+      {_, _, body} -> body
+    end
     conn
-    |> render("media.html",
-              "css_files": [
-                "/js/legacy/legacy.css"
-              ])
+    |> render("media.html", %{ payload: payload,
+      "css_files": [
+      "/js/legacy/legacy.css"
+      ]
+    })
   end
 
 end

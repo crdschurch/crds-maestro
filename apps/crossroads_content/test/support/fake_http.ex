@@ -59,6 +59,10 @@ defmodule CrossroadsContent.FakeHttp do
     {:ok, %HTTPoison.Response{ status_code: 200, body: "{\"series\":[{\"id\":242,\"title\":\"Test Series 1\",\"description\":\"<p>Old McDonald had a farm...<\/p>\",\"startDate\":\"2017-03-17\",\"endDate\":\"2018-03-17\",\"trailerLink\":null,\"version\":\"10\",\"image\":{\"id\":12467,\"name\":\"032713_LW_oakley.jpg\",\"title\":\"032713_LW_oakley\",\"filename\":\"https:\/\/crds-cms-uploads.imgix.net\/media\/messages\/stills\/032713_LW_oakley.jpg\",\"content\":\"NULL\",\"showInSearch\":\"1\",\"cloudStatus\":\"Live\",\"cloudSize\":\"0\",\"cloudMetaJson\":\"NULL\",\"parent\":833,\"owner\":1,\"derivedImages\":[839,888,3144],\"created\":\"2016-01-25T19:54:00-05:00\",\"className\":\"CloudImage\"},\"created\":\"2017-03-17T08:59:25-04:00\",\"className\":\"Series\"}]}" }}
   end
 
+  def get("/api/series") do
+    {:ok, %HTTPoison.Response{ status_code: 200, body: "{\"series\":[{\"id\":242,\"title\":\"Test Series 1\",\"description\":\"<p>Old McDonald had a farm...<\/p>\",\"startDate\":\"2017-03-17\",\"endDate\":\"2018-03-17\",\"trailerLink\":null,\"version\":\"10\",\"image\":{\"id\":12467,\"name\":\"032713_LW_oakley.jpg\",\"title\":\"032713_LW_oakley\",\"filename\":\"https:\/\/crds-cms-uploads.imgix.net\/media\/messages\/stills\/032713_LW_oakley.jpg\",\"content\":\"NULL\",\"showInSearch\":\"1\",\"cloudStatus\":\"Live\",\"cloudSize\":\"0\",\"cloudMetaJson\":\"NULL\",\"parent\":833,\"owner\":1,\"derivedImages\":[839,888,3144],\"created\":\"2016-01-25T19:54:00-05:00\",\"className\":\"CloudImage\"},\"created\":\"2017-03-17T08:59:25-04:00\",\"className\":\"Series\"}]}" }}
+  end
+
   def get("/api/features") do
     {:ok, %HTTPoison.Response{ status_code: 200, body: "{\"features\":[{\"id\":7,\"title\":\"Be a Giver\"}]}" }}
   end  

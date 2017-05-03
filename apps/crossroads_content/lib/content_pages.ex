@@ -24,10 +24,15 @@ defmodule CrossroadsContent.Pages do
     GenServer.call(__MODULE__, {:digital_program}, @timeout)
   end 
 
+  @spec get_series_current :: {:ok | :error, number, map}
+  def get_series_current do
+    GenServer.call(__MODULE__, {:series_current}, @timeout)
+  end  
+
   @spec get_series_all :: {:ok | :error, number, map}
   def get_series_all do
     GenServer.call(__MODULE__, {:series_all}, @timeout)
-  end  
+  end   
 
   @spec get_system_page(String.t) :: {:ok | :error, number, map}
   def get_system_page(state_name) do
@@ -99,9 +104,16 @@ defmodule CrossroadsContent.Pages do
   @doc false
   def handle_call({:series_all}, _from, state) do
     todaysDateString = Date.to_iso8601(Date.utc_today)
-    path = "series?endDate__GreaterThanOrEqual=" <> todaysDateString <> "&endDate__sort=ASC"        
+    path = "series"        
     make_call(path, state)
   end  
+
+  @doc false
+  def handle_call({:series_current}, _from, state) do
+    todaysDateString = Date.to_iso8601(Date.utc_today)
+    path = "series?endDate__GreaterThanOrEqual=#{todaysDateString}&endDate__sort=ASC"        
+    make_call(path, state)
+  end    
 
   #TODO: make this match more dynamic and timeout
   #defp make_call(path, %{"series?" => path_val} = state) do

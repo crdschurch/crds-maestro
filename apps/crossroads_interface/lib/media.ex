@@ -2,16 +2,28 @@ defmodule Media do
 
   alias CrossroadsContent.Pages
 
-  # @spec
+  # @spec series :: [map]
   def series_all_active do
-    # TODO need to sort returned array
     case Pages.get_series_all do
       {:ok, 200, body} -> Map.get(body, "series", [])
       {_, _, _} -> []
     end
   end
 
-  # TODO return sorted of active, current as the first in the list
-  # so we do not hava a separate function to get current series
+  # @spec series :: [map]
+  def series_current do
+    case Pages.get_series_current do
+      {:ok, 200, body} -> Map.get(body, "series", [])
+      {_, _, _} -> []
+    end
+  end  
+
+  # @spec digital_program :: [map]
+  def digital_program do
+    case Pages.get_digital_program do
+      {:ok, 200, body} -> Map.get(body, "features", [])
+      {_, _, _} -> []
+    end
+  end  
 
 end
