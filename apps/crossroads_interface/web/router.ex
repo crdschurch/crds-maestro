@@ -19,19 +19,19 @@ defmodule CrossroadsInterface.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/proxy/gateway", CrossroadsInterface do
-    pipe_through :api
-    get "/*gateway", ProxyGatewayController, :handle_gateway_proxy
-    put "/*gateway", ProxyGatewayController, :handle_gateway_proxy
-    post "/*gateway", ProxyGatewayController, :handle_gateway_proxy
-  end
+ # scope "/proxy/gateway", CrossroadsInterface do
+    #pipe_through :api
+    #get "/*gateway", ProxyGatewayController, :handle_gateway_proxy
+    #put "/*gateway", ProxyGatewayController, :handle_gateway_proxy
+    #post "/*gateway", ProxyGatewayController, :handle_gateway_proxy
+  #end
 
-  scope "/proxy/content", CrossroadsInterface do
-    pipe_through :api
-    get "/*content", ProxyContentController, :handle_content_proxy
-    post "/*content", ProxyContentController, :handle_content_proxy
-    put "/*content", ProxyContentController, :handle_content_proxy
-  end
+  #scope "/proxy/content", CrossroadsInterface do
+    #pipe_through :api
+    #get "/*content", ProxyContentController, :handle_content_proxy
+    #post "/*content", ProxyContentController, :handle_content_proxy
+    #put "/*content", ProxyContentController, :handle_content_proxy
+  #end
 
   scope "/group-leader", CrossroadsInterface do
     pipe_through :browser
