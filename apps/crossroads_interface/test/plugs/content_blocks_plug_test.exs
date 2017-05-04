@@ -7,9 +7,9 @@ defmodule CrossroadsInterface.Plugs.ContentBlocksTest do
   @valid [%{"id" => 1, "title" => "generalError"}]
   @invalid []
 
-  test "given Pages.get_content_blocks/0 returns :ok, assigns :content_blocks", %{conn: _conn} do
+  test "given Pages.get_content_blocks/0 returns :ok, assigns :content_blocks", %{conn: conn} do
     with_mock Pages, [get_content_blocks: fn() -> {:ok, 200, @content_block_call} end] do
-      conn = conn() |> CrossroadsInterface.Plug.ContentBlocks.call(%{})
+      conn = conn |> CrossroadsInterface.Plug.ContentBlocks.call(%{})
       assert conn.assigns.content_blocks == @valid
     end
   end

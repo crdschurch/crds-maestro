@@ -19,23 +19,38 @@ defmodule CrossroadsInterface.Router do
     plug :accepts, ["json"]
   end
 
- # scope "/proxy", CrossroadsInterface do
-    #pipe_through :api
-    #forward "/gateway", ProxyGatewayController, :handle_gateway_proxy
-    #forward "/content", ProxyContentController, :handle_content_proxy
-  #end
+  scope "/proxy/gateway", CrossroadsInterface do
+    pipe_through :api
+    get "/*gateway", ProxyGatewayController, :handle_gateway_proxy
+    put "/*gateway", ProxyGatewayController, :handle_gateway_proxy
+    post "/*gateway", ProxyGatewayController, :handle_gateway_proxy
+  end
+
+  scope "/proxy/content", CrossroadsInterface do
+    pipe_through :api
+    get "/*content", ProxyContentController, :handle_content_proxy
+    post "/*content", ProxyContentController, :handle_content_proxy
+    put "/*content", ProxyContentController, :handle_content_proxy
+  end
+
+  scope "/group-leader", CrossroadsInterface do
+    pipe_through :browser
+    get "/*path", CrdsGroupLeaderController, :index
+  end
+
+  scope "/connect", CrossroadsInterface do
+    pipe_through :browser
+    get "/*path", CrdsConnectController, :index
+  end
 
   scope "/", CrossroadsInterface do
     pipe_through :browser
-
-    forward "/group-leader", CrdsGroupLeaderController, :index
-    forward "/connect", CrdsConnectController, :index
     get "/notfound", NotfoundController, :notfound
     get "/signout", LegacyController, :noRedirect
     get "/signin", LegacyController, :noRedirect
     get "/register", LegacyController, :noRedirect
     get "/homepage", HomepageController, :index
-    forward "/", LegacyController, :index
+    get "/*path", LegacyController, :index
   end
 
 end
