@@ -22,7 +22,7 @@ defmodule CrossroadsInterface.Router do
   scope "/", CrossroadsInterface do
     pipe_through :browser
     get "/group-leader/*path", CrdsGroupLeaderController, :index
-    get "/connect/*path", CrdsGroupLeaderController, :index
+    get "/connect/*path", CrdsConnectController, :index
     get "/notfound", NotfoundController, :notfound
     get "/signout", LegacyController, :noRedirect
     get "/signin", LegacyController, :noRedirect
