@@ -5,6 +5,7 @@ defmodule CrossroadsContent.Pages do
   use GenServer
 
   require Logger
+  require IEx
 
   @base_url Application.get_env(:crossroads_content, :cms_server_endpoint)
   @timeout Application.get_env(:crossroads_content, :cms_timeout)
@@ -24,6 +25,11 @@ defmodule CrossroadsContent.Pages do
     GenServer.call(__MODULE__, {:system_page, state_name}, @timeout)
   end
 
+  @spec get_pages(boolean) :: {:ok | :error, number, map}
+  def get_pages(stage) do
+    GenServer.call(__MODULE__, {:page, stage}, @timeout)
+  end
+
   @spec get_page(String.t, boolean) :: {:ok | :error, number, map}
   def get_page(url, stage) do
     GenServer.call(__MODULE__, {:page, url, stage}, @timeout)
@@ -40,10 +46,35 @@ defmodule CrossroadsContent.Pages do
   end
 
   @doc false
-  def init(:ok) do
+  def init(state) do
+    # Cachex.start_link(:cms_cache, [default_ttl: Application.get_env(:crossroads_content, :cms_cache_ttl)])
+    # Process.send(self(), :refresh_cms_page_cache, [])
     {:ok, %{}}
   end
 
+  def handle_info(:refresh_cms_page_cache, state) do
+    schedule_refresh_cms_page_cache()
+    load_cms_page_cache(state)
+    {:noreply, state}
+  end
+
+  defp load_cms_page_cache(state) do
+    {reply, result} = make_call("Page", state)
+    {result, _status, _body} = case result do
+      {:ok, 200, body} ->
+        Enum.each(body["pages"], 
+          fn(x) -> 
+            Cachex.set(:cms_cache, x["link"], x) 
+          end 
+        ) 
+      {:error, _status, _body} -> nil
+    end
+    result
+  end
+
+  defp schedule_refresh_cms_page_cache() do
+    Process.send_after(self(), :refresh_cms_page_cache, 60 * 1000)
+  end
   @doc false
   def handle_call({:site_config, id},_from, state) do
     path = "SiteConfig/#{id}"
@@ -87,8 +118,11 @@ defmodule CrossroadsContent.Pages do
 
   @doc false
   defp make_call(path, state) do
+    IEx.pry
     {status, response} = Cachex.get(:cms_cache, path)
+
     if status == :missing do
+      IEx.pry
       response = case HTTPoison.get("#{@base_url}/api/#{path}",["Accept": "application/json"], [recv_timeout: @timeout]) do
         {:ok, %HTTPoison.Response{status_code: 404, body: body}} ->
           {:error, 404, decode_request(Poison.decode(body))}
