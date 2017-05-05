@@ -1,42 +1,45 @@
 defmodule CrossroadsContentPagesTest do
   use ExUnit.Case, async: false
-  #doctest CrossroadsContent.Pages
 
+  alias CrossroadsContent.CmsClient
   alias CrossroadsContent.Pages
   alias CrossroadsContent.FakeHttp
 
   import Mock
   require IEx
-
-  # setup_all do
-  #   #Cachex.start(:cms_cache)
-  #   with_mock HTTPoison, [get: fn(url, _headers, _options) -> FakeHttp.get(url) end] do
-  #     Application.ensure_all_started(:crossroads_content)
-  #   end
-  #   :ok
-  # end
   
-  setup do
-    # IEx.pry
-    
-    with_mock HTTPoison, [get: fn(url, _headers, _options) -> FakeHttp.get(url) end] do
-      {:ok, pages} = Pages.start_link([name: CrossroadsContent.Pages])
+  test "loads CMS pages on start" do
+    with_mock CmsClient, [get_pages: fn(_stage) -> FakeHttp.get_pages() end] do     
+      Pages.start_link([name: CrossroadsContent.Pages])
+      assert called CmsClient.get_pages(false)
     end
-    #Application.ensure_started(:cachex)
-    #Cachex.start_link(:cms_cache)
-    #Cachex.clear(:cms_cache)
-    #:ok, pages} = CrossroadsContent.Pages.start_link
-
-    #{:ok, pages: pages}
-    :ok
   end
-  
-  test "get site config returns a 404 response" do
-    with_mock HTTPoison, [get: fn(url, _headers, _options) -> FakeHttp.get(url) end] do     
-      # Pages.start_link([name: CrossroadsContent.Pages])
-      {result, status, _body} = Pages.get_site_config(12)
-      assert status == 404
-      assert result == :error
+
+  test "page_exists?() return true if found" do
+    with_mock CmsClient, [get_pages: fn(_stage) -> FakeHttp.get_pages() end] do  
+      Pages.start_link([name: CrossroadsContent.Pages])     
+      assert Pages.page_exists?("/habitat/") 
+    end
+  end
+
+  test "page_exists?() return false if not found" do
+    with_mock CmsClient, [get_pages: fn(_stage) -> FakeHttp.get_pages() end] do  
+      Pages.start_link([name: CrossroadsContent.Pages])      
+      refute Pages.page_exists?("/gotnothin/") 
+    end
+  end
+
+  test "get_page() return page if found" do
+    with_mock CmsClient, [get_pages: fn(_stage) -> FakeHttp.get_pages() end] do  
+      Pages.start_link([name: CrossroadsContent.Pages]) 
+      assert {:ok, _} = Pages.get_page("/habitat/") 
+    end
+  end
+
+  test "get_page() return error if not found" do
+    with_mock CmsClient, [get_pages: fn(_stage) -> FakeHttp.get_pages() end] do  
+      Pages.start_link([name: CrossroadsContent.Pages])  
+      assert :error = Pages.get_page("/gotnothin/")     
     end
   end
 
