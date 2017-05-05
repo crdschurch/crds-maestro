@@ -17,21 +17,23 @@ defmodule CrossroadsContentPagesTest do
   # end
   
   setup do
-    {:ok, pages} = CrossroadsContent.Pages.start_link
-    # with_mock HTTPoison, [get: fn(url, _headers, _options) -> FakeHttp.get(url) end] do
-    #   {:ok, pages} = CrossroadsContent.Pages.start_link
-    # end
+    # IEx.pry
+    
+    with_mock HTTPoison, [get: fn(url, _headers, _options) -> FakeHttp.get(url) end] do
+      {:ok, pages} = Pages.start_link([name: CrossroadsContent.Pages])
+    end
     #Application.ensure_started(:cachex)
     #Cachex.start_link(:cms_cache)
     #Cachex.clear(:cms_cache)
     #:ok, pages} = CrossroadsContent.Pages.start_link
 
+    #{:ok, pages: pages}
     :ok
   end
   
   test "get site config returns a 404 response" do
-    with_mock HTTPoison, [get: fn(url, _headers, _options) -> FakeHttp.get(url) end] do
-      
+    with_mock HTTPoison, [get: fn(url, _headers, _options) -> FakeHttp.get(url) end] do     
+      # Pages.start_link([name: CrossroadsContent.Pages])
       {result, status, _body} = Pages.get_site_config(12)
       assert status == 404
       assert result == :error
