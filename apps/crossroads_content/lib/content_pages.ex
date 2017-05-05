@@ -26,7 +26,7 @@ defmodule CrossroadsContent.Pages do
   end
 
   defp load_cms_page_cache(state) do
-    {reply, response, state} = CrossroadsContent.CmsClient.get_pages(false)
+    response = CrossroadsContent.CmsClient.get_pages(false)
     status = case response do
       {:ok, 200, body} ->
         Enum.each(body["pages"], 

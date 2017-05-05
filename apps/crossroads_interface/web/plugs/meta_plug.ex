@@ -5,7 +5,7 @@ defmodule CrossroadsInterface.Plug.Meta do
   """
   require IEx
   import Plug.Conn
-  alias CrossroadsContent.Pages
+  alias CrossroadsContent.CmsClient
 
   def init(default), do: default
 
@@ -16,11 +16,11 @@ defmodule CrossroadsInterface.Plug.Meta do
            |> Enum.join(".")
 
     system_page = path
-                  |> Pages.get_system_page
+                  |> CmsClient.get_system_page
                   |> match_system_pages
 
     site_config = 1
-                  |> Pages.get_site_config
+                  |> CmsClient.get_site_config
                   |> match_site_config
 
     conn
