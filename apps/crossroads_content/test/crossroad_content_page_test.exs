@@ -17,7 +17,6 @@ defmodule CrossroadsContentPagesTest do
   # end
   
   setup do
-    # IEx.pry
     {:ok, pages} = CrossroadsContent.Pages.start_link
     # with_mock HTTPoison, [get: fn(url, _headers, _options) -> FakeHttp.get(url) end] do
     #   {:ok, pages} = CrossroadsContent.Pages.start_link
