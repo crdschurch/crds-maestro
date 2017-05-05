@@ -3,7 +3,7 @@ defmodule CrossroadsInterface.ErrorView do
   require IEx
 
   def render("404.html", assigns) do
-    "404"
+    render("404_page.html", %{})
   end
 
   def render("500.html", assigns) do

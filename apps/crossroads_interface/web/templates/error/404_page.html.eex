@@ -1,0 +1,20 @@
+<div class="crds-legacy-styles">
+  <div class="container">
+    <div class="row">
+      <div class="push-top">
+        <div class="col-sm-5">
+          <h1 class="brand-font type-color page-header" mce_advimageresize_id="Form_EditForm_Content_mce_2">Oops.</h1>
+          <h2 class="subheading push-bottom">We're sorry. That page doesn't seem to exist.</h2>
+          <p>Please use the navigation above or search here.</p>
+          <form role="form" action="/search">
+            <div class="form-group">
+              <div class="input-group input-group-lg" ui-sref="search" ng-click="ok($event)"><input class="form-control input-lg" type="search" placeholder="Search" name="q" /><span class="input-group-btn"> <button type="submit" class="btn btn-default"> <svg viewbox="0 0 32 32" class="icon icon-large icon-search3"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#search3"></use></svg></button> </span></div>
+            </div>
+          </form>
+          <p class="push-top"><strong>Still need help?</strong> <br />Browse our <a href="help">help section</a>, <a href="mailto:websupport@crossroads.net">email us</a> or give us a call at 513‑731‑7400.</p>
+        </div>
+        <div class="col-sm-7 push-top" mce_advimageresize_id="Form_EditForm_Content_mce_0"><img class="img-responsive imgix-fluid full-width" title="404 Page Not Found Crushed Coffee Cup" data-src="//crossroads-media.imgix.net/images/coffee-cup-crushed.jpg" alt="Page not found!" src="https://contentint.crossroads.net/" mce_advimageresize_id="Form_EditForm_Content_mce_1" /></div>
+      </div>
+    </div>
+  </div>
+</div>
