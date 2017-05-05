@@ -6,13 +6,16 @@ defmodule CrossroadsContent.CmsClientTest do
   alias CrossroadsContent.FakeHttp
 
   import Mock
-  require IEx
+
+  setup_all do
+    {:ok, cms_cache} = Cachex.start_link(:cms_cache, [default_ttl: Application.get_env(:crossroads_content, :cms_cache_ttl)])
+    {:ok, cms_client} = CmsClient.start_link([name: CrossroadsContent.CmsClient])
+    {:ok, cms_client: cms_client}
+  end
 
   setup do
-    {:ok, cms_client} = CmsClient.start_link([name: CrossroadsContent.CmsClient])
-    #Cachex.start_link(:cms_cache, [default_ttl: Application.get_env(:crossroads_content, :cms_cache_ttl)])
-    #Cachex.clear(:cms_cache)
-    {:ok, cms_client: cms_client}
+    Cachex.clear(:cms_cache)
+    :ok
   end
 
   test "get site config returns a 404 response" do

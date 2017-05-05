@@ -47,8 +47,6 @@ defmodule CrossroadsContent.CmsClient do
 
   @doc false
   def init(:ok) do
-    Logger.debug("initializing CMS Client")
-    IO.inspect Cachex.start_link(:cms_cache, [default_ttl: Application.get_env(:crossroads_content, :cms_cache_ttl)])
     {:ok, %{}}
   end
 
@@ -140,12 +138,5 @@ defmodule CrossroadsContent.CmsClient do
   
   defp decode_request({:ok, valid} = body), do: valid
   defp decode_request({:error, _} = body), do: %{}
-
-  @doc """
-  Stops the registry.
-  """
-  def stop(server) do
-    GenServer.stop(server)
-  end
 
 end

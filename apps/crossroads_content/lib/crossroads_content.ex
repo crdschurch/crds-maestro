@@ -9,6 +9,7 @@ defmodule CrossroadsContent do
     children = [
       worker(CrossroadsContent.CmsClient, [[name: CrossroadsContent.CmsClient]]),
       worker(CrossroadsContent.Pages, [[name: CrossroadsContent.Pages]]),
+      worker(Cachex, [:cms_cache, [default_ttl: Application.get_env(:crossroads_content, :cms_cache_ttl)]])
     ]
 
     opts = [strategy: :one_for_one]
