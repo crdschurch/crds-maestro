@@ -67,40 +67,5 @@ defmodule CrossroadsInterface.MediaController do
   defp join(a, b) do
     to_string(a) <> "." <> to_string(b)
   end
-#for n <- [0 .. Enum.count(body["series"])], do: "<p>" <> Enum.at(body["series"],n)["title"] <> "</p>"
-    #length(payload)
-    #|> IO.inspect()
 
-     #payload = Enum.filter(seriesList, fn h -> h != nil end)
-   #      |> IO.inspect("#{k} => #{v}")
- 
-   #payload = Enum.at(seriesList["Series"],0)["title"]
-   # payload = List.count(seriesList)
-    #payload = "Hi there "
-    #Enum.at(seriesList[:series],0)["title"]
-    #payload = seriesList[":series"]["title"]
-        #seriesList
-    #|> IO.inspect()
-        #"End for loop"
-    #|> IO.inspect()
-
-    #_tail
-    #|> IO.inspect()
-
-    #payload = Map.to_list(series)
-    #|> IO.inspect()
-
-    #List.last(items)
-    #|> IO.inspect()
-
-    #Enum.each items, fn({_, val})  ->
-        #"#{val}"
-        #|> IO.inspect()
-    #end
-
-    #for n <- seriesList, do: seriesList[n]
-
-    
-    #"Begin for loop"
-    #|> IO.inspect()
 end
