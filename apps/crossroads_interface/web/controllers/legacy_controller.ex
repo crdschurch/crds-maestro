@@ -9,10 +9,13 @@ defmodule CrossroadsInterface.LegacyController do
 
   plug CrossroadsInterface.Plug.PutMetaTemplate, "angular_meta_tags.html"
   plug :put_layout, "no_header_or_footer.html"
-
+  
   defp renderSite(conn, params) do
-    conn
-    |> render("app_root.html", %{ "js_files": [
+    path = addTrailingSlashIfNecessary(conn.request_path)
+    if CrossroadsContent.Pages.page_exists?(path) do
+      conn |> assign(:path, path) |> CrossroadsInterface.CmsPageController.call(:index)
+    else  
+      conn |> render("app_root.html", %{ "js_files": [
         "/js/legacy/ang.js",
         "/js/legacy/core.js",
         "/js/legacy/common.js",
@@ -31,6 +34,7 @@ defmodule CrossroadsInterface.LegacyController do
       ], "css_files": [
        "/js/legacy/legacy.css"
       ], "base_href": "/"})
+    end
   end
 
   def index(conn, %{ "resolve" => "true" }) do
@@ -47,6 +51,13 @@ defmodule CrossroadsInterface.LegacyController do
   def noRedirect(conn, _params) do
     conn
       |> renderSite( conn: conn, params: _params)
+  end
+
+  defp addTrailingSlashIfNecessary(url) do
+    case String.last(url) do
+      "/" -> url
+      _ -> url <> "/"
+    end
   end
 
 end

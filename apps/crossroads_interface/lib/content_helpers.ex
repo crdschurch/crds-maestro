@@ -1,10 +1,10 @@
 defmodule ContentHelpers do
 
-  alias CrossroadsContent.Pages
+  alias CrossroadsContent.CmsClient
 
   @spec content_blocks :: [map]
   def content_blocks do
-    case Pages.get_content_blocks do
+    case CmsClient.get_content_blocks do
       {:ok, 200, body} -> Map.get(body, "contentBlocks", [])
       {_, _, _} -> []
     end

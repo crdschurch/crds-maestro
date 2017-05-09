@@ -7,8 +7,10 @@ defmodule CrossroadsContent.Pages do
   require Logger
   require IEx
 
+  @timeout Application.get_env(:crossroads_content, :cms_timeout)
+
   def page_exists?(url) do
-    GenServer.call(__MODULE__, {:exists, url})
+    GenServer.call(__MODULE__, {:exists, url}, @timeout)
   end
 
   def handle_call({:exists, url}, _from, cms_page_cache) do
@@ -16,7 +18,7 @@ defmodule CrossroadsContent.Pages do
   end
 
   def get_page(url) do
-    GenServer.call(__MODULE__, {:get, url})
+    GenServer.call(__MODULE__, {:get, url}, @timeout)
   end
 
   def handle_call({:get, url}, _from, cms_page_cache) do
@@ -25,7 +27,6 @@ defmodule CrossroadsContent.Pages do
 
   @doc false
   def start_link(opts \\ []) do
-    IO.puts "CrossroadsContent.Pages start"
     GenServer.start_link(__MODULE__, :ok, opts)
   end
 
@@ -43,10 +44,9 @@ defmodule CrossroadsContent.Pages do
 
   defp load_cms_page_cache() do
     response = CrossroadsContent.CmsClient.get_pages(false)
-    IEx.pry
     cms_page_cache = case response do
       {:ok, 200, body} ->
-        Enum.group_by(body["pages"], fn(x) -> x["link"] end, fn(x) -> x end)
+        Enum.into(body["pages"], %{}, fn(x) -> {x["link"], x} end)
       {:error, _status, _body} -> %{}
     end
     cms_page_cache
