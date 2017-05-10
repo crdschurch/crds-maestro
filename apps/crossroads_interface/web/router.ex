@@ -11,7 +11,6 @@ defmodule CrossroadsInterface.Router do
     plug CrossroadsInterface.Plug.Payload
     plug CrossroadsInterface.Plug.BaseHref
     plug CrossroadsInterface.Plug.PutMetaTemplate
-    plug CrossroadsInterface.Plug.Authorized
     plug CrossroadsInterface.Plug.BodyClass
   end
 
