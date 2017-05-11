@@ -49,6 +49,8 @@ defmodule CrossroadsContent.Pages do
         Enum.into(body["pages"], %{}, fn(x) -> {x["link"], x} end)
       {:error, _status, _body} -> %{}
     end
+    # ** Remove after golocal is properly de-angulared **
+    cms_page_cache = Map.delete(cms_page_cache, "/golocal/")
     cms_page_cache
   end
 

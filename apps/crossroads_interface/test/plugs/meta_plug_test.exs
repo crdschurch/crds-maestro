@@ -1,6 +1,6 @@
 defmodule CrossroadsInterface.Plugs.MetaTest do
   use CrossroadsInterface.ConnCase
-  alias CrossroadsContent.Pages
+  alias CrossroadsContent.CmsClient
   import Mock
 
   @system_page_response %{"systemPages" => [%{"bodyClasses" => nil,
@@ -22,8 +22,8 @@ defmodule CrossroadsInterface.Plugs.MetaTest do
 
   test "Sets meta data when request to a route is made", %{conn: conn} do
     with_mocks([
-                 {Pages, [], [get_system_page: fn("register") -> {:ok, 200, @system_page_response} end]},
-                 {Pages, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
+                 {CmsClient, [], [get_system_page: fn("register") -> {:ok, 200, @system_page_response} end]},
+                 {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
       conn = %{conn | request_path: "/register"}
                |> CrossroadsInterface.Plug.Meta.call(%{})
       assert conn.assigns.meta_title == "Register"
@@ -35,8 +35,8 @@ defmodule CrossroadsInterface.Plugs.MetaTest do
 
   test "Sets site config data when request to a route is made", %{conn: conn} do
     with_mocks([
-                 {Pages, [], [get_system_page: fn("register") -> {:ok, 200, @system_page_response} end]},
-                 {Pages, [], [get_site_config: fn(1) -> {:ok, 200, @site_config_data} end]} ]) do
+                 {CmsClient, [], [get_system_page: fn("register") -> {:ok, 200, @system_page_response} end]},
+                 {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, @site_config_data} end]} ]) do
       conn = %{conn | request_path: "/register"}
                |> CrossroadsInterface.Plug.Meta.call(%{})
       assert conn.assigns.meta_siteconfig_locale == "en_US"

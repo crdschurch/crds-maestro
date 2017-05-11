@@ -21,8 +21,13 @@ defmodule CrossroadsInterface.Mixfile do
   end
 
   def application do
-    [mod: {CrossroadsInterface, []},
-     applications: [:phoenix, :phoenix_html, :logger_file_backend, :cowboy, :logger, :gettext, :crossroads_content, :ssl]]
+    if Mix.env == :test do
+      [mod: {CrossroadsInterface, []},
+        applications: [:phoenix, :phoenix_html, :logger_file_backend, :cowboy, :logger, :gettext, :ssl]]
+    else
+      [mod: {CrossroadsInterface, []},
+        applications: [:phoenix, :phoenix_html, :logger_file_backend, :cowboy, :logger, :gettext, :crossroads_content, :ssl]]
+    end
   end
 
   defp elixirc_paths(:test), do: ["lib", "web", "test/support"]
