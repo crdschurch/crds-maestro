@@ -36,7 +36,8 @@ defmodule CrossroadsInterface.CmsPageController do
   defp getLayoutFromPage(page) do
     case page["pageType"] do
       "NoHeaderOrFooter" -> "no_header_or_footer.html"
-      "HomePage" -> "screen_width.html"
+      "ScreenWidth" -> "screen_width.html"
+      "HomePage" -> "home_page.html"
       "CenteredContentPage" -> "centered_content_page.html"
       "GoCincinnati" -> "go_cincinnati.html"
       _ -> "no_sidebar.html"
