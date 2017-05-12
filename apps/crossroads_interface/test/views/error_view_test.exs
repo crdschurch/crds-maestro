@@ -16,5 +16,6 @@ defmodule CrossroadsInterface.ErrorViewTest do
 
   test "render any other should default to 404" do
     assert render_to_string(CrossroadsInterface.ErrorView, "505.html", []) =~
-           "<p class=\"push-top\"><strong>Still need help?</strong> <br />Browse our <a href=\"help\">help section</a>, <a href=\"mailto:websupport@crossroads.net\">email us</a> or give us a call at 513‑731‑7400.</p>"  end
+           "<p class=\"push-top\"><strong>Still need help?</strong> <br />Browse our <a href=\"help\">help section</a>, <a href=\"mailto:websupport@crossroads.net\">email us</a> or give us a call at 513‑731‑7400.</p>"  
+  end
 end
