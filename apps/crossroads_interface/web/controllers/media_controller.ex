@@ -15,23 +15,10 @@ defmodule CrossroadsInterface.MediaController do
     [series1 | seriesTail] = seriesMap
     [series | _tail ] = seriesTail
 
-    series
-    |> IO.inspect()
 
-    IO.inspect("Break!")
-
-    flatMap = flatten(series);
-    #title = Lens.make_lens(:title)
-    #startDate = Lens.make_lens(:startDate)
-    #id = Lens.make_lens(:id)
-    #image = Lens.make_lens(:image)
-    #imgPath = Lens.make_lens(:filename)
-
-
-    id = flatMap["id"]
-    imgPath = flatMap["image.filename"]
-    seriesTitle = flatMap["title"]
-    seriesDate = flatMap["startDate"]
+    imgPath = series["image"]["filename"]
+    seriesTitle = series["title"]
+    seriesDate = series["startDate"]
 
     ul = "<ul class='media-list'>"
     listItem = "<li class='col-sm-2 col-xs-g ng-scope'>"
@@ -43,9 +30,7 @@ defmodule CrossroadsInterface.MediaController do
 
     payload = ul <> listItem <> anchorTag <> imgLink <> seriesTitleElt <> seriesDateElt <> closeTags
     
-    Map.to_list(flatMap)
-    |> IO.inspect()
-    
+   
     conn
     |> render("media.html", %{ payload: payload,
       "css_files": [
@@ -54,11 +39,22 @@ defmodule CrossroadsInterface.MediaController do
     })
   end
 
+    #flatMap = flatten(series);
+    #title = Lens.make_lens(:title)
+    #startDate = Lens.make_lens(:startDate)
+    #id = Lens.make_lens(:id)
+    #image = Lens.make_lens(:image)
+    #imgPath = Lens.make_lens(:filename)
+
+    # id = flatMap["id"]
+    # imgPath = flatMap["image.filename"]
+    # seriesTitle = flatMap["title"]
+    # seriesDate = flatMap["startDate"]
+
   def flatten(map) when is_map(map) do
     map
     |> to_list_of_tuples
     |> Enum.into(%{})
-    # |> IO.inspect()
   end
   
 
@@ -66,40 +62,19 @@ defmodule CrossroadsInterface.MediaController do
     m
     |> Enum.map(&process/1)
     |> List.flatten
-    #|> IO.inspect()
   end
 
   defp process({key, sub_map}) when is_map(sub_map) do
     IO.inspect("key = " <> key)
     for { sub_key, value } <- sub_map do
       { 
-        if (this_is_a_map(value)) do
-          IO.inspect("It's a map!")
-          process({sub_key, value})
-        else
-          IO.inspect("It's not a map.")
           process({join(key, sub_key), value})
-        end
       }
     end
   end
 
-  defp process({key, value}) do
-    IO.inspect("In process with just key,value pair")
-    { key, value }
-    |> IO.inspect()
-  end
-
   defp join(a, b) do
     to_string(a) <> "." <> to_string(b)
-  end
-
-    defp this_is_a_map(obj) when is_map(obj) do
-    true
-  end
-
-  defp this_is_a_map(obj) do
-    false
   end
 
 end
