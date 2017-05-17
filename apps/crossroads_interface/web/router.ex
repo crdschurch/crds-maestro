@@ -35,6 +35,7 @@ defmodule CrossroadsInterface.Router do
     get "/signin", LegacyController, :noRedirect
     get "/register", LegacyController, :noRedirect
     get "/homepage", HomepageController, :index
+    # /media - POC Added for US8088 -- careful here, not to take over the current PROD route, unless truely replacing
     get "/media", MediaController, :index
     forward "/", LegacyController, :index
   end

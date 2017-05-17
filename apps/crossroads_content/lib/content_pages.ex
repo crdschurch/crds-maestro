@@ -24,11 +24,13 @@ defmodule CrossroadsContent.Pages do
     GenServer.call(__MODULE__, {:digital_program}, @timeout)
   end 
 
+# POC -- Added for US8088
   @spec get_series_current :: {:ok | :error, number, map}
   def get_series_current do
     GenServer.call(__MODULE__, {:series_current}, @timeout)
   end  
 
+# POC -- Added for US8088
   @spec get_series_all :: {:ok | :error, number, map}
   def get_series_all do
     GenServer.call(__MODULE__, {:series_all}, @timeout)
