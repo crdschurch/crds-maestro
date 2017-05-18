@@ -41,18 +41,6 @@ defmodule CrossroadsInterface.LegacyControllerTest do
     end
   end
 
-  test "addTrailingSlashIfNecessary() adds slash when necessary" do
-    with_mocks([ {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
-                  {CmsClient, [], [get_system_page: fn("") -> {:ok, 200, fake_system_page("")} end]},
-                  {Pages, [], [page_exists?: fn(_path) -> true end]},                  
-                  {CrossroadsInterface.CmsPageController, [], [call: fn(conn, _method) -> conn end]},
-                  {CrossroadsInterface.CmsPageController, [], [index: fn(conn, _) -> conn end]},
-                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
-      conn = get conn, "/hello"
-      assert conn.assigns[:path] == "/hello/"
-    end    
-  end
-
   test "GET /signin", %{conn: conn} do
     with_mocks([ {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
                   {CmsClient, [], [get_system_page: fn("signin") -> {:ok, 200, fake_system_page("signin")} end]},

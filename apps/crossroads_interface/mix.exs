@@ -36,6 +36,7 @@ defmodule CrossroadsInterface.Mixfile do
   defp deps do
     [{:phoenix, "~> 1.1.3"},
      {:phoenix_html, "~> 2.3"},
+     {:phoenix_html_sanitizer, "~> 1.0.0"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:logger_file_backend, "0.0.9"},
      {:gettext, "~> 0.9"},

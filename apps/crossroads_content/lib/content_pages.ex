@@ -14,6 +14,7 @@ defmodule CrossroadsContent.Pages do
   end
 
   def handle_call({:exists, url}, _from, cms_page_cache) do
+    IEx.pry
     {:reply, Map.has_key?(cms_page_cache, url), cms_page_cache}
   end
 
@@ -23,6 +24,14 @@ defmodule CrossroadsContent.Pages do
 
   def handle_call({:get, url}, _from, cms_page_cache) do
     {:reply, Map.fetch(cms_page_cache, url), cms_page_cache}
+  end
+
+  def get_page_routes() do
+    GenServer.call(__MODULE__, {:routes}, @timeout)
+  end
+
+  def handle_call({:routes}, _from, cms_page_cache) do
+    {:reply, Map.keys(cms_page_cache), cms_page_cache}
   end
 
   @doc false
@@ -43,14 +52,20 @@ defmodule CrossroadsContent.Pages do
   end
 
   defp load_cms_page_cache() do
+    IO.puts "Loading all CMS pages"
     response = CrossroadsContent.CmsClient.get_pages(false)
     cms_page_cache = case response do
       {:ok, 200, body} ->
-        Enum.into(body["pages"], %{}, fn(x) -> {x["link"], x} end)
-      {:error, _status, _body} -> %{}
+        Enum.reduce(body["pages"], %{}, fn(x, acc) -> 
+          if(x["requiresAngular"] == "1") do 
+            acc 
+          else 
+            Map.put(acc, x["link"], x)
+          end 
+        end )       
+      {:error, _status, _body} -> %{}        
     end
-    # ** Remove after golocal is properly de-angulared **
-    cms_page_cache = Map.delete(cms_page_cache, "/golocal/")
+    IO.puts "Loading all CMS pages complete"
     cms_page_cache
   end
 

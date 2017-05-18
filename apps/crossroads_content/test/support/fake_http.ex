@@ -81,8 +81,28 @@ defmodule CrossroadsContent.FakeHttp do
       "pageType" => "CenteredContentPage", "extraMeta" => nil,
       "hasBrokenFile" => "0", "metaKeywords" => nil,
       "disableAuthenicatedFinishAction" => nil, "link" => "/habitat/",
-      "onCompleteMessage" => nil, "legacyStyles" => "1",
-      "canEditType" => nil}]}}
+      "onCompleteMessage" => nil, "legacyStyles" => "1", "requiresAngular" => "0",
+      "canEditType" => nil},
+      %{"submitButtonText" => nil, "title" => "Habitat2",
+      "created" => "2015-08-24T14:06:05-04:00", "canViewType" => nil,
+      "inheritSideBar" => "1", "uRLSegment" => "habitat2", "id" => 268,
+      "hideFieldLabels" => nil, "disableCsrfSecurityToken" => nil,
+      "enableLiveValidation" => nil, "sideBar" => 139,
+      "disableSaveSubmissions" => nil, "hasBrokenLink" => "0",
+      "type" => "website",
+      "content" => "<h1 class=\"page-header\">ReachOut: Habitat</h1><h2 class=\"subheading\">Serving Habitat for Humanity</h2><div>\n<p>We believe simple, decent, affordable housing for all people is something God cares about deeply. </p>\n<div>\n<p>Our city has one of the lowest home ownership rates in the country. Only 42% of residents in our city own their homes, compared to 68% nationally. Statistically speaking, home ownership leads to significant increases in family stability, financial security and a sense of belonging to the community. And all of those things increase the likelihood that children can escape a cycle of poverty.</p>\n</div>\n<p>Check back soon for projects that will be available this spring and summer. </p>\n</div>",
+      "bodyClasses" => nil, "menuTitle" => nil,
+      "displayErrorMessagesAtTop" => nil, "clearButtonText" => nil,
+      "sort" => "30", "version" => "15", "card" => "summary",
+      "metaDescription" => nil, "reportClass" => nil,
+      "className" => "CenteredContentPage", "showClearButton" => nil,
+      "showInSearch" => "1", "showInMenus" => "1",
+      "pageType" => "CenteredContentPage", "extraMeta" => nil,
+      "hasBrokenFile" => "0", "metaKeywords" => nil,
+      "disableAuthenicatedFinishAction" => nil, "link" => "/habitat2/",
+      "onCompleteMessage" => nil, "legacyStyles" => "1", "requiresAngular" => "1",
+      "canEditType" => nil}
+      ]}}
   end
 
   def get(url) do

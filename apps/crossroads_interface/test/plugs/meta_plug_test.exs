@@ -1,7 +1,51 @@
 defmodule CrossroadsInterface.Plugs.MetaTest do
   use CrossroadsInterface.ConnCase
   alias CrossroadsContent.CmsClient
+  alias CrossroadsContent.Pages
   import Mock
+
+  @page_response  %{"submitButtonText" => nil, "title" => "Wizard Cow",
+                "created" => "2017-05-17T19:13:05+02:00", "canViewType" => "Inherit",
+                "inheritSideBar" => "1",
+                "image" => %{"className" => "CloudImage",
+                  "cloudMetaJson" => "{\"Dimensions\":\"660x655\",\"LastPut\":1495039552}",
+                  "cloudSize" => "175392", "cloudStatus" => "Live", "content" => nil,
+                  "created" => "2017-05-17T18:45:51+02:00", "derivedImages" => [25, 27],
+                  "filename" => "https://crds-cms-uploads.imgix.net/content/images/animal-wizard-cow.jpg",
+                  "id" => 24, "name" => "animal-wizard-cow.jpg", "owner" => 1, "parent" => 8,
+                  "showInSearch" => "1", "title" => "animal wizard cow"},
+                "uRLSegment" => "wizardcow", "id" => 6, "hideFieldLabels" => "0",
+                "disableCsrfSecurityToken" => "0", "enableLiveValidation" => "0",
+                "sideBar" => 2, "disableSaveSubmissions" => "0", "hasBrokenLink" => "0",
+                "type" => "website", 
+                "content" => "<h1 class=\"page-header\">ReachOut: Habitat</h1><h2 class=\"subheading\">Serving Habitat for Humanity</h
+                2><div>\n<p>We believe simple, decent, affordable housing for all people is something God cares about deeply. </p>\n<div>
+                \n<p>Our city has one of the lowest home ownership rates in the country. Only 42% of residents in our city own their home
+                s, compared to 68% nationally. Statistically speaking, home ownership leads to significant increases in family stability,
+                financial security and a sense of belonging to the community. And all of those things increase the likelihood that child
+                ren can escape a cycle of poverty.</p>\n</div>\n<p>Check back soon for projects that will be available this spring and su
+                mmer. </p>\n</div>", "bodyClasses" => nil,
+                "menuTitle" => nil, "displayErrorMessagesAtTop" => "0",
+                "clearButtonText" => nil, "sort" => "5", "version" => "7",
+                "requiresAngular" => "0",
+                "fields" => [%{"buttonText" => nil, "className" => "EditableFormStep",
+                    "created" => "2017-05-17T19:17:46+02:00", "customErrorMessage" => nil,
+                    "customRules" => nil, "customSettings" => nil, "default" => nil,
+                    "description" => nil, "extraClass" => nil, "footer" => nil,
+                    "header" => nil, "id" => 1, "label" => nil, "migrated" => "1",
+                    "model" => nil, "name" => "EditableFormStep_fc0f4", "parent" => 6,
+                    "required" => "0", "rightTitle" => nil, "showOnLoad" => "1",
+                    "sort" => "1", "title" => "First Page", "version" => "8"}],
+                "card" => "summary", "metaDescription" => "Wizard Cow is a hilariously renamed animal as per the internet", "reportClass" => nil,
+                "className" => "CenteredContentPage", "showClearButton" => "0",
+                "showInSearch" => "1", "showInMenus" => "1",
+                "pageType" => "CenteredContentPage", "extraMeta" => nil,
+                "hasBrokenFile" => "0", "metaKeywords" => nil,
+                "disableAuthenicatedFinishAction" => "0", "link" => "/wizardcow/",
+                "onCompleteMessage" => nil, "legacyStyles" => "1",
+                "canEditType" => "Inherit"}
+
+  @page_no_descripton Map.put(@page_response, "metaDescription", nil)
 
   @system_page_response %{"systemPages" => [%{"bodyClasses" => nil,
                                               "card" => "summary",
@@ -20,8 +64,38 @@ defmodule CrossroadsInterface.Plugs.MetaTest do
                                         "facebook" => "crdschurch",
                                         "twitter" => "@crdschurch"}}
 
-  test "Sets meta data when request to a route is made", %{conn: conn} do
-    with_mocks([
+  test "Sets meta data when request to a cms page route is made", %{conn: conn} do
+    with_mocks([ {Pages, [], [page_exists?: fn(_path) -> true end]},
+                 {Pages, [], [get_page: fn(_path) -> {:ok, @page_response} end]},
+                 {CmsClient, [], [get_system_page: fn("register") -> {:ok, 200, @system_page_response} end]},
+                 {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
+      conn = %{conn | request_path: "/wizardcow"}
+               |> CrossroadsInterface.Plug.Meta.call(%{})
+      
+      assert conn.assigns.meta_title == "Wizard Cow"
+      assert conn.assigns.meta_description == "Wizard Cow is a hilariously renamed animal as per the internet"
+      assert conn.assigns.meta_url == "/wizardcow"
+      assert conn.assigns.meta_type == "website"
+    end
+  end     
+
+  test "Sets meta description when metaDescription is not set from content", %{conn: conn} do
+    with_mocks([ {Pages, [], [page_exists?: fn(_path) -> true end]},
+                 {Pages, [], [get_page: fn(_path) -> {:ok, @page_no_descripton } end ]},
+                 {CmsClient, [], [get_system_page: fn("register") -> {:ok, 200, @system_page_response} end]},
+                 {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
+      conn = %{conn | request_path: "/wizardcow"}
+               |> CrossroadsInterface.Plug.Meta.call(%{})
+      
+      assert conn.assigns.meta_title == "Wizard Cow"
+      assert conn.assigns.meta_description == "ReachOut: HabitatServing Habitat for HumanityWe believe simple, decent, affordable housing for all people is something God cares about deeply. Our city has one of the lowest home ownership rates in the country. Only 42% of residents in our city own their home\n                s, compared to 68% nationall"
+      assert conn.assigns.meta_url == "/wizardcow"
+      assert conn.assigns.meta_type == "website"
+    end
+  end                                  
+
+  test "Sets meta data when request to a system page is made", %{conn: conn} do
+    with_mocks([ {Pages, [], [page_exists?: fn(_path) -> false end]},
                  {CmsClient, [], [get_system_page: fn("register") -> {:ok, 200, @system_page_response} end]},
                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
       conn = %{conn | request_path: "/register"}
@@ -34,7 +108,7 @@ defmodule CrossroadsInterface.Plugs.MetaTest do
   end
 
   test "Sets site config data when request to a route is made", %{conn: conn} do
-    with_mocks([
+    with_mocks([ {Pages, [], [page_exists?: fn(_path) -> false end]},
                  {CmsClient, [], [get_system_page: fn("register") -> {:ok, 200, @system_page_response} end]},
                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, @site_config_data} end]} ]) do
       conn = %{conn | request_path: "/register"}

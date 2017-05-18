@@ -11,7 +11,7 @@ defmodule CrossroadsInterface.LegacyController do
   plug :put_layout, "no_header_or_footer.html"
   
   defp renderSite(conn, params) do
-    path = addTrailingSlashIfNecessary(conn.request_path)
+    path = ContentHelpers.addTrailingSlashIfNecessary(conn.request_path)
     if CrossroadsContent.Pages.page_exists?(path) do
       conn |> assign(:path, path) |> CrossroadsInterface.CmsPageController.call(:index)
     else  
@@ -51,13 +51,6 @@ defmodule CrossroadsInterface.LegacyController do
   def noRedirect(conn, _params) do
     conn
       |> renderSite( conn: conn, params: _params)
-  end
-
-  defp addTrailingSlashIfNecessary(url) do
-    case String.last(url) do
-      "/" -> url
-      _ -> url <> "/"
-    end
   end
 
 end

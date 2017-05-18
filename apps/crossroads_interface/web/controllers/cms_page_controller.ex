@@ -3,6 +3,7 @@ defmodule CrossroadsInterface.CmsPageController do
   use CrossroadsInterface.Web, :controller
   alias CrossroadsContent.Pages
 
+  plug CrossroadsInterface.Plug.PutMetaTemplate, "meta_tags.html"
   plug CrossroadsInterface.Plug.Meta
   plug CrossroadsInterface.Plug.ContentBlocks
 

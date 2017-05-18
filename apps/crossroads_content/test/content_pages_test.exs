@@ -43,4 +43,18 @@ defmodule CrossroadsContentPagesTest do
     end
   end
 
+  test "get_page_routes() returns list of pages" do
+    with_mock CmsClient, [get_pages: fn(_stage) -> FakeHttp.get_pages() end] do  
+      Pages.start_link([name: CrossroadsContent.Pages]) 
+      assert Pages.get_page_routes() == ["/habitat/"]
+    end
+  end
+
+  test "does not include pages that require Angular" do
+    with_mock CmsClient, [get_pages: fn(_stage) -> FakeHttp.get_pages() end] do     
+      Pages.start_link([name: CrossroadsContent.Pages])
+      refute Pages.page_exists?("/habitat2/")
+    end
+  end
+
 end
