@@ -5,9 +5,11 @@
     <%= render CrossroadsInterface.SharedView, "common_head.html", assigns %>
     <%= render_existing @view_module, "head.html", assigns %>
   </head>
-  <body class="crds-legacy-styles">
+  <body class="<%= @body_class %>">
     <%= render CrossroadsInterface.SharedView, "common_body.html", assigns %>
+    <div class="<%= @crds_styles %>">
     <%= render_existing @view_module, "body.html", assigns %>
+    </div>
     <%= render @view_module, @view_template, assigns %>
     <%= render CrossroadsInterface.SharedView, "js_files.html", assigns %>
   </body>
