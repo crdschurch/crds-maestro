@@ -34,6 +34,14 @@ defmodule CrossroadsContent.Pages do
     {:reply, Map.keys(cms_page_cache), cms_page_cache}
   end
 
+  def get_page_cache() do
+    GenServer.call(__MODULE__, {:cache}, @timeout)
+  end
+
+  def handle_call({:cache}, _from, cms_page_cache) do
+    {:reply, cms_page_cache, cms_page_cache}
+  end
+
   @doc false
   def start_link(opts \\ []) do
     GenServer.start_link(__MODULE__, :ok, opts)
