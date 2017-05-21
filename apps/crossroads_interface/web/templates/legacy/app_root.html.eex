@@ -1,4 +1,4 @@
-<div ng-controller="coreController as app" ng-class="app.bodyClasses" class="crds-legacy-styles">
+<div ng-controller="coreController as app" ng-class="app.bodyClasses">
   <div growl class="crossroads-growl"></div>
   <div ui-view>
     <div class="preloader-wrapper">
