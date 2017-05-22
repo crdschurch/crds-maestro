@@ -69,6 +69,10 @@ defmodule CrossroadsInterface.Plug.Meta do
     "/" <> url_segment
   end
 
+  defp get_url(nourl) do
+    ""
+  end
+
   defp get_description(%{"description" => description}) do
     description
   end
@@ -79,6 +83,10 @@ defmodule CrossroadsInterface.Plug.Meta do
         content |> String.slice(0, @max_description_len - 1)
       _ -> description
     end
+  end
+
+  defp get_description(nodescription) do
+    ""
   end
 
   defp find_image(%{"image" => image}) do
