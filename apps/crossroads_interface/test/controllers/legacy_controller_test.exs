@@ -19,7 +19,7 @@ defmodule CrossroadsInterface.LegacyControllerTest do
                                               "type" => "website",
                                               "uRL" => "/register"}]}
 
-  test "GET CMS page", %{conn: conn} do
+  test "GET CMS page should set path and goto CmsPageController", %{conn: conn} do
     with_mocks([ {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
                   {CmsClient, [], [get_system_page: fn("") -> {:ok, 200, fake_system_page("")} end]},
                   {Pages, [], [page_exists?: fn(_path) -> true end]},                  

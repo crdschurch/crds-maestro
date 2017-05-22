@@ -20,7 +20,7 @@ defmodule ContentHelpers do
     end
   end
 
-  def addTrailingSlashIfNecessary(url) do
+  def add_trailing_slash_if_necessary(url) do
     case String.last(url) do
       "/" -> url
       _ -> url <> "/"

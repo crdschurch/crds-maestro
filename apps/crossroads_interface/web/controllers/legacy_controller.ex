@@ -9,9 +9,9 @@ defmodule CrossroadsInterface.LegacyController do
 
   plug CrossroadsInterface.Plug.PutMetaTemplate, "angular_meta_tags.html"
   plug :put_layout, "no_header_or_footer.html"
-  
+
   defp renderSite(conn, params) do
-    path = ContentHelpers.addTrailingSlashIfNecessary(conn.request_path)
+    path = ContentHelpers.add_trailing_slash_if_necessary(conn.request_path)
     if CrossroadsContent.Pages.page_exists?(path) do
       conn |> assign(:path, path) |> CrossroadsInterface.CmsPageController.call(:index)
     else  

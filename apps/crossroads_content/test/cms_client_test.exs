@@ -18,17 +18,19 @@ defmodule CrossroadsContent.CmsClientTest do
     :ok
   end
 
-  test "get site config returns a 404 response" do
-    with_mock HTTPoison, [get: fn(url, _headers, _options) -> FakeHttp.get(url) end] do     
-      {result, status, _body} = CmsClient.get_site_config(12)
+  test "client handles a 404 response from get_site_config" do
+    with_mock HTTPoison, [get: fn(url, _headers, _options) -> FakeHttp.get(url) end] do
+      non_existent_site_config_id = 12
+      {result, status, _body} = CmsClient.get_site_config(non_existent_site_config_id)
       assert status == 404
       assert result == :error
     end
   end
 
-  test "get site config returns an error" do
+  test "client handles a 500 response from get_site_config" do
     with_mock HTTPoison, [get: fn(url, _headers, _options) -> FakeHttp.get(url) end] do
-      {result, status, _body} = CmsClient.get_site_config(500)
+      error_site_config_id = 500
+      {result, status, _body} = CmsClient.get_site_config(error_site_config_id)
       assert status == 500
       assert result == :error
     end
@@ -36,7 +38,8 @@ defmodule CrossroadsContent.CmsClientTest do
 
   test "get site config returns valid value" do
     with_mock HTTPoison, [get: fn(url, _headers, _options) -> FakeHttp.get(url) end] do
-      {result, status, body} = CmsClient.get_site_config(2)
+      valid_site_config_id = 2
+      {result, status, body} = CmsClient.get_site_config(valid_site_config_id)
       assert status == 200
       assert result == :ok
       assert body["siteConfig"]["id"] == 2

@@ -14,26 +14,10 @@ defmodule CrossroadsInterface.Plug.Meta do
   def init(default), do: default
 
   def call(conn, _default) do
-    
-    # if(conn.request_path |> ContentHelpers.addTrailingSlashIfNecessary |> Pages.page_exists?) do
-    #   page = conn.request_path 
-    #             |> ContentHelpers.addTrailingSlashIfNecessary 
-    #             |> Pages.get_page 
-    #             |> match_page
-    #   conn |> setMetaDataFromPage(page)
-    # else
-    #   system_page = conn.request_path 
-    #             |> String.split("/") 
-    #             |> Enum.filter(&(&1 != "")) 
-    #             |> Enum.join(".") 
-    #             |> CmsClient.get_system_page
-    #             |> match_system_pages  
-    #   conn |> setMetaDataFromSystemPage(system_page)
-    # end
 
-    page = case conn.request_path |> ContentHelpers.addTrailingSlashIfNecessary |> Pages.page_exists? do
+    page = case conn.request_path |> ContentHelpers.add_trailing_slash_if_necessary |> Pages.page_exists? do
       true -> conn.request_path 
-                |> ContentHelpers.addTrailingSlashIfNecessary 
+                |> ContentHelpers.add_trailing_slash_if_necessary 
                 |> Pages.get_page 
                 |> match_page
       false -> conn.request_path 
@@ -69,7 +53,7 @@ defmodule CrossroadsInterface.Plug.Meta do
     "/" <> url_segment
   end
 
-  defp get_url(nourl) do
+  defp get_url(_) do
     ""
   end
 
@@ -85,7 +69,7 @@ defmodule CrossroadsInterface.Plug.Meta do
     end
   end
 
-  defp get_description(nodescription) do
+  defp get_description(_) do
     ""
   end
 
@@ -93,7 +77,7 @@ defmodule CrossroadsInterface.Plug.Meta do
     Map.get(image, "filename", @default_image)
   end
 
-  defp find_image(no_image) do
+  defp find_image(_) do
     @default_image
   end
 

@@ -100,28 +100,33 @@ defmodule CrossroadsContent.CmsClient do
 
   @doc false
   defp make_call(path, state) do
-    {status, response} = Cachex.get(:cms_cache, path)
+    {status, result} = Cachex.get(:cms_cache, path)
     if status == :missing do
-      response = case HTTPoison.get("#{@base_url}/api/#{path}",["Accept": "application/json"], [recv_timeout: @timeout]) do
-        {:ok, %HTTPoison.Response{status_code: 404, body: body}} ->
-          {:error, 404, decode_request(Poison.decode(body))}
-        {:ok, %HTTPoison.Response{status_code: 200, body: body, headers: headers}} ->
-          if determine_headers(headers) do
-            {:error, 400, %{}}
-          else 
-            {:ok, 200, decode_request(Poison.decode(body))}
-          end
-        {:error, %HTTPoison.Error{reason: reason}} ->
-          {:error, 500, %{error: reason}}
-        {_, _} ->
-          {:error, 0, %{error: "unknown response"}}
-      end
-      if elem(response, 0) == :ok do
-        Cachex.set(:cms_cache, path, response)
+      result = match_response(HTTPoison.get("#{@base_url}/api/#{path}",["Accept": "application/json"], [recv_timeout: @timeout]))
+      if elem(result, 0) == :ok do
+        Cachex.set(:cms_cache, path, result)
       end      
     end
-    {:reply, response, state}
+    {:reply, result, state}
   end
+
+  defp match_response({:ok, %HTTPoison.Response{status_code: 404, body: body}}) do
+    {:error, 404, decode_request(Poison.decode(body))}
+  end
+
+  defp match_response({:ok, %HTTPoison.Response{status_code: 200, body: body, headers: headers}}) do
+    if determine_headers(headers) do
+      {:error, 400, %{}}
+    else 
+      {:ok, 200, decode_request(Poison.decode(body))}
+    end
+  end
+
+  defp match_response({:error, %HTTPoison.Error{reason: reason}}) do
+    {:error, 500, %{error: reason}}
+  end
+
+  defp match_response(_), do: {:error, 0, %{error: "unknown response"}} 
 
   defp determine_headers(headers) do
     case Enum.filter(headers, &is_html/1) do

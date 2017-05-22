@@ -30,7 +30,7 @@ defmodule CrossroadsInterface.CmsPageControllerTest do
         "disableAuthenicatedFinishAction" => nil, "link" => "/habitat/",
         "onCompleteMessage" => nil, "legacyStyles" => "1", "canEditType" => nil}}
 
-  test "request a page that exists at /habitat/", %{conn: conn} do
+  test "Getting a page that exists at /habitat/", %{conn: conn} do
     with_mocks([ {CmsClient, [], [get_system_page: fn(page) -> {:ok, 200, fake_system_page(page)} end]},
                  {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]},
