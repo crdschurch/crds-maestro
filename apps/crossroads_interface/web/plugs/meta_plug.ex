@@ -8,7 +8,7 @@ defmodule CrossroadsInterface.Plug.Meta do
   alias CrossroadsContent.CmsClient
   alias CrossroadsContent.Pages
 
-  @default_image "http://crds-cms-uploads.imgix.net/content/images/cr-social-sharing-still-bg.png"
+  @default_image "http://crds-cms-uploads.imgix.net/content/images/cr-social-sharing-still-bg.jpg"
   @max_description_len 305
 
   def init(default), do: default
