@@ -13,6 +13,7 @@ defmodule CrossroadsInterface.Router do
     plug CrossroadsInterface.Plug.PutMetaTemplate
     plug CrossroadsInterface.Plug.Authorized
     plug CrossroadsInterface.Plug.BodyClass
+    plug CrossroadsInterface.Plug.CrdsStyles
   end
 
   pipeline :api do
