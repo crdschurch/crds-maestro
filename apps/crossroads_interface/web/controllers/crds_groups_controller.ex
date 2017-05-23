@@ -11,6 +11,7 @@ defmodule CrossroadsInterface.CrdsGroupsController do
   plug CrossroadsInterface.Plug.BaseHref, "/groupsv2"
   plug CrossroadsInterface.Plug.ContentBlocks
   plug CrossroadsInterface.Plug.Meta
+  plug CrossroadsInterface.Plug.CrdsStyles, "crds-styles"
 
   def index(conn, _params) do
     conn
