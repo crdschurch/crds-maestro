@@ -10,8 +10,7 @@ defmodule CrossroadsInterface.CrdsConnectController do
   plug CrossroadsInterface.Plug.BaseHref, "/connect"
   plug CrossroadsInterface.Plug.ContentBlocks
   plug CrossroadsInterface.Plug.Meta
-  
-
+  plug CrossroadsInterface.Plug.CrdsStyles, "crds-styles"
 
   def index(conn, _params) do
     conn

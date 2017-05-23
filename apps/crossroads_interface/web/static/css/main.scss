@@ -23,33 +23,3 @@
   @import 'node_modules/crds-styles/assets/stylesheets/themes/modules';
   @import 'node_modules/crds-styles/assets/stylesheets/utilities/modules';
 }
-
-.maestro-homepage {
-  .crds-styles {
-    .header .navbar-brand.logo svg, 
-    .header .nav>li>a:not(.cta) {
-      color: #fff;
-    }
-  }
-  .crds-legacy-styles {
-    .header .navbar-brand.logo svg,
-    .header .nav>li>a:not(.cta) {
-      color: #fff;
-    }      
-    .homepage {
-      background: none !important
-    }
-  }
-}
-
-.maestro-homepage {
-  background: #fff url(https://crds-cms-uploads.imgix.net/content/images/crossroads-church-home.jpg) no-repeat !important;
-  background-position: -170px top !important;
-  height: 100%;  
-}
-
-@media only screen and (min-width:768px){
-  .maestro-homepage {
-    background-position:center top !important;
-  }
-}
