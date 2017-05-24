@@ -1,6 +1,5 @@
 defmodule CrossroadsInterface.Plug.RedirectCookie do
   import Plug.Conn
-  require IEx
   def call(conn, default) do
     cookie_domain = Application.get_env(:crossroads_interface, :cookie_domain)
     cookie_options =
