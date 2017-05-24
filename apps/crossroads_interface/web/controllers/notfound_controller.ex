@@ -7,13 +7,11 @@ defmodule CrossroadsInterface.NotfoundController do
   plug CrossroadsInterface.Plug.ContentBlocks
 
   def notfound(conn, _params) do
-    payload = case Pages.get_page("/servererror/", false) do
-      {:ok, 200, body} -> Enum.at(body["pages"], 0)["content"]
-      {_, _, body} -> "<h2> #{body} </h2>"
-    end
+    {:ok, page} = Pages.get_page("/servererror/")
+    IO.inspect page
     conn
     |> put_status(404)
-    |> render("404.html", %{ payload: payload,
+    |> render("404.html", %{ payload: page["content"],
       "css_files": [
         "/js/legacy/legacy.css"
       ]

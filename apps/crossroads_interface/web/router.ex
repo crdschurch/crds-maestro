@@ -13,6 +13,7 @@ defmodule CrossroadsInterface.Router do
     plug CrossroadsInterface.Plug.PutMetaTemplate
     plug CrossroadsInterface.Plug.Authorized
     plug CrossroadsInterface.Plug.BodyClass
+    plug CrossroadsInterface.Plug.CrdsStyles
   end
 
   pipeline :api do
@@ -30,6 +31,7 @@ defmodule CrossroadsInterface.Router do
 
     forward "/group-leader", CrdsGroupLeaderController, :index
     forward "/connect", CrdsConnectController, :index
+    forward "/groupsv2", CrdsGroupsController, :index
     get "/notfound", NotfoundController, :notfound
     get "/signout", LegacyController, :noRedirect
     get "/signin", LegacyController, :noRedirect
