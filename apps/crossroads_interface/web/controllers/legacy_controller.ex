@@ -14,7 +14,7 @@ defmodule CrossroadsInterface.LegacyController do
     path = ContentHelpers.add_trailing_slash_if_necessary(conn.request_path)
     if CrossroadsContent.Pages.page_exists?(path) do
       conn |> assign(:path, path) |> CrossroadsInterface.CmsPageController.call(:index)
-    else  
+    else
       conn |> render("app_root.html", %{ "js_files": [
         "/js/legacy/ang.js",
         "/js/legacy/core.js",
@@ -38,19 +38,16 @@ defmodule CrossroadsInterface.LegacyController do
   end
 
   def index(conn, %{ "resolve" => "true" }) do
-    conn
-    |> redirect( to: "/notfound")
+    conn |> redirect( to: "/notfound")
   end
 
-  def index(conn, _params) do    
+  def index(conn, _params) do
     conn
-      |> CrossroadsInterface.Plug.RedirectCookie.call("/")
-      |> renderSite( conn: conn, params: _params)
+    |> CrossroadsInterface.Plug.RedirectCookie.call("/")
+    |> renderSite( conn: conn, params: _params)
   end
 
   def noRedirect(conn, _params) do
-    conn
-      |> renderSite( conn: conn, params: _params)
+    conn |> renderSite( conn: conn, params: _params)
   end
-
 end
