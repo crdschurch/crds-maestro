@@ -3,10 +3,14 @@
  */
 export default function() {
   const baseUrl = window.location.href.replace(window.location.hash, "");
-  [].slice.call(document.querySelectorAll("use[*|href]")).filter((element) => {
+  [].slice.call(document.querySelectorAll("use[*|href]"))
+  
+  .filter((element) => {
     var attr = element.getAttribute("xlink:href");
     return (attr !== null && attr.indexOf("#") === 0);
-  }).forEach((element) => {
+  })
+  
+  .forEach((element) => {
     element.setAttribute("xlink:href", `${baseUrl}${element.getAttribute("xlink:href")}`);
   });
 }
