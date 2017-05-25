@@ -34,7 +34,15 @@ defmodule CrossroadsContent.Pages do
   end
 
   def handle_call({:get, url}, _from, cms_page_cache) do
-    {:reply, Map.fetch(cms_page_cache, url), cms_page_cache}
+    if Map.has_key?(cms_page_cache, url) do
+      page = Map.fetch(cms_page_cache, url)
+    else
+      page = case CrossroadsContent.CmsClient.get_page(url, false) do
+        {:ok, _, body} -> {:ok, List.first(body["pages"])}
+        _ -> :error
+      end      
+    end
+    {:reply, page, cms_page_cache}
   end
 
   def handle_call({:routes}, _from, cms_page_cache) do
