@@ -1,11 +1,17 @@
 .crds-legacy-styles {
   @import './glyphicons';
+
+  .homepage .navbar-brand.logo .icon-logo,
+  .homepage ul.cr-nav>li>a {
+    color: #fff;
+  }
 }
 
 .crds-styles {
   .wf-loading {
       visibility: hidden;
   }
+
   @import 'node_modules/crds-styles/assets/stylesheets/variables';
   @import 'node_modules/crds-styles/assets/stylesheets/overrides';
   @import 'node_modules/crds-styles/assets/stylesheets/functions';

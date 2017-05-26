@@ -5,7 +5,9 @@ config :crossroads_content,
   cms_server_endpoint: ""
 
 config :crossroads_interface,
-  gateway_server_endpoint: ""
+  gateway_server_endpoint: "",
+  cookie_prefix: "",
+  cookie_domain: ""
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.

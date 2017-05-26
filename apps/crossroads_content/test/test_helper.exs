@@ -1,2 +1,5 @@
 ExUnit.configure(exclude: [integration: true])
+Application.ensure_all_started(:logger)
+Application.ensure_all_started(:httpoison)
+Application.ensure_all_started(:cachex)
 ExUnit.start()
