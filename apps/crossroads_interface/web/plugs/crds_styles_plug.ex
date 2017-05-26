@@ -6,7 +6,7 @@ defmodule CrossroadsInterface.Plug.CrdsStyles do
   end
 
   def call(conn, [] = default) do
-    assign(conn, :crds_styles, "crds-legacy-styles")
+    assign(conn, :crds_styles, "")
   end
 
   def call(conn, default) do

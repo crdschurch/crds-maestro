@@ -8,9 +8,9 @@
   <body class="<%= @body_class %>">
     <%= render CrossroadsInterface.SharedView, "common_body.html", assigns %>
     <div class="<%= @crds_styles %>">
-    <%= render_existing @view_module, "body.html", assigns %>
+      <%= render_existing @view_module, "body.html", assigns %>
+      <%= render @view_module, @view_template, assigns %>
     </div>
-    <%= render @view_module, @view_template, assigns %>
     <%= render CrossroadsInterface.SharedView, "js_files.html", assigns %>
   </body>
 </html>
