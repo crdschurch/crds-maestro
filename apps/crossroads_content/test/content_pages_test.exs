@@ -15,6 +15,13 @@ defmodule CrossroadsContentPagesTest do
     end
   end
 
+  test "returns empty cache on CMS pages request error" do
+    with_mock CmsClient, [get_pages: fn(_stage) -> {:error, 500, "Your stoopid"} end] do     
+      Pages.start_link([name: CrossroadsContent.Pages])
+      assert Pages.get_page_cache() == %{}
+    end
+  end
+
   test "page_exists?() return true if found" do
     with_mock CmsClient, [get_pages: fn(_stage) -> FakeHttp.get_pages() end] do  
       Pages.start_link([name: CrossroadsContent.Pages])     
