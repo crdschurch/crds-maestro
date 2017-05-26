@@ -76,6 +76,7 @@ defmodule CrossroadsContent.Pages do
       {:ok, 200, response} -> create_page_cache_from_response(response)
       {:error, _, response} -> Logger.error("Error getting CMS pages #{response}")
                               %{}
+      _ -> %{}
     end    
     Logger.debug("CMS page loading complete")
     cms_page_cache
