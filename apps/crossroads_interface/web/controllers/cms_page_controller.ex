@@ -13,6 +13,7 @@ defmodule CrossroadsInterface.CmsPageController do
     body_class = getBodyClassFromPage(page)
     layout = getLayoutFromPage(page)
     conn 
+      |> CrossroadsInterface.Plug.RedirectCookie.call("content", "{\"link\":\"#{conn.assigns[:path]}\"}")
       |> put_layout(layout)
       |> assign(:body_class, body_class)
       |> assign(:crds_styles, crds_styles)
