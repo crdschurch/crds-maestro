@@ -8,7 +8,10 @@ defmodule CrossroadsInterface.CmsPageController do
   plug CrossroadsInterface.Plug.ContentBlocks
 
   def index(conn, _) do    
-    {:ok, page} = Pages.get_page(conn.assigns[:path])
+    is_stage = isStageRequest?(conn.params)
+
+    {:ok, page} = Pages.get_page(conn.assigns[:path], is_stage)
+
     crds_styles = getStylesClassFromPage(page)
     body_class = getBodyClassFromPage(page)
     layout = getLayoutFromPage(page)
@@ -19,6 +22,13 @@ defmodule CrossroadsInterface.CmsPageController do
       |> assign(:crds_styles, crds_styles)
       |> render(CrossroadsInterface.CmsPageView, "index.html", %{ payload: page["content"],
       "css_files": [ "/js/legacy/legacy.css" ]}) 
+  end
+
+  defp isStageRequest?(params) do
+    case params do
+      %{"stage" => "Stage"} -> true
+      _ -> false
+    end
   end
 
   defp getStylesClassFromPage(page) do
