@@ -43,7 +43,15 @@ defmodule CrossroadsContentPagesTest do
     end
   end
 
-  test "get_page() return page if not cached found" do
+  test "get_page() return stage page from CMS if not cached" do
+    with_mock CmsClient, [get_pages: fn(_stage) -> FakeHttp.get_pages() end,
+                          get_page: fn(_url, _stage) -> FakeHttp.get_pages() end] do  
+      Pages.start_link([name: CrossroadsContent.Pages]) 
+      assert {:ok, _} = Pages.get_page("/notcached/", true) 
+    end
+  end
+
+  test "get_page() returns page from CMS if not cached" do
     with_mock CmsClient, [get_pages: fn(_stage) -> FakeHttp.get_pages() end,
                           get_page: fn(_url, _stage) -> FakeHttp.get_pages() end] do  
       Pages.start_link([name: CrossroadsContent.Pages]) 

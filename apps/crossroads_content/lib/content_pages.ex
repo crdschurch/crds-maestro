@@ -16,7 +16,12 @@ defmodule CrossroadsContent.Pages do
 
   @spec get_page(String.t) :: {:ok, map} | :error
   def get_page(url) do
-    GenServer.call(__MODULE__, {:get, url}, @timeout)
+    GenServer.call(__MODULE__, {:get, url, false}, @timeout)
+  end
+
+  @spec get_page(String.t, boolean) :: {:ok, map} | :error  
+  def get_page(url, stage) do
+    GenServer.call(__MODULE__, {:get, url, stage}, @timeout)
   end
 
   @spec get_page_routes() :: [String.t]
@@ -33,8 +38,8 @@ defmodule CrossroadsContent.Pages do
     {:reply, Map.has_key?(cms_page_cache, url), cms_page_cache}
   end
 
-  def handle_call({:get, url}, _from, cms_page_cache) do
-    if Map.has_key?(cms_page_cache, url) do
+  def handle_call({:get, url, stage}, _from, cms_page_cache) do
+    if Map.has_key?(cms_page_cache, url) && !stage do
       page = Map.fetch(cms_page_cache, url)
     else
       page = case CrossroadsContent.CmsClient.get_page(url, false) do
