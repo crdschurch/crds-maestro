@@ -5,28 +5,30 @@
                 <%= raw(CrossroadsInterface.SharedView.filter_content_blocks(@content_blocks, "homePage")["content"]) %>
             </div>
         </div>
-        <section class="navbar-section" id="crossroads_countdown">
-            <div class="container animated fadeIn">
-                <div class="upcoming animated fadeIn">
-                    <div class="time countdown">
-                        <div class="countdown__timer">
-                            <i class="countdown__text">Join the live stream in...</i>
-                            <ul class="list-inline">
-                                <li><strong><span class="days"></span></strong> <small>days</small></li>
-                                <li class="vr"></li>
-                                <li><strong><span class="hours"></span></strong> <small>hours</small></li>
-                                <li class="vr"></li>
-                                <li><strong><span class="minutes"></span></strong> <small>min</small></li>
-                                <li class="vr"></li>
-                                <li><strong><span class="seconds"></span></strong> <small>sec</small></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="live hide in-progress">
-                        <i>Live stream in progress...</i> <a class="btn btn-sm" href="/live/stream">Watch Now</a>
-                    </div>
-                </div>
-            </div>
-        </section>
     </div>
 </div>
+
+<!-- markup for Rick's countdown
+<section class="navbar-section" id="crossroads_countdown">
+    <div class="container animated fadeIn">
+        <div class="upcoming animated fadeIn">
+            <div class="time countdown">
+                <div class="countdown__timer">
+                    <span class="countdown__text">Watch a <a href="/live">live stream</a> of our next service in</span>
+                    <ul class="list-inline list-inline-countdown">
+                        <li><strong><span class="days"></span></strong> <small>days</small></li>
+                        <li class="vr"></li>
+                        <li><strong><span class="hours"></span></strong> <small>hours</small></li>
+                        <li class="vr"></li>
+                        <li><strong><span class="minutes"></span></strong> <small>min</small></li>
+                        <li class="vr"></li>
+                        <li><strong><span class="seconds"></span></strong> <small>sec</small></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="live hide in-progress">
+                <span class="live__text">Live stream in progress...</span> <a class="btn btn-primary" href="/live/stream">Watch Now</a>
+            </div>
+        </div>
+    </div>
+</section> --> 
