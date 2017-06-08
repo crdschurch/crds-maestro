@@ -18,8 +18,7 @@ defmodule CrossroadsInterface.CmsPageController do
       |> assign(:body_class, body_class)
       |> assign(:crds_styles, crds_styles)
       |> render(CrossroadsInterface.CmsPageView, "index.html", %{ payload: page["content"],
-      "css_files": [ "/js/legacy/legacy.css", "/css/vendor/flickity-2.0.8.min.css" ],
-      "js_files": [ "/js/vendor/flickity-2.0.8.min.js", "/js/home_page/cards.js" ]})
+      "css_files": [ "/js/legacy/legacy.css" ]})
   end
 
   defp getStylesClassFromPage(page) do
