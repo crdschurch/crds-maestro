@@ -7,18 +7,19 @@ defmodule CrossroadsInterface.CmsPageController do
   plug CrossroadsInterface.Plug.Meta
   plug CrossroadsInterface.Plug.ContentBlocks
 
-  def index(conn, _) do    
+  def index(conn, _) do
     {:ok, page} = Pages.get_page(conn.assigns[:path])
     crds_styles = getStylesClassFromPage(page)
     body_class = getBodyClassFromPage(page)
     layout = getLayoutFromPage(page)
-    conn 
+    conn
       |> CrossroadsInterface.Plug.RedirectCookie.call("content", "{\"link\":\"#{conn.assigns[:path]}\"}")
       |> put_layout(layout)
       |> assign(:body_class, body_class)
       |> assign(:crds_styles, crds_styles)
       |> render(CrossroadsInterface.CmsPageView, "index.html", %{ payload: page["content"],
-      "css_files": [ "/js/legacy/legacy.css" ]}) 
+      "css_files": [ "/js/legacy/legacy.css", "/css/vendor/flickity-2.0.8.min.css" ],
+      "js_files": [ "/js/vendor/flickity-2.0.8.min.js", "/js/home_page/cards.js" ]})
   end
 
   defp getStylesClassFromPage(page) do
