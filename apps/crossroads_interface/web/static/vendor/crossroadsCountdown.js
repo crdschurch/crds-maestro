@@ -3,15 +3,17 @@ $(function () {
 
   // Streamspot url
   var streamspotUrl = "https://api.streamspot.com";
-  var streamspotId = "crossr4915";
-  var streamspotKey = "82437b4d-4e38-42e2-83b6-148fcfaf36fb";
+  //var streamspotId = "crossr4915";
+  //var streamspotKey = "82437b4d-4e38-42e2-83b6-148fcfaf36fb";
+  var streamspotId = "crossr30e3";
+  var streamspotKey = "a0cb38cb-8146-47c2-b11f-6d93f4647389";
 
   goLive = function () {
-    $("#crossroads_countdown .time").hide();
-    $("#crossroads_countdown .live").show();
+    $("#crossroads_countdown .time").addClass("hide");
+    $("#crossroads_countdown .live").removeClass("hide");
   };
 
-  loadCountdown = function (data) {
+  showCountdown = function (data) {
     var seconds_till;
     $("#crossroads_countdown").show();
 
@@ -46,7 +48,7 @@ $(function () {
     }, 1000);
   }
 
-  isLive = function() {
+  loadCountdown = function() {
     statusUrl = streamspotUrl + "/broadcaster/" + streamspotId + "/broadcasting";
     $.ajax({
       url: statusUrl,
@@ -56,8 +58,10 @@ $(function () {
         request.setRequestHeader("X-API-Key", streamspotKey);
       },
       success: function (data) {
-        if(data.isBroadcasting) {
-          goLive();
+        if(data.data.isBroadcasting) {
+          goLive();          
+        } else {
+          loadEvents();
         }
       },
       error: function (xhr, ajaxOptions, thrownError) {
@@ -76,7 +80,7 @@ $(function () {
         request.setRequestHeader("X-API-Key", streamspotKey);
       },
       success: function (data) {
-        loadCountdown(data);
+        showCountdown(data);
       },
       error: function (xhr, ajaxOptions, thrownError) {
         return console.log(thrownError);
@@ -109,10 +113,6 @@ $(function () {
   seconds = void 0;
   intervalId = void 0;
 
-  if(isLive()) {
-    goLive();
-  } else {
-    loadEvents();
-  }
+  loadCountdown();
 
 });

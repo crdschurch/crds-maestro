@@ -19,7 +19,7 @@
 
 <section class="navbar-section" id="countdown">
   <div class="container animated fadeIn">
-    <a class="btn see-schedule" href="/live#schedule">
+    <a class="btn see-schedule" ng-click/live#schedule">
       See Schedule
       <svg class="icon icon-arrow-down9" viewBox="0 0 32 32">
         <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-down9"></use>
