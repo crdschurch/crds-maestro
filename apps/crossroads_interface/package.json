@@ -9,7 +9,6 @@
   "dependencies": {
     "crds-shared-header": "0.2.14",
     "crds-styles": "0.6.0",
-    "flickity": "^2.0.8",
     "phoenix": "file:../../deps/phoenix",
     "phoenix_html": "file:../../deps/phoenix_html"
   },
