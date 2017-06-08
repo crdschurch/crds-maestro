@@ -36,5 +36,6 @@
             s.parentNode.insertBefore(wf, s);
         })(document);
     </script>
+    <script src="<%= static_path(@conn, "/js/vendor.js ") %>"></script>
     <script src="<%= static_path(@conn, "/js/app.js ") %>"></script>
     <script>require("web/static/js/app").App.run()</script>

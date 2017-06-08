@@ -15,13 +15,13 @@ defmodule CrossroadsInterface.CmsPageController do
     crds_styles = getStylesClassFromPage(page)
     body_class = getBodyClassFromPage(page)
     layout = getLayoutFromPage(page)
-    conn 
+    conn
       |> CrossroadsInterface.Plug.RedirectCookie.call("content", "{\"link\":\"#{conn.assigns[:path]}\"}")
       |> put_layout(layout)
       |> assign(:body_class, body_class)
       |> assign(:crds_styles, crds_styles)
       |> render(CrossroadsInterface.CmsPageView, "index.html", %{ payload: page["content"],
-      "css_files": [ "/js/legacy/legacy.css" ]}) 
+      "css_files": [ "/js/legacy/legacy.css" ]})
   end
 
   defp isStageRequest?(params) do
