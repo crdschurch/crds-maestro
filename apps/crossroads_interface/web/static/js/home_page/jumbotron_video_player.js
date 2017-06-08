@@ -12,11 +12,6 @@ function onYouTubeIframeAPIReady() {
     setTimeout(onYouTubeIframeAPIReady, 100);
     return true;
   }
-
-  // new CRDS.JumbotronVideoPlayer({
-  //   videoId: 'EKgKp1NzEKU',
-  //   playerId: 'crds-bg-video'
-  // });
 }
 
 CRDS.JumbotronVideoPlayer = function(options = {}) {
