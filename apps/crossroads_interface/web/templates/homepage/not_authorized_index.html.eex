@@ -2,50 +2,31 @@
     <div class="container-fluid main animated fadeIn">
         <div class="row">
             <div class="col-md-12">
-              <%= raw(CrossroadsInterface.SharedView.filter_content_blocks(@content_blocks, "homePage")["content"]) %>
+                <%= raw(CrossroadsInterface.SharedView.filter_content_blocks(@content_blocks, "homePage")["content"]) %>
             </div>
         </div>
-    </div>    
-</div>
-
-<!--
-<div class="row home-countdown">
-  <div id="crossroads_countdown" class="container text-center">
-    <div class="time col-sm-12 type-color-grey h4"><a href="http://crossroads.net/live">Watch</a> a live stream of our next service in <span class="days type-color-grey-darker bold"></span> days, <span class="hours type-color-grey-darker bold"></span> hours and <span class="minutes type-color-grey-darker bold"></span> minutes.</div>
-    <div class="live col-sm-12 type-color-grey h4" style="display: none;"><a class="btn btn-danger" href="http://live.crossroads.net"> <svg class="icon-large" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewbox="0 0 1683.78 1488.1875" enable-background="new 0 0 1683.78 1190.55" xml:space="preserve"><g><g><path d="M708.062,417.92c4.64,3.969,10.322,5.906,15.981,5.906c6.918,0,13.788-2.893,18.644-8.536    c8.836-10.27,7.648-25.728-2.638-34.528c-35.236-30.14-55.437-73.958-55.437-120.214c0-46.246,20.189-90.051,55.401-120.191    c10.287-8.81,11.474-24.269,2.637-34.528c-8.835-10.27-24.35-11.465-34.624-2.63c-46.086,39.466-72.521,96.806-72.521,157.349    C635.504,321.103,661.952,378.467,708.062,417.92z M946.763,140.285c35.248,30.165,55.474,73.995,55.474,120.263    c0,46.268-20.226,90.098-55.474,120.261c-10.299,8.8-11.485,24.259-2.649,34.517c4.855,5.655,11.726,8.549,18.642,8.549    c5.66,0,11.342-1.938,15.97-5.906c46.145-39.466,72.618-96.853,72.618-157.42c0-60.568-26.473-117.956-72.618-157.42    c-10.275-8.811-25.789-7.628-34.612,2.642C935.278,116.028,936.464,131.486,946.763,140.285z M1020.161,54.946    c60.269,51.566,94.832,126.503,94.832,205.603c0,79.098-34.564,154.048-94.844,205.625c-10.287,8.799-11.474,24.257-2.638,34.528    c4.855,5.642,11.726,8.536,18.644,8.536c5.658,0,11.341-1.937,15.98-5.907c71.155-60.89,111.965-149.385,111.965-242.782    c0-93.41-40.811-181.894-111.953-242.76c-10.299-8.824-25.8-7.628-34.624,2.629C1008.688,30.689,1009.874,46.147,1020.161,54.946z     M634.654,503.283c4.627,3.97,10.322,5.907,15.981,5.907c6.918,0,13.788-2.894,18.644-8.537    c8.835-10.257,7.648-25.717-2.638-34.528c-60.232-51.564-94.786-126.492-94.786-205.577c0-79.075,34.541-153.989,94.75-205.542    c10.287-8.811,11.474-24.27,2.638-34.528c-8.836-10.271-24.338-11.453-34.624-2.63c-71.095,60.866-111.869,149.325-111.869,242.7    C522.747,353.933,563.534,442.405,634.654,503.283z M1194.589,1147.406l-143.88-392.564c-0.035-0.12-0.084-0.25-0.131-0.37    l-99.282-270.891c-0.084-0.24-0.168-0.478-0.264-0.717l-50.546-137.944c27.131-18.293,44.971-49.246,44.971-84.371    c0-56.193-45.678-101.754-102.04-101.754c-56.348,0-102.038,45.561-102.038,101.754c0,35.125,17.839,66.078,44.971,84.371    l-22.78,62.169c-0.084,0.215-0.156,0.42-0.227,0.635l-271.085,739.683c-4.652,12.696,1.906,26.757,14.639,31.407    c2.782,1.005,5.622,1.495,8.428,1.495c10.011,0,19.423-6.169,23.066-16.092l69.105-188.588l555.573,203.174    c8.955,3.264,19.05,1.076,25.8-5.667C1195.632,1166.391,1197.862,1156.361,1194.589,1147.406z M915.352,528.152l69.502,189.652    l-222.026-96.386L915.352,528.152z M832.484,361.705c3.597,0.382,7.242,0.598,10.934,0.598c3.693,0,7.338-0.216,10.935-0.598    l28.546,77.914l-66-35.363L832.484,361.705z M799.862,450.714l78.984,42.31l-121.774,74.473L799.862,450.714z M723.923,657.941    L965.01,762.602l-329.805,137.43L723.923,657.941z M660.13,942.726l353.209-147.199l116.952,319.132L660.13,942.726z"></path></g></g><text x="0" y="1205.55" fill="#000000" font-size="5px" font-weight="bold" font-family="&#039;Helvetica Neue&#039;, Helvetica, Arial-Unicode, Arial, Sans-serif">Created by Sasha Tikhonov</text><text x="0" y="1210.55" fill="#000000" font-size="5px" font-weight="bold" font-family="&#039;Helvetica Neue&#039;, Helvetica, Arial-Unicode, Arial, Sans-serif">from the Noun Project</text></svg> LIVE NOW </a> <br class="visible-xs"> Watch a live stream of our current service.</div>
-  </div>
-</div>
--->
-
-<section class="navbar-section" id="countdown">
-  <div class="container animated fadeIn">
-    <a class="btn see-schedule" ng-click/live#schedule">
-      See Schedule
-      <svg class="icon icon-arrow-down9" viewBox="0 0 32 32">
-        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#arrow-down9"></use>
-      </svg>
-    </a>
-    <div class="upcoming animated fadeIn">
-      <div class="time countdown">
-        <div id="crossroads_countdown" class="countdown__timer">
-          <i class="countdown__text">Join the live stream in...</i>
-
-          <ul class="list-inline">
-            <li><strong><span class="days"></span></strong> <small>days</small></li>
-            <li class="vr"></li>
-            <li><strong><span class="hours"></span></strong> <small>hours</small></li>
-            <li class="vr"></li>
-            <li><strong><span class="minutes"></span></strong> <small>min</small></li>
-            <li class="vr"></li>
-            <li><strong><span class="seconds"></span></strong> <small>sec</small></li>
-          </ul>
-        </div>
-
-      </div>
-      <div class="live in-progress">
-        <i>Live stream in progress...</i> <a class="btn btn-sm" href="/live/stream">Watch Now</a>
-      </div>
+        <section class="navbar-section" id="crossroads_countdown">
+            <div class="container animated fadeIn">
+                <div class="upcoming animated fadeIn">
+                    <div class="time countdown">
+                        <div class="countdown__timer">
+                            <i class="countdown__text">Join the live stream in...</i>
+                            <ul class="list-inline">
+                                <li><strong><span class="days"></span></strong> <small>days</small></li>
+                                <li class="vr"></li>
+                                <li><strong><span class="hours"></span></strong> <small>hours</small></li>
+                                <li class="vr"></li>
+                                <li><strong><span class="minutes"></span></strong> <small>min</small></li>
+                                <li class="vr"></li>
+                                <li><strong><span class="seconds"></span></strong> <small>sec</small></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="live hide in-progress">
+                        <i>Live stream in progress...</i> <a class="btn btn-sm" href="/live/stream">Watch Now</a>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
-  </div>
-</section>
-
+</div>
