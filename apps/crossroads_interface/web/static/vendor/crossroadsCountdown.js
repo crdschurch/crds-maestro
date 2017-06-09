@@ -3,11 +3,9 @@ $(function () {
 
   // Streamspot url
   var streamspotUrl = "https://api.streamspot.com";
-  //var streamspotId = "crossr4915";
-  //var streamspotKey = "82437b4d-4e38-42e2-83b6-148fcfaf36fb";
-  var streamspotId = "crossr30e3";
-  var streamspotKey = "a0cb38cb-8146-47c2-b11f-6d93f4647389";
-
+  var streamspotId = window.env.streamspotId;
+  var streamspotKey = window.env.streamspotKey;
+  
   goLive = function () {
     $("#crossroads_countdown .time").addClass("hide");
     $("#crossroads_countdown .live").removeClass("hide");
@@ -113,6 +111,8 @@ $(function () {
   seconds = void 0;
   intervalId = void 0;
 
-  loadCountdown();
+  if ($("#crossroads_countdown").length) {
+    loadCountdown();
+  }
 
 });
