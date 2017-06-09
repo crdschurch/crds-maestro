@@ -2,7 +2,7 @@
     <div class="container-fluid main animated fadeIn">
         <div class="row">
             <div class="col-md-12">
-              <%= raw(CrossroadsInterface.SharedView.filter_content_blocks(@content_blocks, "homePage")["content"]) %>
+                <%= raw(CrossroadsInterface.SharedView.filter_content_blocks(@content_blocks, "homePage")["content"]) %>
             </div>
         </div>
     </div>
