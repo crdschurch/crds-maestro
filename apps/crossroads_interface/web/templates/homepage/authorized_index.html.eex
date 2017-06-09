@@ -5,6 +5,6 @@
               <%= raw(CrossroadsInterface.SharedView.filter_content_blocks(@content_blocks, "userHomePage")["content"]) %>
             </div>
         </div>
-    </div>    
+    </div>
 </div>
 

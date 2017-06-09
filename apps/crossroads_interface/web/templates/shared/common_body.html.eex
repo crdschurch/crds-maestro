@@ -41,5 +41,6 @@
         env.streamspotId = "<%= Application.get_env(:crossroads_interface, :streamspot_id) %>";
         env.streamspotKey = "<%= Application.get_env(:crossroads_interface, :streamspot_key) %>";
     </script>
+    <script src="<%= static_path(@conn, "/js/vendor.js ") %>"></script>
     <script src="<%= static_path(@conn, "/js/app.js ") %>"></script>
     <script>require("web/static/js/app").App.run()</script>
