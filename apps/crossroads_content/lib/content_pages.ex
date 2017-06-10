@@ -42,7 +42,7 @@ defmodule CrossroadsContent.Pages do
     if Map.has_key?(cms_page_cache, url) && !stage do
       page = Map.fetch(cms_page_cache, url)
     else
-      page = case CrossroadsContent.CmsClient.get_page(url, false) do
+      page = case CrossroadsContent.CmsClient.get_page(url, stage) do
         {:ok, _, body} -> {:ok, List.first(body["pages"])}
         _ -> :error
       end      
@@ -77,7 +77,7 @@ defmodule CrossroadsContent.Pages do
 
   defp load_cms_page_cache() do
     Logger.debug("Loading all CMS pages")    
-    cms_page_cache = case CrossroadsContent.CmsClient.get_pages(false) do
+    cms_page_cache = case CrossroadsContent.CmsClient.get("Page", %{"requiresAngular" => 0}) do
       {:ok, 200, response} -> create_page_cache_from_response(response)
       {:error, _, %{error: response}} -> Logger.error("Error getting CMS pages: #{response}"); %{}
       _ -> Logger.error("Error getting CMS pages"); %{}
