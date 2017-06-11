@@ -95,7 +95,7 @@ defmodule CrossroadsContent.CmsClient do
   @doc false
   def handle_call({:all, url, params}, _from, state) do
     path = "#{url}?#{URI.encode_query(params)}"
-    make_cached_call(path, state)
+    make_call(path, state)
   end
 
   @doc false

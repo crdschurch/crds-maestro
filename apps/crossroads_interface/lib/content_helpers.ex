@@ -27,4 +27,10 @@ defmodule ContentHelpers do
     end
   end
 
+  def is_stage_request?(params) do
+    case params do
+      %{"stage" => "Stage"} -> true
+      _ -> false
+    end
+  end
 end

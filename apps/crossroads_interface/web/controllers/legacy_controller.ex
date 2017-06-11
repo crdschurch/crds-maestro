@@ -12,10 +12,15 @@ defmodule CrossroadsInterface.LegacyController do
 
   defp renderSite(conn, params) do
     path = ContentHelpers.add_trailing_slash_if_necessary(conn.request_path)
-    if CrossroadsContent.Pages.page_exists?(path) do
-      conn |> assign(:path, path) |> CrossroadsInterface.CmsPageController.call(:index)
-    else
-      conn |> render("app_root.html", %{ "js_files": [
+    case CrossroadsContent.Pages.get_page(path, ContentHelpers.is_stage_request?(conn.params)) do
+      {:ok, nil} -> conn |> renderLegacyApp(params)
+      {:ok, page} -> conn |> assign(:page, page) |> CrossroadsInterface.CmsPageController.call(:index)
+      _ -> conn |> renderLegacyApp(params)
+    end
+  end
+
+  defp renderLegacyApp(conn, params) do
+    conn |> render("app_root.html", %{ "js_files": [
         "/js/legacy/ang.js",
         "/js/legacy/core.js",
         "/js/legacy/common.js",
@@ -34,7 +39,6 @@ defmodule CrossroadsInterface.LegacyController do
       ], "css_files": [
        "/js/legacy/legacy.css"
       ], "base_href": "/"})
-    end
   end
 
   def index(conn, %{ "resolve" => "true" }) do

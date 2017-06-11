@@ -11,7 +11,12 @@ defmodule CrossroadsContent.Pages do
 
   @spec page_exists?(String.t) :: boolean
   def page_exists?(url) do
-    GenServer.call(__MODULE__, {:exists, url}, @timeout)
+    GenServer.call(__MODULE__, {:exists, url, false}, @timeout)
+  end
+
+  @spec page_exists?(String.t, boolean) :: boolean
+  def page_exists?(url, stage) do
+    GenServer.call(__MODULE__, {:exists, url, stage}, @timeout)
   end
 
   @spec get_page(String.t) :: {:ok, map} | :error
@@ -34,15 +39,23 @@ defmodule CrossroadsContent.Pages do
     GenServer.call(__MODULE__, {:cache}, @timeout)
   end
 
-  def handle_call({:exists, url}, _from, cms_page_cache) do
+  def handle_call({:exists, url, false}, _from, cms_page_cache) do
     {:reply, Map.has_key?(cms_page_cache, url), cms_page_cache}
+  end
+
+  def handle_call({:exists, url, true}, _from, cms_page_cache) do
+    exists = case get_non_angular_page(url, true) do
+      {:ok, _, body} -> List.first(body["pages"]) != nil
+      _ -> false
+    end
+    {:reply, exists, cms_page_cache}
   end
 
   def handle_call({:get, url, stage}, _from, cms_page_cache) do
     if Map.has_key?(cms_page_cache, url) && !stage do
       page = Map.fetch(cms_page_cache, url)
     else
-      page = case CrossroadsContent.CmsClient.get_page(url, stage) do
+      page = case get_non_angular_page(url, stage) do
         {:ok, _, body} -> {:ok, List.first(body["pages"])}
         _ -> :error
       end      
@@ -75,9 +88,32 @@ defmodule CrossroadsContent.Pages do
     {:noreply, cms_page_cache}
   end
 
+  defp set_angular_not_required(params) do
+    Map.put(params, "requiresAngular", 0)
+  end
+
+  defp set_stage(params, stage) do
+    case stage do
+      true -> Map.put(params, "stage", "Stage")
+      false -> params
+    end
+  end
+
+  defp set_link(params, url) do
+    Map.put(params, "link", url)
+  end
+
+  defp get_non_angular_pages(stage) do
+    CrossroadsContent.CmsClient.get("Page", Map.new |> set_angular_not_required |> set_stage(stage))
+  end
+
+  defp get_non_angular_page(url, stage) do  
+    CrossroadsContent.CmsClient.get("Page", Map.new |> set_angular_not_required |> set_stage(stage) |> set_link(url))
+  end
+
   defp load_cms_page_cache() do
     Logger.debug("Loading all CMS pages")    
-    cms_page_cache = case CrossroadsContent.CmsClient.get("Page", %{"requiresAngular" => 0}) do
+    cms_page_cache = case get_non_angular_pages(false) do
       {:ok, 200, response} -> create_page_cache_from_response(response)
       {:error, _, %{error: response}} -> Logger.error("Error getting CMS pages: #{response}"); %{}
       _ -> Logger.error("Error getting CMS pages"); %{}
