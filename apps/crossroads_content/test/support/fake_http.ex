@@ -65,11 +65,14 @@ defmodule CrossroadsContent.FakeHttp do
 
   def get_pages(params) do
     ok_response = {:ok, 200, %{"pages" => [%{"content" => "<h1>Page</h1>"}]}}
-    notfound_response = {:error, 404, %{}}
+    notfound_response = {:ok, 200, %{"pages" => []}}
+    error_response = {:error, 500, %{}}
     case params do      
       %{"requiresAngular" => 0, "link" => "/notcached/"} -> ok_response
       %{"requiresAngular" => 0, "link" => "/gotnothin/"} -> notfound_response
+      %{"requiresAngular" => 0, "stage" => "Stage", "link" => "/habitat/"} -> ok_response
       %{"requiresAngular" => 0, "stage" => "Stage", "link" => "/notcached/"} -> ok_response
+      %{"requiresAngular" => 0, "stage" => "Stage", "link" => "/error/"} -> error_response
       %{"requiresAngular" => 0} -> get_pages()
     end    
   end

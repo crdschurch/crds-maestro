@@ -36,31 +36,52 @@ defmodule CrossroadsContentPagesTest do
     end
   end
 
-  test "get_page() returns cached published page (stage=false)" do
+  test "get_page(stage=false) returns cached published page" do
     with_mock CmsClient, [get: fn("Page", %{"requiresAngular" => 0}) -> FakeHttp.get_pages() end] do  
       Pages.start_link([name: CrossroadsContent.Pages]) 
       assert {:ok, _} = Pages.get_page("/habitat/") 
     end
   end
 
-  test "get_page() returns page from CMS if not cached (published since last cache load)" do
+  test "get_page(stage=false) returns error if page exists but not cached (published since last cache load)" do
     with_mock CmsClient, [get: fn("Page", params) -> FakeHttp.get_pages(params) end] do  
       Pages.start_link([name: CrossroadsContent.Pages]) 
-      assert {:ok, %{"content" => "<h1>Page</h1>"}} = Pages.get_page("/notcached/") 
+      assert :error = Pages.get_page("/notcached/") 
     end
   end
 
-  test "get_page() return unpublished (stage=true) page from CMS if not cached" do
+  test "get_page(stage=false) returns error if not found" do 
+    with_mock CmsClient, [get: fn("Page", params) -> FakeHttp.get_pages(params) end] do 
+      Pages.start_link([name: CrossroadsContent.Pages])  
+      assert :error = Pages.get_page("/gotnothin/")     
+    end
+  end
+
+  test "get_page(stage=true) returns unpublished page from CMS" do
     with_mock CmsClient, [get: fn("Page", params) -> FakeHttp.get_pages(params) end] do   
       Pages.start_link([name: CrossroadsContent.Pages]) 
       assert {:ok, %{"content" => "<h1>Page</h1>"}} = Pages.get_page("/notcached/", true) 
     end
   end
 
-  test "get_page() return error if not found" do 
-    with_mock CmsClient, [get: fn("Page", params) -> FakeHttp.get_pages(params) end] do 
-      Pages.start_link([name: CrossroadsContent.Pages])  
-      assert :error = Pages.get_page("/gotnothin/")     
+  test "get_page(stage=true) returns unpublished page from CMS even if published version is cached" do
+    with_mock CmsClient, [get: fn("Page", params) -> FakeHttp.get_pages(params) end] do   
+      Pages.start_link([name: CrossroadsContent.Pages]) 
+      assert {:ok, %{"content" => "<h1>Page</h1>"}} = Pages.get_page("/habitat/", true) 
+    end
+  end
+
+  test "get_page(stage=true) returns error if unpublished page that requires angular does not exist" do
+    with_mock CmsClient, [get: fn("Page", params) -> FakeHttp.get_pages(params) end] do   
+      Pages.start_link([name: CrossroadsContent.Pages]) 
+      assert :error = Pages.get_page("/gotnothin/", true) 
+    end
+  end
+
+  test "get_page(stage=true) returns error if unknown error occurs getting from CMS" do
+    with_mock CmsClient, [get: fn("Page", params) -> FakeHttp.get_pages(params) end] do   
+      Pages.start_link([name: CrossroadsContent.Pages]) 
+      assert :error = Pages.get_page("/error/", true) 
     end
   end
 

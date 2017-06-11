@@ -51,15 +51,15 @@ defmodule CrossroadsContent.Pages do
     {:reply, exists, cms_page_cache}
   end
 
-  def handle_call({:get, url, stage}, _from, cms_page_cache) do
-    if Map.has_key?(cms_page_cache, url) && !stage do
-      page = Map.fetch(cms_page_cache, url)
-    else
-      page = case get_non_angular_page(url, stage) do
-        {:ok, _, body} -> {:ok, List.first(body["pages"])}
-        _ -> :error
-      end      
-    end
+  def handle_call({:get, url, false}, _from, cms_page_cache) do
+    {:reply, Map.fetch(cms_page_cache, url), cms_page_cache}
+  end
+
+  def handle_call({:get, url, true}, _from, cms_page_cache) do
+    page = case get_non_angular_page(url, true) do
+      {:ok, _, %{"pages" => page_list}} when length(page_list) > 0 -> {:ok, List.first(page_list)}
+      _ -> :error
+    end      
     {:reply, page, cms_page_cache}
   end
 

@@ -13,7 +13,6 @@ defmodule CrossroadsInterface.LegacyController do
   defp renderSite(conn, params) do
     path = ContentHelpers.add_trailing_slash_if_necessary(conn.request_path)
     case CrossroadsContent.Pages.get_page(path, ContentHelpers.is_stage_request?(conn.params)) do
-      {:ok, nil} -> conn |> renderLegacyApp(params)
       {:ok, page} -> conn |> assign(:page, page) |> CrossroadsInterface.CmsPageController.call(:index)
       _ -> conn |> renderLegacyApp(params)
     end

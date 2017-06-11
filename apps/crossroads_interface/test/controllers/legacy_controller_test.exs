@@ -34,7 +34,7 @@ defmodule CrossroadsInterface.LegacyControllerTest do
   test "GET non CMS page ", %{conn: conn} do
     with_mocks([ {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
                   {CmsClient, [], [get_system_page: fn("") -> {:ok, 200, fake_system_page("")} end]},
-                  {Pages, [], [get_page: fn(_path, _stage) -> {:ok, nil} end]},
+                  {Pages, [], [get_page: fn(_path, _stage) -> :error end]},
                   {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
       conn = get conn, "/"
       assert html_response(conn, 200)
@@ -44,7 +44,7 @@ defmodule CrossroadsInterface.LegacyControllerTest do
   test "GET /signin", %{conn: conn} do
     with_mocks([ {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
                   {CmsClient, [], [get_system_page: fn("signin") -> {:ok, 200, fake_system_page("signin")} end]},
-                  {Pages, [], [get_page: fn(_path, _stage) -> {:ok, nil} end]},
+                  {Pages, [], [get_page: fn(_path, _stage) -> :error end]},
                   {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
       conn = get conn, "/signin"
       assert html_response(conn, 200)
@@ -54,7 +54,7 @@ defmodule CrossroadsInterface.LegacyControllerTest do
   test "GET /signout", %{conn: conn} do
     with_mocks([ {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
                   {CmsClient, [], [get_system_page: fn("signout") -> {:ok, 200, fake_system_page("signout")} end]},
-                  {Pages, [], [get_page: fn(_path, _stage) -> {:ok, nil} end]},
+                  {Pages, [], [get_page: fn(_path, _stage) -> :error end]},
                   {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
       conn = get conn, "/signout"
       assert html_response(conn, 200)
