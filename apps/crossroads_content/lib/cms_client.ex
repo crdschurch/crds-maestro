@@ -53,19 +53,19 @@ defmodule CrossroadsContent.CmsClient do
   @doc false
   def handle_call({:site_config, id}, _from, state) do
     path = "SiteConfig/#{id}"
-    make_call(path, state)
+    make_cached_call(path, state)
   end
 
   @doc false
   def handle_call({:content_blocks}, _from, state) do
     path = "ContentBlock"
-    make_call(path, state)
+    make_cached_call(path, state)
   end
 
   @doc false
   def handle_call({:system_page, state_name}, _from, state) do
     path = "SystemPage/?StateName=#{state_name}"
-    make_call(path, state)
+    make_cached_call(path, state)
   end
 
   @doc false
@@ -77,19 +77,19 @@ defmodule CrossroadsContent.CmsClient do
   @doc false
   def handle_call({:page, url, false}, _from, state) do
     path = "Page/?link=#{url}"
-    make_call(path, state)
+    make_cached_call(path, state)
   end
 
   @doc false
   def handle_call({:pages, false}, _from, state) do
     path = "Page"
-    make_call(path, state)
+    make_cached_call(path, state)
   end
 
   @doc false
   def handle_call({:pages, true}, _from, state) do
     path = "Page/?stage=Stage"
-    make_call(path, state)
+    make_cached_call(path, state)
   end
 
   @doc false
@@ -99,14 +99,19 @@ defmodule CrossroadsContent.CmsClient do
   end
 
   @doc false
-  defp make_call(path, state) do
+  defp make_cached_call(path, state) do
     {status, result} = Cachex.get(:cms_cache, path)
     if status == :missing do
-      result = match_response(HTTPoison.get("#{@base_url}/api/#{path}",["Accept": "application/json"], [recv_timeout: @timeout]))
+      {:reply, result, state} = make_call(path,state)
       if elem(result, 0) == :ok do
         Cachex.set(:cms_cache, path, result)
       end      
     end
+    {:reply, result, state}
+  end
+
+  defp make_call(path, state) do
+    result = match_response(HTTPoison.get("#{@base_url}/api/#{path}",["Accept": "application/json"], [recv_timeout: @timeout]))
     {:reply, result, state}
   end
 
