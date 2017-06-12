@@ -33,18 +33,21 @@ defmodule CrossroadsInterface.LegacyControllerTest do
 
   test "GET non CMS page ", %{conn: conn} do
     with_mocks([ {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
-                  {CmsClient, [], [get_system_page: fn("") -> {:ok, 200, fake_system_page("")} end]},
-                  {Pages, [], [get_page: fn(_path, _stage) -> :error end]},
-                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
+                 {CmsClient, [], [get_system_page: fn("") -> {:ok, 200, fake_system_page("")} end]},
+                 {Pages, [], [get_page: fn(_path, _stage) -> :error end]},
+                 {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
       conn = get conn, "/"
       assert html_response(conn, 200)
     end
   end
 
   test "GET /non-existant?resolve=true is 404", %{conn: conn} do
-    with_mocks([ {Pages, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
-                  {Pages, [], [get_system_page: fn("non-existant") -> {:ok, 200, fake_system_page("")} end]},
-                  {Pages, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
+    with_mocks([ {Pages,     [], [page_exists?: fn(_page) -> false end]},
+                 {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
+                 {CmsClient, [], [get_system_page: fn("non-existant") -> {:ok, 200, fake_system_page("")} end]},
+                 {Pages,     [], [get_page: fn(_path, _stage) -> :error end]},
+                 {CmsClient, [], [get_page: fn("/servererror/", false) -> {:ok, 200, fake_error_page()} end]},
+                 {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
       conn = get(conn, "/non-existant", %{"resolve" => "true"})
       assert html_response(conn, 404)
     end

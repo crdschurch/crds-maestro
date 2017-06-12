@@ -105,7 +105,7 @@ defmodule CrossroadsContent.CmsClient do
       {:reply, result, state} = make_call(path,state)
       if elem(result, 0) == :ok do
         Cachex.set(:cms_cache, path, result)
-      end      
+      end
     end
     {:reply, result, state}
   end
