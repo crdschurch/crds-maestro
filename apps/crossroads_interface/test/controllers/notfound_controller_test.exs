@@ -6,7 +6,7 @@ defmodule CrossroadsInterface.NotfoundControllerTest do
 
   require IEx
 
-  @oops_page %{"bodyClasses" => nil, "canEditType" => nil, "canViewType" => nil,
+  @oops_page %{"pages" => [%{"bodyClasses" => nil, "canEditType" => nil, "canViewType" => nil,
     "card" => "summary", "className" => "ErrorPage",
     "content" => "<div class=\"push-top\">\n<div class=\"col-sm-5\">\n<h1 class=\"brand-font type-color page-header\">Oops.</h1>\n<h2 class=\"subheading push-bottom\">We're sorry. There seems to
   have been an issue.</h2>\n<p>Please use the navigation above or search here.</p>\n<form role=\"form\" action=\"/search\">\n<div class=\"form-group\">\n<div class=\"input-group input-group-lg\" ui-sref=\"search\" ng-click=\"ok($event)\"><input class=\"form-control input-lg\" type=\"search\" placeholder=\"Search\" name=\"q\"><span class=\"input-group-btn\"> <button type=\"submit\" c
@@ -22,7 +22,7 @@ defmodule CrossroadsInterface.NotfoundControllerTest do
     "pageType" => "ErrorPage", "reportClass" => nil, "requiresAngular" => "0",
     "showInMenus" => "0", "showInSearch" => "0", "sideBar" => 206, "sort" => "57",
     "title" => "Server error", "type" => "website", "uRLSegment" => "servererror",
-    "version" => "30"}
+    "version" => "30"}]}
 
   @content_block_call %{"contentBlocks" => [%{"id" => 1, "title" => "generalError"}]}
   @system_page_response %{"systemPages" => [%{"bodyClasses" => nil,
@@ -42,7 +42,7 @@ defmodule CrossroadsInterface.NotfoundControllerTest do
     with_mocks([ {Pages, [], [page_exists?: fn(_path) -> false end]},
                  {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, @content_block_call} end]},
                  {CmsClient, [], [get_system_page: fn(_anything) -> {:ok, 200, @system_page_response} end]},
-                 {Pages, [], [get_page: fn(_url) -> {:ok, @oops_page} end ]},
+                 {CmsClient, [], [get_page: fn(_url, _stage) -> {:ok, 200, @oops_page} end ]},
                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
 
       conn = get conn, "/notfound"

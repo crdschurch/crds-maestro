@@ -63,6 +63,20 @@ defmodule CrossroadsContent.FakeHttp do
     {:ok, %HTTPoison.Response{ status_code: 200, body: "{\"pages\":[{\"id\":270,\"submitButtonText\":null,\"clearButtonText\":null,\"onCompleteMessage\":null,\"showClearButton\":null,\"disableSaveSubmissions\":null,\"enableLiveValidation\":null,\"hideFieldLabels\":null,\"displayErrorMessagesAtTop\":null,\"disableAuthenicatedFinishAction\":null,\"disableCsrfSecurityToken\":null,\"pageType\":\"CenteredContentPage\",\"link\":\"\\/habitat\\/\",\"metaKeywords\":null,\"bodyClasses\":null,\"legacyStyles\":\"1\",\"type\":\"website\",\"card\":\"summary\",\"inheritSideBar\":\"1\",\"uRLSegment\":\"habitat\",\"title\":\"Habitat\",\"menuTitle\":null,\"content\":\"<h1 class=\\\"page-header\\\">ReachOut: Habitat<\\/h1><h2 class=\\\"subheading\\\">Serving Habitat for Humanity<\\/h2><div>\\n<p>We believe simple, decent, affordable housing for all people is something God cares about deeply.\\u00a0<\\/p>\\n<div>\\n<p>Our city has one of the lowest home ownership rates in the country. Only 42% of residents in our city own their homes, compared to 68% nationally. Statistically speaking, home ownership leads to significant increases in family stability, financial security and a sense of belonging to the community. And all of those things increase the likelihood that children can escape a cycle of poverty.<\\/p>\\n<\\/div>\\n<p>Check back soon for projects that will be available this spring and summer.\\u00a0<\\/p>\\n<\\/div>\",\"metaDescription\":null,\"extraMeta\":null,\"showInMenus\":\"1\",\"showInSearch\":\"1\",\"sort\":\"30\",\"hasBrokenFile\":\"0\",\"hasBrokenLink\":\"0\",\"reportClass\":null,\"canViewType\":\"\",\"canEditType\":\"\",\"version\":\"15\",\"sideBar\":139,\"fields\":[{\"id\":362,\"name\":\"EditableFormStep_00e32\",\"title\":\"First Page\",\"default\":null,\"sort\":\"1\",\"required\":\"0\",\"customErrorMessage\":null,\"customRules\":null,\"customSettings\":null,\"migrated\":\"1\",\"extraClass\":null,\"rightTitle\":null,\"showOnLoad\":\"1\",\"model\":null,\"header\":null,\"description\":null,\"label\":null,\"footer\":null,\"buttonText\":null,\"version\":\"3\",\"parent\":268,\"created\":\"2016-09-19T14:03:08-04:00\",\"className\":\"EditableFormStep\"}],\"created\":\"2015-08-24T14:06:05-04:00\",\"className\":\"CenteredContentPage\"}]}"  }}
   end
 
+  def get_pages(params) do
+    ok_response = {:ok, 200, %{"pages" => [%{"content" => "<h1>Page</h1>"}]}}
+    notfound_response = {:ok, 200, %{"pages" => []}}
+    error_response = {:error, 500, %{}}
+    case params do      
+      %{"requiresAngular" => 0, "link" => "/notcached/"} -> ok_response
+      %{"requiresAngular" => 0, "link" => "/gotnothin/"} -> notfound_response
+      %{"requiresAngular" => 0, "stage" => "Stage", "link" => "/habitat/"} -> ok_response
+      %{"requiresAngular" => 0, "stage" => "Stage", "link" => "/notcached/"} -> ok_response
+      %{"requiresAngular" => 0, "stage" => "Stage", "link" => "/error/"} -> error_response
+      %{"requiresAngular" => 0} -> get_pages()
+    end    
+  end
+
   def get_pages() do
     {:ok, 200, %{"pages" => [%{"submitButtonText" => nil, "title" => "Habitat",
       "created" => "2015-08-24T14:06:05-04:00", "canViewType" => nil,
