@@ -18,6 +18,11 @@ CRDS.JumbotronVideoPlayer = function(options = {}) {
   this.videoId = options.videoId;
   this.playerId = options.playerId;
   this.playerEl = document.getElementById(this.playerId);
+
+  if(!this.playerEl) {
+    return;
+  }
+
   this.playerContainerEl = this.playerEl.parentElement;
   this.jumbotronEl = this.playerContainerEl.parentElement;
   this.videoTrigger = this.jumbotronEl.querySelector('.video-trigger');
