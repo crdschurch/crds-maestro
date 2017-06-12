@@ -1,10 +1,10 @@
 defmodule ContentHelpers do
 
-  alias CrossroadsContent.Pages
+  alias CrossroadsContent.CmsClient
 
   @spec content_blocks :: [map]
   def content_blocks do
-    case Pages.get_content_blocks do
+    case CmsClient.get_content_blocks do
       {:ok, 200, body} -> Map.get(body, "contentBlocks", [])
       {_, _, _} -> []
     end
@@ -20,4 +20,17 @@ defmodule ContentHelpers do
     end
   end
 
+  def add_trailing_slash_if_necessary(url) do
+    case String.last(url) do
+      "/" -> url
+      _ -> url <> "/"
+    end
+  end
+
+  def is_stage_request?(params) do
+    case params do
+      %{"stage" => "Stage"} -> true
+      _ -> false
+    end
+  end
 end

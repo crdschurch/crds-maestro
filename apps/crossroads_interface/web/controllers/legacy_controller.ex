@@ -11,8 +11,15 @@ defmodule CrossroadsInterface.LegacyController do
   plug :put_layout, "no_header_or_footer.html"
 
   defp renderSite(conn, params) do
-    conn
-    |> render("app_root.html", %{ "js_files": [
+    path = ContentHelpers.add_trailing_slash_if_necessary(conn.request_path)
+    case CrossroadsContent.Pages.get_page(path, ContentHelpers.is_stage_request?(conn.params)) do
+      {:ok, page} -> conn |> assign(:page, page) |> CrossroadsInterface.CmsPageController.call(:index)
+      _ -> conn |> renderLegacyApp(params)
+    end
+  end
+
+  defp renderLegacyApp(conn, params) do
+    conn |> render("app_root.html", %{ "js_files": [
         "/js/legacy/ang.js",
         "/js/legacy/core.js",
         "/js/legacy/common.js",
@@ -50,13 +57,11 @@ defmodule CrossroadsInterface.LegacyController do
 
   def index(conn, _params) do
     conn
-      |> CrossroadsInterface.Plug.RedirectCookie.call("/")
-      |> renderSite( conn: conn, params: _params)
+    |> CrossroadsInterface.Plug.RedirectCookie.call("/")
+    |> renderSite( conn: conn, params: _params)
   end
 
   def noRedirect(conn, _params) do
-    conn
-      |> renderSite( conn: conn, params: _params)
+    conn |> renderSite( conn: conn, params: _params)
   end
-
 end
