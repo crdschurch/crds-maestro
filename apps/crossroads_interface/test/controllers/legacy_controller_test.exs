@@ -27,6 +27,7 @@ defmodule CrossroadsInterface.LegacyControllerTest do
                   {CrossroadsInterface.CmsPageController, [], [index: fn(conn, _) -> conn end]},
                   {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
       conn = get conn, "/"
+      assert conn.assigns[:path] == "/"
       assert conn.assigns[:page] == %{"content" => "<h1>Page</h1>"}
     end
   end
