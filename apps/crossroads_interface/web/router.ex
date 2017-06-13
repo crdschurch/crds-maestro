@@ -6,7 +6,6 @@ defmodule CrossroadsInterface.Router do
     plug :fetch_session
     plug :fetch_flash
     plug :protect_from_forgery
-    plug :put_secure_browser_headers
     plug CrossroadsInterface.Plug.PageType
     plug CrossroadsInterface.Plug.Payload
     plug CrossroadsInterface.Plug.BaseHref
