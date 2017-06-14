@@ -6,11 +6,11 @@ defmodule CrossroadsInterface.CrdsConnectController do
   @moduledoc"""
   This controller handles "/connect" (Finder) requests
   """
-
-  plug CrossroadsInterface.Plug.BaseHref, "/connect"
-  plug CrossroadsInterface.Plug.Meta
-  plug CrossroadsInterface.Plug.ContentBlocks
   plug :put_layout, "screen_width.html"
+  plug CrossroadsInterface.Plug.BaseHref, "/connect"
+  plug CrossroadsInterface.Plug.ContentBlocks
+  plug CrossroadsInterface.Plug.Meta
+  plug CrossroadsInterface.Plug.CrdsStyles, "crds-styles"
 
   def index(conn, _params) do
     conn

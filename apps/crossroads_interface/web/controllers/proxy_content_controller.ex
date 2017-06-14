@@ -9,7 +9,7 @@ defmodule CrossroadsInterface.ProxyContentController do
   Handle when a request comes in for a specific page in the CMS
   """
   def handle_content_proxy(%{:request_path => _request_path} = conn, %{"link" => page} = _params) do
-    {_, code, body} = CrossroadsContent.Pages.get_page(page, false)
+    {_, code, body} = CrossroadsContent.CmsClient.get_page(page, false)
     conn |> send_response(code, Poison.encode(body))
   end
 
@@ -17,7 +17,7 @@ defmodule CrossroadsInterface.ProxyContentController do
   Handle when a request comes in for content blocks
   """
   def handle_content_proxy(%{:request_path => "/proxy/content//api/ContentBlock"} = conn, _params) do
-    {_, code, body} =  CrossroadsContent.Pages.get_content_blocks()
+    {_, code, body} =  CrossroadsContent.CmsClient.get_content_blocks()
     conn |> send_response(code, Poison.encode(body))
   end
 
@@ -25,7 +25,7 @@ defmodule CrossroadsInterface.ProxyContentController do
   Handle when a request for the site config comes in
   """
   def handle_content_proxy(%{:request_path => "/proxy/content//api/SiteConfig/" <> site_id} = conn, _params) do
-    {_, code, body} = CrossroadsContent.Pages.get_site_config(site_id)
+    {_, code, body} = CrossroadsContent.CmsClient.get_site_config(site_id)
     conn |> send_response(code, Poison.encode(body))
   end
 
@@ -33,7 +33,7 @@ defmodule CrossroadsInterface.ProxyContentController do
   Handle when a SystemPage is requested
   """
   def handle_content_proxy(%{:request_path => "/proxy/content//api/SystemPage/"} = conn, %{"StateName" => state_name} = _params) do
-    {_, code, body} = CrossroadsContent.Pages.get_system_page(state_name)
+    {_, code, body} = CrossroadsContent.CmsClient.get_system_page(state_name)
     conn |> send_response(code, Poison.encode(body))
   end
 
@@ -41,7 +41,7 @@ defmodule CrossroadsInterface.ProxyContentController do
   Handle any other CMS requests by 
   """
   def handle_content_proxy(%{:request_path => "/proxy/content//api/" <> request_path} = conn, params) do
-    {_, code, body} = CrossroadsContent.Pages.get(request_path, params)
+    {_, code, body} = CrossroadsContent.CmsClient.get(request_path, params)
     conn |> send_response(code, Poison.encode(body))
   end
 
@@ -49,7 +49,7 @@ defmodule CrossroadsInterface.ProxyContentController do
   Handle any other CMS requests by 
   """
   def handle_content_proxy(%{:request_path => "/proxy/content/api/" <> request_path} = conn, params) do
-    {_, code, body} = CrossroadsContent.Pages.get(request_path, params)
+    {_, code, body} = CrossroadsContent.CmsClient.get(request_path, params)
     conn |> send_response(code, Poison.encode(body))
   end
 
