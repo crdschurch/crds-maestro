@@ -77,6 +77,16 @@ defmodule CrossroadsContent.FakeHttp do
     end    
   end
 
+  def get_page(path, _stage) do
+    logged_in_response = {:ok, %{"content" => "<h1>Logged in page</h1>"}}
+    logged_out_response = {:ok, %{"content" => "<h1>Logged out page</h1>"}}
+    error_response = :error
+    case path do
+      "/home/logged-in-user" -> logged_in_response
+      "/home/logged-out-user" -> logged_out_response
+    end
+  end
+
   def get_pages() do
     {:ok, 200, %{"pages" => [%{"submitButtonText" => nil, "title" => "Habitat",
       "created" => "2015-08-24T14:06:05-04:00", "canViewType" => nil,
