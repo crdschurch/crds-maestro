@@ -14,7 +14,6 @@ defmodule CrossroadsInterface.LegacyControllerTest do
                   {CrossroadsInterface.CmsPageController, [], [index: fn(conn, _) -> conn end]},
                   {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
       conn = conn
-        |> assign(:authorized, false)
         |> get("/")
 
       assert called Pages.get_page("/", false)
@@ -28,12 +27,12 @@ defmodule CrossroadsInterface.LegacyControllerTest do
                   {CmsClient, [], [get_system_page: fn("") -> {:ok, 200, fake_system_page("")} end]},
                   {Pages, [], [get_page: fn(path, stage) -> CrossroadsContent.FakeHttp.get_page(path, stage) end]},
                   {CrossroadsInterface.CmsPageController, [], [call: fn(conn, _method) -> conn end]},
+                  {CrossroadsInterface.Plug.Authorized, [], [call: fn(conn, _) -> assign(conn, :authorized, true) end]},
                   {CrossroadsInterface.CmsPageController, [], [index: fn(conn, _) -> conn end]},
                   {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
       conn = conn
-        |> assign(:authorized, true)
         |> get("/")
-      assert called Pages.get_page("/home/logged-in-user", false)
+      assert called Pages.get_page("/home/logged-in-user/", false)
       assert conn.assigns[:path] == "/"
       assert conn.assigns[:page] == %{"content" => "<h1>Logged in page</h1>"}
     end

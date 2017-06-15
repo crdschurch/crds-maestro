@@ -71,7 +71,7 @@ defmodule CrossroadsContent.FakeHttp do
     logged_in_response = {:ok, %{"content" => "<h1>Logged in page</h1>"}}
     logged_out_response = {:ok, %{"content" => "<h1>Logged out page</h1>"}}
     case path do
-      "/home/logged-in-user" -> logged_in_response
+      "/home/logged-in-user/" -> logged_in_response
       "/" -> logged_out_response
     end
   end

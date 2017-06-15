@@ -8,6 +8,7 @@ defmodule CrossroadsInterface.LegacyController do
   """
 
   plug CrossroadsInterface.Plug.PutMetaTemplate, "angular_meta_tags.html"
+  plug CrossroadsInterface.Plug.Authorized
   plug :put_layout, "no_header_or_footer.html"
 
   def index(conn, %{ "resolve" => "true" }) do
@@ -47,7 +48,7 @@ defmodule CrossroadsInterface.LegacyController do
 
   defp return_root_by_authentication_status(conn) do
     case conn.assigns[:authorized] do
-      true -> "/home/logged-in-user"
+      true -> "/home/logged-in-user/"
       false -> "/"
       _ -> "/"
     end
