@@ -16,6 +16,8 @@ defmodule CrossroadsInterface.LegacyControllerTest do
       conn = conn
         |> assign(:authorized, false)
         |> get("/")
+
+      assert called Pages.get_page("/", false)
       assert conn.assigns[:path] == "/"
       assert conn.assigns[:page] == %{"content" => "<h1>Logged out page</h1>"}
     end
@@ -31,6 +33,7 @@ defmodule CrossroadsInterface.LegacyControllerTest do
       conn = conn
         |> assign(:authorized, true)
         |> get("/")
+      assert called Pages.get_page("/home/logged-in-user", false)
       assert conn.assigns[:path] == "/"
       assert conn.assigns[:page] == %{"content" => "<h1>Logged in page</h1>"}
     end

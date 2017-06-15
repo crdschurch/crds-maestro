@@ -38,7 +38,7 @@ defmodule CrossroadsInterface.LegacyController do
     end
   end
 
-  defp get_authorized_path(conn, path) do
+  def get_authorized_path(conn, path) do
     case path do
       "/" -> return_root_by_authentication_status(conn)
       _ -> path
@@ -48,8 +48,8 @@ defmodule CrossroadsInterface.LegacyController do
   defp return_root_by_authentication_status(conn) do
     case conn.assigns[:authorized] do
       true -> "/home/logged-in-user"
-      false -> "/home/logged-out-user"
-      _ -> "/home/logged-out-user"
+      false -> "/"
+      _ -> "/"
     end
   end
 
