@@ -1,8 +1,7 @@
 <%= raw(assigns[:payload]) %>
 
 <script>
-  new CRDS.CardCarousel('crds-home-happening-cards');
-  new CRDS.CardCarousel('crds-home-location-cards');
+  new CRDS.CardCarousels();
 
   window.onload = function() {
     new CRDS.JumbotronVideoPlayer({
