@@ -26,8 +26,9 @@ defmodule CrossroadsInterface.LegacyController do
   end
 
   defp renderSite(conn, params) do
-    path = ContentHelpers.add_trailing_slash_if_necessary(conn.request_path)
-    case CrossroadsContent.Pages.get_page(get_authorized_path(conn, path), ContentHelpers.is_stage_request?(conn.params)) do
+    path = conn.request_path |> ContentHelpers.add_trailing_slash_if_necessary
+    case CrossroadsContent.Pages.get_page(determine_authorized_path(conn, path),
+                                          ContentHelpers.is_stage_request?(conn.params)) do
       {:ok, page}
         -> conn
           |> assign(:path, path)
@@ -39,7 +40,7 @@ defmodule CrossroadsInterface.LegacyController do
     end
   end
 
-  def get_authorized_path(conn, path) do
+  def determine_authorized_path(conn, path) do
     case path do
       "/" -> return_root_by_authentication_status(conn)
       _ -> path
@@ -48,7 +49,7 @@ defmodule CrossroadsInterface.LegacyController do
 
   defp return_root_by_authentication_status(conn) do
     case conn.assigns[:authorized] do
-      true -> "/home/logged-in-user/"
+      true -> "/personalized/"
       false -> "/"
       _ -> "/"
     end

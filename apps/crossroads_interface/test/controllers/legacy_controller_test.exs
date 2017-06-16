@@ -32,7 +32,7 @@ defmodule CrossroadsInterface.LegacyControllerTest do
                   {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
       conn = conn
         |> get("/")
-      assert called Pages.get_page("/home/logged-in-user/", false)
+      assert called Pages.get_page("/personalized/", false)
       assert conn.assigns[:path] == "/"
       assert conn.assigns[:page] == %{"content" => "<h1>Logged in page</h1>"}
     end
