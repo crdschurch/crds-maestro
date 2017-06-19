@@ -67,14 +67,8 @@ defmodule CrossroadsContent.FakeHttp do
     Logger.debug("getting url... #{url}")
   end
 
-  def get_page(path, _stage) do
-    logged_in_response = {:ok, %{"content" => "<h1>Logged in page</h1>"}}
-    logged_out_response = {:ok, %{"content" => "<h1>Logged out page</h1>"}}
-    case path do
-      "/personalized/" -> logged_in_response
-      "/" -> logged_out_response
-    end
-  end
+  def get_page("/personalized/", _stage), do: {:ok, %{"content" => "<h1>Logged in page</h1>"}}
+  def get_page("/", _stage), do: {:ok, %{"content" => "<h1>Logged out page</h1>"}}
 
   def get_pages(params) do
     ok_response = {:ok, 200, %{"pages" => [%{"content" => "<h1>Page</h1>"}]}}
