@@ -6,7 +6,7 @@ defmodule CrossroadsInterface.AuthorizedPlugTest do
   test "should call the gateway with the cookie value", %{conn: conn} do
     with_mock CrossroadsInterface.ProxyHttp, [gateway_get: fn(_url, _headers) -> {:ok, %HTTPoison.Response{body: "", headers: "", status_code: 200}} end] do
      cookie_value = "@verySp#C!$lc)0k!e"
-     _conn = conn
+     conn
         |> put_req_cookie("intsessionId", cookie_value)
         |> fetch_cookies()
         |> Authorized.call([])
