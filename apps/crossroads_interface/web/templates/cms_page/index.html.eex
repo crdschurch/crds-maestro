@@ -5,9 +5,17 @@
   new CRDS.CardCarousel('crds-home-location-cards');
 
   window.onload = function() {
-    new CRDS.JumbotronVideoPlayer({
-      videoId: 'EKgKp1NzEKU',
-      playerId: 'crds-bg-video'
-    });
-  }
+    initYouTube();
+  };
+
+  function initYouTube() {
+    if (!YT) {
+      setTimeout(initYouTube, 100);
+      return true;
+    }
+    var videoPlayers = document.querySelectorAll('.jumbotron.bg-video');
+    for (i = 0; i < videoPlayers.length; i++) {
+      new CRDS.JumbotronVideoPlayer(videoPlayers[i]);
+    }
+  };
 </script>

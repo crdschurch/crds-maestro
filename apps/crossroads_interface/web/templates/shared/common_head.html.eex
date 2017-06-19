@@ -39,7 +39,7 @@
     <link rel="shortcut icon" href="//crossroads-media.s3.amazonaws.com/images/favicon/favicon.ico">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 
-    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>"/> 
+    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>"/>
 
     <style>
     @-webkit-keyframes spinnerRotate {
@@ -74,4 +74,6 @@
     <% end %>
 
     <base href="<%= @base_href %>">
+
+    <script src="//www.youtube.com/iframe_api"></script>
 
