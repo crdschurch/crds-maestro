@@ -18,12 +18,20 @@ defmodule CrossroadsInterface.NotFoundAssetsPlugTest do
     end
 
     test "it should not modify response found for a root 'non-asset'" , %{conn: conn} do
-      local_conn = CrossroadsInterface.Plug.NotFoundAssetsPlug.call(conn(:get, "/assets/asset.aaa"),%{})
-      assert local_conn.status == conn.status
+      local_conn = 
+      :get |> conn("/assets/asset.aaa")
+
+      after_plug = 
+      local_conn |> CrossroadsInterface.Plug.NotFoundAssetsPlug.call(%{})
+      assert local_conn.status == after_plug.status
     end
 
     test "it should not modify response for a 'non-asset' in an extended path" , %{conn: conn} do
-      local_conn = CrossroadsInterface.Plug.NotFoundAssetsPlug.call(conn(:get, "/assets/asset.aaa"),%{})
+      local_conn = 
+      :get |> conn("/assets/asset.aaa", %{})
+
+      after_plug = 
+      local_conn |> CrossroadsInterface.Plug.NotFoundAssetsPlug.call(%{})
       assert local_conn.status == conn.status
     end
     
