@@ -1,20 +1,37 @@
 window['CRDS'] = window['CRDS'] || {};
 
-CRDS.CardCarousel = function(elementId) {
-  this.init(elementId);
+// ----------------------------------------------- #
+
+CRDS.CardCarousels = function(selector=undefined) {
+  var els = document.querySelectorAll(selector || '[data-carousel]');
+  for(var i=0; i<els.length; i++) {
+    new CRDS.CardCarousel(els[i]);
+  }
+}
+
+// ----------------------------------------------- #
+
+CRDS.CardCarousel = function(el) {
+  this.init(el);
   return;
 }
 
 CRDS.CardCarousel.prototype.constructor = CRDS.CardCarousel;
 
-CRDS.CardCarousel.prototype.init = function(elementId) {
-  var _this = this;
-  this.carousel = document.getElementById(elementId);
-  if (!this.carousel) {
-    setTimeout(_this.init, 100);
-    return;
+CRDS.CardCarousel.prototype.init = function(el) {
+  this.carousel = el.querySelector('.feature-cards');
+  if(this.carousel) {
+    this.carousel.dataset.carousel = el.dataset.carousel;
+    this.setup();
+    return this.addEvents();
   }
-  return this.addEvents();
+};
+
+CRDS.CardCarousel.prototype.setup = function() {
+  var cards = this.getCards();
+  for(var i=0; i<cards.length; i++) {
+    cards[i].classList.add('carousel-cell');
+  }
 };
 
 CRDS.CardCarousel.prototype.getCards = function() {
