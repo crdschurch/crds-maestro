@@ -20,9 +20,11 @@ CRDS.CardCarousel.prototype.constructor = CRDS.CardCarousel;
 
 CRDS.CardCarousel.prototype.init = function(el) {
   this.carousel = el.querySelector('.feature-cards');
-  this.carousel.dataset.carousel = el.dataset.carousel;
-  this.setup();
-  return this.addEvents();
+  if(this.carousel) {
+    this.carousel.dataset.carousel = el.dataset.carousel;
+    this.setup();
+    return this.addEvents();
+  }
 };
 
 CRDS.CardCarousel.prototype.setup = function() {
