@@ -52,7 +52,7 @@ CRDS.JumbotronVideoPlayer = function(jumbotronEl) {
             </g\>\
           </g\>\
         </svg\>';
-  this.jumbotronEl.prepend(preloader);
+  this.jumbotronEl.insertBefore(preloader, this.jumbotronEl.firstChild);
   this.preloaderContainerEl = this.jumbotronEl.querySelector('.preloader-wrapper');
   this.preloaderEl = this.jumbotronEl.querySelector('.preloader');
 
@@ -62,7 +62,7 @@ CRDS.JumbotronVideoPlayer = function(jumbotronEl) {
         <svg class="icon icon-2" viewBox="0 0 256 256"\>\
           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#close"></use\>\
         </svg\>';
-  this.inlinePlayerContainerEl.prepend(closeButton);
+  this.inlinePlayerContainerEl.insertBefore(closeButton, this.inlinePlayerContainerEl.firstChild);
 
   this.inlineVideoTrigger.innerHTML = '\
     <svg class="icon icon-5" viewBox="0 0 256 256"\>\
