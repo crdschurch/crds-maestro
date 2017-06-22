@@ -2,7 +2,7 @@ import { SharedHeader } from 'crds-shared-header/dist/bundle';
 import phoenixEventListener from './phoenixEventListener';
 import svgFixer from './svgFixer';
 
-import JumbotronVideoPlayer from './home_page/jumbotron_video_player';
+// import JumbotronVideoPlayer from './home_page/jumbotron_video_player';
 import CardCarousel from './home_page/card_carousel';
 
 
