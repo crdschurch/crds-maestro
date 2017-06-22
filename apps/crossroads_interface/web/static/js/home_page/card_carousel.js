@@ -3,6 +3,7 @@ window['CRDS'] = window['CRDS'] || {};
 // ----------------------------------------------- #
 
 CRDS.CardCarousels = function(selector=undefined) {
+  CRDS._instances = CRDS._instances || {};
   var els = document.querySelectorAll(selector || '[data-carousel]');
   for(var i=0; i<els.length; i++) {
     new CRDS.CardCarousel(els[i]);
@@ -19,6 +20,10 @@ CRDS.CardCarousel = function(el) {
 CRDS.CardCarousel.prototype.constructor = CRDS.CardCarousel;
 
 CRDS.CardCarousel.prototype.init = function(el) {
+  var id = 'carousel-' + this.generateId();
+  el.setAttribute('data-carousel-id', id);
+  CRDS._instances[id] = this;
+
   this.carousel = el.querySelector('.feature-cards');
   if(this.carousel) {
     this.carousel.dataset.carousel = el.dataset.carousel;
@@ -34,6 +39,10 @@ CRDS.CardCarousel.prototype.setup = function() {
   }
 };
 
+CRDS.CardCarousel.prototype.generateId = function() {
+  return Math.random().toString(36).substring(7);
+};
+
 CRDS.CardCarousel.prototype.getCards = function() {
   return this.carousel.querySelectorAll('.card');
 };
@@ -45,7 +54,7 @@ CRDS.CardCarousel.prototype.updateCardClass = function(action) {
 }
 
 CRDS.CardCarousel.prototype.createCarousel = function() {
-  new Flickity(this.carousel, {
+  this.flickity = new Flickity(this.carousel, {
     cellAlign: 'left',
     contain: true,
     prevNextButtons: false,

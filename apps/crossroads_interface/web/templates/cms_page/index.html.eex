@@ -2,6 +2,7 @@
 
 <script>
   new CRDS.CardCarousels();
+  new CRDS.CardFilters();
 
   window.onload = function() {
     initYouTube();
