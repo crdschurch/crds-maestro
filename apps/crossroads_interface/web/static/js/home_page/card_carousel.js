@@ -73,6 +73,7 @@ CRDS.CardCarousel.prototype.destroyCarousel = function() {
 CRDS.CardCarousel.prototype.reload = function() {
   if(this.flickity) {
     this.flickity.reloadCells();
+    this.flickity.selectCell(0);
   }
 };
 
