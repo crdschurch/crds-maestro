@@ -3,11 +3,4 @@
 <script>
   new CRDS.CardCarousel('crds-home-happening-cards');
   new CRDS.CardCarousel('crds-home-location-cards');
-
-  window.onload = function() {
-    new CRDS.JumbotronVideoPlayer({
-      videoId: 'EKgKp1NzEKU',
-      playerId: 'crds-bg-video'
-    });
-  }
 </script>
