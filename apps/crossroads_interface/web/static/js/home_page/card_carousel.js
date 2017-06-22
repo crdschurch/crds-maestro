@@ -8,14 +8,14 @@ CRDS.CardCarousels = function(selector=undefined) {
   for(var i=0; i<els.length; i++) {
     new CRDS.CardCarousel(els[i]);
   }
-}
+};
 
 // ----------------------------------------------- #
 
 CRDS.CardCarousel = function(el) {
   this.init(el);
   return;
-}
+};
 
 CRDS.CardCarousel.prototype.constructor = CRDS.CardCarousel;
 
@@ -65,7 +65,15 @@ CRDS.CardCarousel.prototype.createCarousel = function() {
 CRDS.CardCarousel.prototype.destroyCarousel = function() {
   this.carousel.classList.add('card-deck--expanded-layout');
   this.updateCardClass('remove');
-  new Flickity(this.carousel).destroy();
+  if(this.flickity) {
+    this.flickity.destroy();
+  }
+};
+
+CRDS.CardCarousel.prototype.reload = function() {
+  if(this.flickity) {
+    this.flickity.reloadCells();
+  }
 };
 
 CRDS.CardCarousel.prototype.addStyles = function() {
