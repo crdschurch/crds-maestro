@@ -25,7 +25,7 @@ CRDS.JumbotronVideoPlayer = function(jumbotronEl) {
   this.inlinePlayerContainerEl.appendChild(this.inlinePlayerEl);
 
   this.bgPlayerVars = {
-    autoplay: 1,
+    autoplay: 0,
     controls: 0,
     modestbranding: 1,
     loop: 1,
@@ -35,16 +35,17 @@ CRDS.JumbotronVideoPlayer = function(jumbotronEl) {
   };
 
   this.inlinePlayerVars = {
-    autoplay: 0,
+    autoplay: 1,
     controls: 1,
+    playsinline: 0,
     modestbranding: 1,
     showinfo: 0
   };
 
   var preloader = document.createElement('div');
-      preloader.classList.add('preloader-wrapper');
+      preloader.classList.add('inline-preloader-wrapper');
       preloader.innerHTML = '\
-        <svg viewBox="0 0 102 101" class="preloader preloader--top-right preloader--small"\>\
+        <svg viewBox="0 0 102 101" class="inline-preloader inline-preloader--top-right inline-preloader--small"\>\
           <g fill="none" fill-rule="evenodd"\>\
             <g transform="translate(1 1)" stroke-width="2"\>\
               <ellipse stroke="#eee" cx="50" cy="49.421" rx="50" ry="49.421"\></ellipse\>\
@@ -52,9 +53,9 @@ CRDS.JumbotronVideoPlayer = function(jumbotronEl) {
             </g\>\
           </g\>\
         </svg\>';
-  this.jumbotronEl.prepend(preloader);
-  this.preloaderContainerEl = this.jumbotronEl.querySelector('.preloader-wrapper');
-  this.preloaderEl = this.jumbotronEl.querySelector('.preloader');
+  this.jumbotronEl.insertBefore(preloader, this.jumbotronEl.firstChild);
+  this.preloaderContainerEl = this.jumbotronEl.querySelector('.inline-preloader-wrapper');
+  this.preloaderEl = this.jumbotronEl.querySelector('.inline-preloader');
 
   var closeButton = document.createElement('a');
       closeButton.classList.add('close-video');
@@ -62,7 +63,7 @@ CRDS.JumbotronVideoPlayer = function(jumbotronEl) {
         <svg class="icon icon-2" viewBox="0 0 256 256"\>\
           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#close"></use\>\
         </svg\>';
-  this.inlinePlayerContainerEl.prepend(closeButton);
+  this.inlinePlayerContainerEl.insertBefore(closeButton, this.inlinePlayerContainerEl.firstChild);
 
   this.inlineVideoTrigger.innerHTML = '\
     <svg class="icon icon-5" viewBox="0 0 256 256"\>\
@@ -89,6 +90,18 @@ CRDS.JumbotronVideoPlayer.prototype.initBgVideo = function() {
     }
   });
   this.bindEvents();
+  this.playBgVideo();
+};
+
+CRDS.JumbotronVideoPlayer.prototype.playBgVideo = function() {
+  var _this = this;
+  if (!this.bgPlayer.playVideo) {
+    setTimeout(function() {
+      _this.playBgVideo();
+    }, 250);
+    return true;
+  }
+  this.bgPlayer.playVideo();
 };
 
 CRDS.JumbotronVideoPlayer.prototype.onBgVideoReady = function(event) {
@@ -177,13 +190,12 @@ CRDS.JumbotronVideoPlayer.prototype.initInlineVideo = function() {
   return true;
 };
 
-CRDS.JumbotronVideoPlayer.prototype.playInlineVideo = function() {
+CRDS.JumbotronVideoPlayer.prototype.playInlineVideo = function(event = null) {
   if (!this.inlinePlayer) {
     this.initInlineVideo();
     return true;
   }
   this.inlinePlayerContainerEl.classList.add('active');
-  this.inlinePlayer.playVideo();
 };
 
 CRDS.JumbotronVideoPlayer.prototype.stopInlineVideo = function() {
