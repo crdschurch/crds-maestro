@@ -42,9 +42,9 @@ CRDS.JumbotronVideoPlayer = function(jumbotronEl) {
   };
 
   var preloader = document.createElement('div');
-      preloader.classList.add('preloader-wrapper');
+      preloader.classList.add('inline-preloader-wrapper');
       preloader.innerHTML = '\
-        <svg viewBox="0 0 102 101" class="preloader preloader--top-right preloader--small"\>\
+        <svg viewBox="0 0 102 101" class="inline-preloader inline-preloader--top-right inline-preloader--small"\>\
           <g fill="none" fill-rule="evenodd"\>\
             <g transform="translate(1 1)" stroke-width="2"\>\
               <ellipse stroke="#eee" cx="50" cy="49.421" rx="50" ry="49.421"\></ellipse\>\
@@ -53,8 +53,8 @@ CRDS.JumbotronVideoPlayer = function(jumbotronEl) {
           </g\>\
         </svg\>';
   this.jumbotronEl.insertBefore(preloader, this.jumbotronEl.firstChild);
-  this.preloaderContainerEl = this.jumbotronEl.querySelector('.preloader-wrapper');
-  this.preloaderEl = this.jumbotronEl.querySelector('.preloader');
+  this.preloaderContainerEl = this.jumbotronEl.querySelector('.inline-preloader-wrapper');
+  this.preloaderEl = this.jumbotronEl.querySelector('.inline-preloader');
 
   var closeButton = document.createElement('a');
       closeButton.classList.add('close-video');
