@@ -136,6 +136,7 @@ CRDS.JumbotronVideoPlayer.prototype.initBgVideo = function() {
     events: {
       onReady: function(event) {
         _this.onBgVideoReady(event);
+        _this.playBgVideo();
       },
       onStateChange: function(event) {
         _this.onBgVideoStateChange(event);
@@ -143,7 +144,6 @@ CRDS.JumbotronVideoPlayer.prototype.initBgVideo = function() {
     }
   });
   this.bindEvents();
-  this.playBgVideo();
 };
 
 CRDS.JumbotronVideoPlayer.prototype.playBgVideo = function() {
