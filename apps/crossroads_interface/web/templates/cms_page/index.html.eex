@@ -2,19 +2,5 @@
 
 <script>
   new CRDS.CardCarousels();
-
-  window.onload = function() {
-    initYouTube();
-  };
-
-  function initYouTube() {
-    if (!YT) {
-      setTimeout(initYouTube, 100);
-      return true;
-    }
-    var videoPlayers = document.querySelectorAll('.jumbotron.bg-video');
-    for (i = 0; i < videoPlayers.length; i++) {
-      new CRDS.JumbotronVideoPlayer(videoPlayers[i]);
-    }
-  };
+  new CRDS.JumbotronVideoPlayers();
 </script>

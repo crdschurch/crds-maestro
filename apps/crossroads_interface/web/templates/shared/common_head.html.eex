@@ -74,6 +74,3 @@
     <% end %>
 
     <base href="<%= @base_href %>">
-
-    <script src="//www.youtube.com/iframe_api"></script>
-
