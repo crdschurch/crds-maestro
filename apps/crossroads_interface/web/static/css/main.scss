@@ -10,6 +10,15 @@
 }
 
 .crds-styles {
+  @import 'node_modules/crds-styles/assets/stylesheets/variables';
+  @import 'node_modules/crds-styles/assets/stylesheets/overrides';
+  @import 'node_modules/crds-styles/assets/stylesheets/functions';
+  @import 'node_modules/crds-styles/assets/stylesheets/mixins';
+
+  font-family: $base-font-face;
+  font-size: $base-font-size;
+  font-weight: 300;
+
   .wf-loading {
       visibility: hidden;
   }
@@ -19,10 +28,6 @@
     min-height: 35vh;
   }
 
-  @import 'node_modules/crds-styles/assets/stylesheets/variables';
-  @import 'node_modules/crds-styles/assets/stylesheets/overrides';
-  @import 'node_modules/crds-styles/assets/stylesheets/functions';
-  @import 'node_modules/crds-styles/assets/stylesheets/mixins';
   @import 'node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
   @import 'node_modules/crds-styles/assets/stylesheets/base/modules';
   @import 'node_modules/crds-styles/assets/stylesheets/components/modules';
