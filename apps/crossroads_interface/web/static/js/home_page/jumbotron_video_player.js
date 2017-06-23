@@ -5,26 +5,10 @@ CRDS.JumbotronVideoPlayers = function() {
     this.init();
   } else {
     var jsUrl = 'https://www.youtube.com/iframe_api';
-    this.loadScript(jsUrl, this.__bind(this.init, this));
+    CRDS.Utils.loadScript(jsUrl, CRDS.Utils.__bind(this.init, this));
   }
   return;
 };
-
-CRDS.JumbotronVideoPlayers.prototype.__bind = function(fn, me) {
-  return function() {
-    return fn.apply(me, arguments);
-  };
-};
-
-CRDS.JumbotronVideoPlayers.prototype.loadScript = function(url, callback) {
-  var script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.src = url;
-      script.onreadystatechange = callback;
-      script.onload = callback;
-  var head = document.getElementsByTagName('head')[0];
-      head.appendChild(script);
-}
 
 CRDS.JumbotronVideoPlayers.prototype.init = function() {
   var videoPlayers = document.querySelectorAll('.jumbotron.bg-video');
@@ -37,7 +21,7 @@ CRDS.JumbotronVideoPlayers.prototype.init = function() {
 
 CRDS.JumbotronVideoPlayer = function(jumbotronEl) {
   this.jumbotronEl = jumbotronEl;
-  this.interval = setInterval(this.__bind(this.checkYoutubeStatus, this), 100);
+  this.interval = setInterval(CRDS.Utils.__bind(this.checkYoutubeStatus, this), 100);
   return;
 }
 
@@ -47,12 +31,6 @@ CRDS.JumbotronVideoPlayer.prototype.checkYoutubeStatus = function() {
     this.init();
   }
 }
-
-CRDS.JumbotronVideoPlayer.prototype.__bind = function(fn, me) {
-  return function() {
-    return fn.apply(me, arguments);
-  };
-};
 
 CRDS.JumbotronVideoPlayer.prototype.init = function() {
   this.bgPlayerContainerEl = this.jumbotronEl.querySelector('.bg-video-player');

@@ -7,25 +7,9 @@ CRDS.CardFilters = function(selector=undefined) {
   if(typeof Mustache == 'object') {
     this.init();
   } else {
-    this.loadScript('https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js', this.__bind(this.init, this));
+    CRDS.Utils.loadScript('https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js', CRDS.Utils.__bind(this.init, this));
   }
   return;
-}
-
-CRDS.CardFilters.prototype.__bind = function(fn, me) {
-  return function() {
-    return fn.apply(me, arguments);
-  };
-};
-
-CRDS.CardFilters.prototype.loadScript = function(url, callback) {
-  var script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.src = url;
-      script.onreadystatechange = callback;
-      script.onload = callback;
-  var head = document.getElementsByTagName('head')[0];
-      head.appendChild(script);
 }
 
 CRDS.CardFilters.prototype.init = function() {
@@ -46,12 +30,6 @@ CRDS.CardFilter = function(el) {
   this.setup();
   return;
 }
-
-CRDS.CardFilter.prototype.__bind = function(fn, me) {
-  return function() {
-    return fn.apply(me, arguments);
-  };
-};
 
 CRDS.CardFilter.prototype.init = function() {
   this.els = this.el.querySelectorAll('[data-filter]');
@@ -83,7 +61,7 @@ CRDS.CardFilter.prototype.setup = function() {
   var links = el.querySelectorAll('a');
 
   for(var i=0; i<links.length; i++) {
-    links[i].addEventListener('click', this.__bind(this.click, this));
+    links[i].addEventListener('click', CRDS.Utils.__bind(this.click, this));
   }
 
   this.container.insertBefore(el, this.container.childNodes[0])
