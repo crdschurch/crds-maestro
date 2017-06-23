@@ -122,9 +122,9 @@ CRDS.CardFilter.prototype.resetFilter = function(el) {
 }
 
 CRDS.CardFilter.prototype.activateFilter = function(el=undefined) {
-  var siblings = el.parentNode.childNodes;
+  var siblings = el.parentNode.parentNode.childNodes;
   for(var i=0; i<siblings.length; i++) {
-    siblings[i].classList.remove('on');
+    siblings[i].querySelector('a').classList.remove('on');
   }
   if(el) {
     el.classList.add('on');
@@ -151,5 +151,5 @@ CRDS.CardFilter.prototype.humanizeString = function(property) {
 
 CRDS.CardFilter.prototype.filterHTML = function() {
   var id = Math.random().toString(36).substring(7);
-  return '<button class="btn btn-outline btn-option dropdown-toggle soft-half-sides soft-quarter-ends" type="button" id="dropdownMenu-' + id + '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><svg class="icon icon-1 pull-right push-left" viewBox="0 0 256 256"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#chevron-down"></use></svg> <span data-current-label>{{label}}</span></button><ul class="crds-list dropdown-menu" aria-labelledby="dropdownMenu-' + id + '">{{#reset}}<a href="#" data-reset>{{reset}}</a>{{/reset}}{{#filters}}<a href="#" data-filter-select="{{value}}" class="block">{{title}}</a>{{/filters}}</ul>';
+  return '<button class="btn btn-outline btn-option dropdown-toggle soft-half-sides soft-quarter-ends" type="button" id="dropdownMenu-' + id + '" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><svg class="icon icon-1 pull-right push-left" viewBox="0 0 256 256"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#chevron-down"></use></svg> <span data-current-label>{{label}}</span></button><ul class="crds-list dropdown-menu" aria-labelledby="dropdownMenu-' + id + '">{{#reset}}<li><a href="#" data-reset>{{reset}}</a></li>{{/reset}}{{#filters}}<li><a href="#" data-filter-select="{{value}}" class="block">{{title}}</a>{{/filters}}</li></ul>';
 }
