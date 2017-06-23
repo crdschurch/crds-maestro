@@ -1,7 +1,1 @@
 <%= raw(assigns[:payload]) %>
-
-<script>
-  new CRDS.CardCarousels();
-  new CRDS.JumbotronVideoPlayers();
-  new CRDS.CardFilters();
-</script>
