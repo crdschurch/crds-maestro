@@ -5,6 +5,7 @@ defmodule CrossroadsInterface.HomepageController do
 
   plug Plug.Meta
   plug Plug.ContentBlocks
+  plug CrossroadsInterface.Plug.Authorized
   plug Plug.BodyClass, "crds-legacy-styles"
 
   plug :put_layout, "screen_width.html"

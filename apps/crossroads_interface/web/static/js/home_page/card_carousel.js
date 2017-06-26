@@ -1,20 +1,46 @@
 window['CRDS'] = window['CRDS'] || {};
 
-CRDS.CardCarousel = function(elementId) {
-  this.init(elementId);
+// ----------------------------------------------- #
+
+CRDS.CardCarousels = function(selector=undefined) {
+  CRDS._instances = CRDS._instances || {};
+  var els = document.querySelectorAll(selector || '[data-carousel]');
+  for(var i=0; i<els.length; i++) {
+    new CRDS.CardCarousel(els[i]);
+  }
+};
+
+// ----------------------------------------------- #
+
+CRDS.CardCarousel = function(el) {
+  this.init(el);
   return;
-}
+};
 
 CRDS.CardCarousel.prototype.constructor = CRDS.CardCarousel;
 
-CRDS.CardCarousel.prototype.init = function(elementId) {
-  var _this = this;
-  this.carousel = document.getElementById(elementId);
-  if (!this.carousel) {
-    setTimeout(_this.init, 100);
-    return;
+CRDS.CardCarousel.prototype.init = function(el) {
+  var id = 'carousel-' + this.generateId();
+  el.setAttribute('data-carousel-id', id);
+  CRDS._instances[id] = this;
+
+  this.carousel = el.querySelector('.feature-cards');
+  if(this.carousel) {
+    this.carousel.dataset.carousel = el.dataset.carousel;
+    this.setup();
+    return this.addEvents();
   }
-  return this.addEvents();
+};
+
+CRDS.CardCarousel.prototype.setup = function() {
+  var cards = this.getCards();
+  for(var i=0; i<cards.length; i++) {
+    cards[i].classList.add('carousel-cell');
+  }
+};
+
+CRDS.CardCarousel.prototype.generateId = function() {
+  return Math.random().toString(36).substring(7);
 };
 
 CRDS.CardCarousel.prototype.getCards = function() {
@@ -28,7 +54,7 @@ CRDS.CardCarousel.prototype.updateCardClass = function(action) {
 }
 
 CRDS.CardCarousel.prototype.createCarousel = function() {
-  new Flickity(this.carousel, {
+  this.flickity = new Flickity(this.carousel, {
     cellAlign: 'left',
     contain: true,
     prevNextButtons: false,
@@ -39,7 +65,16 @@ CRDS.CardCarousel.prototype.createCarousel = function() {
 CRDS.CardCarousel.prototype.destroyCarousel = function() {
   this.carousel.classList.add('card-deck--expanded-layout');
   this.updateCardClass('remove');
-  new Flickity(this.carousel).destroy();
+  if(this.flickity) {
+    this.flickity.destroy();
+  }
+};
+
+CRDS.CardCarousel.prototype.reload = function() {
+  if(this.flickity) {
+    this.flickity.reloadCells();
+    this.flickity.selectCell(0);
+  }
 };
 
 CRDS.CardCarousel.prototype.addStyles = function() {

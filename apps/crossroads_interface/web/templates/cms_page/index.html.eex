@@ -1,6 +1,1 @@
 <%= raw(assigns[:payload]) %>
-
-<script>
-  new CRDS.CardCarousel('crds-home-happening-cards');
-  new CRDS.CardCarousel('crds-home-location-cards');
-</script>

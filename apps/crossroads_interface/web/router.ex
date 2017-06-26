@@ -6,12 +6,10 @@ defmodule CrossroadsInterface.Router do
     plug :fetch_session
     plug :fetch_flash
     plug :protect_from_forgery
-    plug :put_secure_browser_headers
     plug CrossroadsInterface.Plug.PageType
     plug CrossroadsInterface.Plug.Payload
     plug CrossroadsInterface.Plug.BaseHref
     plug CrossroadsInterface.Plug.PutMetaTemplate
-    plug CrossroadsInterface.Plug.Authorized
     plug CrossroadsInterface.Plug.BodyClass
     plug CrossroadsInterface.Plug.CrdsStyles
   end

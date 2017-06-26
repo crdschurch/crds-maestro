@@ -1,7 +1,7 @@
 defmodule CrossroadsInterface.ProxyContentControllerTest do
   use CrossroadsInterface.ConnCase
-  alias CrossroadsContent.Pages
-  import Mock
+  #alias CrossroadsContent.Pages
+  #import Mock
 
 #  @valid %{"pages" => [%{"id" => 239, "link" => "\/some-real-page\/"}]}
   #@invalid %{"error" => "nothing there"}
