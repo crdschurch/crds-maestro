@@ -1,5 +1,7 @@
 window['CRDS'] = window['CRDS'] || {};
 
+// ---------------------------------------- JumbotronVideoPlayers
+
 CRDS.JumbotronVideoPlayers = function() {
   if(typeof YT == 'object') {
     this.init();
@@ -27,13 +29,17 @@ CRDS.JumbotronVideoPlayers.prototype.loadScript = function(url, callback) {
 }
 
 CRDS.JumbotronVideoPlayers.prototype.init = function() {
-  var videoPlayers = document.querySelectorAll('.jumbotron.bg-video');
-  for (var i = 0; i < videoPlayers.length; i++) {
-    new CRDS.JumbotronVideoPlayer(videoPlayers[i]);
+  var bgVideoPlayers = document.querySelectorAll('.jumbotron.bg-video');
+  for (var i = 0; i < bgVideoPlayers.length; i++) {
+    new CRDS.JumbotronBgVideoPlayer(bgVideoPlayers[i]);
+  }
+  var inlineVideoPlayers = document.querySelectorAll('.jumbotron.inline-video');
+  for (var i = 0; i < inlineVideoPlayers.length; i++) {
+    new CRDS.JumbotronInlineVideoPlayer(inlineVideoPlayers[i]);
   }
 }
 
-// --------------------------------------- #
+// ---------------------------------------- JumbotronBgVideoPlayer
 
 CRDS.JumbotronVideoPlayer = function(jumbotronEl) {
   this.jumbotronEl = jumbotronEl;
@@ -261,3 +267,5 @@ CRDS.JumbotronVideoPlayer.prototype.onInlineVideoStateChange = function(event) {
     this.stopInlineVideo();
   }
 };
+
+// ---------------------------------------- JumbotronInlineVideoPlayer
