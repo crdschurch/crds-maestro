@@ -1,0 +1,44 @@
+footer.crds-legacy-footer {
+  background-color: $gray-lighter;
+  margin-top: 40px;
+  padding-bottom: 200px;
+  padding-top: 50px;
+  color: $cr-gray;
+  line-height: 1.375rem;
+
+  h5 {
+    margin-top: 0;
+    color: $cr-gray;
+    font-weight: bold;
+    font-size: 1rem;
+  }
+  a {
+    color: $cr-gray;
+  }
+  .social-icons {
+    text-align: left;
+
+    @media (min-width: $screen-lg-min) {
+      text-align: right;
+    }
+
+    a {
+      background: $cr-gray;
+      color: $cr-gray-lighter;
+      border-radius: 50%;
+      padding: 8px;
+      display: inline-block;
+      height: 40px;
+      width: 40px;
+      margin-right: 15px;
+      svg {
+        height: 24px;
+        width: 24px;
+      }
+
+      &:hover {
+        background-color: $brand-primary;
+      }
+    }
+  }
+}

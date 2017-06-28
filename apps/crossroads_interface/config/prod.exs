@@ -31,6 +31,7 @@ config :logger,
 
 config :logger, :debug_log,
   path: "/var/log/maestro/maestro#{ConfigHelper.get_suffix()}.log",
+  format: "$date $time $metadata[$level] $message\n",
   level: :debug
 
 # Check `Plug.SSL` for all available options in `force_ssl`.
