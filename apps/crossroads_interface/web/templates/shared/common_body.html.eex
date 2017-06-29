@@ -11,7 +11,7 @@
     <script src="https://www.imgix.com/libraries/imgix.js" type="text/javascript" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js" defer></script>
 
-    <script>
+    <script defer>
       imgix.onready(function() {
         imgix.fluid({
           updateOnResizeDown: true,
@@ -23,8 +23,8 @@
     </script>
 
     <script src="https://use.typekit.net/ccb3vpa.js" defer></script>
-    <script>try{Typekit.load({ async: true });}catch(e){}</script>
-    <script>
+    <script defer>try{Typekit.load({ async: true });}catch(e){}</script>
+    <script defer>
         WebFontConfig = {
             typekit: {
                 id: 'ccb3vpa'
@@ -38,11 +38,11 @@
             s.parentNode.insertBefore(wf, s);
         })(document);
     </script>
-    <script>
+    <script defer>
         var env = window.env || {};
         env.streamspotId = "<%= Application.get_env(:crossroads_interface, :streamspot_id) %>";
         env.streamspotKey = "<%= Application.get_env(:crossroads_interface, :streamspot_key) %>";
     </script>
     <script src="<%= static_path(@conn, "/js/vendor.js ") %>" defer></script>
     <script src="<%= static_path(@conn, "/js/app.js ") %>" defer></script>
-    <script>require("web/static/js/app").App.run()</script>
+    <script defer>require("web/static/js/app").App.run()</script>

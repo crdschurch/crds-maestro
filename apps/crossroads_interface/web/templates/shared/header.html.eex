@@ -1,6 +1,6 @@
 <div class="crds-styles">
   <div data-header></div>
-  <script>
+  <script defer>
       (function(){
           var options = {
               cmsEndpoint: '<%= Application.get_env(:crossroads_interface, :cms_client_endpoint) %>',

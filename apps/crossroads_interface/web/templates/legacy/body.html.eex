@@ -32,6 +32,6 @@
 </script>
 
 <!-- prerender.io - Prevent caching before page is rendered-->
-<script>
+<script defer>
     window.prerenderReady = false;
 </script>
