@@ -73,16 +73,6 @@ CRDS.JumbotronVideoPlayer.prototype.init = function() {
     throw 'data-player-id is required on the jumbotron containing element.';
   }
 
-  this.inlineVideoTrigger = this.jumbotronEl.querySelector('.inline-video-trigger');
-  this.inlineVideoId = this.inlineVideoTrigger.getAttribute('data-video-id') ||
-                       this.bgVideoId;
-
-  this.inlinePlayerContainerEl = this.jumbotronEl.querySelector('.inline-video-player');
-  this.inlinePlayerId = 'video-player-' + Math.random().toString(36).substr(2, 10);
-  this.inlinePlayerEl = document.createElement('div');
-  this.inlinePlayerEl.setAttribute('id', this.inlinePlayerId);
-  this.inlinePlayerContainerEl.appendChild(this.inlinePlayerEl);
-
   this.bgPlayerVars = {
     autoplay: 0,
     controls: 0,
@@ -91,14 +81,6 @@ CRDS.JumbotronVideoPlayer.prototype.init = function() {
     playsinline: 1,
     showinfo: 0,
     playlist: this.bgVideoId // See: https://stackoverflow.com/a/25781957/2241124
-  };
-
-  this.inlinePlayerVars = {
-    autoplay: 1,
-    controls: 1,
-    playsinline: 0,
-    modestbranding: 1,
-    showinfo: 0
   };
 
   var preloader = document.createElement('div');
@@ -115,19 +97,6 @@ CRDS.JumbotronVideoPlayer.prototype.init = function() {
   this.jumbotronEl.insertBefore(preloader, this.jumbotronEl.firstChild);
   this.preloaderContainerEl = this.jumbotronEl.querySelector('.inline-preloader-wrapper');
   this.preloaderEl = this.jumbotronEl.querySelector('.inline-preloader');
-
-  var closeButton = document.createElement('a');
-      closeButton.classList.add('close-video');
-      closeButton.innerHTML = '\
-        <svg class="icon icon-2" viewBox="0 0 256 256"\>\
-          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#close"></use\>\
-        </svg\>';
-  this.inlinePlayerContainerEl.insertBefore(closeButton, this.inlinePlayerContainerEl.firstChild);
-
-  this.inlineVideoTrigger.innerHTML = '\
-    <svg class="icon icon-5" viewBox="0 0 256 256"\>\
-      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#play-thin"></use\>\
-    </svg\>';
 
   return this.initBgVideo();
 };
@@ -219,53 +188,96 @@ CRDS.JumbotronVideoPlayer.prototype.bindEvents = function() {
   window.addEventListener('resize', function(event) {
     _this.resizePlayer();
   }, true);
-
-  this.inlineVideoTrigger.addEventListener('click', function(event) {
-    event.preventDefault();
-    _this.playInlineVideo();
-  }, true);
-
-  var closeTrigger = this.inlinePlayerContainerEl.querySelector('.close-video');
-  closeTrigger.addEventListener('click', function(event) {
-    event.preventDefault();
-    _this.stopInlineVideo();
-  }, true);
 };
 
-CRDS.JumbotronVideoPlayer.prototype.initInlineVideo = function() {
+// ---------------------------------------- JumbotronInlineVideoPlayer
+
+CRDS.JumbotronInlineVideoPlayer = function(jumbotronEl) {
+  this.jumbotronEl = jumbotronEl;
+  this.init();
+  return;
+};
+
+CRDS.JumbotronInlineVideoPlayer.prototype.init = function() {
+  this.videoTrigger = this.jumbotronEl.querySelector('.inline-video-trigger');
+  this.videoTrigger.innerHTML = '\
+    <svg class="icon icon-5" viewBox="0 0 256 256"\>\
+      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#play-thin"></use\>\
+    </svg\>';
+
+  this.videoId = this.videoTrigger.getAttribute('data-video-id')
+  this.playerContainerEl = this.jumbotronEl.querySelector('.inline-video-player');
+  this.playerId = 'video-player-' + Math.random().toString(36).substr(2, 10);
+  this.playerEl = document.createElement('div');
+  this.playerEl.setAttribute('id', this.playerId);
+  this.playerContainerEl.appendChild(this.playerEl);
+
+  this.playerOptions = {
+    autoplay: 1,
+    controls: 1,
+    playsinline: 0,
+    modestbranding: 1,
+    showinfo: 0
+  };
+
+  this.closeButton = document.createElement('a');
+  this.closeButton.classList.add('close-video');
+  this.closeButton.innerHTML = '\
+    <svg class="icon icon-2" viewBox="0 0 256 256"\>\
+      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#close"></use\>\
+    </svg\>';
+
+  this.playerContainerEl.insertBefore(this.closeButton, this.playerContainerEl.firstChild);
+
+  this.bindEvents();
+};
+
+CRDS.JumbotronInlineVideoPlayer.prototype.initVideo = function() {
   var _this = this;
-  this.inlinePlayer = new YT.Player(this.inlinePlayerId, {
-    videoId: this.inlineVideoId,
-    playerVars: this.inlinePlayerVars,
+  this.player = new YT.Player(this.playerId, {
+    videoId: this.videoId,
+    playerVars: this.playerOptions,
     events: {
       onReady: function(event) {
-        _this.playInlineVideo(event);
+        _this.playVideo(event);
       },
       onStateChange: function(event) {
-        _this.onInlineVideoStateChange(event);
+        _this.onStateChange(event);
       }
     }
   });
   return true;
 };
 
-CRDS.JumbotronVideoPlayer.prototype.playInlineVideo = function(event = null) {
-  if (!this.inlinePlayer) {
-    this.initInlineVideo();
+CRDS.JumbotronInlineVideoPlayer.prototype.bindEvents = function() {
+  var _this = this;
+
+  this.videoTrigger.addEventListener('click', function(event) {
+    event.preventDefault();
+    _this.playVideo();
+  }, true);
+
+  this.closeButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    _this.stopVideo();
+  }, true);
+};
+
+CRDS.JumbotronInlineVideoPlayer.prototype.playVideo = function(event = null) {
+  if (!this.player) {
+    this.initVideo();
     return true;
   }
-  this.inlinePlayerContainerEl.classList.add('active');
+  this.playerContainerEl.classList.add('active');
 };
 
-CRDS.JumbotronVideoPlayer.prototype.stopInlineVideo = function() {
-  this.inlinePlayerContainerEl.classList.remove('active');
-  this.inlinePlayer.stopVideo();
+CRDS.JumbotronInlineVideoPlayer.prototype.stopVideo = function() {
+  this.playerContainerEl.classList.remove('active');
+  this.player.stopVideo();
 };
 
-CRDS.JumbotronVideoPlayer.prototype.onInlineVideoStateChange = function(event) {
+CRDS.JumbotronInlineVideoPlayer.prototype.onStateChange = function(event) {
   if (event.data == YT.PlayerState.ENDED) {
-    this.stopInlineVideo();
+    this.stopVideo();
   }
 };
-
-// ---------------------------------------- JumbotronInlineVideoPlayer
