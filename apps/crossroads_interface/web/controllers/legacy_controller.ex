@@ -59,7 +59,6 @@ defmodule CrossroadsInterface.LegacyController do
     conn |> render("app_root.html", %{ "js_files": [
         "/js/legacy/ang.js",
         "/js/legacy/core.js",
-        "/js/legacy/load-image.all.min.js",
         "/js/legacy/main.js"
       ], "css_files": [
        "/js/legacy/legacy.css"
