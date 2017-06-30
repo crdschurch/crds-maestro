@@ -1,4 +1,3 @@
-import { SharedHeader } from 'crds-shared-header/dist/bundle';
 import phoenixEventListener from './phoenixEventListener';
 import svgFixer from './svgFixer';
 
