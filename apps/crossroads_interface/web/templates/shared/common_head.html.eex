@@ -39,38 +39,54 @@
     <link rel="shortcut icon" href="//crossroads-media.s3.amazonaws.com/images/favicon/favicon.ico">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 
-    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>"/>
+    <noscript id="deferred-styles">      
+      <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>"/>
 
-    <style>
-    @-webkit-keyframes spinnerRotate {
-      100% {
-        -webkit-transform: rotate(360deg);
+      <style>
+      @-webkit-keyframes spinnerRotate {
+        100% {
+          -webkit-transform: rotate(360deg);
+        }
       }
-    }
 
-    @keyframes spin {
-      100% {
-        transform: rotate(360deg);
+      @keyframes spin {
+        100% {
+          transform: rotate(360deg);
+        }
       }
-    }
 
-    .preloader {
-      width: 75px;
-      height: 75px;
-      background: transparent;
-      margin: 110px auto;
-      -webkit-animation: spin 700ms linear infinite;
-      animation: spin 700ms linear infinite;
-      display: block;
-      top: calc(20% - 37.5px);
-      left: calc(50% - 37.5px);
-    }
-    </style>
+      .preloader {
+        width: 75px;
+        height: 75px;
+        background: transparent;
+        margin: 110px auto;
+        -webkit-animation: spin 700ms linear infinite;
+        animation: spin 700ms linear infinite;
+        display: block;
+        top: calc(20% - 37.5px);
+        left: calc(50% - 37.5px);
+      }
+      </style>
 
-    <%= if assigns[:css_files] do %>
-        <%= for script_file <- @css_files do %>
-            <link href="<%= static_path(@conn, script_file)%>" type="text/css" rel="stylesheet"> </script>
-        <% end %>
-    <% end %>
+      <%= if assigns[:css_files] do %>
+          <%= for script_file <- @css_files do %>
+              <link href="<%= static_path(@conn, script_file)%>" type="text/css" rel="stylesheet"> </script>
+          <% end %>
+      <% end %>      
+    </noscript>
 
     <base href="<%= @base_href %>">
+
+    <script>
+      var loadDeferredStyles = function() {
+        var addStylesNode = document.getElementById("deferred-styles");
+        var replacement = document.createElement("div");
+        replacement.innerHTML = addStylesNode.textContent;
+        document.body.appendChild(replacement)
+        addStylesNode.parentElement.removeChild(addStylesNode);
+      };
+      var raf = requestAnimationFrame || mozRequestAnimationFrame ||
+          webkitRequestAnimationFrame || msRequestAnimationFrame;
+      if (raf) raf(function() { window.setTimeout(loadDeferredStyles, 0); });
+      else window.addEventListener('load', loadDeferredStyles);
+    </script>
