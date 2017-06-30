@@ -6,7 +6,7 @@
     <!-- End Google Tag Manager (noscript) -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js" defer></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js" defer></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" defer></script>
     <script type="text/javascript" src="https://js.stripe.com/v2/" defer></script>
     <script src="https://www.imgix.com/libraries/imgix.js" type="text/javascript" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js" defer></script>
