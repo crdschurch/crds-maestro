@@ -141,7 +141,8 @@ CRDS.JumbotronBgVideoPlayer.prototype.onVideoStateChange = function(event) {
 CRDS.JumbotronBgVideoPlayer.prototype.resizePlayer = function() {
   var width = this.jumbotronEl.offsetWidth,
       height = this.jumbotronEl.offsetHeight,
-      ratio = 16 / 9;
+      ratio = parseFloat(this.jumbotronEl.getAttribute('data-aspect-ratio')) ||
+              (16 / 9);
 
   // If the container is wider than the desired ratio ...
   if (width / height > ratio) {
