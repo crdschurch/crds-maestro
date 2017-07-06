@@ -1,4 +1,4 @@
-<div class="crds-styles">
+<div class="crds-shared-header">
   <div data-header></div>
   <script>
     svg4everybody();
