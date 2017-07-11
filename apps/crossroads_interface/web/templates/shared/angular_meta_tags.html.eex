@@ -1,0 +1,29 @@
+<title ng-bind="meta.title">Crossroads</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="fragment" content="!">
+<meta name="description" content="{{meta.description | htmlToPlainText | truncate : 155}}">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="//crossroads-media.s3.amazonaws.com/images/favicon/mstile-144x144.png">
+<meta name="msapplication-config" content="//crossroads-media.s3.amazonaws.com/images/favicon/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+<meta name="prerender-status-code" content="{{meta.statusCode}}">
+
+<!-- Site wide og/fb tags -->
+<meta property="og:site_name" content="{{meta.siteconfig.title}}"/>
+<meta property="og:locale" content="{{meta.siteconfig.locale}}" />
+<!--<meta property="fb:app_id" content="[FB_APP_ID]" />-->   <!-- If and when we have a Facebook App ID, it goes here -->
+
+<!-- URL specific og/fb tags. Using http://int.crossroads.net/media/single for example data-->
+<meta property="og:title" content="{{meta.title}}" />
+<meta property="og:url" content="{{meta.url}}" />
+<meta property="og:image" content="{{meta.image.filename}}" />   <!-- Best if at least 1200x630 pixels -->
+<meta property="og:description" content="{{meta.description | htmlToPlainText}}" />
+
+<meta property="og:type" content="{{meta.type}}" />   <!-- Type of content. Use 'article' for blog posts & media pages. Use 'website' for content/static pages -->
+<meta property="article:publisher" content="https://www.facebook.com/{{meta.siteconfig.facebook}}" /> <!-- Only valid for 'article' types (blog posts and media) -->
+<!-- <meta property="article:author" content="https://www.facebook.com/tatelucas" /> -->   <!-- optional tag if you want to identify the author instead of just "Crossroads". Only valid for 'article' types (blog posts and media) -->
+
+<!-- Site wide Twitter tags. Twitter will use og tags for url, title, image and description -->
+<meta name="twitter:card" content="{{meta.card}}">
+<meta name="twitter:site" content="{{meta.siteconfig.twitter}}">

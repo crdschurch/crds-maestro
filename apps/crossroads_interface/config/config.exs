@@ -5,14 +5,43 @@
 # is restricted to this project.
 use Mix.Config
 
-config :ssl, protocol_version: :"tlsv1.2"
+defmodule ConfigHelper do
+  def get_suffix do
+    get_maestro_name_extension() <> get_environment()
+  end
+
+  defp get_maestro_name_extension do
+    case System.get_env("MAESTRO_NAME_EXTENSION") do
+      "" -> ""
+      ext -> ext
+    end
+  end
+
+  defp get_environment do
+    case System.get_env("CRDS_ENV") do
+      "" -> ""
+      env -> "-" <> env 
+    end
+  end
+end
 
 config :crossroads_content,
-  http: HTTPoison,
-  content_server: "https://contentint.crossroads.net/"
+  cms_server_endpoint: System.get_env("CRDS_CMS_SERVER_ENDPOINT"),
+  cms_cache_ttl: 10 * 60 * 1000,
+  cms_timeout: 10 * 60 * 1000
 
 config :crossroads_interface,
-  api_url: "http://silbervm:49380/"
+  image_client_endpoint: "#{System.get_env("CRDS_GATEWAY_CLIENT_ENDPOINT")}api/image/profile/",
+  cookie_prefix: System.get_env("CRDS_ENV"),
+  cookie_domain: System.get_env("CRDS_COOKIE_DOMAIN"),
+  cms_client_endpoint: System.get_env("CRDS_CMS_CLIENT_ENDPOINT"),
+  gateway_server_endpoint: System.get_env("CRDS_GATEWAY_SERVER_ENDPOINT"),
+  app_client_endpoint: System.get_env("CRDS_APP_CLIENT_ENDPOINT"),
+  streamspot_id: System.get_env("CRDS_STREAMSPOT_SSID"),
+  streamspot_key: System.get_env("CRDS_STREAMSPOT_API_KEY")
+
+
+config :ssl, protocol_version: :"tlsv1.2"
 
 # Configures the endpoint
 config :crossroads_interface, CrossroadsInterface.Endpoint,

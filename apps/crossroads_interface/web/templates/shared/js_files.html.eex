@@ -1,0 +1,5 @@
+<%= if assigns[:js_files] do %>
+  <%= for script_file <- @js_files do %>
+    <script src="<%= static_path(@conn, script_file)%>"></script>
+  <% end %>
+<% end %>

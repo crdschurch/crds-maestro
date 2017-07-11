@@ -1,2 +1,49 @@
-$icon-font-path: "/assets/";
-@import 'node_modules/crds-styles/assets/stylesheets/bootstrap';
+@import 'vendor/flickity';
+
+.crds-legacy-styles {
+  @import './glyphicons';
+
+  .homepage .navbar-brand.logo .icon-logo,
+  .homepage ul.cr-nav>li>a {
+    color: #fff;
+  }
+}
+
+.crds-styles {
+  @import 'node_modules/crds-styles/assets/stylesheets/variables';
+  @import 'node_modules/crds-styles/assets/stylesheets/overrides';
+  @import 'node_modules/crds-styles/assets/stylesheets/functions';
+  @import 'node_modules/crds-styles/assets/stylesheets/mixins';
+
+  font-family: $base-font-face;
+  font-size: $base-font-size;
+  font-weight: 300;
+
+  .wf-loading {
+      visibility: hidden;
+  }
+
+  .app-container {
+    display: block;
+    min-height: 35vh;
+  }
+
+  @import 'node_modules/bootstrap-sass/assets/stylesheets/bootstrap';
+  @import 'node_modules/crds-styles/assets/stylesheets/base/modules';
+  @import 'node_modules/crds-styles/assets/stylesheets/components/modules';
+  @import 'node_modules/crds-styles/assets/stylesheets/layouts/modules';
+  @import 'node_modules/crds-styles/assets/stylesheets/themes/modules';
+  @import 'node_modules/crds-styles/assets/stylesheets/utilities/modules';
+  @import 'node_modules/crds-styles/assets/stylesheets/vendors/datepicker';
+  @import 'node_modules/crds-styles/assets/stylesheets/vendors/toast';
+  @import './modules/legacy_footer';
+  @import './pages/homepage';
+}
+
+.noscroll {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}

@@ -1,7 +1,0 @@
-<%= render CrossroadsInterface.SharedView, "header.html", assigns %>
-
-
-<%= render @view_module, @view_template, assigns %>
-
-
-<%= render CrossroadsInterface.SharedView, "footer.html", assigns %>

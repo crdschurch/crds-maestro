@@ -1,7 +1,18 @@
-import "phoenix_html"
+import phoenixEventListener from './phoenixEventListener';
+import svgFixer from './svgFixer';
 
-// include all svg files in icons directory in the body of the document
-//var files = require.context('../icons', false, /.svg$/);
-//files.keys().forEach(files);
+import JumbotronVideoPlayer from './home_page/jumbotron_video_player';
+import CardCarousel from './home_page/card_carousel';
+import CardFilters from './home_page/card_filters';
+import VideoModal from './home_page/video_modal';
 
-// import socket from "./socket"
+export var App = {
+  run: function() {
+    phoenixEventListener();
+    domReady(svgFixer);
+  }
+}
+
+function domReady(callback) {
+  document.addEventListener("DOMContentLoaded", callback);
+}

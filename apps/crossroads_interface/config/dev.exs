@@ -1,8 +1,17 @@
 use Mix.Config
 
 config :crossroads_content,
-  http: HTTPoison,
-  content_server: "https://contentint.crossroads.net/"
+  cms_server_endpoint: "https://contentint.crossroads.net/"
+
+config :crossroads_interface,
+  image_client_endpoint: "https://gatewayint.crossroads.net/gateway/api/image/profile/",
+  gateway_server_endpoint: "https://gatewayint.crossroads.net/gateway/",
+  cms_client_endpoint: "https://contentint.crossroads.net/",
+  cookie_prefix: "",
+  cookie_domain: "",
+  app_client_endpoint: "/",
+  streamspot_id: "crossr30e3",
+  streamspot_key: "a0cb38cb-8146-47c2-b11f-6d93f4647389"
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
@@ -11,11 +20,8 @@ config :crossroads_content,
 # watchers to your application. For example, we use it
 # with brunch.io to recompile .js and .css sources.
 config :crossroads_interface, CrossroadsInterface.Endpoint,
+  url: [host: "localhost", port: 4000],
   http: [port: 4000],
-  https: [port: 4443,
-    otp_app: :crossroads_interface,
-    keyfile: "priv/keys/localhost.key",
-    certfile: "priv/keys/localhost.cert"],
   debug_errors: false,
   code_reloader: true,
   check_origin: false,

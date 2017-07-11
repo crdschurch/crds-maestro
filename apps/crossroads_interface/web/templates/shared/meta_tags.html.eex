@@ -1,0 +1,28 @@
+<title><%= @meta_title %></title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="description" content="<%= @meta_description %>">
+<meta name="fragment" content="!">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="//crossroads-media.s3.amazonaws.com/images/favicon/mstile-144x144.png">
+<meta name="msapplication-config" content="//crossroads-media.s3.amazonaws.com/images/favicon/browserconfig.xml">
+<meta name="theme-color" content="#ffffff">
+<meta name="prerender-status-code" content="{{meta.statusCode}}">
+<!-- Site wide og/fb tags -->
+<meta property="og:site_name" content="<%= @meta_siteconfig_title %>" />
+<meta property="og:locale" content="<%= @meta_siteconfig_locale %>" />
+
+<!-- URL specific og/fb tags. Using http://int.crossroads.net/media/single for example data-->
+<meta property="og:title" content="<%= @meta_title %>" />
+<meta property="og:url" content="<%= @meta_url %>" />
+<meta property="og:image" content="<%= @meta_image %>" />
+<!-- Best if at least 1200x630 pixels -->
+<meta property="og:description" content="<%= raw(@meta_description) %>" />
+
+<meta property="og:type" content="<%= @meta_type %>" />
+<meta property="article:publisher" content="https://www.facebook.com/<%= @meta_siteconfig_facebook %>" />
+
+<!-- Site wide Twitter tags. Twitter will use og tags for url, title, image and description -->
+<meta name="twitter:card" content="<%= @meta_card %>">
+<meta name="twitter:site" content="<%= @meta_siteconfig_twitter %>">

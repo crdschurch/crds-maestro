@@ -12,19 +12,25 @@ defmodule CrossroadsContent.Mixfile do
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      elixirc_paths: elixirc_paths(Mix.env),
+     aliases: aliases(),
      deps: deps()]
   end
 
+  defp aliases do
+  [
+    test: "test --no-start" #(2)
+  ]
+  end
   # Configuration for the OTP application
   #
   # Type "mix help compile.app" for more information
   def application do
-   [applications: [:logger, :httpoison],
+   [applications: [:logger, :httpoison, :cachex],
     mod: {CrossroadsContent, []}]
   end
 
   defp deps do
-    [
+    [ {:cachex, "~> 2.1"},
       {:httpoison, "~> 0.9.0"},
       {:poison, "~> 2.0"},
       {:mock, "~> 0.2.0", only: :test}
