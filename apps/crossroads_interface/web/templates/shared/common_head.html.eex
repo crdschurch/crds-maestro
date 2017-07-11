@@ -69,7 +69,7 @@
 
     <%= if assigns[:css_files] do %>
         <%= for script_file <- @css_files do %>
-            <link href="<%= static_path(@conn, script_file)%>" type="text/css" rel="stylesheet"> </script>
+            <link href="<%= static_path(@conn, script_file)%>" type="text/css" rel="stylesheet" />
         <% end %>
     <% end %>
 
