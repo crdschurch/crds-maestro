@@ -19,6 +19,7 @@ defmodule CrossroadsInterface.HomepageController do
     conn
     |> render(page,
               "css_files": [
+                "/css/app.css",
                 "/js/legacy/legacy.css"
               ])
   end
