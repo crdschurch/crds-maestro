@@ -1,6 +1,10 @@
 window['CRDS'] = window['CRDS'] || {};
 
+// ---------------------------------------- JumbotronVideoPlayers
+
 CRDS.JumbotronVideoPlayers = function() {
+  this.bgVideoPlayers = document.querySelectorAll('.jumbotron.bg-video');
+  this.inlineVideoPlayers = document.querySelectorAll('.jumbotron.inline-video');
   if(typeof YT == 'object') {
     this.init();
   } else {
@@ -27,142 +31,106 @@ CRDS.JumbotronVideoPlayers.prototype.loadScript = function(url, callback) {
 }
 
 CRDS.JumbotronVideoPlayers.prototype.init = function() {
-  var videoPlayers = document.querySelectorAll('.jumbotron.bg-video');
-  for (var i = 0; i < videoPlayers.length; i++) {
-    new CRDS.JumbotronVideoPlayer(videoPlayers[i]);
+  this.interval = setInterval(this.__bind(this.initVideos, this), 100);
+};
+
+CRDS.JumbotronVideoPlayers.prototype.initVideos = function() {
+  if (typeof YT == 'object' && typeof YT.Player == 'function') {
+    clearInterval(this.interval);
+    for (var i = 0; i < this.bgVideoPlayers.length; i++) {
+      new CRDS.JumbotronBgVideoPlayer(this.bgVideoPlayers[i]);
+    }
+    for (var i = 0; i < this.inlineVideoPlayers.length; i++) {
+      new CRDS.JumbotronInlineVideoPlayer(this.inlineVideoPlayers[i]);
+    }
   }
-}
-
-// --------------------------------------- #
-
-CRDS.JumbotronVideoPlayer = function(jumbotronEl) {
-  this.jumbotronEl = jumbotronEl;
-  this.interval = setInterval(this.__bind(this.checkYoutubeStatus, this), 100);
   return;
 }
 
-CRDS.JumbotronVideoPlayer.prototype.checkYoutubeStatus = function() {
-  if(typeof YT == 'object' && typeof YT.Player == 'function') {
-    clearInterval(this.interval);
-    this.init();
-  }
+// ---------------------------------------- JumbotronBgVideoPlayer
+
+CRDS.JumbotronBgVideoPlayer = function(jumbotronEl) {
+  this.jumbotronEl = jumbotronEl;
+  this.init();
+  return;
 }
 
-CRDS.JumbotronVideoPlayer.prototype.__bind = function(fn, me) {
-  return function() {
-    return fn.apply(me, arguments);
-  };
-};
+CRDS.JumbotronBgVideoPlayer.prototype.init = function() {
+  this.playerContainerEl = this.jumbotronEl.querySelector('.bg-video-player');
+  this.playerId = 'video-player-' + Math.random().toString(36).substr(2, 10);
 
-CRDS.JumbotronVideoPlayer.prototype.init = function() {
-  this.bgPlayerContainerEl = this.jumbotronEl.querySelector('.bg-video-player');
-  this.bgPlayerId = 'video-player-' + Math.random().toString(36).substr(2, 10);
+  this.playerEl = document.createElement('div');
+  this.playerEl.setAttribute('id', this.playerId);
+  this.playerContainerEl.appendChild(this.playerEl);
 
-  this.bgPlayerEl = document.createElement('div');
-  this.bgPlayerEl.setAttribute('id', this.bgPlayerId);
-  this.bgPlayerContainerEl.appendChild(this.bgPlayerEl);
-
-  this.bgVideoId = this.jumbotronEl.getAttribute('data-video-id');
-  if (!this.bgVideoId) {
+  this.videoId = this.jumbotronEl.getAttribute('data-video-id');
+  if (!this.videoId) {
     throw 'data-player-id is required on the jumbotron containing element.';
   }
 
-  this.inlineVideoTrigger = this.jumbotronEl.querySelector('.inline-video-trigger');
-  this.inlineVideoId = this.inlineVideoTrigger.getAttribute('data-video-id') ||
-                       this.bgVideoId;
-
-  this.inlinePlayerContainerEl = this.jumbotronEl.querySelector('.inline-video-player');
-  this.inlinePlayerId = 'video-player-' + Math.random().toString(36).substr(2, 10);
-  this.inlinePlayerEl = document.createElement('div');
-  this.inlinePlayerEl.setAttribute('id', this.inlinePlayerId);
-  this.inlinePlayerContainerEl.appendChild(this.inlinePlayerEl);
-
-  this.bgPlayerVars = {
+  this.playerOptions = {
     autoplay: 0,
     controls: 0,
     modestbranding: 1,
     loop: 1,
     playsinline: 1,
     showinfo: 0,
-    playlist: this.bgVideoId // See: https://stackoverflow.com/a/25781957/2241124
+    playlist: this.videoId // See: https://stackoverflow.com/a/25781957/2241124
   };
 
-  this.inlinePlayerVars = {
-    autoplay: 1,
-    controls: 1,
-    playsinline: 0,
-    modestbranding: 1,
-    showinfo: 0
-  };
-
-  var preloader = document.createElement('div');
-      preloader.classList.add('inline-preloader-wrapper');
-      preloader.innerHTML = '\
-        <svg viewBox="0 0 102 101" class="inline-preloader inline-preloader--top-right inline-preloader--small"\>\
-          <g fill="none" fill-rule="evenodd"\>\
-            <g transform="translate(1 1)" stroke-width="2"\>\
-              <ellipse stroke="#eee" cx="50" cy="49.421" rx="50" ry="49.421"\></ellipse\>\
-              <path d="M50 98.842c27.614 0 50-22.127 50-49.42C100 22.125 77.614 0 50 0" stroke-opacity=".631" stroke="#3B6E8F"\></path\>\
-            </g\>\
-          </g\>\
-        </svg\>';
-  this.jumbotronEl.insertBefore(preloader, this.jumbotronEl.firstChild);
+  this.preloader = document.createElement('div');
+  this.preloader.classList.add('inline-preloader-wrapper');
+  this.preloader.innerHTML = '\
+    <svg viewBox="0 0 102 101" class="inline-preloader inline-preloader--top-right inline-preloader--small"\>\
+      <g fill="none" fill-rule="evenodd"\>\
+        <g transform="translate(1 1)" stroke-width="2"\>\
+          <ellipse stroke="#eee" cx="50" cy="49.421" rx="50" ry="49.421"\></ellipse\>\
+          <path d="M50 98.842c27.614 0 50-22.127 50-49.42C100 22.125 77.614 0 50 0" stroke-opacity=".631" stroke="#3B6E8F"\></path\>\
+        </g\>\
+      </g\>\
+    </svg\>';
+  this.jumbotronEl.insertBefore(this.preloader, this.jumbotronEl.firstChild);
   this.preloaderContainerEl = this.jumbotronEl.querySelector('.inline-preloader-wrapper');
   this.preloaderEl = this.jumbotronEl.querySelector('.inline-preloader');
 
-  var closeButton = document.createElement('a');
-      closeButton.classList.add('close-video');
-      closeButton.innerHTML = '\
-        <svg class="icon icon-2" viewBox="0 0 256 256"\>\
-          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#close"></use\>\
-        </svg\>';
-  this.inlinePlayerContainerEl.insertBefore(closeButton, this.inlinePlayerContainerEl.firstChild);
-
-  this.inlineVideoTrigger.innerHTML = '\
-    <svg class="icon icon-5" viewBox="0 0 256 256"\>\
-      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#play-thin"></use\>\
-    </svg\>';
-
-  return this.initBgVideo();
+  return this.initVideo();
 };
 
-CRDS.JumbotronVideoPlayer.prototype.constructor = CRDS.JumbotronVideoPlayer;
-
-CRDS.JumbotronVideoPlayer.prototype.initBgVideo = function() {
+CRDS.JumbotronBgVideoPlayer.prototype.initVideo = function() {
   var _this = this;
-  this.bgPlayer = new YT.Player(this.bgPlayerId, {
-    videoId: this.bgVideoId,
-    playerVars: this.bgPlayerVars,
+  this.player = new YT.Player(this.playerId, {
+    videoId: this.videoId,
+    playerVars: this.playerOptions,
     events: {
       onReady: function(event) {
-        _this.onBgVideoReady(event);
-        _this.playBgVideo();
+        _this.onVideoReady(event);
+        _this.playVideo();
       },
       onStateChange: function(event) {
-        _this.onBgVideoStateChange(event);
+        _this.onVideoStateChange(event);
       }
     }
   });
   this.bindEvents();
 };
 
-CRDS.JumbotronVideoPlayer.prototype.playBgVideo = function() {
+CRDS.JumbotronBgVideoPlayer.prototype.playVideo = function() {
   var _this = this;
-  if (!this.bgPlayer.playVideo) {
+  if (!this.player.playVideo) {
     setTimeout(function() {
-      _this.playBgVideo();
+      _this.playVideo();
     }, 250);
     return true;
   }
-  this.bgPlayer.playVideo();
+  this.player.playVideo();
 };
 
-CRDS.JumbotronVideoPlayer.prototype.onBgVideoReady = function(event) {
+CRDS.JumbotronBgVideoPlayer.prototype.onVideoReady = function(event) {
   this.resizePlayer();
   event.target.mute();
 };
 
-CRDS.JumbotronVideoPlayer.prototype.onBgVideoStateChange = function(event) {
+CRDS.JumbotronBgVideoPlayer.prototype.onVideoStateChange = function(event) {
   if (event.data == YT.PlayerState.PLAYING) {
     this.preloaderContainerEl.classList.add('loaded');
   } else {
@@ -170,10 +138,11 @@ CRDS.JumbotronVideoPlayer.prototype.onBgVideoStateChange = function(event) {
   };
 };
 
-CRDS.JumbotronVideoPlayer.prototype.resizePlayer = function() {
+CRDS.JumbotronBgVideoPlayer.prototype.resizePlayer = function() {
   var width = this.jumbotronEl.offsetWidth,
       height = this.jumbotronEl.offsetHeight,
-      ratio = 16 / 9;
+      ratio = parseFloat(this.jumbotronEl.getAttribute('data-aspect-ratio')) ||
+              (16 / 9);
 
   // If the container is wider than the desired ratio ...
   if (width / height > ratio) {
@@ -183,12 +152,12 @@ CRDS.JumbotronVideoPlayer.prototype.resizePlayer = function() {
         newHeight = width / ratio;
 
     // Resize the player.
-    this.bgPlayer.setSize(newWidth, newHeight);
+    this.player.setSize(newWidth, newHeight);
 
     // The player's container should sit at the left,
     // and at half of its excess height.
-    this.bgPlayerContainerEl.style.left = 0;
-    this.bgPlayerContainerEl.style.top = -((newHeight - height) / 2) + 'px';
+    this.playerContainerEl.style.left = 0;
+    this.playerContainerEl.style.top = -((newHeight - height) / 2) + 'px';
   }
   // If the player is higher than the aspect ratio
   else {
@@ -198,66 +167,111 @@ CRDS.JumbotronVideoPlayer.prototype.resizePlayer = function() {
         newWidth = height * ratio;
 
     // Resize the player.
-    this.bgPlayer.setSize(newWidth, newHeight);
+    this.player.setSize(newWidth, newHeight);
 
     // The player's container should sit at the top,
     // and at half of its excess width.
-    this.bgPlayerContainerEl.style.top = 0;
-    this.bgPlayerContainerEl.style.left = -((newWidth - width) / 2) + 'px';
+    this.playerContainerEl.style.top = 0;
+    this.playerContainerEl.style.left = -((newWidth - width) / 2) + 'px';
   };
 };
 
-CRDS.JumbotronVideoPlayer.prototype.bindEvents = function() {
+CRDS.JumbotronBgVideoPlayer.prototype.bindEvents = function() {
   var _this = this;
 
   window.addEventListener('resize', function(event) {
     _this.resizePlayer();
   }, true);
-
-  this.inlineVideoTrigger.addEventListener('click', function(event) {
-    event.preventDefault();
-    _this.playInlineVideo();
-  }, true);
-
-  var closeTrigger = this.inlinePlayerContainerEl.querySelector('.close-video');
-  closeTrigger.addEventListener('click', function(event) {
-    event.preventDefault();
-    _this.stopInlineVideo();
-  }, true);
 };
 
-CRDS.JumbotronVideoPlayer.prototype.initInlineVideo = function() {
+// ---------------------------------------- JumbotronInlineVideoPlayer
+
+CRDS.JumbotronInlineVideoPlayer = function(jumbotronEl) {
+  this.jumbotronEl = jumbotronEl;
+  this.init();
+  return;
+};
+
+CRDS.JumbotronInlineVideoPlayer.prototype.init = function() {
+  this.videoTrigger = this.jumbotronEl.querySelector('.inline-video-trigger');
+  this.videoTrigger.innerHTML = '\
+    <svg class="icon icon-5" viewBox="0 0 256 256"\>\
+      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#play-thin"></use\>\
+    </svg\>';
+
+  this.videoId = this.videoTrigger.getAttribute('data-video-id')
+  this.playerContainerEl = this.jumbotronEl.querySelector('.inline-video-player');
+  this.playerId = 'video-player-' + Math.random().toString(36).substr(2, 10);
+  this.playerEl = document.createElement('div');
+  this.playerEl.setAttribute('id', this.playerId);
+  this.playerContainerEl.appendChild(this.playerEl);
+
+  this.playerOptions = {
+    autoplay: 1,
+    controls: 1,
+    playsinline: 0,
+    modestbranding: 1,
+    showinfo: 0
+  };
+
+  this.closeButton = document.createElement('a');
+  this.closeButton.classList.add('close-video');
+  this.closeButton.innerHTML = '\
+    <svg class="icon icon-2" viewBox="0 0 256 256"\>\
+      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#close"></use\>\
+    </svg\>';
+
+  this.playerContainerEl.insertBefore(this.closeButton, this.playerContainerEl.firstChild);
+
+  this.bindEvents();
+};
+
+CRDS.JumbotronInlineVideoPlayer.prototype.initVideo = function() {
   var _this = this;
-  this.inlinePlayer = new YT.Player(this.inlinePlayerId, {
-    videoId: this.inlineVideoId,
-    playerVars: this.inlinePlayerVars,
+  this.player = new YT.Player(this.playerId, {
+    videoId: this.videoId,
+    playerVars: this.playerOptions,
     events: {
       onReady: function(event) {
-        _this.playInlineVideo(event);
+        _this.playVideo(event);
       },
       onStateChange: function(event) {
-        _this.onInlineVideoStateChange(event);
+        _this.onStateChange(event);
       }
     }
   });
   return true;
 };
 
-CRDS.JumbotronVideoPlayer.prototype.playInlineVideo = function(event = null) {
-  if (!this.inlinePlayer) {
-    this.initInlineVideo();
+CRDS.JumbotronInlineVideoPlayer.prototype.bindEvents = function() {
+  var _this = this;
+
+  this.videoTrigger.addEventListener('click', function(event) {
+    event.preventDefault();
+    _this.playVideo();
+  }, true);
+
+  this.closeButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    _this.stopVideo();
+  }, true);
+};
+
+CRDS.JumbotronInlineVideoPlayer.prototype.playVideo = function(event = null) {
+  if (!this.player) {
+    this.initVideo();
     return true;
   }
-  this.inlinePlayerContainerEl.classList.add('active');
+  this.playerContainerEl.classList.add('active');
 };
 
-CRDS.JumbotronVideoPlayer.prototype.stopInlineVideo = function() {
-  this.inlinePlayerContainerEl.classList.remove('active');
-  this.inlinePlayer.stopVideo();
+CRDS.JumbotronInlineVideoPlayer.prototype.stopVideo = function() {
+  this.playerContainerEl.classList.remove('active');
+  this.player.stopVideo();
 };
 
-CRDS.JumbotronVideoPlayer.prototype.onInlineVideoStateChange = function(event) {
+CRDS.JumbotronInlineVideoPlayer.prototype.onStateChange = function(event) {
   if (event.data == YT.PlayerState.ENDED) {
-    this.stopInlineVideo();
+    this.stopVideo();
   }
 };

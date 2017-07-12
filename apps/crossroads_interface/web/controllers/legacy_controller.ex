@@ -59,20 +59,10 @@ defmodule CrossroadsInterface.LegacyController do
     conn |> render("app_root.html", %{ "js_files": [
         "/js/legacy/ang.js",
         "/js/legacy/core.js",
-        "/js/legacy/common.js",
-        "/js/legacy/profile.js",
-        "/js/legacy/trips.js",
-        "/js/legacy/camps.js",
-        "/js/legacy/give.js",
-        "/js/legacy/media.js",
-        "/js/legacy/search.js",
-        "/js/legacy/load-image.all.min.js",
-        "/js/legacy/govolunteer.js",
-        "/js/legacy/formbuilder.js",
-        "/js/legacy/childcare.js",
-        "/js/legacy/formlybuilder.js",
-        "/js/legacy/main.js"
+        "/js/legacy/misc.js",
+        "/js/legacy/main.js"        
       ], "css_files": [
+       "/css/app.css",
        "/js/legacy/legacy.css"
       ], "base_href": "/"})
   end
