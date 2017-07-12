@@ -17,7 +17,7 @@ defmodule CrossroadsInterface.LegacyController do
 
   def index(conn, params) do
     conn
-    |> CrossroadsInterface.Plug.RedirectCookie.call("/")
+    |> CrossroadsInterface.Plug.RedirectCookie.call(conn.request_path)
     |> renderSite( conn: conn, params: params)
   end
 
