@@ -24,6 +24,11 @@ RUN npm install -g bower
 COPY . /crossroads-phoenix
 COPY ./local /microclients
 
+# Build Maestro Javascript
+RUN cd /crossroads-phoenix/apps/crossroads_interface && \
+    npm install && \
+    ./node_modules/brunch/bin/brunch build
+
 COPY ./docker-entrypoint.sh /usr/local/bin
 RUN chmod u+x /usr/local/bin/docker-entrypoint.sh
 

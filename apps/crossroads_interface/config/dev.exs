@@ -1,7 +1,7 @@
 use Mix.Config
 
 config :crossroads_content,
-  cms_server_endpoint: "https://contentint.crossroads.net/"
+  cms_server_endpoint: System.get_env("CRDS_CMS_SERVER_ENDPOINT")
 
 config :crossroads_interface,
   image_client_endpoint: "https://gatewayint.crossroads.net/gateway/api/image/profile/",

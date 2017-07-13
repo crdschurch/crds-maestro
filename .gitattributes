@@ -8,4 +8,4 @@
 *.sql text
 *.yml text
 Dockerfile text
-docker-php-entrypoint text
+docker-entrypoint.sh text
