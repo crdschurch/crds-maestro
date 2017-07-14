@@ -75,6 +75,7 @@ CRDS.JumbotronBgVideoPlayer.prototype.init = function() {
     loop: 1,
     playsinline: 1,
     showinfo: 0,
+    iv_load_policy: 3,
     playlist: this.videoId // See: https://stackoverflow.com/a/25781957/2241124
   };
 
