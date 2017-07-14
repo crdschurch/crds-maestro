@@ -18,6 +18,20 @@ defmodule CrossroadsInterface.Endpoint do
     at: "/", from: {:crossroads_interface, "priv/static/js/crds_connect"}, gzip: System.get_env("MIX_ENV") == "prod",
     only_matching: ["css", "fonts", "assets", "images", "js", "favicon", "robots"]
 
+  # TODO: Both of these approaches seem to work. Need to determine which is best
+  # TODO: Determine if this should be done before the other processes above to favor the /microclients folder
+
+  # For Development in Docker look at /microclients folder 
+  # if Mix.env == :dev do
+  #   plug Plug.Static,
+  #     at: "/js/legacy", from: "/microclients/legacy", gzip: System.get_env("MIX_ENV") == "prod"
+  # end
+  
+  if Application.get_env(:crossroads_interface, :run_in_docker) == true do
+    plug Plug.Static,
+      at: "/js/legacy", from: "/microclients/legacy", gzip: System.get_env("MIX_ENV") == "prod"
+  end
+
   plug CrossroadsInterface.Plug.NotFoundAssetsPlug
 
   # Code reloading can be explicitly enabled under the
