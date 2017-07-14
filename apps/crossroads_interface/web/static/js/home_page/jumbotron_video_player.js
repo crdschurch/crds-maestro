@@ -195,10 +195,12 @@ CRDS.JumbotronInlineVideoPlayer = function(jumbotronEl) {
 
 CRDS.JumbotronInlineVideoPlayer.prototype.init = function() {
   this.videoTrigger = this.jumbotronEl.querySelector('.inline-video-trigger');
-  this.videoTrigger.innerHTML = '\
-    <svg class="icon icon-5" viewBox="0 0 256 256"\>\
-      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#play-thin"></use\>\
-    </svg\>';
+  if (this.videoTrigger && this.videoTrigger.innerHTML == '') {
+    this.videoTrigger.innerHTML = '\
+      <svg class="icon icon-5" viewBox="0 0 256 256"\>\
+        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#play-thin"></use\>\
+      </svg\>';
+  }
 
   this.videoId = this.videoTrigger.getAttribute('data-video-id')
   this.playerContainerEl = this.jumbotronEl.querySelector('.inline-video-player');
