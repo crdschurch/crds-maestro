@@ -3,33 +3,42 @@ defmodule CrossroadsInterface.Endpoint do
 
   socket "/socket", CrossroadsInterface.UserSocket
 
-  # Serve at "/" the static files from "priv/static" directory.
-  #
-  # You should set gzip to true if you are running phoenix.digest
-  # when deploying your static files in production.
-  plug Plug.Static,
-    at: "/", from: :crossroads_interface, gzip: System.get_env("MIX_ENV") == "prod",
-    only_matching: ["css", "fonts", "assets", "images", "js", "favicon", "robots"]
+  if Application.get_env(:crossroads_interface, :run_in_docker) != true do
+    # Serve at "/" the static files from "priv/static" directory.
+    #
+    # You should set gzip to true if you are running phoenix.digest
+    # when deploying your static files in production.  
+    plug Plug.Static,
+      at: "/", from: :crossroads_interface, gzip: System.get_env("MIX_ENV") == "prod",
+      only_matching: ["css", "fonts", "assets", "images", "js", "favicon", "robots"]
 
-  plug Plug.Static,
-    at: "/assets", from: {:crossroads_interface, "priv/static/js/legacy"}, gzip: System.get_env("MIX_ENV") == "prod"
+    plug Plug.Static,
+      at: "/assets", from: {:crossroads_interface, "priv/static/js/legacy"}, gzip: System.get_env("MIX_ENV") == "prod"
 
-  plug Plug.Static,
-    at: "/", from: {:crossroads_interface, "priv/static/js/crds_connect"}, gzip: System.get_env("MIX_ENV") == "prod",
-    only_matching: ["css", "fonts", "assets", "images", "js", "favicon", "robots"]
+    plug Plug.Static,
+      at: "/", from: {:crossroads_interface, "priv/static/js/crds_connect"}, gzip: System.get_env("MIX_ENV") == "prod",
+      only_matching: ["css", "fonts", "assets", "images", "js", "favicon", "robots"]
 
-  # TODO: Both of these approaches seem to work. Need to determine which is best
-  # TODO: Determine if this should be done before the other processes above to favor the /microclients folder
+  else 
+    # If running in docker serve files from the /microclients folder rather than priv/static
+    plug Plug.Static,
+      at: "/", from: "/microclients", gzip: System.get_env("MIX_ENV") == "prod",
+      only_matching: ["css", "fonts", "assets", "images", "js", "favicon", "robots"]
 
-  # For Development in Docker look at /microclients folder 
-  # if Mix.env == :dev do
-  #   plug Plug.Static,
-  #     at: "/js/legacy", from: "/microclients/legacy", gzip: System.get_env("MIX_ENV") == "prod"
-  # end
-  
-  if Application.get_env(:crossroads_interface, :run_in_docker) == true do
     plug Plug.Static,
       at: "/js/legacy", from: "/microclients/legacy", gzip: System.get_env("MIX_ENV") == "prod"
+
+    plug Plug.Static,
+      at: "/assets", from: "/microclients/legacy", gzip: System.get_env("MIX_ENV") == "prod"
+
+    plug Plug.Static,
+      at: "/", from: "/microclients/crds_connect", gzip: System.get_env("MIX_ENV") == "prod",
+      only_matching: ["css", "fonts", "assets", "images", "js", "favicon", "robots"]
+
+    # Server remaining Maestro specific files from priv folders
+    plug Plug.Static,
+      at: "/", from: :crossroads_interface, gzip: System.get_env("MIX_ENV") == "prod",
+      only_matching: ["css", "fonts", "assets", "images", "js", "favicon", "robots"]
   end
 
   plug CrossroadsInterface.Plug.NotFoundAssetsPlug

@@ -41,8 +41,6 @@ config :crossroads_interface,
   streamspot_key: System.get_env("CRDS_STREAMSPOT_API_KEY"),
   run_in_docker: false
 
-
-
 config :ssl, protocol_version: :"tlsv1.2"
 
 # Configures the endpoint
