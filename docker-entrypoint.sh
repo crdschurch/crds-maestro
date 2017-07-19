@@ -1,15 +1,15 @@
 #!/bin/sh
 set -e
 
-if [ ! -d /crossroads-phoenix/deps ]; then
-    cd /crossroads-phoenix
+if [ ! -d /maestro/deps ]; then
+    cd /maestro
     mix deps.get
 fi
 
-if [ ! -d /crossroads-phoenix/apps/crossroads_interface/node_modules ]; then
-    cd /crossroads-phoenix/apps/crossroads_interface
+if [ ! -d /maestro/apps/crossroads_interface/node_modules ]; then
+    cd /maestro/apps/crossroads_interface
     npm install
 fi
 
-cd /crossroads-phoenix
+cd /maestro
 exec "$@"

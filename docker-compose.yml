@@ -1,22 +1,35 @@
 version: '3'
 services:
-  crds-phoenix:
-    build: .   
-    image: crds-phoenix
-    container_name: crds-phoenix
+  crds-maestro:
+    build: .
+    image: crds-maestro
+    container_name: crds-maestro
     ports:
      - "4000:4000"
-    volumes:
-     # - ../.:/crossroads-phoenix
-     #- C:/temp/new_phoenix/crds-angular/crossroads.net/assets/:/crossroads-phoenix/apps/crossroads_interface/priv/static/js/legacy
-     - C:/temp/new_phoenix/crds-angular/crossroads.net/assets/:/microclients/legacy
+    # volumes:
+    #  - .:/maestro
+    #  # - C:\temp:/microclients/legacy
+    #  - ./local:/microclients
+    #  #- C:/temp/new_phoenix/crds-angular/crossroads.net/assets/:/maestro/apps/crossroads_interface/priv/static/js/legacy
+    #  #- C:/temp/new_phoenix/crds-angular/crossroads.net/assets/:/microclients/legacy
     environment:
      # are all of these necessary if we are building legacy outside of container?
-     - CRDS_CMS_ENDPOINT=${CRDS_CMS_ENDPOINT}
-     - CRDS_API_ENDPOINT=${CRDS_API_ENDPOINT}
-     - CRDS_STREAMSPOT_API_KEY=${CRDS_STREAMSPOT_API_KEY}
-     - CRDS_STREAMSPOT_SSID=${CRDS_STREAMSPOT_SSID}
-     - CRDS_STRIPE_PUBKEY=${CRDS_STRIPE_PUBKEY}
-     - CRDS_ENV=${CRDS_ENV}
-     - CRDS_COOKIE_DOMAIN=${CRDS_COOKIE_DOMAIN}
+     - CRDS_APP_CLIENT_ENDPOINT
+     # TODO: Change to use environment variables
+     - CRDS_CMS_CLIENT_ENDPOINT=http://docker.for.win.localhost:81/
+     - CRDS_CMS_SERVER_ENDPOINT=http://docker.for.win.localhost:81/
+     - CRDS_COOKIE_DOMAIN=localhost
+     - CRDS_ENV=int
+     - CRDS_GATEWAY_CLIENT_ENDPOINT
+     - CRDS_GATEWAY_SERVER_ENDPOINT
+     - CRDS_STREAMSPOT_API_KEY
+     - CRDS_STREAMSPOT_SSID
      - MIX_ENV=dev
+
+  crds-apache:
+    build: 
+      context: ./apache
+    image: crds-apache
+    container_name: crds-apache
+    ports:
+     - "8000:80"

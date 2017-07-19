@@ -10,7 +10,7 @@ RUN mix local.rebar --force
 ENV PHOENIX_VERSION 1.1.6
 RUN mix archive.install --force https://github.com/phoenixframework/archives/raw/master/phoenix_new-$PHOENIX_VERSION.ez
 
-VOLUME /crossroads-phoenix
+VOLUME /maestro
 
 # Install NodeJS 6.x, NPM, and bower
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
@@ -21,7 +21,7 @@ RUN echo "{\"allow_root\": true }" > .bowerrc
 RUN npm install -g bower
 
 # Copy phoenix and micro clients
-COPY . /crossroads-phoenix
+COPY . /maestro
 COPY ./local /microclients
 
 COPY ./docker-entrypoint.sh /usr/local/bin
