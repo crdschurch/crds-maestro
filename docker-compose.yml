@@ -15,9 +15,8 @@ services:
     environment:
      # are all of these necessary if we are building legacy outside of container?
      - CRDS_APP_CLIENT_ENDPOINT
-     # TODO: Change to use environment variables
-     - CRDS_CMS_CLIENT_ENDPOINT=http://docker.for.win.localhost:81/
-     - CRDS_CMS_SERVER_ENDPOINT=http://docker.for.win.localhost:81/
+     - CRDS_CMS_CLIENT_ENDPOINT
+     - CRDS_CMS_SERVER_ENDPOINT
      - CRDS_COOKIE_DOMAIN=localhost
      - CRDS_ENV=int
      - CRDS_GATEWAY_CLIENT_ENDPOINT
