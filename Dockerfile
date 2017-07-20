@@ -22,7 +22,7 @@ RUN npm install -g bower
 
 # Copy phoenix and micro clients
 COPY . /maestro
-COPY ./local /microclients
+COPY ./microclients /microclients
 
 COPY ./docker-entrypoint.sh /usr/local/bin
 RUN chmod u+x /usr/local/bin/docker-entrypoint.sh
