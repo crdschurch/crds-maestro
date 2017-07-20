@@ -26,7 +26,7 @@ defmodule CrossroadsInterface.ExploreController do
   end
 
   defp resolve(file) do
-    "./priv/static/js/explore/#{file}"
+    "./priv/static/js/static/explore/#{file}"
   end
 
 end
