@@ -38,8 +38,7 @@ config :crossroads_interface,
   gateway_server_endpoint: System.get_env("CRDS_GATEWAY_SERVER_ENDPOINT"),
   app_client_endpoint: System.get_env("CRDS_APP_CLIENT_ENDPOINT"),
   streamspot_id: System.get_env("CRDS_STREAMSPOT_SSID"),
-  streamspot_key: System.get_env("CRDS_STREAMSPOT_API_KEY"),
-  run_in_docker: false
+  streamspot_key: System.get_env("CRDS_STREAMSPOT_API_KEY")
 
 config :ssl, protocol_version: :"tlsv1.2"
 

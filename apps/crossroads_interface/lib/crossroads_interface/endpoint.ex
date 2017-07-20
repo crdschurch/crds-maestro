@@ -3,7 +3,7 @@ defmodule CrossroadsInterface.Endpoint do
 
   socket "/socket", CrossroadsInterface.UserSocket
 
-  if Application.get_env(:crossroads_interface, :run_in_docker) != true do
+  if System.get_env("MAESTRO_RUN_IN_DOCKER") == nil do
     # Serve at "/" the static files from "priv/static" directory.
     #
     # You should set gzip to true if you are running phoenix.digest

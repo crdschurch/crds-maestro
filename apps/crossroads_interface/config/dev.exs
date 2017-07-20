@@ -11,8 +11,8 @@ config :crossroads_interface,
   cookie_domain: "",
   app_client_endpoint: "/",
   streamspot_id: "crossr30e3",
-  streamspot_key: "a0cb38cb-8146-47c2-b11f-6d93f4647389",
-  run_in_docker: true
+  streamspot_key: "a0cb38cb-8146-47c2-b11f-6d93f4647389"
+
 
 # For development, we disable any cache and enable
 # debugging and code reloading.

@@ -24,6 +24,7 @@ services:
      - CRDS_STREAMSPOT_API_KEY
      - CRDS_STREAMSPOT_SSID
      - MIX_ENV=dev
+     - MAESTRO_RUN_IN_DOCKER=true
 
   crds-apache:
     build: 
