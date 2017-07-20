@@ -18,6 +18,7 @@ erl_crash.dump
 
 # Folder for local copies of Micro Clients
 /local
+/microclients
 
 node_modules/
 .deliver/releases/
