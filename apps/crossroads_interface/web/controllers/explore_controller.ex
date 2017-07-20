@@ -11,22 +11,7 @@ defmodule CrossroadsInterface.ExploreController do
   plug CrossroadsInterface.Plug.Meta
 
   def index(conn, _params) do
-    conn
-    |> put_headers
-    |> render_entry("index.html")
-  end
-
-  defp put_headers(conn) do
-    conn |> put_resp_header("content-type", "text/html; charset=utf-8")
-  end
-
-  defp render_entry(conn, file) do
-    path = resolve(file)
-    conn |> Plug.Conn.send_file(200, path)
-  end
-
-  defp resolve(file) do
-    "./priv/static/js/static/explore/#{file}"
+    html(conn, File.read!("./priv/static/js/static/explore/index.html"))
   end
 
 end
