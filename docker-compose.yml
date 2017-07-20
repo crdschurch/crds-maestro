@@ -2,7 +2,7 @@ version: '3'
 services:
   crds-maestro:
     build: .
-    image: crds-maestro
+    image: crdschurch/crds-maestro
     container_name: crds-maestro
     ports:
      - "4000:4000"
@@ -29,7 +29,7 @@ services:
   crds-apache:
     build: 
       context: ./apache
-    image: crds-apache
+    image: crdschurch/crds-apache
     container_name: crds-apache
     ports:
      - "8000:80"
