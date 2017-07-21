@@ -36,7 +36,7 @@ defmodule CrossroadsInterface.Endpoint do
       at: "/assets", from: "/microclients/legacy", gzip: System.get_env("MIX_ENV") == "prod"
     
     plug Plug.Static,
-      at: "/explore", from: "/microclients/explore"}, gzip: System.get_env("MIX_ENV") == "prod"
+      at: "/explore", from: "/microclients/explore", gzip: System.get_env("MIX_ENV") == "prod"
       
     plug Plug.Static,
       at: "/", from: "/microclients/crds_connect", gzip: System.get_env("MIX_ENV") == "prod",
