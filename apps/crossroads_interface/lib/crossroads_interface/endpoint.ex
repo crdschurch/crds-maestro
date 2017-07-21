@@ -8,12 +8,16 @@ defmodule CrossroadsInterface.Endpoint do
     #
     # You should set gzip to true if you are running phoenix.digest
     # when deploying your static files in production.  
+
     plug Plug.Static,
       at: "/", from: :crossroads_interface, gzip: System.get_env("MIX_ENV") == "prod",
       only_matching: ["css", "fonts", "assets", "images", "js", "favicon", "robots"]
 
     plug Plug.Static,
       at: "/assets", from: {:crossroads_interface, "priv/static/js/legacy"}, gzip: System.get_env("MIX_ENV") == "prod"
+    
+    plug Plug.Static,
+      at: "/explore", from: {:crossroads_interface, "priv/static/js/static/explore"}, gzip: System.get_env("MIX_ENV") == "prod"
 
     plug Plug.Static,
       at: "/", from: {:crossroads_interface, "priv/static/js/crds_connect"}, gzip: System.get_env("MIX_ENV") == "prod",
@@ -30,7 +34,10 @@ defmodule CrossroadsInterface.Endpoint do
 
     plug Plug.Static,
       at: "/assets", from: "/microclients/legacy", gzip: System.get_env("MIX_ENV") == "prod"
-
+    
+    plug Plug.Static,
+      at: "/explore", from: "/microclients/explore"}, gzip: System.get_env("MIX_ENV") == "prod"
+      
     plug Plug.Static,
       at: "/", from: "/microclients/crds_connect", gzip: System.get_env("MIX_ENV") == "prod",
       only_matching: ["css", "fonts", "assets", "images", "js", "favicon", "robots"]

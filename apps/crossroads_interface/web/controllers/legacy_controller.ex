@@ -17,7 +17,7 @@ defmodule CrossroadsInterface.LegacyController do
 
   def index(conn, params) do
     conn
-    |> CrossroadsInterface.Plug.RedirectCookie.call("/")
+    |> CrossroadsInterface.Plug.RedirectCookie.call(conn.request_path)
     |> renderSite( conn: conn, params: params)
   end
 
@@ -62,6 +62,7 @@ defmodule CrossroadsInterface.LegacyController do
         "/js/legacy/misc.js",
         "/js/legacy/main.js"        
       ], "css_files": [
+       "/css/app.css",
        "/js/legacy/legacy.css"
       ], "base_href": "/"})
   end

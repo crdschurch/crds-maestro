@@ -22,6 +22,7 @@ defmodule CrossroadsInterface.CrdsStreamingController do
         "/js/crds_streaming/vendor.bundle.js",
         "/js/crds_streaming/main.bundle.js"
       ], "css_files": [ 
+        "/css/app.css",
         "/js/legacy/legacy.css",
         "/js/crds_streaming/styles.bundle.css" 
       ]})
