@@ -16,7 +16,8 @@ defmodule CrossroadsInterface.Endpoint do
     at: "/assets", from: {:crossroads_interface, "priv/static/js/legacy"}, gzip: System.get_env("MIX_ENV") == "prod"
     
   plug Plug.Static,
-    at: "/explore", from: {:crossroads_interface, "priv/static/js/static/explore"}, gzip: System.get_env("MIX_ENV") == "prod"
+    at: "/explore", from: {:crossroads_interface, "priv/static/js/static/explore"}, gzip: System.get_env("MIX_ENV") == "prod",
+    cache_control_for_etags: "public, max-age=86400"
 
   plug Plug.Static,
     at: "/", from: {:crossroads_interface, "priv/static/js/crds_connect"}, gzip: System.get_env("MIX_ENV") == "prod",
