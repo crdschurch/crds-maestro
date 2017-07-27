@@ -16,20 +16,23 @@ defmodule CrossroadsInterface.Endpoint do
     plug Plug.Static,
       at: "/assets", from: {:crossroads_interface, "priv/static/js/legacy"}, gzip: System.get_env("MIX_ENV") == "prod"
     
-  plug Plug.Static,
-    at: "/explore", from: {:crossroads_interface, "priv/static/js/static/explore"}, gzip: System.get_env("MIX_ENV") == "prod",
-    cache_control_for_etags: "public, max-age=86400"
+    plug Plug.Static,
+      at: "/explore", from: {:crossroads_interface, "priv/static/js/static/explore"}, gzip: System.get_env("MIX_ENV") == "prod",
+      cache_control_for_etags: "public, max-age=86400"
 
     plug Plug.Static,
       at: "/", from: {:crossroads_interface, "priv/static/js/crds_connect"}, gzip: System.get_env("MIX_ENV") == "prod",
       only_matching: ["css", "fonts", "assets", "images", "js", "favicon", "robots"]
 
   else 
+    #TODO: Can we set a base reference for static files and share code with above?
+
     # If running in docker serve files from the /microclients folder rather than priv/static
     plug Plug.Static,
       at: "/", from: "/microclients", gzip: System.get_env("MIX_ENV") == "prod",
       only_matching: ["css", "fonts", "assets", "images", "js", "favicon", "robots"]
 
+    # TODO: Do we need this one. It's not defined above anymore?
     plug Plug.Static,
       at: "/js/legacy", from: "/microclients/legacy", gzip: System.get_env("MIX_ENV") == "prod"
 
@@ -37,8 +40,9 @@ defmodule CrossroadsInterface.Endpoint do
       at: "/assets", from: "/microclients/legacy", gzip: System.get_env("MIX_ENV") == "prod"
     
     plug Plug.Static,
-      at: "/explore", from: "/microclients/explore", gzip: System.get_env("MIX_ENV") == "prod"
-      
+      at: "/explore", from: "/microclients/static/explore", gzip: System.get_env("MIX_ENV") == "prod",
+      cache_control_for_etags: "public, max-age=86400"
+
     plug Plug.Static,
       at: "/", from: "/microclients/crds_connect", gzip: System.get_env("MIX_ENV") == "prod",
       only_matching: ["css", "fonts", "assets", "images", "js", "favicon", "robots"]
