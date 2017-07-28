@@ -11,13 +11,14 @@ defmodule CrossroadsInterface.ExploreController do
   plug CrossroadsInterface.Plug.Meta
 
   def index(conn, _params) do
-    # TODO: This is an issue running in Maestro
+    application_root_path = Path.join(Application.app_dir(:crossroads_interface), "priv/static")
 
-    file = case System.get_env("MAESTRO_RUN_IN_DOCKER") do
-      nil -> Application.app_dir(:crossroads_interface, "priv/static/js/static/explore/index.html")
-      _ -> "/microclients/static/explore/index.html"
+    priv_path = case System.get_env("MAESTRO_RUN_IN_DOCKER") do
+      nil -> application_root_path
+      _ -> "/microclients"
     end
 
+    file = Path.join(priv_path, "js/static/explore/index.html")
     html(conn, File.read!(file))
   end
 
