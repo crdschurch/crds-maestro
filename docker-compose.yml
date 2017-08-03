@@ -33,3 +33,14 @@ services:
     container_name: crds-apache
     ports:
      - "8000:80"
+    environment:
+     # are all of these necessary if we are building legacy outside of container?
+     - CRDS_CMS_SERVER_ENDPOINT=https://contentint.crossroads.net/
+     - CRDS_GATEWAY_SERVER_ENDPOINT=https://gatewayint.crossroads.net/gateway/
+     - CRDS_PRERENDER_IO_KEY
+     - CRDS_SERVER_ALIAS=int.crossroads.net
+     - CRDS_SERVER_NAME=localhost
+     - CRDS_SERVICES_SERVER_ENDPOINT=https://gatewayint.crossroads.net/
+     - CRDS_WEBSITE_PATH=/usr/local/apache2/htdocs
+     - MAESTRO_HOSTNAME=crds-maestro
+     - MAESTRO_PORT=4000
