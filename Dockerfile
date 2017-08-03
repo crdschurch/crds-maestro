@@ -28,5 +28,5 @@ COPY ./microclients /microclients
 COPY ./docker-entrypoint.sh /usr/local/bin
 RUN chmod u+x /usr/local/bin/docker-entrypoint.sh
 
-CMD sh -c "MIX_ENV=dev mix phoenix.server"
+CMD sh -c "MIX_ENV=dev mix phoenix.server $MIX_PARAMS"
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
