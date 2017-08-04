@@ -99,3 +99,6 @@ sudo chmod 755 /var/maestro
 6. Extract maestro release.tar.gz file to `/var/maestor/releases/DATE_TIME` folder
 7. Create a symbolic link from `/var/maestro/current` to `/var/maestor/releases/DATE_TIME`
 8. Start the service using `sudo service maestro start`
+
+# Docker
+Please see the [crds-build-tools](https://github.com/crdschurch/crds-build-tools) repository for running local containers of Maestro
