@@ -21,7 +21,6 @@ defmodule CrossroadsInterface.CrdsGroupsController do
           "/js/crds_connect/vendor.js",
           "/js/crds_connect/app.js"
         ], "css_files": [
-          "/css/app.css", 
           "/js/legacy/legacy.css"
         ]})
   end
