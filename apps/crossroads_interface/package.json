@@ -8,7 +8,7 @@
   "repository": {},
   "dependencies": {
     "crds-shared-header": "0.2.14",
-    "crds-styles": "0.10.0",
+    "crds-styles": "0.11.3",
     "phoenix": "file:../../deps/phoenix",
     "phoenix_html": "file:../../deps/phoenix_html"
   },
@@ -22,6 +22,7 @@
     "clean-css-brunch": ">= 1.0 < 1.8",
     "copycat-brunch": "^1.1.0",
     "css-brunch": ">= 1.0 < 1.8",
+    "jasmine-core": "^2.7.0",
     "jasmine-es6": "^0.4.0",
     "javascript-brunch": ">= 1.0 < 1.8",
     "karma": "^1.5.0",
