@@ -7,7 +7,7 @@ Follow the guide located on the [elixir site](http://elixir-lang.org/install.htm
 
 ### Install the Phoenix Mix archive
 There is a great [guide on the phoenix site](http://www.phoenixframework.org/docs/installation), but essentially you will just run:
-`$ mix archive.install https://github.com/phoenixframework/archives/raw/master/phoenix_new-1.1.6.ez` to install the mix archive version 1.1.6.
+`$ mix archive.install https://github.com/phoenixframework/archives/raw/master/phoenix_new.ez` to install the mix archive.
 
 ### Install node.js >= 5.0.0
 This is environment specific, please visit [https://nodejs.org/en/](https://nodejs.org/en/) for instructions on installing on your operating system. 
@@ -99,6 +99,3 @@ sudo chmod 755 /var/maestro
 6. Extract maestro release.tar.gz file to `/var/maestor/releases/DATE_TIME` folder
 7. Create a symbolic link from `/var/maestro/current` to `/var/maestor/releases/DATE_TIME`
 8. Start the service using `sudo service maestro start`
-
-# Docker
-Please see the [crds-build-tools](https://github.com/crdschurch/crds-build-tools) repository for running local containers of Maestro
