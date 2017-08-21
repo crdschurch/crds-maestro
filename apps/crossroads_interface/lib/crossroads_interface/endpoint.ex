@@ -3,24 +3,36 @@ defmodule CrossroadsInterface.Endpoint do
 
   socket "/socket", CrossroadsInterface.UserSocket
 
-  # Serve at "/" the static files from "priv/static" directory.
-  #
+  application_root_path = Path.join(Application.app_dir(:crossroads_interface), "priv/static")
+
+  priv_path = case System.get_env("MAESTRO_RUN_IN_DOCKER") do
+    nil -> application_root_path
+    _ -> "/microclients"
+  end
+
   # You should set gzip to true if you are running phoenix.digest
   # when deploying your static files in production.
+  
+  if System.get_env("MAESTRO_RUN_IN_DOCKER") != nil do
+    # If running in docker prefer /microclients/ files over application_root_path files
+    plug Plug.Static,
+      at: "/", from: priv_path, gzip: System.get_env("MIX_ENV") == "prod",
+      only_matching: ["css", "fonts", "assets", "images", "js", "favicon", "robots"]
+  end
 
   plug Plug.Static,
-    at: "/", from: :crossroads_interface, gzip: System.get_env("MIX_ENV") == "prod",
+    at: "/", from: application_root_path, gzip: System.get_env("MIX_ENV") == "prod",
     only_matching: ["css", "fonts", "assets", "images", "js", "favicon", "robots"]
 
   plug Plug.Static,
-    at: "/assets", from: {:crossroads_interface, "priv/static/js/legacy"}, gzip: System.get_env("MIX_ENV") == "prod"
-    
+    at: "/assets", from: Path.join(priv_path, "js/legacy"), gzip: System.get_env("MIX_ENV") == "prod"
+  
   plug Plug.Static,
-    at: "/explore", from: {:crossroads_interface, "priv/static/js/static/explore"}, gzip: System.get_env("MIX_ENV") == "prod",
+    at: "/explore", from: Path.join(priv_path, "js/static/explore"), gzip: System.get_env("MIX_ENV") == "prod",
     cache_control_for_etags: "public, max-age=86400"
 
   plug Plug.Static,
-    at: "/", from: {:crossroads_interface, "priv/static/js/crds_connect"}, gzip: System.get_env("MIX_ENV") == "prod",
+    at: "/", from: Path.join(priv_path, "js/crds_connect"), gzip: System.get_env("MIX_ENV") == "prod",
     only_matching: ["css", "fonts", "assets", "images", "js", "favicon", "robots"]
 
   plug CrossroadsInterface.Plug.NotFoundAssetsPlug
