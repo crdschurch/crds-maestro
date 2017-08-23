@@ -13,6 +13,10 @@ defmodule CrossroadsInterface.Endpoint do
     plug Plug.Static, 
       at: "/", from: "/microclients", gzip: System.get_env("MIX_ENV") == "prod", 
       only_matching: ["css", "fonts", "assets", "images", "js", "favicon", "robots"] 
+      
+    plug Plug.Static, 
+      at: "/", from: {:crossroads_interface, "priv/static"}, gzip: System.get_env("MIX_ENV") == "prod", 
+      only_matching: ["css", "fonts", "assets", "images", "js", "favicon", "robots"] 
 
     plug Plug.Static, 
       at: "/assets", from: "/microclients/js/legacy", gzip: System.get_env("MIX_ENV") == "prod" 
