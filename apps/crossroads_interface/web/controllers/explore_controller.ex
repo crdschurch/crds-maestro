@@ -11,7 +11,7 @@ defmodule CrossroadsInterface.ExploreController do
   plug CrossroadsInterface.Plug.Meta
 
   def index(conn, _params) do
-    application_root_path = Path.join(Application.app_dir(:crossroads_interface), "priv/static")
+    application_root_path = Application.app_dir(:crossroads_interface, "priv/static")
 
     priv_path = case System.get_env("MAESTRO_RUN_IN_DOCKER") do
       nil -> application_root_path
