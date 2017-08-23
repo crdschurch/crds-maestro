@@ -13,10 +13,7 @@ defmodule CrossroadsInterface.ExploreController do
   def index(conn, _params) do
     application_root_path = Application.app_dir(:crossroads_interface, "priv/static")
 
-    priv_path = case System.get_env("MAESTRO_RUN_IN_DOCKER") do
-      nil -> application_root_path
-      _ -> "/microclients"
-    end
+    priv_path = ConfigHelper.get_priv_path()
 
     file = Path.join(priv_path, "js/static/explore/index.html")
     html(conn, File.read!(file))

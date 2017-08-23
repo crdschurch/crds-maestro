@@ -6,10 +6,7 @@ defmodule CrossroadsInterface.Endpoint do
 
   application_root_path = Application.app_dir(:crossroads_interface, "priv/static")
 
-  priv_path = case System.get_env("MAESTRO_RUN_IN_DOCKER") do
-    nil -> application_root_path
-    _ -> "/microclients"
-  end
+  priv_path = ConfigHelper.get_priv_path()
 
   Logger.debug "Root: #{application_root_path}"
   Logger.debug "Priv path: #{priv_path}"  

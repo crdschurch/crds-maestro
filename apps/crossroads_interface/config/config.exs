@@ -23,6 +23,13 @@ defmodule ConfigHelper do
       env -> "-" <> env 
     end
   end
+
+  def get_priv_path do
+    case System.get_env("MAESTRO_RUN_IN_DOCKER") do
+      nil -> Application.app_dir(:crossroads_interface, "priv/static")
+      _ -> "/microclients"
+    end
+  end
 end
 
 config :crossroads_content,
