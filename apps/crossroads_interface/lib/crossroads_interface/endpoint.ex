@@ -16,6 +16,13 @@ defmodule CrossroadsInterface.Endpoint do
   # You should set gzip to true if you are running phoenix.digest
   # when deploying your static files in production.
 
+  if System.get_env("MAESTRO_RUN_IN_DOCKER") != nil do 
+    # If running in docker prefer /microclients/ files over application_root_path files 
+    plug Plug.Static, 
+      at: "/", from: priv_path, gzip: System.get_env("MIX_ENV") == "prod", 
+      only_matching: ["css", "fonts", "assets", "images", "js", "favicon", "robots"] 
+  end 
+
   plug Plug.Static, 
     at: "/", from: application_root_path, gzip: System.get_env("MIX_ENV") == "prod", 
     only_matching: ["css", "fonts", "assets", "images", "js", "favicon", "robots"] 
