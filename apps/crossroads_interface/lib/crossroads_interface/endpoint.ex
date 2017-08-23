@@ -4,7 +4,7 @@ defmodule CrossroadsInterface.Endpoint do
 
   socket "/socket", CrossroadsInterface.UserSocket
 
-  application_root_path = Application.app_dir(:crossroads_interface, "priv/static")
+  application_root_path = Path.join(:code.priv_dir(:crossroads_interface), "static")
 
   priv_path = ConfigHelper.get_priv_path()
 
@@ -16,26 +16,19 @@ defmodule CrossroadsInterface.Endpoint do
   # You should set gzip to true if you are running phoenix.digest
   # when deploying your static files in production.
 
-  if System.get_env("MAESTRO_RUN_IN_DOCKER") != nil do 
-    # If running in docker prefer /microclients/ files over application_root_path files 
-    plug Plug.Static, 
-      at: "/", from: priv_path, gzip: System.get_env("MIX_ENV") == "prod", 
-      only_matching: ["css", "fonts", "assets", "images", "js", "favicon", "robots"] 
-  end 
-
   plug Plug.Static, 
     at: "/", from: application_root_path, gzip: System.get_env("MIX_ENV") == "prod", 
     only_matching: ["css", "fonts", "assets", "images", "js", "favicon", "robots"] 
 
   plug Plug.Static, 
-    at: "/assets", from: { priv_path, "js/legacy" }, gzip: System.get_env("MIX_ENV") == "prod" 
+    at: "/assets", from: Path.join(priv_path, "js/legacy"), gzip: System.get_env("MIX_ENV") == "prod" 
    
   plug Plug.Static, 
-    at: "/explore", from: { priv_path, "js/static/explore" }, gzip: System.get_env("MIX_ENV") == "prod", 
+    at: "/explore", from: Path.join(priv_path, "js/static/explore"), gzip: System.get_env("MIX_ENV") == "prod", 
     cache_control_for_etags: "public, max-age=86400"
 
   plug Plug.Static, 
-    at: "/", from: { priv_path, "js/crds_connect"}, gzip: System.get_env("MIX_ENV") == "prod", 
+    at: "/", from: Path.join(priv_path, "js/crds_connect"), gzip: System.get_env("MIX_ENV") == "prod", 
     only_matching: ["css", "fonts", "assets", "images", "js", "favicon", "robots"]
 
   plug CrossroadsInterface.Plug.NotFoundAssetsPlug
