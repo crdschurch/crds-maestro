@@ -28,4 +28,17 @@ defmodule ConfigHelper.GetSuffixTest do
 
     assert ConfigHelper.get_suffix() == "_yahoo-foobar"
   end
+
+  test "get_priv_path/0 returns /microclients when MAESTRO_RUN_IN_DOCKER is set", %{conn: _conn} do
+    System.put_env("MAESTRO_RUN_IN_DOCKER", "true")
+
+    assert ConfigHelper.get_priv_path() == "/microclients"
+  end
+
+  test "get_priv_path/0 returns priv/static when MAESTRO_RUN_IN_DOCKER is not set", %{conn: _conn} do
+    System.delete_env("MAESTRO_RUN_IN_DOCKER")
+
+    assert ConfigHelper.get_priv_path() == Application.app_dir(:crossroads_interface, "priv/static")
+  end
+
 end

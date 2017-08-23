@@ -11,7 +11,12 @@ defmodule CrossroadsInterface.ExploreController do
   plug CrossroadsInterface.Plug.Meta
 
   def index(conn, _params) do
-    html(conn, File.read!(Application.app_dir(:crossroads_interface, "priv/static/js/static/explore/index.html")))
+    application_root_path = Application.app_dir(:crossroads_interface, "priv/static")
+
+    priv_path = ConfigHelper.get_priv_path()
+
+    file = Path.join(priv_path, "js/static/explore/index.html")
+    html(conn, File.read!(file))
   end
 
 end
