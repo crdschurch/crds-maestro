@@ -28,14 +28,14 @@ defmodule CrossroadsInterface.Endpoint do
     only_matching: ["css", "fonts", "assets", "images", "js", "favicon", "robots"] 
 
   plug Plug.Static, 
-    at: "/assets", from: Path.join(priv_path, "js/legacy"), gzip: System.get_env("MIX_ENV") == "prod" 
+    at: "/assets", from: { priv_path, "js/legacy" }, gzip: System.get_env("MIX_ENV") == "prod" 
    
   plug Plug.Static, 
-    at: "/explore", from: Path.join(priv_path, "js/static/explore"), gzip: System.get_env("MIX_ENV") == "prod", 
+    at: "/explore", from: { priv_path, "js/static/explore" }, gzip: System.get_env("MIX_ENV") == "prod", 
     cache_control_for_etags: "public, max-age=86400"
 
   plug Plug.Static, 
-    at: "/", from: Path.join(priv_path, "js/crds_connect"), gzip: System.get_env("MIX_ENV") == "prod", 
+    at: "/", from: { priv_path, "js/crds_connect"}, gzip: System.get_env("MIX_ENV") == "prod", 
     only_matching: ["css", "fonts", "assets", "images", "js", "favicon", "robots"]
 
   plug CrossroadsInterface.Plug.NotFoundAssetsPlug
