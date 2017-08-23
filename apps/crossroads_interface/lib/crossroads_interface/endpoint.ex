@@ -9,25 +9,26 @@ defmodule CrossroadsInterface.Endpoint do
     nil -> application_root_path
     _ -> "/microclients"
   end
+  
 
   # Serve at "/" the static files from "priv/static" directory.
   #
   # You should set gzip to true if you are running phoenix.digest
   # when deploying your static files in production.
 
-  plug Plug.Static,
-    at: "/", from: :crossroads_interface, gzip: System.get_env("MIX_ENV") == "prod",
-    only_matching: ["css", "fonts", "assets", "images", "js", "favicon", "robots"]
+  plug Plug.Static, 
+    at: "/", from: application_root_path, gzip: System.get_env("MIX_ENV") == "prod", 
+    only_matching: ["css", "fonts", "assets", "images", "js", "favicon", "robots"] 
 
-  plug Plug.Static,
-    at: "/assets", from: {:crossroads_interface, "priv/static/js/legacy"}, gzip: System.get_env("MIX_ENV") == "prod"
-    
-  plug Plug.Static,
-    at: "/explore", from: {:crossroads_interface, "priv/static/js/static/explore"}, gzip: System.get_env("MIX_ENV") == "prod",
+  plug Plug.Static, 
+    at: "/assets", from: Path.join(priv_path, "js/legacy"), gzip: System.get_env("MIX_ENV") == "prod" 
+   
+  plug Plug.Static, 
+    at: "/explore", from: Path.join(priv_path, "js/static/explore"), gzip: System.get_env("MIX_ENV") == "prod", 
     cache_control_for_etags: "public, max-age=86400"
 
-  plug Plug.Static,
-    at: "/", from: {:crossroads_interface, "priv/static/js/crds_connect"}, gzip: System.get_env("MIX_ENV") == "prod",
+  plug Plug.Static, 
+    at: "/", from: Path.join(priv_path, "js/crds_connect"), gzip: System.get_env("MIX_ENV") == "prod", 
     only_matching: ["css", "fonts", "assets", "images", "js", "favicon", "robots"]
 
   plug CrossroadsInterface.Plug.NotFoundAssetsPlug
