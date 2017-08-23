@@ -3,6 +3,13 @@ defmodule CrossroadsInterface.Endpoint do
 
   socket "/socket", CrossroadsInterface.UserSocket
 
+  application_root_path = Application.app_dir(:crossroads_interface, "priv/static")
+
+  priv_path = case System.get_env("MAESTRO_RUN_IN_DOCKER") do
+    nil -> application_root_path
+    _ -> "/microclients"
+  end
+
   # Serve at "/" the static files from "priv/static" directory.
   #
   # You should set gzip to true if you are running phoenix.digest
