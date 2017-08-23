@@ -1,5 +1,6 @@
 defmodule CrossroadsInterface.Endpoint do
   use Phoenix.Endpoint, otp_app: :crossroads_interface
+  require Logger
 
   socket "/socket", CrossroadsInterface.UserSocket
 
@@ -9,7 +10,9 @@ defmodule CrossroadsInterface.Endpoint do
     nil -> application_root_path
     _ -> "/microclients"
   end
-  
+
+  Logger.debug "Root: #{application_root_path}"
+  Logger.debug "Priv path: #{priv_path}"  
 
   # Serve at "/" the static files from "priv/static" directory.
   #
