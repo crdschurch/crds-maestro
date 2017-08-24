@@ -16,7 +16,7 @@ defmodule CrossroadsInterface.StaticController do
 
     file = case System.get_env("MAESTRO_RUN_IN_DOCKER") do
       nil -> Path.join(Application.app_dir(:crossroads_interface),"priv/static/js/static#{conn.request_path}/index.html")
-      _ -> "/microclients/js/static/explore/index.html"
+      _ -> "/microclients/js/static#{conn.request_path}/index.html"
     end
 
     html(conn, File.read!(file))
