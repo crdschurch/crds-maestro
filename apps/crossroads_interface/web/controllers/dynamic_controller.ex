@@ -13,13 +13,12 @@ defmodule CrossroadsInterface.DynamicController do
   plug CrossroadsInterface.Plug.Meta
 
   def index(conn, _params) do
-
-    file = case System.get_env("MAESTRO_RUN_IN_DOCKER") do
-      nil -> Path.join(Application.app_dir(:crossroads_interface),"priv/static/js/static#{conn.request_path}/index.html")
-      _ -> "/microclients/js/static#{conn.request_path}/index.html"
+    template = "js/static#{conn.request_path}/index.html"
+    path = case System.get_env("MAESTRO_RUN_IN_DOCKER") do
+      nil -> Path.join(Application.app_dir(:crossroads_interface),"priv/static/#{template}")
+      _ -> "/microclients/#{template}"
     end
-
-    html(conn, File.read!(file))
+    html(conn, File.read!(path))
   end
 
 end
