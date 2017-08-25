@@ -1,4 +1,4 @@
-defmodule CrossroadsInterface.StaticController do
+defmodule CrossroadsInterface.DynamicController do
   use CrossroadsInterface.Web, :controller
   require Logger
   require File
