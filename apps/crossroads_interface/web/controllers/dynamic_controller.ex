@@ -4,7 +4,10 @@ defmodule CrossroadsInterface.DynamicController do
   require File
 
   @moduledoc"""
-  This controller handles static requests
+  This controller handles requests to the /priv/static/js/static directory
+  The request path is appended to the file request and the html is served dynamically
+  without further modification to this file. Please adjust router.ex to enable more
+  routes to use this.
   """
   plug CrossroadsInterface.Plug.ContentBlocks
   plug CrossroadsInterface.Plug.Meta
