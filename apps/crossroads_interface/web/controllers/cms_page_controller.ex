@@ -7,7 +7,7 @@ defmodule CrossroadsInterface.CmsPageController do
   plug CrossroadsInterface.Plug.Meta
   plug CrossroadsInterface.Plug.ContentBlocks
 
-  def index(conn, _) do    
+  def index(conn, _) do
     page = conn.assigns[:page]
     crds_styles = getStylesClassFromPage(page)
     body_class = getBodyClassFromPage(page)
