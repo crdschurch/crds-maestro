@@ -35,7 +35,8 @@ defmodule CrossroadsInterface.Router do
     get "/signin", LegacyController, :noRedirect
     get "/register", LegacyController, :noRedirect
     get "/homepage", HomepageController, :index
-    get "/explore", ExploreController, :index
+    get "/explore", DynamicController, :index
+    get "/atriumevents", DynamicController, :index
     forward "/streaming", CrdsStreamingController, :index
     forward "/", LegacyController, :index
   end
