@@ -8,14 +8,14 @@ defmodule CrossroadsInterface.CrdsGroupsController do
   """
 
   plug :put_layout, "screen_width.html"
-  plug CrossroadsInterface.Plug.BaseHref, "/groupsv2/search"
+  plug CrossroadsInterface.Plug.BaseHref, "/groups/search"
   plug CrossroadsInterface.Plug.ContentBlocks
   plug CrossroadsInterface.Plug.Meta
   plug CrossroadsInterface.Plug.CrdsStyles, "crds-styles"
 
   def index(conn, _params) do
     conn
-      |> CrossroadsInterface.Plug.RedirectCookie.call("/groupsv2/search")
+      |> CrossroadsInterface.Plug.RedirectCookie.call("/groups/search")
       |> render("app_root.html", %{ "js_files": [
           "/js/crds_connect/polyfills.js",
           "/js/crds_connect/vendor.js",
