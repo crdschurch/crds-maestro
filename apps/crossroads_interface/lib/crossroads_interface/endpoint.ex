@@ -9,9 +9,13 @@ defmodule CrossroadsInterface.Endpoint do
   # when deploying your static files in production.
 
   if System.get_env("MAESTRO_RUN_IN_DOCKER") != nil do
+
+    microClientsFilePath = "/microclients"
+    microClientsJsFilePath = "#{microClientsFilePath}/js"
+    microClientsJsStaticFilePath = "#{microClientsJsFilePath}/static"
     
     plug Plug.Static, 
-      at: "/", from: "/microclients", gzip: System.get_env("MIX_ENV") == "prod", 
+      at: "/", from: microClientsFilePath, gzip: System.get_env("MIX_ENV") == "prod", 
       only_matching: ["css", "fonts", "assets", "images", "js", "favicon", "robots"] 
       
     plug Plug.Static, 
@@ -19,31 +23,43 @@ defmodule CrossroadsInterface.Endpoint do
       only_matching: ["css", "fonts", "assets", "images", "js", "favicon", "robots"] 
       
     plug Plug.Static, 
-      at: "/", from: "/microclients/js/static", gzip: System.get_env("MIX_ENV") == "prod", 
+      at: "/explore", from: "#{microClientsJsStaticFilePath}/explore", gzip: System.get_env("MIX_ENV") == "prod", 
+      cache_control_for_etags: "public, max-age=86400"
+      
+    plug Plug.Static, 
+      at: "/atriumevents", from: "#{microClientsJsStaticFilePath}/atriumevents", gzip: System.get_env("MIX_ENV") == "prod", 
       cache_control_for_etags: "public, max-age=86400"
 
     plug Plug.Static, 
-      at: "/assets", from: "/microclients/js/legacy", gzip: System.get_env("MIX_ENV") == "prod" 
+      at: "/assets", from: "#{microClientsJsFilePath}/legacy", gzip: System.get_env("MIX_ENV") == "prod" 
 
     plug Plug.Static, 
-      at: "/", from: "/microclients/js/crds_connect", gzip: System.get_env("MIX_ENV") == "prod", 
+      at: "/", from: "#{microClientsJsFilePath}/crds_connect", gzip: System.get_env("MIX_ENV") == "prod", 
       only_matching: ["css", "fonts", "assets", "images", "js", "favicon", "robots"]
 
   else
+
+    filePath = "priv/static"
+    jsFilePath = "#{filePath}/js"
+    jsStaticFilePath = "#{jsFilePath}/static"
     
     plug Plug.Static, 
-      at: "/", from: {:crossroads_interface, "priv/static"}, gzip: System.get_env("MIX_ENV") == "prod", 
+      at: "/", from: {:crossroads_interface, filePath}, gzip: System.get_env("MIX_ENV") == "prod", 
       only_matching: ["css", "fonts", "assets", "images", "js", "favicon", "robots"] 
       
     plug Plug.Static, 
-      at: "/", from: {:crossroads_interface, "priv/static/js/static"}, gzip: System.get_env("MIX_ENV") == "prod", 
+      at: "/explore", from: {:crossroads_interface, "#{jsStaticFilePath}/explore"}, gzip: System.get_env("MIX_ENV") == "prod", 
+      cache_control_for_etags: "public, max-age=86400"
+      
+    plug Plug.Static, 
+      at: "/atriumevents", from: {:crossroads_interface, "#{jsStaticFilePath}/atriumevents"}, gzip: System.get_env("MIX_ENV") == "prod", 
       cache_control_for_etags: "public, max-age=86400"
 
     plug Plug.Static, 
-      at: "/assets", from: {:crossroads_interface, "priv/static/js/legacy"}, gzip: System.get_env("MIX_ENV") == "prod" 
+      at: "/assets", from: {:crossroads_interface, "#{jsFilePath}/legacy"}, gzip: System.get_env("MIX_ENV") == "prod" 
 
     plug Plug.Static, 
-      at: "/", from: {:crossroads_interface, "priv/static/js/crds_connect"}, gzip: System.get_env("MIX_ENV") == "prod", 
+      at: "/", from: {:crossroads_interface, "#{jsFilePath}/crds_connect"}, gzip: System.get_env("MIX_ENV") == "prod", 
       only_matching: ["css", "fonts", "assets", "images", "js", "favicon", "robots"]
 
   end
