@@ -40,7 +40,6 @@ config :crossroads_interface,
   streamspot_id: System.get_env("CRDS_STREAMSPOT_SSID"),
   streamspot_key: System.get_env("CRDS_STREAMSPOT_API_KEY")
 
-
 config :ssl, protocol_version: :"tlsv1.2"
 
 # Configures the endpoint

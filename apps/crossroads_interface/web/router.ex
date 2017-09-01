@@ -29,13 +29,14 @@ defmodule CrossroadsInterface.Router do
 
     forward "/group-leader", CrdsGroupLeaderController, :index
     forward "/connect", CrdsConnectController, :index
-    forward "/groupsv2/search", CrdsGroupsController, :index
+    forward "/groups/search", CrdsGroupsController, :index
     get "/notfound", NotfoundController, :notfound
     get "/signout", LegacyController, :noRedirect
     get "/signin", LegacyController, :noRedirect
     get "/register", LegacyController, :noRedirect
     get "/homepage", HomepageController, :index
-    get "/explore", ExploreController, :index
+    get "/explore", DynamicController, :index
+    get "/atriumevents", DynamicController, :index
     forward "/streaming", CrdsStreamingController, :index
     forward "/", LegacyController, :index
   end
