@@ -8,6 +8,11 @@
     })(window,document,'script','dataLayer','GTM-MFS4MJ');</script>
     <!-- End Google Tag Manager -->
 
+    <!-- Begin Monetate ExpressTag Sync v8.1. Place at start of document head. DO NOT ALTER. -->
+    <script type=“text/javascript”>var monetateT = new Date().getTime();</script>
+    <script type=“text/javascript” src=“//se.monetate.net/js/2/a-ad392f3b/d/crossroads.net/entry.js”></script>
+    <!-- End Monetate tag. -->
+    
     <style>
         /* Allow angular.js to be loaded in body, hiding cloaked elements until
          * templates compile.  The !important is important given that there may be
