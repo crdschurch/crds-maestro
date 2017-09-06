@@ -1,17 +1,17 @@
 use Mix.Config
 
 config :crossroads_content,
-  cms_server_endpoint: "https://contentint.crossroads.net/"
+  cms_server_endpoint: System.get_env("CRDS_CMS_SERVER_ENDPOINT") || "https://contentint.crossroads.net/"
 
-config :crossroads_interface,
-  image_client_endpoint: "https://gatewayint.crossroads.net/gateway/api/image/profile/",
-  gateway_server_endpoint: "https://gatewayint.crossroads.net/gateway/",
-  cms_client_endpoint: "https://contentint.crossroads.net/",
+config :crossroads_interface,	
+  gateway_server_endpoint: System.get_env("CRDS_GATEWAY_SERVER_ENDPOINT") || "https://gatewayint.crossroads.net/gateway/",		
+  cms_client_endpoint: System.get_env("CRDS_CMS_CLIENT_ENDPOINT") || "https://contentint.crossroads.net/",
   cookie_prefix: "",
   cookie_domain: "",
   app_client_endpoint: "/",
   streamspot_id: "crossr30e3",
   streamspot_key: "a0cb38cb-8146-47c2-b11f-6d93f4647389"
+
 
 # For development, we disable any cache and enable
 # debugging and code reloading.

@@ -39,7 +39,7 @@ CRDS.CardFilters.prototype.init = function() {
 
 CRDS.CardFilter = function(el) {
   this.el = el;
-  this.container = this.el.dataset.filterParent ? document.querySelector(this.el.dataset.filterParent) : this.el;
+  this.container = document.querySelector(this.el.dataset.filterParent) ? document.querySelector(this.el.dataset.filterParent) : this.el;
   this.filter_label = this.el.dataset.filterLabel || 'Filter By Location...';
   this.reset_label = this.el.dataset.filterResetLabel || false;
   this.init();
