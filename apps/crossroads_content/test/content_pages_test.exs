@@ -37,7 +37,7 @@ defmodule CrossroadsContentPagesTest do
   end
 
   test "get_page(stage=false) returns cached published page" do
-    with_mock CmsClient, [get: fn("Page", %{"requiresAngular" => 0}) -> FakeHttp.get_pages() end] do  
+    with_mock CmsClient, [get: fn("Page", _params) -> FakeHttp.get_pages() end] do  
       Pages.start_link([name: CrossroadsContent.Pages]) 
       assert {:ok, _} = Pages.get_page("/habitat/") 
     end
@@ -88,14 +88,7 @@ defmodule CrossroadsContentPagesTest do
   test "get_page_routes() returns list of pages" do
     with_mock CmsClient, [get: fn(_url, _params) -> FakeHttp.get_pages() end] do  
       Pages.start_link([name: CrossroadsContent.Pages]) 
-      assert Pages.get_page_routes() == ["/habitat/"]
-    end
-  end
-
-  test "does not include pages that require Angular" do
-    with_mock CmsClient, [get: fn(_url, _params) -> FakeHttp.get_pages() end] do     
-      Pages.start_link([name: CrossroadsContent.Pages])
-      refute Pages.page_exists?("/habitat2/")
+      assert Pages.get_page_routes() == ["/habitat/", "/habitat2/"]
     end
   end
 

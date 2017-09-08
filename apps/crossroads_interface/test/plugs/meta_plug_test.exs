@@ -18,13 +18,13 @@ defmodule CrossroadsInterface.Plugs.MetaTest do
                 "disableCsrfSecurityToken" => "0", "enableLiveValidation" => "0",
                 "sideBar" => 2, "disableSaveSubmissions" => "0", "hasBrokenLink" => "0",
                 "type" => "website", 
-                "content" => "<h1 class=\"page-header\">ReachOut: Habitat</h1><h2 class=\"subheading\">Serving Habitat for Humanity</h
-                2><div>\n<p>We believe simple, decent, affordable housing for all people is something God cares about deeply. </p>\n<div>
-                \n<p>Our city has one of the lowest home ownership rates in the country. Only 42% of residents in our city own their home
-                s, compared to 68% nationally. Statistically speaking, home ownership leads to significant increases in family stability,
-                financial security and a sense of belonging to the community. And all of those things increase the likelihood that child
-                ren can escape a cycle of poverty.</p>\n</div>\n<p>Check back soon for projects that will be available this spring and su
-                mmer. </p>\n</div>", "bodyClasses" => nil,
+                "content" => "<h1 class=\"page-header\">ReachOut: Habitat</h1><h2 class=\"subheading\">Serving Habitat for Humanity</h2>" <>
+                  "<div><p>We believe simple, decent, affordable housing for all people is something God cares about deeply. </p><div>" <>
+                  "<p>Our city has one of the lowest home ownership rates in the country. Only 42% of residents in our city own their home" <>
+                  "s, compared to 68% nationally. Statistically speaking, home ownership leads to significant increases in family stability," <>
+                  "financial security and a sense of belonging to the community. And all of those things increase the likelihood that child" <>
+                  "ren can escape a cycle of poverty.</p></div><p>Check back soon for projects that will be available this spring and su" <>
+                  "mmer. </p></div>", "bodyClasses" => nil,
                 "menuTitle" => nil, "displayErrorMessagesAtTop" => "0",
                 "clearButtonText" => nil, "sort" => "5", "version" => "7",
                 "requiresAngular" => "0",
@@ -100,7 +100,7 @@ defmodule CrossroadsInterface.Plugs.MetaTest do
                |> CrossroadsInterface.Plug.Meta.call(%{})
       
       assert conn.assigns.meta_title == "Wizard Cow | Crossroads"
-      assert conn.assigns.meta_description == "ReachOut: HabitatServing Habitat for HumanityWe believe simple, decent, affordable housing for all people is something God cares about deeply. Our city has one of the lowest home ownership rates in the country. Only 42% of residents in our city own their home\n                s, compared to 68% nationall"
+      assert conn.assigns.meta_description == "ReachOut: HabitatServing Habitat for HumanityWe believe simple, decent, affordable housing for all people is something God cares about deeply. Our city has one of the lowest home ownership rates in the country. Only 42% of residents in our city own their homes, compared to 68% nationally. Statistically "
       assert conn.assigns.meta_url == "/wizardcow"
       assert conn.assigns.meta_type == "website"
     end
