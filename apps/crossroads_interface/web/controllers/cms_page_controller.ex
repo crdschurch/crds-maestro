@@ -14,7 +14,6 @@ defmodule CrossroadsInterface.CmsPageController do
       page["redirectUrl"] != nil ->
         conn
           |> redirect(external: page["redirectUrl"])
-          |> halt()
       true ->
         crds_styles = getStylesClassFromPage(page)
         body_class = getBodyClassFromPage(page)
