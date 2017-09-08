@@ -45,7 +45,8 @@ defmodule CrossroadsInterface.Endpoint do
     
     plug Plug.Static, 
       at: "/", from: {:crossroads_interface, filePath}, gzip: System.get_env("MIX_ENV") == "prod", 
-      only_matching: ["css", "fonts", "assets", "images", "js", "favicon", "robots"] 
+      only_matching: ["css", "fonts", "assets", "images", "js", "favicon", "robots"] , 
+      cache_control_for_etags: "public, max-age=86400"
       
     plug Plug.Static, 
       at: "/explore", from: {:crossroads_interface, "#{jsStaticFilePath}/explore"}, gzip: System.get_env("MIX_ENV") == "prod", 
