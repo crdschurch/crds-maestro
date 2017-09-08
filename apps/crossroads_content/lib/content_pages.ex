@@ -156,8 +156,8 @@ defmodule CrossroadsContent.Pages do
       _ -> %{}
     end
 
-    # Call the CMS with up to 150 IDs at a time. Ideally we would make a single CMS call,
-    # but URLs are limited to 2K characters, so batching in chunks of 150 will keep us from
+    # Call the CMS with up to 125 IDs at a time. Ideally we would make a single CMS call,
+    # but URLs are limited to 2K characters, so batching in chunks of 125 will keep us from
     # exceeding the max URL length.
     id_chunks = get_id_chunks(ids)
     id_queries = Enum.map(id_chunks, fn x -> build_id_query x end)
@@ -182,7 +182,7 @@ defmodule CrossroadsContent.Pages do
 
   defp get_id_chunks(ids) when length(ids) === 0 do [] end
   defp get_id_chunks(ids) do
-    max_ids_per_call = 150;
+    max_ids_per_call = 125;
 
     {head, tail} = Enum.split(ids, max_ids_per_call)
 
