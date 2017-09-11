@@ -5,7 +5,13 @@
 /* global imagesLoaded */
 
 export default function (images, callback) {
-  images.forEach((img) => {
+  function forEach(array, callbackfunc, scope) {
+    for (let i = 0; i < array.length; i += 1) {
+      callbackfunc.call(scope, i, array[i]);
+    }
+  }
+
+  forEach(images, (index, img) => {
     const attributeCheck = setInterval(() => {
       if (img.hasAttribute('src')) {
         clearInterval(attributeCheck);
