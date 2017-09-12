@@ -5,9 +5,9 @@
 /* global imagesLoaded */
 
 export default function (images, callback) {
-  function forEach(array, callbackfunc, scope) {
+  function forEach(array, callbackfunc) {
     for (let i = 0; i < array.length; i += 1) {
-      callbackfunc.call(scope, i, array[i]);
+      callbackfunc.call(this, i, array[i]);
     }
   }
 
@@ -15,9 +15,7 @@ export default function (images, callback) {
     const attributeCheck = setInterval(() => {
       if (img.hasAttribute('src')) {
         clearInterval(attributeCheck);
-        imagesLoaded(img, () => {
-          callback();
-        });
+        imagesLoaded(img, callback);
       }
     }, 100);
   });
