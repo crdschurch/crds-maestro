@@ -18,11 +18,11 @@ CRDS.MainJumbotronVideo.prototype.init = function() {
   }, true);
 };
 
-CRDS.MainJumbotronVideo.prototype.setSize = function(player, newWidth, newHeight) {
-  player.css({"height": newHeight, "width": newWidth})
-}
-
 CRDS.MainJumbotronVideo.prototype.resizePlayer = function() {
+  // mainJumbotronVideoEl => .jumbotron.bg-video [Outermost div]
+  // player => #main-jumbotron-video [Innermost div]
+  // playerContainerEl => .bg-video-player [Middle div]
+
   var width = this.mainJumbotronVideoEl.offsetWidth,
       height = this.mainJumbotronVideoEl.offsetHeight,
       ratio = parseFloat(this.mainJumbotronVideoEl.getAttribute('data-aspect-ratio')) ||
@@ -36,11 +36,9 @@ CRDS.MainJumbotronVideo.prototype.resizePlayer = function() {
         newHeight = width / ratio;
 
     // Resize the player.
-    debugger;
-    this.player.style.height = "auto";
-    this.player.style.width = "100%";
+    this.player.attributes.height.value = newHeight;
+    this.player.attributes.width.value = newWidth;
 
-    debugger;
     // The player's container should sit at the left,
     // and at half of its excess height.
     this.playerContainerEl.style.left = 0;
@@ -54,11 +52,9 @@ CRDS.MainJumbotronVideo.prototype.resizePlayer = function() {
         newWidth = height * ratio;
 
     // Resize the player.
-    debugger;
-    this.player.style.height = "auto";
-    this.player.style.width = "100%";
+    this.player.attributes.height.value = newHeight;
+    this.player.attributes.width.value = newWidth;
 
-    debugger;
     // The player's container should sit at the top,
     // and at half of its excess width.
     this.playerContainerEl.style.top = 0;
@@ -119,7 +115,6 @@ CRDS.MainJumbotronVideo.prototype.resizePlayer = function() {
 // // ---------------------------------------- JumbotronBgVideoPlayer
 // 
 // CRDS.JumbotronBgVideoPlayer = function(jumbotronEl) {
-//   debugger;
 //   this.jumbotronEl = jumbotronEl;
 //   this.init();
 //   return;
