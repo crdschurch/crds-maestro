@@ -108,15 +108,18 @@ defmodule CrossroadsContent.Pages do
   end
 
   defp get_non_angular_pages(stage) do
-    CrossroadsContent.CmsClient.get("Page", Map.new |> set_angular_not_required |> set_stage(stage))
+    params = Map.new |> set_angular_not_required |> set_stage(stage)
+    CrossroadsContent.CmsClient.get("Page", params)
   end
 
   defp get_non_angular_page(url, stage) do
-    CrossroadsContent.CmsClient.get("Page", Map.new |> set_angular_not_required |> set_stage(stage) |> set_link(url))
+    params = Map.new |> set_angular_not_required |> set_stage(stage) |> set_link(url)
+    CrossroadsContent.CmsClient.get("Page", params)
   end
 
   defp get_redirector_pages(stage) do
-    redirector_pages = CrossroadsContent.CmsClient.get("Page", Map.new |> set_redirector_pagetype |> set_stage(stage))
+    params = Map.new |> set_redirector_pagetype |> set_stage(stage)
+    redirector_pages = CrossroadsContent.CmsClient.get("Page", params)
 
     case redirector_pages do
       {:ok, 200, response} ->
@@ -159,7 +162,12 @@ defmodule CrossroadsContent.Pages do
     # Call the CMS with up to 125 IDs at a time. Ideally we would make a single CMS call,
     # but URLs are limited to 2K characters, so batching in chunks of 125 will keep us from
     # exceeding the max URL length.
-    id_chunks = get_id_chunks(ids)
+    #
+    # NOTE: Enum.chunk/4 will generate a deprecation warning starting with 1.7, but the
+    # replacement Enum.chunk_every/4 is not available until 1.5 and we're currently on 1.4
+    # so we're forced to use the deprecated function for now.
+    max_ids_per_chunk = 125;
+    id_chunks = Enum.chunk(ids, max_ids_per_chunk, max_ids_per_chunk, [])
     id_queries = Enum.map(id_chunks, fn x -> build_id_query x end)
 
     target_pages = Enum.map(id_queries, fn query -> CrossroadsContent.CmsClient.get("Page", query) end)
@@ -178,15 +186,6 @@ defmodule CrossroadsContent.Pages do
       }
       Map.put(acc, page["id"], redirectData)
     end )
-  end
-
-  defp get_id_chunks(ids) when length(ids) === 0 do [] end
-  defp get_id_chunks(ids) do
-    max_ids_per_call = 125;
-
-    {head, tail} = Enum.split(ids, max_ids_per_call)
-
-    [head | get_id_chunks(tail)]
   end
 
   defp build_id_query(id_chunk) do
