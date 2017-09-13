@@ -145,51 +145,56 @@ defmodule CrossroadsContent.Pages do
   end
 
   defp get_redirector_targets(redirector_pages) do
-    get_link_to = fn page ->
-      case page["linkTo"] do
-        0 -> false
-        _ -> page["linkTo"]
-      end
-    end
-
-    # Each redirector_page will have a "linkTo" element that contains the ID of the target
-    # page. We need to retrieve each target page (by ID) in order to get the target URL.
-    ids = case Map.fetch(redirector_pages, "pages") do
-      {:ok, value} -> value |> Enum.filter(get_link_to) |> Enum.map(get_link_to) |> Enum.uniq
-      _ -> %{}
-    end
-
     # Call the CMS with up to 125 IDs at a time. Ideally we would make a single CMS call,
     # but URLs are limited to 2K characters, so batching in chunks of 125 will keep us from
     # exceeding the max URL length.
-    #
-    # NOTE: Enum.chunk/4 will generate a deprecation warning starting with 1.7, but the
-    # replacement Enum.chunk_every/4 is not available until 1.5 and we're currently on 1.4
-    # so we're forced to use the deprecated function for now.
-    max_ids_per_chunk = 125;
-    id_chunks = Enum.chunk(ids, max_ids_per_chunk, max_ids_per_chunk, [])
-    id_queries = Enum.map(id_chunks, fn x -> build_id_query x end)
+    get_target_page_ids(redirector_pages)
+        |> split_ids_into_chunks(125)
+        |> load_cms_pages_in_chunks
+        |> build_redirect_map
+  end
 
-    target_pages = Enum.map(id_queries, fn query -> CrossroadsContent.CmsClient.get("Page", query) end)
-      |> Enum.reduce([], fn(x, acc) ->
-        case x do
-          {:ok, 200, response} -> [response["pages"] | acc] |> List.flatten
-          {:error, _, %{error: response}} -> Logger.error "Error getting redirection pages: #{response}"; acc
-          _ -> Logger.error "Error getting redirection pages"; acc
-        end
-      end)
+  defp get_target_page_ids(redirector_pages) do
+    redirector_pages
+      |> Map.get("pages", [])
+      |> Enum.filter_map(
+          fn page -> page["linkTo"] != nil end,
+          fn page -> page["linkTo"] end)
+      |> Enum.uniq
+  end
 
-    Enum.reduce(target_pages, %{}, fn(page, acc) ->
-      redirectData = %{
-        "title" => page["title"],
-        "link" => page["link"],
-      }
-      Map.put(acc, page["id"], redirectData)
-    end )
+  defp split_ids_into_chunks(id_list, chunk_size) do
+    id_list
+        |> Enum.chunk(chunk_size, chunk_size, [])
+        |> Enum.map(fn x -> build_id_query x end)
   end
 
   defp build_id_query(id_chunk) do
     Enum.into(id_chunk, Keyword.new, fn x -> {"id[]", x} end)
+  end
+
+  defp load_cms_pages_in_chunks(id_chunks) do
+    id_chunks
+        |> Enum.map(fn query -> CrossroadsContent.CmsClient.get("Page", query) end)
+        |> Enum.reduce([], fn(x, acc) ->
+            case x do
+              {:ok, 200, response} -> [response["pages"] | acc] |> List.flatten
+              {:error, _, %{error: response}} -> Logger.error "Error getting redirection pages: #{response}"; acc
+              _ -> Logger.error "Error getting redirection pages"; acc
+            end
+          end)
+  end
+
+  # return a map keyed by page ID
+  defp build_redirect_map(page_list) do
+    page_list
+        |> Enum.reduce(%{}, fn(page, acc) ->
+            redirectData = %{
+              "title" => page["title"],
+              "link" => page["link"],
+            }
+            Map.put(acc, page["id"], redirectData)
+          end )
   end
 
   defp load_cms_page_cache() do
