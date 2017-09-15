@@ -103,6 +103,8 @@ CRDS.JumbotronBgVideoPlayer.prototype.resizePlayer = function() {
     this.playerContainerEl.style.top = 0;
     this.playerContainerEl.style.left = -((newWidth - width) / 2) + 'px';
   };
+  // This is to remove the visibility: hidden attribute from the video tag
+  this.player.style.visibility = "";
 };
 
 // ---------------------------------------- JumbotronInlineVideoPlayer
