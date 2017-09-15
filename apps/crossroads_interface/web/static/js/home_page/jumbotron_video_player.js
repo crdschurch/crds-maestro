@@ -54,6 +54,7 @@ CRDS.JumbotronBgVideoPlayer = function(jumbotronBgVideo) {
   this.player = document.querySelector(".bg-jumbotron-video");
   this.playerContainerEl = document.querySelector(".bg-video-player");
   this.init();
+  this.resizePlayer();
   return;
 }
 
@@ -104,7 +105,7 @@ CRDS.JumbotronBgVideoPlayer.prototype.resizePlayer = function() {
     this.playerContainerEl.style.left = -((newWidth - width) / 2) + 'px';
   };
   // This is to remove the visibility: hidden attribute from the video tag
-  this.player.style.visibility = "";
+  this.player.classList.remove("hide");
 };
 
 // ---------------------------------------- JumbotronInlineVideoPlayer
