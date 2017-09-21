@@ -16,11 +16,14 @@ defmodule CrossroadsInterface.CrdsConnectController do
     conn
       |> CrossroadsInterface.Plug.RedirectCookie.call("/connect")
       |> render("app_root.html", %{ "js_files": [
-          "/js/crds_connect/polyfills.js",
-          "/js/crds_connect/vendor.js",
-          "/js/crds_connect/app.js"
+        "/js/crds_connect/inline.bundle.js",
+        "/js/crds_connect/polyfills.bundle.js",
+        "/js/crds_connect/styles.bundle.js",
+        "/js/crds_connect/vendor.bundle.js",
+        "/js/crds_connect/main.bundle.js"
         ], "css_files": [
-          "/js/legacy/legacy.css"
+          "/js/legacy/legacy.css",
+          "/js/crds_connect/styles.bundle.css" 
         ]})
   end
 
