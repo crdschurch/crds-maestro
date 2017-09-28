@@ -33,7 +33,7 @@ defmodule CrossroadsContent.Mixfile do
     [ {:cachex, "~> 2.1"},
       {:httpoison, "~> 0.9.0"},
       {:poison, "~> 2.0"},
-      {:mock, "~> 0.2.0", only: :test}
+      {:mock, "~> 0.3.1", only: :test}
     ]
   end
 
