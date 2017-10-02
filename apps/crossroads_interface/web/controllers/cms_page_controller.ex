@@ -9,16 +9,23 @@ defmodule CrossroadsInterface.CmsPageController do
 
   def index(conn, _) do
     page = conn.assigns[:page]
-    crds_styles = getStylesClassFromPage(page)
-    body_class = getBodyClassFromPage(page)
-    layout = getLayoutFromPage(page)
-    conn
-      |> CrossroadsInterface.Plug.RedirectCookie.call("content", "{\"link\":\"#{conn.assigns[:path]}\"}")
-      |> put_layout(layout)
-      |> assign(:body_class, body_class)
-      |> assign(:crds_styles, crds_styles)
-      |> render(CrossroadsInterface.CmsPageView, "index.html", %{ payload: page["content"],
-      "css_files": [ "/css/app.css", "/js/legacy/legacy.css" ]})
+
+    cond do
+      page["redirectUrl"] != nil ->
+        conn
+          |> redirect(external: page["redirectUrl"])
+      true ->
+        crds_styles = getStylesClassFromPage(page)
+        body_class = getBodyClassFromPage(page)
+        layout = getLayoutFromPage(page)
+        conn
+          |> CrossroadsInterface.Plug.RedirectCookie.call("content", "{\"link\":\"#{conn.assigns[:path]}\"}")
+          |> put_layout(layout)
+          |> assign(:body_class, body_class)
+          |> assign(:crds_styles, crds_styles)
+          |> render(CrossroadsInterface.CmsPageView, "index.html", %{ payload: page["content"],
+          "css_files": [ "/css/app.css", "/js/legacy/legacy.css" ]})
+    end
   end
 
   defp getStylesClassFromPage(page) do
