@@ -46,7 +46,7 @@ CRDS.CardFilter.prototype.init = function init() {
   this.els = Array.prototype.slice.call(this.els);
 
   // Get unique filters
-  this.filters = this.els.reduce((acc, card) => acc.concat(card.getAttribute('data-filter').split(',')), []).filter((item, i, ar) => ar.indexOf(item) === i);
+  this.filters = this.els.reduce((acc, card) => acc.concat(card.getAttribute('data-filter').split(',')), []).filter((item, i, ar) => item && ar.indexOf(item) === i);
 };
 
 CRDS.CardFilter.prototype.setup = function setup() {
@@ -58,7 +58,7 @@ CRDS.CardFilter.prototype.setup = function setup() {
   for (let i = 0; i < this.filters.length; i += 1) {
     const filter = this.filters[i];
     args.filters.push({
-      title: this.humanizeString(filter),
+      title: filter,
       value: filter
     });
   }
@@ -89,7 +89,7 @@ CRDS.CardFilter.prototype.click = function click(e) {
 
 CRDS.CardFilter.prototype.performFilter = function performFilter(filter) {
   this.currentFilter = filter;
-  this.setCurrentLabel(this.humanizeString(filter));
+  this.setCurrentLabel(filter);
 
   for (let i = 0; i < this.els.length; i += 1) {
     const el = this.els[i];
@@ -126,11 +126,6 @@ CRDS.CardFilter.prototype.refreshCarousel = function refreshCarousel() {
     const id = this.el.dataset.carouselId;
     CRDS._instances[id].reload();
   }
-};
-
-CRDS.CardFilter.prototype.humanizeString = function humanizeString(property) {
-  return property.replace(/[^a-zA-Z0-9\s]/g, ' ')
-    .replace(/(\w+)/g, match => match.charAt(0).toUpperCase() + match.slice(1));
 };
 
 CRDS.CardFilter.prototype.filterHTML = function filterHTML() {
