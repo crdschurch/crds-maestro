@@ -7,7 +7,7 @@
   },
   "repository": {},
   "dependencies": {
-    "crds-shared-header": "0.2.14",
+    "crds-shared-header": "0.4.11",
     "crds-styles": "0.15.0",
     "iframe-resizer": "^3.5.14",
     "phoenix": "file:../../deps/phoenix",
