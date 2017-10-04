@@ -81,6 +81,9 @@ defmodule CrossroadsContent.FakeHttp do
       %{"requiresAngular" => 0, "stage" => "Stage", "link" => "/notcached/"} -> ok_response
       %{"requiresAngular" => 0, "stage" => "Stage", "link" => "/error/"} -> error_response
       %{"requiresAngular" => 0} -> get_pages()
+      %{"pageType" => "RedirectorPage"} -> get_redirector_pages()
+      %{"id[]" => 3000} -> get_redirector_targets()
+      _ -> error_response
     end    
   end
 
@@ -121,9 +124,30 @@ defmodule CrossroadsContent.FakeHttp do
       "pageType" => "CenteredContentPage", "extraMeta" => nil,
       "hasBrokenFile" => "0", "metaKeywords" => nil,
       "disableAuthenicatedFinishAction" => nil, "link" => "/habitat2/",
-      "onCompleteMessage" => nil, "legacyStyles" => "1", "requiresAngular" => "1",
+      "onCompleteMessage" => nil, "legacyStyles" => "1", "requiresAngular" => "0",
       "canEditType" => nil}
       ]}}
+  end
+
+  def get_redirector_pages() do
+    {:ok, 200, %{"pages" =>
+      [
+        %{ "id" => 2983, "link" => "/infosession/", "linkTo" => 3000,
+           "redirectionType" => "Internal", "externalURL" => nil, "title" => "GO Info Sessions 2018" },
+        %{ "id" => 2878, "link" => "/imin/", "linkTo" => 0,
+           "redirectionType" => "External", "externalURL" => "https://www.crossroads.net/leaveyourmark", "title" => "I'm In Campaign" }
+      ]
+      }
+    }
+  end
+
+  def get_redirector_targets() do
+    {:ok, 200, %{"pages" =>
+      [
+        %{ "id" => 3000, "link" => "/new-reachout/go/info-session/", "title" => "Info Session" }
+      ]
+      }
+    }
   end
 
 end
