@@ -16,11 +16,12 @@
 
     <script>
       imgix.onready(function() {
-        imgix.fluid({
+        var fluidset = imgix.fluid({
           updateOnResizeDown: true,
           updateOnPinchZoom: true,
           pixelStep: 10,
-          autoInsertCSSBestPractices: true
+          autoInsertCSSBestPractices: true,
+          onLoad: function() { fluidset.reload(); }
         });
       });
     </script>
