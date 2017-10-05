@@ -12,7 +12,6 @@ export default function (images, callback) {
   }
 
   forEach(images, (index, img) => {
-    console.log(img);
     const attributeCheck = setInterval(() => {
       if (img.hasAttribute('src')) {
         clearInterval(attributeCheck);

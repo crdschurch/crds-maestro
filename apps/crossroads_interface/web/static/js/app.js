@@ -16,24 +16,6 @@ export const App = {
       svgFixer();
       const iFrameResizer = require('iframe-resizer/js/iframeResizer.min.js');
       iFrameResizer({ log: true }, '#fred');
-
-      // TODO: move to separate file
-      let loaded;
-      const imgixInlineImages = $('img.imgix-fluid');
-
-      const intervalId = setInterval(() => {
-        loaded = true;
-        for (let i = 0; imgixInlineImages[i]; ++i) {
-          if (!imgixInlineImages[i].hasAttribute('src')) {
-            loaded = false;
-          }
-        }
-
-        if (loaded) {
-          clearInterval(intervalId);
-          window.dispatchEvent(new Event('resize'));
-        }
-      }, 100);
     });
   }
 };
