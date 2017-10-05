@@ -4,6 +4,7 @@ import JumbotronVideoPlayer from './home_page/jumbotron_video_player';
 import CardCarousel from './home_page/card_carousel';
 import CardFilters from './home_page/card_filters';
 import VideoModal from './home_page/video_modal';
+import Countdown from './home_page/countdown';
 
 const domReady = (callback) => {
   document.addEventListener('DOMContentLoaded', callback);
