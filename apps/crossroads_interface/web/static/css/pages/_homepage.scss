@@ -12,6 +12,7 @@
   height: 60px;
   background-color: $cr-cyan;
   z-index: 10;
+  -webkit-box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.15);
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.15);
 
   @media (min-width: $screen-xs-min) {
@@ -24,10 +25,10 @@
   @media (min-width: $screen-sm-min) {
     display: none;
   }
-  
+
   a {
     float: left;
-    padding-top: .25rem;
+    padding-top: 0.25rem;
     width: 20%;
     height: 100%;
     font-size: 11px;
@@ -37,8 +38,8 @@
     text-decoration: none;
     color: rgba(255, 255, 255, 0.6);
     cursor: pointer;
-    
-    @media(min-width: $screen-xs-min) {
+
+    @media (min-width: $screen-xs-min) {
       font-size: 12px;
     }
 
@@ -57,8 +58,8 @@
     }
   }
 
-  .active, 
-  a:hover  {
+  .active,
+  a:hover {
     color: $cr-white;
   }
 
@@ -102,14 +103,46 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0,0,0,.95);
+  background-color: rgba(0, 0, 0, 0.95);
   z-index: 0;
   opacity: 0;
-  transition: .4s all ease-in-out;
-  
+  -webkit-transition: 0.45s all ease-in-out;
+  transition: 0.45s all ease-in-out;
+
   &.visible {
     opacity: 1;
     z-index: 10;
+  }
+
+  .jumbotron-overlayContent {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    margin: 0 auto;
+    height: 100%;
+
+    @media screen and (min-width: 767px) {
+      width: 60%;
+      -webkit-box-orient: horizontal;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+      flex-direction: row;
+    }
+
+    .recentService,
+    .upcomingService {
+      margin: 0 1rem;
+    }
   }
 
   .jumbotron-overlay-close {
@@ -123,9 +156,9 @@
     fill: #ffffff;
     opacity: 1;
     pointer-events: all;
-    
+
     &:hover {
-      cursor: pointer; 
+      cursor: pointer;
     }
   }
 }
