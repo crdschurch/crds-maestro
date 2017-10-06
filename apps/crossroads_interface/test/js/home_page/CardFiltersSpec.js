@@ -3,11 +3,12 @@ import { CardFilters, CardFilter } from '../../../web/static/js/home_page/card_f
 
 describe("CardFilters", () => {
   describe("new CardFilters()", () => {
-    it("adds a mustache script tag if the DOM does not have a Mustache object defined", () => {
+    fit("adds a mustache script tag if the DOM does not have a Mustache object defined", () => {
+      spyOn(CRDS.CardFilters.prototype, 'init');
       new CRDS.CardFilters();
       let mustache_url = 'https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js';
       let element_src = document.getElementsByTagName('script')[0].src;
-      expect(element_src).toEqual(mustache_url);
+      expect(document.body.innerHTML).toContain(mustache_url);
     });
   });
 });
@@ -183,15 +184,18 @@ describe("CardFilter", () => {
   describe("new CardFilter()", () => {
     window.Mustache = {
       render: function () {
-      return '<button class="btn btn-outline btn-option dropdown-toggle soft-half-sides soft-quarter-ends" type="button" id="dropdownMenu-999" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><svg class="icon icon-1 pull-right push-left" viewBox="0 0 256 256"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#chevron-down"></use></svg> <span data-current-label>{{label}}</span></button><ul class="crds-list dropdown-menu" aria-labelledby="dropdownMenu-999">{{#reset}}<li><a href="#" data-reset>{{reset}}</a></li>{{/reset}}{{#filters}}<li><a href="#" data-filter-select="{{value}}" class="block">{{title}}</a>{{/filters}}</li></ul>';
+        return;
       }
     }
 
     let element, cardFilter;
 
+    let mustacheTemplate = `<button class="btn btn-outline btn-option dropdown-toggle soft-half-sides soft-quarter-ends" type="button" id="dropdownMenu-foobar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><svg class="icon icon-1 pull-right push-left" viewBox="0 0 256 256"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#chevron-down"></use></svg><span data-current-label>mylabel</span></button><ul class="crds-list dropdown-menu" aria-labelledby="dropdownMenu-foobar"><li><a href="#" data-reset>myreset</a></li><li><a href="#" data-filter-select="southwest-ohio" class="block">My Wonderful Foobar</a></li></ul>`;
+
+
     beforeEach(() => {
       element = document.querySelectorAll('[data-filterable]')[0];
-      spyOn(Mustache, 'render').and.returnValue({});
+      spyOn(Mustache, 'render').and.returnValue(mustacheTemplate);
       spyOn(CRDS.CardFilter.prototype, 'init').and.callThrough();
       cardFilter = new CRDS.CardFilter(element);
     });
@@ -220,9 +224,11 @@ describe("CardFilter", () => {
   describe ("CardFilter methods", () => {
     let element, cardFilter;
 
+    let mustacheTemplate = `<button class="btn btn-outline btn-option dropdown-toggle soft-half-sides soft-quarter-ends" type="button" id="dropdownMenu-foobar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><svg class="icon icon-1 pull-right push-left" viewBox="0 0 256 256"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#chevron-down"></use></svg><span data-current-label>mylabel</span></button><ul class="crds-list dropdown-menu" aria-labelledby="dropdownMenu-foobar"><li><a href="#" data-reset>myreset</a></li><li><a href="#" data-filter-select="southwest-ohio" class="block">My Wonderful Foobar</a></li></ul>`;
+
     beforeEach(() => {
       element = document.querySelectorAll('[data-filterable]')[0];
-      spyOn(Mustache, 'render').and.returnValue({});
+      spyOn(Mustache, 'render').and.returnValue(mustacheTemplate);
     });
 
     it("#init gets the unique filters", () => {
@@ -254,13 +260,79 @@ describe("CardFilter", () => {
     });
 
     describe ("#click(e)", () => {
-      it("#click(e) resets and activates the filter when it hasn't changed and it is undefined");
+      describe("resets and activates the filter", () => {
+        let cardFilter;
+        beforeEach(() => {
+          spyOn(CRDS.CardFilter.prototype, 'refreshCarousel').and.returnValue({});
+          cardFilter = new CRDS.CardFilter(element);
+        });
 
-      it("#click(e) resets and activates the filter when it isn't the current one and it is undefined");
+        it("when the filter is undefined");
 
-      it("#click(e) resets and activates the filter when filter hasn't changed and it is defined");
+        it("when filter hasn't changed", () => {
+          let dataFilterSelect = document.querySelectorAll('[data-filter-select]')[0];
+          spyOn(CRDS.CardFilter.prototype, 'resetFilter');
+          spyOn(CRDS.CardFilter.prototype, 'activateFilter');
+          let domEvent = {
+            preventDefault: function() {
+              return;
+            },
+            currentTarget: dataFilterSelect
+          }
 
-      it("#click(e) performs and activates the filter when it isn't the current one and it is defined");
+          cardFilter.click(domEvent);
+          cardFilter.click(domEvent);
+
+          expect(CRDS.CardFilter.prototype.resetFilter).toHaveBeenCalled();
+          expect(CRDS.CardFilter.prototype.activateFilter).toHaveBeenCalled();
+        });
+      });
+
+      describe("when filter isn't the currently selected one and it is defined", () => {
+        let cardFilter, dataFilterSelect, domEvent, checkBlockStyling;
+        beforeEach(() => {
+          spyOn(CRDS.CardFilter.prototype, 'refreshCarousel').and.returnValue({});
+          cardFilter = new CRDS.CardFilter(element);
+          dataFilterSelect = document.querySelectorAll('[data-filter-select]')[0];
+          domEvent = {
+            preventDefault: function() {
+              return;
+            },
+            currentTarget: dataFilterSelect
+          };
+          checkBlockStyling = function (cardList) {
+            let result;
+            for ( let i = 0; i < cardList.length; i ++ ) {
+              cardList[i].style.display != "block" ? result = false : result = true;
+            }
+            return result;
+          }
+
+        });
+
+        it("activates the filter and adds the class of 'on' to the list anchor element", () => {
+          expect(cardFilter.container.innerHTML).not.toContain('class="block on"');
+
+          cardFilter.click(domEvent);
+
+          expect(cardFilter.container.innerHTML).toContain('class="block on"');
+        });
+
+        it("performs the filtering on the location items", () => {
+          let displayedCardsList = document.querySelectorAll('[data-filter="southwest-ohio"]');
+          let allCardsHaveStyleBlock = checkBlockStyling(displayedCardsList);
+
+          expect(allCardsHaveStyleBlock).toEqual(false)
+
+          cardFilter.click(domEvent);
+
+          allCardsHaveStyleBlock = checkBlockStyling(displayedCardsList);
+ 
+          expect(cardFilter.currentFilter).toEqual(domEvent.currentTarget.dataset.filterSelect);
+          expect(allCardsHaveStyleBlock).toEqual(true);
+          expect(CRDS.CardFilter.prototype.refreshCarousel).toHaveBeenCalled();
+        });
+      });
     });
   });
 });
