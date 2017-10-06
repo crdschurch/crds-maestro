@@ -8,7 +8,7 @@ describe("CardFilters", () => {
       new CRDS.CardFilters();
       let mustache_url = 'https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js';
       let element_src = document.getElementsByTagName('script')[0].src;
-      expect(document.body.innerHTML).toContain(mustache_url);
+      expect(document.head.innerHTML).toContain(mustache_url);
     });
   });
 });
@@ -182,11 +182,6 @@ describe("CardFilter", () => {
   });
 
   describe("new CardFilter()", () => {
-    window.Mustache = {
-      render: function () {
-        return;
-      }
-    }
 
     let element, cardFilter;
 
