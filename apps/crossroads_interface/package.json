@@ -32,6 +32,7 @@
     "karma": "^1.5.0",
     "karma-browserify": "^5.1.1",
     "karma-jasmine": "^1.1.0",
+    "karma-mocha-reporter": "^2.2.4",
     "karma-phantomjs-launcher": "^1.0.4",
     "sass-brunch": "^2.10.4",
     "uglify-js-brunch": ">= 1.0 < 1.8",
