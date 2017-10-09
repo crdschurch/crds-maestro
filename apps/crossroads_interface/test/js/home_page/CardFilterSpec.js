@@ -226,14 +226,6 @@ describe('CardFilter', () => {
       expect(cardFilter.filters).toEqual(locationRegions);
     });
 
-    it('#setup adds a div with a class of dropdown', () => {
-      spyOn(CRDS.CardFilter.prototype, 'setup').and.callThrough();
-      expect(document.getElementsByClassName('dropdown').length).toEqual(0);
-      const cardFilter = new CRDS.CardFilter(element);
-      expect(document.getElementsByClassName('dropdown').length).toEqual(1);
-      expect(CRDS.CardFilter.prototype.setup).toHaveBeenCalled();
-    });
-
     it('#setup adds html to div.dropdown element', () => {
       const cardFilter = new CRDS.CardFilter(element);
       const dropdown = document.getElementsByClassName('dropdown')[0];
