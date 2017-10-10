@@ -10,6 +10,15 @@ CRDS.Countdown = class Countdown {
     this.minutes = undefined;
     this.seconds = undefined;
     this.intervalId = undefined;
+    this.timeoutId = undefined;
+
+    this.broadcasting = undefined;
+    this.nextEvent = undefined;
+    this.currentEvent = undefined;
+    this.streamStatus = undefined;
+    this.secondsUntilNextEvent = undefined;
+
+    this.UPCOMING_DURATION = 15; // hours
 
     // Streamspot url
     this.streamspotUrl = 'https://api.streamspot.com';
@@ -17,19 +26,63 @@ CRDS.Countdown = class Countdown {
     this.streamspotKey = window.env.streamspotKey;
 
     if ($('#crossroads_countdown').length) {
-      this.loadCountdown();
+      Countdown.setLoadingStatus(true);
+      this.getStreamspotStatus();
     }
   }
 
-  loadCountdown() {
-    this.loadEvents()
+  static setLoadingStatus(loading) {
+    if (loading) {
+      $("[data-stream-status-loading='hide']").addClass('hide');
+      $("[data-stream-status-loading='show']").removeClass('hide');
+    } else {
+      $("[data-stream-status-loading='show']").addClass('hide');
+      $("[data-stream-status-loading='hide']").removeClass('hide');
+    }
+  }
+
+  setStreamStatus() {
+    if (this.broadcasting) {
+      this.streamStatus = 'live';
+      $("[data-stream-live='show']").removeClass('hide');
+      $("[data-stream-live='hide']").addClass('hide');
+      $("[data-stream-upcoming='show']").addClass('hide');
+      $("[data-stream-upcoming='hide']").removeClass('hide');
+      $("[data-stream-off='show']").addClass('hide');
+      $("[data-stream-off='hide']").removeClass('hide');
+    } else {
+      $("[data-stream-live='show']").addClass('hide');
+      $("[data-stream-live='hide']").removeClass('hide');
+      const secondsUntilNextEvent = (Countdown.convertDate(this.nextEvent.start) - (new Date())) / 1000;
+      if (secondsUntilNextEvent < this.UPCOMING_DURATION * 60 * 60) {
+        this.streamStatus = 'upcoming';
+        $("[data-stream-upcoming='show']").removeClass('hide');
+        $("[data-stream-upcoming='hide']").addClass('hide');
+        $("[data-stream-off='show']").addClass('hide');
+        $("[data-stream-off='hide']").removeClass('hide');
+      } else {
+        this.streamStatus = 'off';
+        $("[data-stream-off='show']").removeClass('hide');
+        $("[data-stream-off='hide']").addClass('hide');
+        $("[data-stream-upcoming='show']").addClass('hide');
+        $("[data-stream-upcoming='hide']").removeClass('hide');
+      }
+    }
+  }
+
+  getStreamspotStatus() {
+    this.getEvents()
       .done((events) => {
+        this.nextEvent = events.data.next;
+        this.secondsUntilNextEvent = (Countdown.convertDate(this.nextEvent.start) - (new Date())) / 1000;
+        this.currentEvent = events.data.current;
         this.isBroadcasting()
           .done((broadcasting) => {
+            this.broadcasting = broadcasting.data.isBroadcasting;
             if (broadcasting.data.isBroadcasting) {
               this.goLive();
             } else {
-              this.showCountdown(events);
+              this.showCountdown();
             }
           })
           .fail((xhr, ajaxOptions, thrownError) => {
@@ -41,9 +94,9 @@ CRDS.Countdown = class Countdown {
       });
   }
 
-  loadEvents() {
+  getEvents() {
     const streamspotKey = this.streamspotKey;
-    const eventUrl = `${this.streamspotUrl}/broadcaster/${this.streamspotId}/broadcasts/upcoming`;
+    const eventUrl = `${this.streamspotUrl}/broadcaster/${this.streamspotId}/broadcasts/upcomingPlusCurrent`;
     return $.ajax({
       url: eventUrl,
       dataType: 'json',
@@ -67,21 +120,26 @@ CRDS.Countdown = class Countdown {
     });
   }
 
-  static goLive() {
-    $("[data-on-load='show']").removeClass('hide');
-    $("[data-on-live='show']").removeClass('hide');
-    $("[data-on-live='hide']").addClass('hide');
+  goLive() {
+    Countdown.setLoadingStatus(false);
+    this.setStreamStatus();
+
+    const currentEndDate = this.currentEvent.end;
+    const secondsUntilStreamEnd = (Countdown.convertDate(currentEndDate) - (new Date())) / 1000;
+
+    this.timeoutId = setTimeout(() => {
+      this.getStreamspotStatus();
+    }, 1000 * secondsUntilStreamEnd);
   }
 
-  showCountdown(data) {
+  showCountdown() {
     $('#crossroads_countdown').show();
-    $("[data-on-load='show']").removeClass('hide');
-    $("[data-on-live='show']").addClass('hide');
-    $("[data-on-live='hide']").removeClass('hide');
+    Countdown.setLoadingStatus(false);
+    this.setStreamStatus();
 
-    const dateString = data.data.next.start;
+    const nextStartDate = this.nextEvent.start;
 
-    const secondsUntilNextEvent = (Countdown.convertDate(dateString) - (new Date())) / 1000;
+    const secondsUntilNextEvent = (Countdown.convertDate(nextStartDate) - (new Date())) / 1000;
     this.days = Math.floor(secondsUntilNextEvent / 86400);
     this.hours = Math.floor((secondsUntilNextEvent % 86400) / 3600);
     this.minutes = Math.floor((secondsUntilNextEvent % 3600) / 60);
@@ -109,8 +167,11 @@ CRDS.Countdown = class Countdown {
     $('#crossroads_countdown .hours').html(Countdown.padZero(this.hours));
     $('#crossroads_countdown .minutes').html(Countdown.padZero(this.minutes));
     $('#crossroads_countdown .seconds').html(Countdown.padZero(this.seconds));
+    if (this.hours < this.UPCOMING_DURATION && this.streamStatus !== 'upcoming') {
+      this.setStreamStatus();
+    }
     if (this.seconds === 0 && this.minutes === 0 && this.hours === 0 && this.days === 0) {
-      this.goLive();
+      this.getStreamspotStatus();
       clearInterval(this.intervalId);
     }
   }
