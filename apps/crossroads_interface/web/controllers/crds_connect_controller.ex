@@ -19,11 +19,9 @@ defmodule CrossroadsInterface.CrdsConnectController do
         "/js/crds_connect/inline.bundle.js",
         "/js/crds_connect/polyfills.bundle.js",
         "/js/crds_connect/styles.bundle.js",
-        "/js/crds_connect/vendor.bundle.js",
         "/js/crds_connect/main.bundle.js"
         ], "css_files": [
-          "/js/legacy/legacy.css",
-          "/js/crds_connect/styles.bundle.css" 
+          "/js/legacy/legacy.css"
         ]})
   end
 
