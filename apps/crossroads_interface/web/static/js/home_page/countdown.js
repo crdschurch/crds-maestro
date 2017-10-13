@@ -23,7 +23,7 @@ CRDS.Countdown = class Countdown {
     this.streamspotId = window.env.streamspotId;
     this.streamspotKey = window.env.streamspotKey;
 
-    if ($('#crossroads_countdown').length) {
+    if ($('.crds-countdown').length) {
       this.getStreamspotStatus();
     }
   }
@@ -113,7 +113,7 @@ CRDS.Countdown = class Countdown {
   }
 
   showCountdown() {
-    $('#crossroads_countdown').show();
+    $('.crds-countdown').show();
 
     const secondsUntilNextEvent = (Countdown.convertDate(this.nextEvent.start) - (new Date())) / 1000;
     if (secondsUntilNextEvent < this.UPCOMING_DURATION * 60 * 60) {
@@ -145,10 +145,10 @@ CRDS.Countdown = class Countdown {
         }
       }
     }
-    $('#crossroads_countdown .days').html(Countdown.padZero(this.days));
-    $('#crossroads_countdown .hours').html(Countdown.padZero(this.hours));
-    $('#crossroads_countdown .minutes').html(Countdown.padZero(this.minutes));
-    $('#crossroads_countdown .seconds').html(Countdown.padZero(this.seconds));
+    $('.crds-countdown .days').html(Countdown.padZero(this.days));
+    $('.crds-countdown .hours').html(Countdown.padZero(this.hours));
+    $('.crds-countdown .minutes').html(Countdown.padZero(this.minutes));
+    $('.crds-countdown .seconds').html(Countdown.padZero(this.seconds));
     if (this.hours < this.UPCOMING_DURATION && this.streamStatus !== 'upcoming') {
       this.setStreamStatus('upcoming');
     }
