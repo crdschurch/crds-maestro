@@ -1,4 +1,5 @@
-#locations-filter-label, #happening-filter-label {
+#locations-filter-label,
+#happening-filter-label {
   .dropdown {
     float: right;
   }
@@ -97,6 +98,15 @@
   }
 }
 
+.jumbotron.bg-video .btn-white {
+  color: #333;
+  background-color: $cr-white;
+
+  &:hover {
+    background-color: $cr-gray-lighter;    
+  }
+}
+
 .jumbotron-overlay {
   position: absolute;
   top: 0;
@@ -152,6 +162,66 @@
       }
     }
 
+    .card-img-container {
+      position: relative;
+    }
+
+    .countdown-container,
+    .off-container,
+    .live-container {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: rgba(0,0,0,.6);
+      
+      .countdown-timer {
+        padding: 0;
+
+        li {
+          font-size: 1.875rem;
+        }
+      }
+    }
+
+    .off-container,
+    .live-container {
+      flex-direction: column;
+    }
+
+    .off-container {
+      h4 {
+        color: $cr-gray-lighter;
+      }
+
+      h3 {
+        font-size: 1.25rem;
+        color: $cr-white;
+
+        @media screen and (min-width: $screen-xs-min) {
+          font-size: 1.5rem;
+        }
+      }
+    }
+
+    .live-container {
+      background-color: rgba(24, 150, 214, .95);
+      cursor: pointer;
+
+      h4 {
+        font-size: 1.5rem;
+        color: $cr-white;
+      }
+
+      .icon {
+        height: 5rem;
+      }
+    }
+
     .divider {
       margin: .5rem 0 1rem;
       width: 20%;
@@ -159,7 +229,7 @@
       @media screen and (min-width: $screen-xs-min) {
         margin: 3rem;
         width: 1px;
-        height: 20%;
+        height: 10%;
       }
     }
 
@@ -178,6 +248,15 @@
 
       .card-block {
         margin-bottom: 0;
+        text-align: center;
+
+        @media screen and (min-width: $screen-xs-min) {
+          text-align: left;
+        }
+      }
+
+      .card-subtitle {
+        font-size: .875rem;
       }
 
       .card-link {

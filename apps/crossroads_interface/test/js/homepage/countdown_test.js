@@ -120,7 +120,7 @@ describe('Countdown', () => {
   <div data-stream-upcoming='hide'>Not upcoming</div>
   <div data-stream-off='show'>Off</div>
   <div data-stream-off='hide'>Not off</div>
-  <section class="container" id="crossroads_countdown">
+  <section class="container crds-countdown" id="crossroads_countdown">
   <div class="time countdown" data-stream-live="hide"><span class="countdown-header">Join the live stream in...</span>
   <ul class="countdown-timer list-inline">
   <li class="countdown-days days"></li>
