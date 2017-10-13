@@ -12,11 +12,9 @@ CRDS.Countdown = class Countdown {
     this.intervalId = undefined;
     this.timeoutId = undefined;
 
-    this.broadcasting = undefined;
     this.nextEvent = undefined;
     this.currentEvent = undefined;
     this.streamStatus = undefined;
-    this.secondsUntilNextEvent = undefined;
 
     this.UPCOMING_DURATION = 15; // hours
 
@@ -26,7 +24,6 @@ CRDS.Countdown = class Countdown {
     this.streamspotKey = window.env.streamspotKey;
 
     if ($('.crds-countdown').length) {
-      Countdown.setLoadingStatus(true);
       this.getStreamspotStatus();
     }
   }
@@ -41,8 +38,8 @@ CRDS.Countdown = class Countdown {
     }
   }
 
-  setStreamStatus() {
-    if (this.broadcasting) {
+  setStreamStatus(status) {
+    if (status === 'live') {
       this.streamStatus = 'live';
       $("[data-stream-live='show']").removeClass('hide');
       $("[data-stream-live='hide']").addClass('hide');
@@ -53,8 +50,7 @@ CRDS.Countdown = class Countdown {
     } else {
       $("[data-stream-live='show']").addClass('hide');
       $("[data-stream-live='hide']").removeClass('hide');
-      const secondsUntilNextEvent = (Countdown.convertDate(this.nextEvent.start) - (new Date())) / 1000;
-      if (secondsUntilNextEvent < this.UPCOMING_DURATION * 60 * 60) {
+      if (status === 'upcoming') {
         this.streamStatus = 'upcoming';
         $("[data-stream-upcoming='show']").removeClass('hide');
         $("[data-stream-upcoming='hide']").addClass('hide');
@@ -71,23 +67,17 @@ CRDS.Countdown = class Countdown {
   }
 
   getStreamspotStatus() {
+    Countdown.setLoadingStatus(true);
     this.getEvents()
       .done((events) => {
         this.nextEvent = events.data.next;
-        this.secondsUntilNextEvent = (Countdown.convertDate(this.nextEvent.start) - (new Date())) / 1000;
         this.currentEvent = events.data.current;
-        this.isBroadcasting()
-          .done((broadcasting) => {
-            this.broadcasting = broadcasting.data.isBroadcasting;
-            if (broadcasting.data.isBroadcasting) {
-              this.goLive();
-            } else {
-              this.showCountdown();
-            }
-          })
-          .fail((xhr, ajaxOptions, thrownError) => {
-            console.log(thrownError);
-          });
+        Countdown.setLoadingStatus(false);
+        if (events.data.current != null) {
+          this.goLive();
+        } else {
+          this.showCountdown();
+        }
       })
       .fail((xhr, ajaxOptions, thrownError) => {
         console.log(thrownError);
@@ -107,39 +97,31 @@ CRDS.Countdown = class Countdown {
     });
   }
 
-  isBroadcasting() {
-    const streamspotKey = this.streamspotKey;
-    const statusUrl = `${this.streamspotUrl}/broadcaster/${this.streamspotId}/broadcasting`;
-    return $.ajax({
-      url: statusUrl,
-      dataType: 'json',
-      crossDomain: true,
-      beforeSend(request) {
-        request.setRequestHeader('X-API-Key', streamspotKey);
-      }
-    });
-  }
-
   goLive() {
-    Countdown.setLoadingStatus(false);
-    this.setStreamStatus();
+    this.setStreamStatus('live');
 
     const currentEndDate = this.currentEvent.end;
     const secondsUntilStreamEnd = (Countdown.convertDate(currentEndDate) - (new Date())) / 1000;
 
     this.timeoutId = setTimeout(() => {
-      this.getStreamspotStatus();
+      if (this.nextEvent == null) {
+        this.getStreamspotStatus();
+      } else {
+        this.showCountdown();
+      }
     }, 1000 * secondsUntilStreamEnd);
   }
 
   showCountdown() {
     $('.crds-countdown').show();
-    Countdown.setLoadingStatus(false);
-    this.setStreamStatus();
 
-    const nextStartDate = this.nextEvent.start;
+    const secondsUntilNextEvent = (Countdown.convertDate(this.nextEvent.start) - (new Date())) / 1000;
+    if (secondsUntilNextEvent < this.UPCOMING_DURATION * 60 * 60) {
+      this.setStreamStatus('upcoming');
+    } else {
+      this.setStreamStatus('off');
+    }
 
-    const secondsUntilNextEvent = (Countdown.convertDate(nextStartDate) - (new Date())) / 1000;
     this.days = Math.floor(secondsUntilNextEvent / 86400);
     this.hours = Math.floor((secondsUntilNextEvent % 86400) / 3600);
     this.minutes = Math.floor((secondsUntilNextEvent % 3600) / 60);
@@ -168,10 +150,12 @@ CRDS.Countdown = class Countdown {
     $('.crds-countdown .minutes').html(Countdown.padZero(this.minutes));
     $('.crds-countdown .seconds').html(Countdown.padZero(this.seconds));
     if (this.hours < this.UPCOMING_DURATION && this.streamStatus !== 'upcoming') {
-      this.setStreamStatus();
+      this.setStreamStatus('upcoming');
     }
     if (this.seconds === 0 && this.minutes === 0 && this.hours === 0 && this.days === 0) {
-      this.getStreamspotStatus();
+      this.currentEvent = this.nextEvent;
+      this.nextEvent = null;
+      this.goLive();
       clearInterval(this.intervalId);
     }
   }
