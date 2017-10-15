@@ -245,6 +245,7 @@ describe('Countdown', () => {
     expect($("[data-stream-upcoming='hide']").hasClass('hide')).toBe(true);
     expect($("[data-stream-off='show']").hasClass('hide')).toBe(true);
     expect($("[data-stream-off='hide']").hasClass('hide')).toBe(false);
+    expect($("#offState")).toContain('foobar');
     clearTimeout(countdown.timeoutId);
     clearInterval(countdown.intervalId);
   });
