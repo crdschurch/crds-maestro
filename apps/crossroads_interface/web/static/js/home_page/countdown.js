@@ -149,7 +149,8 @@ CRDS.Countdown = class Countdown {
     $('.crds-countdown .hours').html(Countdown.padZero(this.hours));
     $('.crds-countdown .minutes').html(Countdown.padZero(this.minutes));
     $('.crds-countdown .seconds').html(Countdown.padZero(this.seconds));
-    if (this.hours < this.UPCOMING_DURATION && this.streamStatus !== 'upcoming') {
+    const remainingSeconds = (this.seconds) + (this.minutes * 60) + (this.hours * 3600) + (this.days * 86400);
+    if (remainingSeconds < this.UPCOMING_DURATION * 3600 && this.streamStatus !== 'upcoming') {
       this.setStreamStatus('upcoming');
     }
     if (this.seconds === 0 && this.minutes === 0 && this.hours === 0 && this.days === 0) {
