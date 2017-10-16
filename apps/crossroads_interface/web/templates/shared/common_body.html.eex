@@ -12,6 +12,19 @@
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/svg4everybody/2.1.8/svg4everybody.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/g/mutationobserver"></script>
     <script src="//d1tmclqz61gqwd.cloudfront.net/javascripts/crds-shared-header-v0.4.13.min.js"></script>
+    <script src="//d1tmclqz61gqwd.cloudfront.net/javascripts/crds-status-message-v0.0.1.min.js"></script>
+
+    <script>
+    new CRDS.StatusMessage({
+      msg: '<strong>Warning:</strong> You are using an unsupported browser and may experience some issues. Please consider upgrading.',
+      style: 'danger',
+      supportedBrowsers: [
+        { name: 'Internet Explorer', version: 11 },
+        { name: 'Chrome', version: 70 },
+        { name: 'Firefox', version: 56 }
+      ]
+    });    
+    </script>
 
     <script>
       imgix.onready(function() {
