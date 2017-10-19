@@ -116,6 +116,7 @@ describe('Countdown', () => {
   <div data-stream-upcoming='hide'>Not upcoming</div>
   <div data-stream-off='show'>Off</div>
   <div data-stream-off='hide'>Not off</div>
+  <div data-automation-id="offState"></div>
   <section class="container crds-countdown" id="crossroads_countdown">
   <div class="time countdown" data-stream-live="hide"><span class="countdown-header">Join the live stream in...</span>
   <ul class="countdown-timer list-inline">
@@ -209,6 +210,8 @@ describe('Countdown', () => {
     expect($("[data-stream-upcoming='hide']").hasClass('hide')).toBe(false);
     expect($("[data-stream-off='show']").hasClass('hide')).toBe(false);
     expect($("[data-stream-off='hide']").hasClass('hide')).toBe(true);
+    const dateHtml = '<h3>Next Live Stream</h3><h4>Friday at 4:30pm EST</h4>';
+    expect($("[data-automation-id='offState']").html()).toContain(dateHtml);
     clearInterval(countdown.intervalId);
   });
 
