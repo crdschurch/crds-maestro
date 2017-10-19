@@ -257,8 +257,8 @@ describe('CardFilter', () => {
           cardFilter = new CRDS.CardFilter(element);
         });
 
-        it("when filter hasn't changed", () => {
-          const dataFilterSelect = document.querySelectorAll('[data-filter-select]')[0];
+        it('when reset option is selected', () => {
+          const dataFilterSelect = document.querySelectorAll('[data-reset]')[0];
           spyOn(CRDS.CardFilter.prototype, 'resetFilter');
           spyOn(CRDS.CardFilter, 'activateFilter');
           const domEvent = {
