@@ -75,9 +75,9 @@ CRDS.Countdown = class Countdown {
     const startTime = this.get12HourTime(startDayTime[1]);
     const timeString = `${startDay} at ${startTime} EST`;
     $("[data-automation-id='offState']").append(
-      $('<h3>').text('Next Live Stream')
+      $('<h4 class="font-size-base">').text('Next Live Stream')
     ).append(
-      $('<h4>').text(timeString)
+      $('<h3>').text(timeString)
     );
   }
 
