@@ -62,8 +62,52 @@ CRDS.Countdown = class Countdown {
         $("[data-stream-off='hide']").addClass('hide');
         $("[data-stream-upcoming='show']").addClass('hide');
         $("[data-stream-upcoming='hide']").removeClass('hide');
+
+        this.appendNextStreamDate();
       }
     }
+  }
+
+  appendNextStreamDate() {
+    const startDayTime = this.nextEvent.start.split(' ');
+    const startDay = this.getDayOfWeek(startDayTime[0]);
+    const startTime = this.get12HourTime(startDayTime[1]);
+    const timeString = `${startDay} at ${startTime} EST`;
+    $("[data-automation-id='offState']").append(
+      $('<h3>').text('Next Live Stream')
+    ).append(
+      $('<h4>').text(timeString)
+    );
+  }
+
+  static getDayOfWeek(date) {
+    // date comes in as YYYY-mm-dd format
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
+      'Thursday', 'Friday', 'Saturday'];
+    const startDate = new Date(date);
+    const dayOfWeek = daysOfWeek[startDate.getDay()];
+    return dayOfWeek;
+  }
+
+  static get12HourTime(time) {
+    // time comes in as HH:mm:ss format
+    const timeArray = time.split(':');
+    let hours = timeArray[0];
+    let minutes = timeArray[1];
+    let ampm = 'am';
+
+    if (hours > 12) {
+      hours -= 12;
+      ampm = 'pm';
+    }
+
+    // presently we have a 10 minutes offset on our streamspot schedule
+    // this adjusts for that
+    if (minutes !== '00' && minutes !== '15' && minutes !== '30' && minutes !== '45') {
+      minutes = (parseInt(minutes, 10) + 10).toString();
+    }
+
+    return `${hours}:${minutes}${ampm}`;
   }
 
   getStreamspotStatus() {
