@@ -70,8 +70,8 @@ CRDS.Countdown = class Countdown {
 
   appendNextStreamDate() {
     const startDayTime = this.nextEvent.start.split(' ');
-    const startDay = this.getDayOfWeek(startDayTime[0]);
-    const startTime = this.get12HourTime(startDayTime[1]);
+    const startDay = Countdown.getDayOfWeek(startDayTime[0]);
+    const startTime = Countdown.get12HourTime(startDayTime[1]);
     const timeString = `${startDay} at ${startTime} EST`;
     $("[data-automation-id='offState']").append(
       $('<h3>').text('Next Live Stream')
