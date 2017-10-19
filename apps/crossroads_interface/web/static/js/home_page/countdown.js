@@ -15,9 +15,9 @@ CRDS.Countdown = class Countdown {
     this.nextEvent = undefined;
     this.currentEvent = undefined;
     this.streamStatus = undefined;
-    this.streamOffset = 10;
 
     this.UPCOMING_DURATION = 15; // hours
+    this.STREAMING_OFFSET = 10; // minutes
 
     // Streamspot url
     this.streamspotUrl = 'https://api.streamspot.com';
@@ -71,8 +71,8 @@ CRDS.Countdown = class Countdown {
 
   appendNextStreamDate() {
     const startDayTime = this.nextEvent.start.split(' ');
-    const startDay = Countdown.getDayOfWeek(startDayTime[0]);
-    const startTime = Countdown.get12HourTime(startDayTime[1]);
+    const startDay = this.getDayOfWeek(startDayTime[0]);
+    const startTime = this.get12HourTime(startDayTime[1]);
     const timeString = `${startDay} at ${startTime} EST`;
     $("[data-automation-id='offState']").append(
       $('<h3>').text('Next Live Stream')
@@ -81,7 +81,7 @@ CRDS.Countdown = class Countdown {
     );
   }
 
-  static getDayOfWeek(date) {
+  getDayOfWeek(date) {
     // date comes in as YYYY-mm-dd format
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
       'Thursday', 'Friday', 'Saturday'];
@@ -90,7 +90,7 @@ CRDS.Countdown = class Countdown {
     return dayOfWeek;
   }
 
-  static get12HourTime(time) {
+  get12HourTime(time) {
     // time comes in as HH:mm:ss format
     const timeArray = time.split(':');
     let hours = timeArray[0];
@@ -105,7 +105,7 @@ CRDS.Countdown = class Countdown {
     // presently we have a 10 minutes offset on our streamspot schedule
     // this adjusts for that
     if (minutes !== '00' && minutes !== '15' && minutes !== '30' && minutes !== '45') {
-      minutes = (parseInt(minutes, 10) + this.streamOffset).toString();
+      minutes = (parseInt(minutes, 10) + this.STREAMING_OFFSET).toString();
     }
 
     return `${hours}:${minutes}${ampm}`;
