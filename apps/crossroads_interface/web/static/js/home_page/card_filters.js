@@ -87,9 +87,10 @@ CRDS.CardFilter = class CardFilter {
   click(e) {
     e.preventDefault();
     const filter = e.currentTarget.dataset.filterSelect;
+    const reset = e.currentTarget.dataset.reset;
     if (this.currentFilter !== filter && filter !== undefined) {
       this.performFilter(filter);
-    } else {
+    } else if (reset !== undefined) {
       this.resetFilter();
     }
     CardFilter.activateFilter(e.currentTarget);
