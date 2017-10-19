@@ -3,10 +3,6 @@ import Countdown from '../../../web/static/js/home_page/countdown';
 /* global CRDS */
 
 describe('Countdown', () => {
-  let mockLive;
-  let mockOff;
-  let mockUpcoming;
-
   const broadcasts = [
     {
       eventId: 1039015,
@@ -138,33 +134,9 @@ describe('Countdown', () => {
   beforeEach(() => {
     jasmine.clock().install();
     document.body.innerHTML = testDom;
-    mockLive = function (params) {
-      if (params.url.includes('broadcasting')) {
-        return $.Deferred().resolve({ data: { isBroadcasting: true } }).promise();
-      } else if (params.url.includes('upcoming')) {
-        return $.Deferred().resolve(upcomingResponseLive).promise();
-      }
-      return {};
-    };
-    mockOff = function (params) {
-      if (params.url.includes('broadcasting')) {
-        return $.Deferred().resolve({ data: { isBroadcasting: false } }).promise();
-      } else if (params.url.includes('upcoming')) {
-        return $.Deferred().resolve(upcomingResponseOff).promise();
-      }
-      return {};
-    };
-    mockUpcoming = function (params) {
-      if (params.url.includes('broadcasting')) {
-        return $.Deferred().resolve({ data: { isBroadcasting: false } }).promise();
-      } else if (params.url.includes('upcoming')) {
-        return $.Deferred().resolve(upcomingResponseUpcoming).promise();
-      }
-      return {};
-    };
   });
 
-  afterEach(function() {
+  afterEach(() => {
     jasmine.clock().uninstall();
   });
 
@@ -173,7 +145,7 @@ describe('Countdown', () => {
     const startDate = CRDS.Countdown.convertDate(broadcasts[0].start);
     const baseTime = new Date(startDate.getTime() + (10 * 60 * 1000));
     jasmine.clock().mockDate(baseTime);
-    spyOn($, 'ajax').and.callFake(mockLive);
+    spyOn($, 'ajax').and.returnValue($.Deferred().resolve(upcomingResponseLive).promise());
     const countdown = new CRDS.Countdown();
     expect($("[data-stream-status-loading='show']").hasClass('hide')).toBe(true);
     expect($("[data-stream-status-loading='hide']").hasClass('hide')).toBe(false);
@@ -185,7 +157,7 @@ describe('Countdown', () => {
     const startDate = CRDS.Countdown.convertDate(broadcasts[0].start);
     const baseTime = new Date(startDate.getTime() + (10 * 60 * 1000));
     jasmine.clock().mockDate(baseTime);
-    spyOn($, 'ajax').and.callFake(mockLive);
+    spyOn($, 'ajax').and.returnValue($.Deferred().resolve(upcomingResponseLive).promise());
     const countdown = new CRDS.Countdown();
     expect($("[data-stream-live='show']").hasClass('hide')).toBe(false);
     expect($("[data-stream-live='hide']").hasClass('hide')).toBe(true);
@@ -197,7 +169,7 @@ describe('Countdown', () => {
     const startDate = CRDS.Countdown.convertDate(broadcasts[1].start);
     const baseTime = new Date(startDate.getTime() - (10 * 60 * 1000));
     jasmine.clock().mockDate(baseTime);
-    spyOn($, 'ajax').and.callFake(mockUpcoming);
+    spyOn($, 'ajax').and.returnValue($.Deferred().resolve(upcomingResponseUpcoming).promise());
     const countdown = new CRDS.Countdown();
     expect($("[data-stream-live='show']").hasClass('hide')).toBe(true);
     expect($("[data-stream-live='hide']").hasClass('hide')).toBe(false);
@@ -213,7 +185,23 @@ describe('Countdown', () => {
     const startDate = CRDS.Countdown.convertDate(broadcasts[1].end);
     const baseTime = new Date(startDate.getTime() + (10 * 60 * 1000));
     jasmine.clock().mockDate(baseTime);
-    spyOn($, 'ajax').and.callFake(mockOff);
+    spyOn($, 'ajax').and.returnValue($.Deferred().resolve(upcomingResponseOff).promise());
+    const countdown = new CRDS.Countdown();
+    expect($("[data-stream-live='show']").hasClass('hide')).toBe(true);
+    expect($("[data-stream-live='hide']").hasClass('hide')).toBe(false);
+    expect($("[data-stream-upcoming='show']").hasClass('hide')).toBe(true);
+    expect($("[data-stream-upcoming='hide']").hasClass('hide')).toBe(false);
+    expect($("[data-stream-off='show']").hasClass('hide')).toBe(false);
+    expect($("[data-stream-off='hide']").hasClass('hide')).toBe(true);
+    clearInterval(countdown.intervalId);
+  });
+
+  it('should show off stream elements if more than 0 days, less than X hours', () => {
+    // load 3 days, 10 min before broadcast[2]
+    const startDate = CRDS.Countdown.convertDate(broadcasts[2].start);
+    const baseTime = new Date(startDate.getTime() - (3 * 24 * 60 * 60 * 1000) - (10 * 60 * 1000));
+    jasmine.clock().mockDate(baseTime);
+    spyOn($, 'ajax').and.returnValue($.Deferred().resolve(upcomingResponseOff).promise());
     const countdown = new CRDS.Countdown();
     expect($("[data-stream-live='show']").hasClass('hide')).toBe(true);
     expect($("[data-stream-live='hide']").hasClass('hide')).toBe(false);
@@ -229,7 +217,6 @@ describe('Countdown', () => {
     const startDate = CRDS.Countdown.convertDate(broadcasts[1].start);
     const baseTime = new Date(startDate.getTime() - (1 * 60 * 1000));
     jasmine.clock().mockDate(baseTime);
-    spyOn(CRDS.Countdown.prototype, 'isBroadcasting').and.returnValues($.Deferred().resolve({ data: { isBroadcasting: false } }).promise(), $.Deferred().resolve({ data: { isBroadcasting: true } }).promise());
     spyOn(CRDS.Countdown.prototype, 'getEvents').and.returnValues($.Deferred().resolve(upcomingResponseUpcoming).promise(), $.Deferred().resolve(upcomingResponseLive2).promise());
     const countdown = new CRDS.Countdown();
     // fast forward 2 minutes 
@@ -248,7 +235,7 @@ describe('Countdown', () => {
     const startDate = CRDS.Countdown.convertDate(broadcasts[2].start);
     const baseTime = new Date(startDate.getTime() - (15 * 60 * 60 * 1000) - (1 * 60 * 1000));
     jasmine.clock().mockDate(baseTime);
-    spyOn($, 'ajax').and.callFake(mockOff);
+    spyOn($, 'ajax').and.returnValue($.Deferred().resolve(upcomingResponseOff).promise());
     const countdown = new CRDS.Countdown();
     // fast forward 2 minutes
     jasmine.clock().tick(1000 * 60 * 2);
@@ -267,7 +254,6 @@ describe('Countdown', () => {
     const startDate = CRDS.Countdown.convertDate(broadcasts[1].end);
     const baseTime = new Date(startDate.getTime() - (1 * 60 * 1000));
     jasmine.clock().mockDate(baseTime);
-    spyOn(CRDS.Countdown.prototype, 'isBroadcasting').and.returnValues($.Deferred().resolve({ data: { isBroadcasting: true } }).promise(), $.Deferred().resolve({ data: { isBroadcasting: false } }).promise());
     spyOn(CRDS.Countdown.prototype, 'getEvents').and.returnValues($.Deferred().resolve(upcomingResponseLive2).promise(), $.Deferred().resolve(upcomingResponseOff).promise());
     const countdown = new CRDS.Countdown();
     // fast forward 2 minutes
@@ -287,7 +273,6 @@ describe('Countdown', () => {
     const startDate = CRDS.Countdown.convertDate(broadcasts[0].end);
     const baseTime = new Date(startDate.getTime() - (1 * 60 * 1000));
     jasmine.clock().mockDate(baseTime);
-    spyOn(CRDS.Countdown.prototype, 'isBroadcasting').and.returnValues($.Deferred().resolve({ data: { isBroadcasting: true } }).promise(), $.Deferred().resolve({ data: { isBroadcasting: false } }).promise());
     spyOn(CRDS.Countdown.prototype, 'getEvents').and.returnValues($.Deferred().resolve(upcomingResponseLive).promise(), $.Deferred().resolve(upcomingResponseUpcoming).promise());
     const countdown = new CRDS.Countdown();
     // fast forward 2 minutes
