@@ -15,6 +15,7 @@ CRDS.Countdown = class Countdown {
     this.nextEvent = undefined;
     this.currentEvent = undefined;
     this.streamStatus = undefined;
+    this.streamOffset = 10;
 
     this.UPCOMING_DURATION = 15; // hours
 
@@ -104,7 +105,7 @@ CRDS.Countdown = class Countdown {
     // presently we have a 10 minutes offset on our streamspot schedule
     // this adjusts for that
     if (minutes !== '00' && minutes !== '15' && minutes !== '30' && minutes !== '45') {
-      minutes = (parseInt(minutes, 10) + 10).toString();
+      minutes = (parseInt(minutes, 10) + this.streamOffset).toString();
     }
 
     return `${hours}:${minutes}${ampm}`;
