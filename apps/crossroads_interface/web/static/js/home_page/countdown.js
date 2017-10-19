@@ -70,9 +70,9 @@ CRDS.Countdown = class Countdown {
   }
 
   appendNextStreamDate() {
-    const startDayTime = this.nextEvent.start.split(' ');
-    const startDay = this.getDayOfWeek(startDayTime[0]);
-    const startTime = this.get12HourTime(startDayTime[1]);
+    const startDate = Countdown.convertDate(this.nextEvent.start);
+    const startDay = Countdown.getDayOfWeek(startDate);
+    const startTime = this.get12HourTime(startDate);
     const timeString = `${startDay} at ${startTime} EST`;
     $("[data-automation-id='offState']").append(
       $('<h4 class="font-size-base">').text('Next Live Stream')
@@ -81,20 +81,17 @@ CRDS.Countdown = class Countdown {
     );
   }
 
-  getDayOfWeek(date) {
+  static getDayOfWeek(date) {
     // date comes in as YYYY-mm-dd format
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
       'Thursday', 'Friday', 'Saturday'];
-    const startDate = new Date(date);
-    const dayOfWeek = daysOfWeek[startDate.getDay()];
+    const dayOfWeek = daysOfWeek[date.getDay()];
     return dayOfWeek;
   }
 
-  get12HourTime(time) {
-    // time comes in as HH:mm:ss format
-    const timeArray = time.split(':');
-    let hours = timeArray[0];
-    let minutes = timeArray[1];
+  get12HourTime(date) {
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
     let ampm = 'am';
 
     if (hours > 12) {
@@ -104,7 +101,7 @@ CRDS.Countdown = class Countdown {
 
     // presently we have a 10 minutes offset on our streamspot schedule
     // this adjusts for that
-    if (minutes !== '00' && minutes !== '15' && minutes !== '30' && minutes !== '45') {
+    if (minutes !== '00' || minutes !== '15' || minutes !== '30' || minutes !== '45') {
       minutes = (parseInt(minutes, 10) + this.STREAMING_OFFSET).toString();
     }
 
