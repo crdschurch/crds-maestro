@@ -69,6 +69,7 @@ CRDS.CardFilter = class CardFilter {
     };
     const el = document.createElement('DIV');
     el.classList.add('dropdown');
+    el.dataset.automationId = 'happenings-dropdown';
     el.innerHTML = Mustache.render(CardFilter.filterHTML(), args);
 
     const links = el.querySelectorAll('a');
