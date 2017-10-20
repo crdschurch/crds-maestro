@@ -15,12 +15,11 @@
     <script src="//d1tmclqz61gqwd.cloudfront.net/javascripts/crds-status-message-v0.0.9.min.js"></script>
 
     <script>
-    var str = '<strong>Warning:</strong> You are using an unsupported browser. Please <a href="http://outdatedbrowser.com/" target="_blank">consider upgrading</a> for the best experience.';
+    var str = '<strong>Warning:</strong> You are using an unsupported browser. Please <a href="https://www.google.com/chrome/" target="_blank">consider upgrading to Google Chrome</a> for the best experience.';
     new CRDS.StatusMessage(str, {
       style: 'danger',
       browsers: [
-        { name: 'Internet Explorer', version: 11 },
-        { name: 'Chrome', version: 60 },
+        { name: 'Chrome', version: 58 },
         { name: 'Safari', version: 10 },
         { name: 'Firefox', version: 56 }
       ]

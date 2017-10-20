@@ -107,7 +107,7 @@
   background-color: $cr-white;
 
   &:hover {
-    background-color: $cr-gray-lighter;    
+    background-color: $cr-gray-lighter;
   }
 }
 
@@ -170,19 +170,25 @@
       position: relative;
     }
 
-    .countdown-container,
     .off-container,
+    .countdown-container,
     .live-container {
       position: absolute;
       top: 0;
       right: 0;
       bottom: 0;
       left: 0;
+      display: -webkit-box;
+      display: -ms-flexbox;
       display: flex;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
       align-items: center;
+      -webkit-box-pack: center;
+      -ms-flex-pack: center;
       justify-content: center;
-      background-color: rgba(0,0,0,.6);
-      
+      background-color: rgba(0, 0, 0, 0.6);
+
       .countdown-timer {
         padding: 0;
 
@@ -194,6 +200,9 @@
 
     .off-container,
     .live-container {
+      -webkit-box-orient: vertical;
+      -webkit-box-direction: normal;
+      -ms-flex-direction: column;
       flex-direction: column;
     }
 
@@ -213,7 +222,7 @@
     }
 
     .live-container {
-      background-color: rgba(24, 150, 214, .95);
+      background-color: rgba(24, 150, 214, 0.95);
       cursor: pointer;
 
       h4 {
@@ -227,9 +236,9 @@
     }
 
     .divider {
-      margin: .5rem 0 1rem;
+      margin: 0.5rem 0 1rem;
       width: 20%;
-      border: 1px solid rgba(255,255,255,.2);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       @media screen and (min-width: $screen-xs-min) {
         margin: 3rem;
         width: 1px;
@@ -276,12 +285,12 @@
           display: block;
         }
       }
-  
+
       .card-title {
         display: block;
         font-size: 1rem;
         color: #e7e7e7;
-  
+
         @media (min-width: $screen-xs-min) {
           font-size: 1.25rem;
         }
