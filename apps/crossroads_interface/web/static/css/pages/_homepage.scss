@@ -238,7 +238,7 @@
     }
 
     .recentService,
-    .upcomingService {
+    .streamService {
       margin: 0;
       width: 100%;
 
@@ -249,6 +249,10 @@
 
     .card {
       margin-bottom: 0;
+
+      a:hover {
+        text-decoration: none;
+      }
 
       .card-block {
         margin-bottom: 0;
@@ -263,6 +267,10 @@
 
       .card-link {
         display: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
 
         @media (min-width: $screen-xs-min) {
           display: block;
@@ -280,9 +288,11 @@
       }
 
       .card-subtitle {
-        font-size: .75rem;
+        text-transform: capitalize;
+        font-size: .875rem;
+
         @media (min-width: $screen-xs-min) {
-          font-size: .875rem;
+          font-size: 1rem;
         }
       }
     }
