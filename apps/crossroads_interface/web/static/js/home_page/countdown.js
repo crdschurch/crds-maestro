@@ -83,6 +83,10 @@ CRDS.Countdown = class Countdown {
     );
   }
 
+  addOffsetTime(time) {
+    return new Date(time.getTime() + (this.STREAM_OFFSET * this.MS_PER_MINUTE));
+  }
+
   static getDayOfWeek(date) {
     // date comes in as YYYY-mm-dd format
     const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
@@ -93,7 +97,7 @@ CRDS.Countdown = class Countdown {
 
   static get12HourTime(date) {
     let hours = date.getHours();
-    const minutes = date.getMinutes();
+    const minutes = (`0${date.getMinutes()}`).slice(-2);
     let ampm = 'am';
 
     if (hours > 12) {
@@ -102,10 +106,6 @@ CRDS.Countdown = class Countdown {
     }
 
     return `${hours}:${minutes}${ampm}`;
-  }
-
-  addOffsetTime(time) {
-    return new Date(time.getTime() + (this.STREAM_OFFSET * this.MS_PER_MINUTE));
   }
 
   getStreamspotStatus() {
