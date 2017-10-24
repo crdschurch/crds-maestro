@@ -1,7 +1,30 @@
-#locations-filter-label,
 #happening-filter-label {
   .dropdown {
     float: right;
+  }
+}
+
+#locations-search {
+  border-top: 1px solid rgba(151,151,151,.35);
+  
+  .collection-header {
+    margin: 0;
+    border-top: 0;
+
+    @media screen and (min-width: $screen-sm-min) {
+      float: left;
+    }
+  }
+  
+  .searchbar {
+    width: 100%;
+    margin: 1rem 0;
+    @media screen and (min-width: $screen-sm-min) {
+      float: right;
+      margin: .5rem 0;
+      width: 50%;
+      padding: .5rem;
+    }
   }
 }
 
