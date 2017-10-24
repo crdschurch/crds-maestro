@@ -6,9 +6,26 @@
     <!-- End Google Tag Manager (noscript) -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.js"></script>
-    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://www.imgix.com/libraries/imgix.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/svg4everybody/2.1.8/svg4everybody.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/g/mutationobserver"></script>
+    <script src="//d1tmclqz61gqwd.cloudfront.net/javascripts/crds-shared-header-v0.4.14.min.js"></script>
+    <script src="//d1tmclqz61gqwd.cloudfront.net/javascripts/crds-status-message-v0.0.9.min.js"></script>
+
+    <script>
+    var str = '<strong>Warning:</strong> You are using an unsupported browser. Please <a href="https://www.google.com/chrome/" target="_blank">consider upgrading to Google Chrome</a> for the best experience.';
+    new CRDS.StatusMessage(str, {
+      style: 'danger',
+      browsers: [
+        { name: 'Chrome', version: 58 },
+        { name: 'Safari', version: 10 },
+        { name: 'Firefox', version: 56 }
+      ]
+    });
+    </script>
+
     <script>
       imgix.onready(function() {
         imgix.fluid({
@@ -37,7 +54,7 @@
         })(document);
     </script>
     <script>
-        var env = window.env || {};        
+        var env = window.env || {};
         env.streamspotId = "<%= Application.get_env(:crossroads_interface, :streamspot_id) %>";
         env.streamspotKey = "<%= Application.get_env(:crossroads_interface, :streamspot_key) %>";
     </script>

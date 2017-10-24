@@ -34,7 +34,7 @@ defmodule CrossroadsInterface.Plug.Meta do
 
     conn
     |> assign(:meta_description, get_description(page))
-    |> assign(:meta_title, Map.get(page, "title", "Crossroads"))
+    |> assign(:meta_title, get_title(page, site_config))
     |> assign(:meta_url, get_url(page))
     |> assign(:meta_type, Map.get(page, "type", "website"))
     |> assign(:meta_image, find_image(page))
@@ -43,6 +43,15 @@ defmodule CrossroadsInterface.Plug.Meta do
     |> assign(:meta_siteconfig_locale, Map.get(site_config, "locale", "en_US"))
     |> assign(:meta_siteconfig_facebook, Map.get(site_config, "facebook", ""))
     |> assign(:meta_siteconfig_twitter, Map.get(site_config, "twitter", ""))
+  end
+
+  defp get_title(page, site_config) do
+   page_title = Map.get(page, "title", "Crossroads")
+   title_suffix = " | " <> Map.get(site_config, "title", "Crossroads")
+   case String.contains?(page_title, title_suffix) do
+     true -> page_title
+     false -> page_title <> title_suffix
+   end
   end
 
   defp get_url(%{"uRL" => url}) do

@@ -1,6 +1,5 @@
 defmodule CrossroadsInterface.NotFoundAssetsPlugTest do
   use CrossroadsInterface.ConnCase
-  import IEx
 
   describe "NotFoundAssetsPlug: " do
     test "it should not modify response for root", %{conn: conn} do
@@ -27,11 +26,17 @@ defmodule CrossroadsInterface.NotFoundAssetsPlugTest do
       local_conn = CrossroadsInterface.Plug.NotFoundAssetsPlug.call(build_conn(:get, "/assets/asset.aaa"),%{})
       assert local_conn.status == conn.status
     end
-    
+ 
     test "it should return 'not found' for a .php file" , %{conn: conn} do
       local_conn = CrossroadsInterface.Plug.NotFoundAssetsPlug.call(build_conn(:get, "/shouldnotbehere.php"),%{})
-      assert local_conn.status == 404
-    end
+      local_conn =
+        :get
+        |> build_conn("/assets/asset.aaa")
 
+      after_plug =
+        local_conn
+        |> CrossroadsInterface.Plug.NotFoundAssetsPlug.call(%{})
+      assert local_conn.status == after_plug.status
+    end
   end
 end

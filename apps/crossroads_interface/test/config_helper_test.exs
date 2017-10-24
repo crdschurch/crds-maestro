@@ -28,4 +28,5 @@ defmodule ConfigHelper.GetSuffixTest do
 
     assert ConfigHelper.get_suffix() == "_yahoo-foobar"
   end
+
 end
