@@ -11,7 +11,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/svg4everybody/2.1.8/svg4everybody.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/g/mutationobserver"></script>
-    <script src="//d1tmclqz61gqwd.cloudfront.net/javascripts/crds-shared-header-v0.4.14.min.js"></script>
+    <script src="//d1tmclqz61gqwd.cloudfront.net/javascripts/crds-shared-header-v0.4.13.min.js"></script>
     <script src="//d1tmclqz61gqwd.cloudfront.net/javascripts/crds-status-message-v0.0.9.min.js"></script>
 
     <script>
