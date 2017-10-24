@@ -13,7 +13,7 @@ defmodule CrossroadsInterface.CmsPageController do
     cond do
       page["redirectUrl"] != nil ->
         conn
-          |> redirect(external: page["redirectUrl"])
+        |> redirect(external: page["redirectUrl"])
       true ->
         crds_styles = getStylesClassFromPage(page)
         body_class = getBodyClassFromPage(page)
@@ -23,8 +23,10 @@ defmodule CrossroadsInterface.CmsPageController do
           |> put_layout(layout)
           |> assign(:body_class, body_class)
           |> assign(:crds_styles, crds_styles)
-          |> render(CrossroadsInterface.CmsPageView, "index.html", %{ payload: page["content"],
-          "css_files": [ "/css/app.css", "/js/legacy/legacy.css" ]})
+          |> render(CrossroadsInterface.CmsPageView,
+                    "index.html",
+                    %{ payload: page["content"],
+                      "css_files": [ "/css/app.css", "/js/legacy/legacy.css" ]})
     end
   end
 
