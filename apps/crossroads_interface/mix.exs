@@ -36,15 +36,14 @@ defmodule CrossroadsInterface.Mixfile do
   defp deps do
     [{:phoenix, "~> 1.1.3"},
      {:phoenix_html, "~> 2.3"},
+     {:plug, "~> 1.3", override: true},
      {:phoenix_html_sanitizer, "~> 1.0.0"},
-     {:html_sanitize_ex, "~> 1.3.0", override: true},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:logger_file_backend, "0.0.9"},
      {:gettext, "~> 0.9"},
      {:cowboy, "~> 1.0"},
      {:crossroads_content, in_umbrella: true},
      {:mix_test_watch, "~> 0.2", only: :dev},
-     {:mock, "~> 0.3.1", only: :test},
-     {:floki, "~> 0.18.1"}]
+     {:mock, "~> 0.3.1", only: :test}]
   end
 end

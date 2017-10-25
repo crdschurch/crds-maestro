@@ -13,6 +13,7 @@
     <script type="text/javascript" src="//cdn.jsdelivr.net/g/mutationobserver"></script>
     <script src="//d1tmclqz61gqwd.cloudfront.net/javascripts/crds-shared-header-v0.4.13.min.js"></script>
     <script src="//d1tmclqz61gqwd.cloudfront.net/javascripts/crds-status-message-v0.0.9.min.js"></script>
+    <script src='https://unpkg.com/formiojs@latest/dist/formio.full.min.js'></script>
 
     <script>
     var str = '<strong>Warning:</strong> You are using an unsupported browser. Please <a href="https://www.google.com/chrome/" target="_blank">consider upgrading to Google Chrome</a> for the best experience.';

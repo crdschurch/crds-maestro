@@ -31,7 +31,7 @@ defmodule CrossroadsContent.Mixfile do
 
   defp deps do
     [ {:cachex, "~> 2.1"},
-      {:httpoison, "~> 0.9.0"},
+      {:httpoison, "~> 0.13"},
       {:poison, "~> 2.0"},
       {:mock, "~> 0.3.1", only: :test}
     ]
