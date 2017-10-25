@@ -1,5 +1,7 @@
 <div class="crds-shared-header">
-  <div data-header></div>
+  <div data-header>
+    <%= raw(filter_content_blocks(@content_blocks, "sharedGlobalHeader")["content"]) %>
+  </div>
   <script>
     svg4everybody();
     (function(){
@@ -7,8 +9,8 @@
         cmsEndpoint: '<%= Application.get_env(:crossroads_interface, :cms_client_endpoint) %>',
         appEndpoint: '<%= Application.get_env(:crossroads_interface, :app_client_endpoint) %>',
         imgEndpoint: '<%= Application.get_env(:crossroads_interface, :image_client_endpoint) %>',
-        crdsCookiePrefix: '<%= Application.get_env(:crossroads_interface, :cookie_prefix) %>',
-        contentBlockTitle: 'sharedGlobalHeader' };
+        crdsCookiePrefix: '<%= Application.get_env(:crossroads_interface, :cookie_prefix) %>'
+      };
       var header = new CRDS.SharedHeader(options);
       header.render();
     })();
