@@ -3,7 +3,6 @@ import LocationFinder from '../../../web/static/js/home_page/location_finder';
 /* global CRDS */
 
 describe('LocationFinder', () => {
-
   const locationsTestDom = `<div id="section-locations" class="feature-cards flickity-enabled is-draggable" data-carousel="mobile-scroll" tabindex="0">
     <div class="flickity-viewport" style="height: 481px; touch-action: none;">
       <div class="flickity-slider" style="left: 0px; transform: translateX(-570.65%);">
@@ -64,44 +63,43 @@ describe('LocationFinder', () => {
 
   const apiReturnData = [
     {
-      "origin": "45140",
-      "location": {
-              "locationId": 3,
-              "location": "Oakley",
-              "address": "3500 Madison Road",
-              "city": "Cincinnati",
-              "state": "OH",
-              "zip": "45209",
-              "imageUrl": "//crds-cms-uploads.imgix.net/content/images/site-oakley.jpg"
-            },
-      "distance": 17.9
+      origin: '45140',
+      location: {
+        locationId: 3,
+        location: 'Oakley',
+        address: '3500 Madison Road',
+        city: 'Cincinnati',
+        state: 'OH',
+        zip: '45209',
+        imageUrl: '//crds-cms-uploads.imgix.net/content/images/site-oakley.jpg'
+      },
+      distance: 17.9
     },
     {
-      "origin": "45140",
-      "location": {
-              "locationId": 5,
-              "location": "Mason",
-              "address": "990 Reading Road Mason - Crossroads Mason Church",
-              "city": "Mason",
-              "state": "OH",
-              "zip": "45040-8769",
-              "imageUrl": "//crds-cms-uploads.imgix.net/content/images/site-mason.jpg"
-            },
-      "distance": 14.4
+      origin: '45140',
+      location: {
+        locationId: 5,
+        location: 'Mason',
+        address: '990 Reading Road Mason - Crossroads Mason Church',
+        city: 'Mason',
+        state: 'OH',
+        zip: '45040-8769',
+        imageUrl: '//crds-cms-uploads.imgix.net/content/images/site-mason.jpg'
+      },
+      distance: 14.4
     }
-  ]
+  ];
 
   let locationFinder;
 
   beforeEach(() => {
     document.body.innerHTML = locationsTestDom;
-    spyOn($, 'ajax').and.returnValue(apiReturnData);
-    locationFinder = new CRDS.LocationFinder('45249'); 
+    spyOn($, 'ajax').and.returnValue($.Deferred().resolve(apiReturnData).promise());
+    locationFinder = new CRDS.LocationFinder('45249');
   });
 
-  it("on initialization, it creates an object of locations:distances", () => {
-    const data = [{"location": "Oakley", "distance": 17.9}, {"location": "Mason", "distance": 14.4}]
+  it('on initialization, it creates an object of locations:distances', () => {
+    const data = [{ location: 'Oakley', distance: 17.9 }, { location: 'Mason', distance: 14.4 }];
     expect(locationFinder.distancesFromOrigin).toEqual(data);
   });
-
 });
