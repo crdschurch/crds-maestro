@@ -1,5 +1,5 @@
 <div class="crds-shared-header">
-  <div data-header>
+  <div data-header style="visibility: hidden;">
     <%= raw(filter_content_blocks(@content_blocks, "sharedGlobalHeader")["content"]) %>
   </div>
   <script>
