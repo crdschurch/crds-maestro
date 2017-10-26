@@ -5,23 +5,42 @@ window.CRDS = window.CRDS || {};
 
 CRDS.DistanceSorter = class DistanceSorter {
   constructor() {
-    this.locationDistances = undefined;
+    this.locationDistances = [];
+    this.searchForm = undefined;
+    this.searchInput = undefined;
+    this.cards = undefined;
+    this.init();
+  }
+
+  init() {
     this.searchForm = document.getElementById('locations-address-input');
+    this.searchForm.addEventListener('submit', this.handleFormSubmit.bind(this));
     this.searchInput = this.searchForm.getElementsByTagName('input')[0];
-    this.cards = document.getElementById('locations-search').getElementsByClassName('card');
-    this.searchForm.addEventListener('submit', this.handleFormSubmit);
+    this.cards = document.getElementById('section-locations').getElementsByClassName('card');
   }
 
   handleFormSubmit(event) {
     event.preventDefault();
-    CRDS.DistanceSorter.getDistance();
-    this.createDataAttributes();
-    this.appendDistances();
+    this.getDistance()
+      .done((locationDistances) => {
+        for (let i = 0; i < locationDistances.length; i += 1) {
+          const locationName = locationDistances[i].location.location;
+          const distance = locationDistances[i].distance;
+          const locationDistance = { location: locationName, distance };
+          this.locationDistances.push(locationDistance);
+        }
+        this.createDataAttributes();
+        this.appendDistances();
+      })
+      .fail((xhr, ajaxOptions, thrownError) => {
+        console.log(thrownError);
+      });
   }
 
-  static getDistance() {
-    const locationFinder = new CRDS.LocationFinder(this.searchInput.value);
-    this.locationDistances = locationFinder.distancesFromOrigin;
+  getDistance() {
+    this.locationDistances = [];
+    const locationFinder = new CRDS.LocationFinder();
+    return locationFinder.getLocationDistances(this.searchInput.value);
   }
 
   createDataAttributes() {
@@ -34,10 +53,12 @@ CRDS.DistanceSorter = class DistanceSorter {
   appendDistances() {
     for (let i = 0; i < this.cards.length; i += 1) {
       const locationMatch = this.locationDistances.find(obj => obj.location === this.cards[i].dataset.location);
-      const span = document.createElement('span');
-      span.classList.add('distance');
-      span.append(locationMatch.distance);
-      this.cards[i].getElementsByClassName('card-block')[0].appendChild(span);
+      if (locationMatch !== undefined) {
+        const span = document.createElement('span');
+        span.classList.add('distance');
+        span.append(locationMatch.distance);
+        this.cards[i].getElementsByClassName('card-block')[0].appendChild(span);
+      }
     }
   }
 };

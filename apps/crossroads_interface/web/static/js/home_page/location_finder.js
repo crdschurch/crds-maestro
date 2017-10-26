@@ -4,11 +4,11 @@
 window.CRDS = window.CRDS || {};
 
 CRDS.LocationFinder = class LocationFinder {
-  constructor(origin) {
+  constructor() {
     this.gatewayAPIEndpoint = `${window.env.gatewayServerEndpoint}/api/v1.0.0`;
-    this.origin = origin;
+    // this.origin = origin;
     this.distancesFromOrigin = [];
-    this.setup();
+    // this.setup();
   }
 
   setup() {
@@ -26,14 +26,14 @@ CRDS.LocationFinder = class LocationFinder {
       });
   }
 
-  getLocationDistances() {
+  getLocationDistances(origin) {
     const locationDistancesURL = `${this.gatewayAPIEndpoint}/locations/proximities`;
     return $.ajax({
       url: locationDistancesURL,
       dataType: 'json',
       crossDomain: true,
       data: {
-        origin: this.origin
+        origin
       }
     });
   }
