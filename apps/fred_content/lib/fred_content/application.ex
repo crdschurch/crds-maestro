@@ -9,7 +9,7 @@ defmodule FredContent.Application do
     import Supervisor.Spec, warn: false
 
     children = [
-      worker(FredContent, [[name: FredContent]]),
+      worker(Cachex, [:fred_cache, [], []]),
     ]
 
     opts = [strategy: :one_for_one, name: FredContent.Supervisor]

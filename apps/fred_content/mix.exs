@@ -27,7 +27,8 @@ defmodule FredContent.Mixfile do
      {:credo, "~> 0.8", only: [:dev, :test]},
      {:dialyxir, "~> 0.5", only: [:dev], runtime: false, },
      {:mix_test_watch, "~> 0.2", only: :dev, runtime: false},
-     {:floki, "~> 0.18.1"}]
+     {:floki, "~> 0.18.1"},
+     {:cachex, "~> 2.1"}]
   end
 
   defp elixirc_paths(:test) do

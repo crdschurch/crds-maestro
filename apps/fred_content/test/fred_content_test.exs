@@ -1,8 +1,15 @@
 defmodule FredContentTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
   doctest FredContent
   alias FredContent.FakeHttp
   import Mock
+
+  setup do
+    on_exit fn ->
+      Cachex.clear(:fred_cache)
+    end
+    :ok
+  end
 
   test "loads FRED data successfully" do
     with_mock HTTPoison, [get: fn(url, headers, options) -> FakeHttp.get(url, headers, options) end] do
@@ -14,7 +21,15 @@ defmodule FredContentTest do
   test "sends cookie userId in request" do
     with_mock HTTPoison, [get: fn(url, headers, options) -> FakeHttp.get(url, headers, options) end] do
       FredContent.fetch_form("goodForm", 2186211)
-      assert called HTTPoison.get("/goodForm?partial=true", %{}, hackney: [cookie: ["userId=2186211"]])
+      assert called HTTPoison.get("https://embedint.crossroads.net/fred/goodForm?partial=true", %{}, hackney: [cookie: ["userId=2186211"]])
+    end
+  end
+
+  test "handles redirect correctly" do
+    with_mock HTTPoison, [get: fn(url, headers, options) -> FakeHttp.get(url, headers, options) end] do
+      content = FredContent.fetch_form("redirectForm", 2186211, "https://google.com")
+      assert content == "<a href='https://google.com'> </a>"
+      assert called HTTPoison.get("https://embedint.crossroads.net/fred/redirectForm?partial=true&redirecturl=https://google.com", %{}, hackney: [cookie: ["userId=2186211"]])
     end
   end
 
@@ -32,13 +47,20 @@ defmodule FredContentTest do
     end
   end
 
+  test "caches form data" do
+    with_mock HTTPoison, [get: fn(url, headers, options) -> FakeHttp.get(url, headers, options) end] do
+      content = FredContent.fetch_form("goodForm", 2186211)
+      assert Cachex.exists?(:fred_cache, "goodForm2186211") == {:ok, true}
+    end
+  end
+
   test "gets form name" do
-    name = FredContent.get_form_name(:url, "<div class='fred-form' id='formname'> </div>")
-    assert name == "formname"
+    name = FredContent.get_form_info(:url, "<div class='fred-form' id='formname'> </div>")
+    assert name == %{form_id: "formname", redirect_url: nil}
   end
 
   test "no form name is nil" do
-    name = FredContent.get_form_name(:url2, "<div class='non-fred-form' id='formname'> </div>")
+    name = FredContent.get_form_info(:url2, "<div class='non-fred-form' id='formname'> </div>")
     assert name == nil
   end
 
@@ -52,14 +74,14 @@ defmodule FredContentTest do
       </div>
     </div>
     """
-    name = FredContent.get_form_name(:url3, html)
-    assert name == "formname"
+    name = FredContent.get_form_info(:url3, html)
+    assert name == %{form_id: "formname", redirect_url: nil}
   end
 
   test "caching form name based on unique key" do
-    name = FredContent.get_form_name(:url, "<div class='fred-form' id='formname'> </div>")
-    same_name = FredContent.get_form_name(:url,"<div class='fred-form' id='differentname'> </div>")
-    assert same_name == "formname"
+    name = FredContent.get_form_info(:url, "<div class='fred-form' id='formname'> </div>")
+    same_name = FredContent.get_form_info(:url,"<div class='fred-form' id='differentname'> </div>")
+    assert same_name == %{form_id: "formname", redirect_url: nil}
   end
 
   test "injects form into payload" do
@@ -88,5 +110,27 @@ defmodule FredContentTest do
     newpayload = FredContent.inject_form(form, payload)
     expected = "<div><p><div id=\"formio\">hello</div></p></div>"
     assert expected == newpayload
+  end
+
+  @tag :integration
+  test "connects to fred and pulls back html" do
+    content = FredContent.fetch_form("campercampingcamp", 2186211)
+    assert content =~ "\"title\": \"Camper Camping Camp Sign Up\""
+  end
+
+  @tag :integration
+  test "http call cache should timeout after configured time (5 seconds)" do
+    content = FredContent.fetch_form("campercampingcamp", 2186211)
+    assert Cachex.exists?(:fred_cache, "campercampingcamp2186211") == {:ok, true}
+    :timer.sleep(Application.get_env(:fred_content, :http_cache_ttl, 5000));
+    assert Cachex.exists?(:fred_cache, "campercampingcamp2186211") == {:ok, false}
+  end
+
+  @tag :integration
+  test "formname cache should timeout after configured time (6 seconds)" do
+    name = FredContent.get_form_info(:url, "<div class='fred-form' id='formname'> </div>")
+    :timer.sleep(Application.get_env(:fred_content, :formname_cache_ttl, 6000));
+    same_name = FredContent.get_form_info(:url,"<div class='fred-form' id='differentname'> </div>")
+    assert same_name == "differentname"
   end
 end
