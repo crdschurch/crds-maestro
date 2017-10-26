@@ -3,10 +3,15 @@ use Mix.Config
 config :crossroads_content,
   cms_server_endpoint: System.get_env("CRDS_CMS_SERVER_ENDPOINT") || "https://contentint.crossroads.net/"
 
-config :crossroads_interface,	
-  gateway_server_endpoint: System.get_env("CRDS_GATEWAY_SERVER_ENDPOINT") || "https://gatewayint.crossroads.net/gateway/",		
+config :fred_content,
+  fred_server_endpoint: "https://embed#{System.get_env("CRDS_ENV")}.crossroads.net/fred",
+  http_cache_ttl: :timer.seconds(60),
+  formname_cache_ttl: :timer.seconds(10)
+
+config :crossroads_interface,
+  gateway_server_endpoint: System.get_env("CRDS_GATEWAY_SERVER_ENDPOINT") || "https://gatewayint.crossroads.net/gateway/",
   cms_client_endpoint: System.get_env("CRDS_CMS_CLIENT_ENDPOINT") || "https://contentint.crossroads.net/",
-  cookie_prefix: "",
+  cookie_prefix: System.get_env("CRDS_ENV"),
   cookie_domain: "",
   app_client_endpoint: "/",
   streamspot_id: "crossr30e3",

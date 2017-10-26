@@ -1,1 +1,1 @@
-<%= show_html(@payload) %>
+<%= show_html(@conn, @payload) %>

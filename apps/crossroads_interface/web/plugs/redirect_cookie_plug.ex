@@ -8,7 +8,7 @@ defmodule CrossroadsInterface.Plug.RedirectCookie do
 
   def call(conn, url, params) do
     cookie_options = get_cookie_options()
-    conn 
+    conn
       |> put_resp_cookie("redirectUrl", URI.encode(url), cookie_options) 
       |> put_resp_cookie("params", URI.encode(params), cookie_options)
   end

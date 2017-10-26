@@ -26,7 +26,7 @@ defmodule CrossroadsInterface.Mixfile do
         applications: [:phoenix, :phoenix_html, :phoenix_html_sanitizer, :logger_file_backend, :cowboy, :logger, :gettext, :ssl]]
     else
       [mod: {CrossroadsInterface, []},
-        applications: [:phoenix, :phoenix_html, :phoenix_html_sanitizer, :logger_file_backend, :cowboy, :logger, :gettext, :crossroads_content, :ssl]]
+        applications: [:phoenix, :phoenix_html, :phoenix_html_sanitizer, :logger_file_backend, :cowboy, :logger, :gettext, :crossroads_content, :ssl, :fred_content]]
     end
   end
 

@@ -19,9 +19,8 @@ defmodule FredContent do
     @cache
     |> Cachex.get(key_name)
     |> case do
-      {:ok, value} ->
-        value
-      _ ->
+      {:ok, value} -> value
+      _no_cache ->
         form_name
         |> build_url(redirect)
         |> HTTPoison.get(%{}, hackney: [cookie: ["userId=#{contact_id}"]])
