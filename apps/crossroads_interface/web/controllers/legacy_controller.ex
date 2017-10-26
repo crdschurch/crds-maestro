@@ -60,10 +60,11 @@ defmodule CrossroadsInterface.LegacyController do
         "/js/legacy/ang.js",
         "/js/legacy/core.js",
         "/js/legacy/misc.js",
-        "/js/legacy/main.js"        
+        "/js/legacy/main.js"
       ], "css_files": [
        "/css/app.css",
-       "/js/legacy/legacy.css"
+       "/js/legacy/legacy.css",
+       "/js/legacy/core.css"
       ], "base_href": "/"})
   end
 end
