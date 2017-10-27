@@ -37,9 +37,12 @@ CRDS.DistanceSorter = class DistanceSorter {
         this.createDataAttributes();
         this.appendDistances();
         this.locationsCarousel.sortBy('distance');
+        this.anywhereCheck();
+        this.clearError();
       })
       .fail((xhr, ajaxOptions, thrownError) => {
         console.log(thrownError);
+        this.showError();
       });
   }
 
@@ -56,19 +59,48 @@ CRDS.DistanceSorter = class DistanceSorter {
     }
   }
 
+  showError() {
+    const errorText = document.createTextNode('We couldn\'t find what you were looking for. Try searching again.');
+    const errorElement = document.createElement('div');
+    const parent = this.locationsCarousel.carousel.parentElement;
+    this.searchInput.classList.add('error');
+    errorElement.classList.add('error-text', 'alert', 'alert-danger');
+    errorElement.append(errorText);
+    const oldError = parent.getElementsByClassName('error-text');
+    if (oldError.length === 0) {
+      parent.insertBefore(errorElement, this.locationsCarousel.carousel);
+    } else {
+      parent.replaceChild(errorElement, oldError[0]);
+    }
+  }
+
+  clearError() {
+    const errors = this.locationsCarousel.carousel.parentNode.getElementsByClassName('error-text');
+    errors[0].parentElement.removeChild(errors[0]);
+    this.searchInput.classList.remove('error');
+  }
+
+  anywhereCheck() {
+    if (this.locationDistances[0].distance > 30) {
+      this.cards[this.cards.length - 1].classList.add('order-first');
+    } else {
+      this.cards[this.cards.length - 1].classList.remove('order-first');
+    }
+  }
+
   appendDistances() {
     for (let i = 0; i < this.cards.length; i += 1) {
       const locationMatch = this.locationDistances.find(obj => obj.location === this.cards[i].dataset.location);
       if (locationMatch !== undefined) {
         this.cards[i].dataset.distance = locationMatch.distance;
         const span = document.createElement('span');
-        span.classList.add('distance');
-        span.append(locationMatch.distance);
+        span.classList.add('distance', 'label', 'font-family-base');
+        span.append(`${locationMatch.distance} miles`);
         const oldSpan = this.cards[i].getElementsByClassName('distance');
         if (oldSpan.length === 0) {
-          this.cards[i].getElementsByClassName('card-block')[0].appendChild(span);
+          this.cards[i].insertBefore(span, this.cards[i].children[0]);
         } else {
-          this.cards[i].getElementsByClassName('card-block')[0].replaceChild(span, oldSpan[0]);
+          this.cards[i].replaceChild(span, oldSpan[0]);
         }
       }
     }

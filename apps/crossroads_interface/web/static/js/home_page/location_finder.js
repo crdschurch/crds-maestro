@@ -5,7 +5,7 @@ window.CRDS = window.CRDS || {};
 
 CRDS.LocationFinder = class LocationFinder {
   constructor() {
-    this.gatewayAPIEndpoint = `${window.env.gatewayServerEndpoint}/api/v1.0.0`;
+    this.gatewayAPIEndpoint = `${window.env.gatewayServerEndpoint}api/v1.0.0`;
   }
 
   getLocationDistances(origin) {
