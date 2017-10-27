@@ -3,7 +3,7 @@ defmodule CrossroadsInterface.CmsPageView do
 
   @env Application.get_env(:crossroads_interface, :cookie_prefix, "")
 
-  def show_html(nil), do: ""
+  def show_html(conn, nil), do: raw("")
   def show_html(conn, payload) do
     conn.request_path
     |> FredContent.get_form_info(payload)
@@ -19,7 +19,7 @@ defmodule CrossroadsInterface.CmsPageView do
     |> FredContent.fetch_form(contact_id, redirect_url)
     |> FredContent.inject_form(payload)
   end
-  defp determine_payload(form, payload), do: payload
+  defp determine_payload(form, payload, conn), do: payload
 
   defp get_token(%{req_cookies: %{@env <> "sessionId" => token}}), do: token
   defp get_token(conn), do: ""

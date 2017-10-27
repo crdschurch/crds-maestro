@@ -33,7 +33,8 @@ config :crossroads_content,
 config :fred_content,
   fred_server_endpoint: "https://embed#{System.get_env("CRDS_ENV")}.crossroads.net/fred",
   http_cache_ttl: :timer.seconds(60),
-  formname_cache_ttl: :timer.seconds(10)
+  formname_cache_ttl: :timer.seconds(10),
+  cookie_prefix: System.get_env("CRDS_ENV")
 
 config :crossroads_interface,
   image_client_endpoint: "#{System.get_env("CRDS_GATEWAY_CLIENT_ENDPOINT")}api/image/profile/",

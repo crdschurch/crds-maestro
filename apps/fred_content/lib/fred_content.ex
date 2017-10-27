@@ -5,6 +5,7 @@ defmodule FredContent do
   require Logger
   require IEx
 
+  @env Application.get_env(:fred_content, :cookie_prefix, "")
   @server Application.get_env(:fred_content, :fred_server_endpoint)
   @fredclass "fred-form"
   @cache :fred_cache
@@ -14,8 +15,8 @@ defmodule FredContent do
   @doc """
   Get the form based on the name and prepopulate based on the contact id
   """
-  @spec fetch_form(String.t, integer()) :: String.t
-  def fetch_form(form_name, contact_id, redirect \\ "") do
+  @spec fetch_form(String.t, String.t, String.t, String.t) :: String.t
+  def fetch_form(form_name, contact_id, token, redirect \\ "") do
     key_name = form_name <> "#{contact_id}"
     @cache
     |> Cachex.get(key_name)
@@ -27,7 +28,7 @@ defmodule FredContent do
         Logger.debug("no cached value for #{key_name}")
         form_name
         |> build_url(redirect)
-        |> HTTPoison.get(%{}, hackney: [cookie: ["userId=#{contact_id}"]])
+        |> HTTPoison.get(%{}, hackney: [cookie: ["userId=#{contact_id}","#{@env}sessionId=#{token}"]])
         |> case do
           {:ok, %HTTPoison.Response{body: body}} ->
             Cachex.set(@cache, key_name, body, async: true, ttl: @cache_http_ttl)
@@ -54,7 +55,7 @@ defmodule FredContent do
     iex> FredContent.get_form_info(:another_unique_url, "<div id='blah' class='fred-form' redirecturl='/url'></div>")
     %{form_id: "blah", redirect_url: "/url"}
   """
-  @spec get_form_info(atom(), String.t) :: %{form_name: String.t, redirect_url: String.t}
+  @spec get_form_info(atom(), String.t) :: %{form_id: String.t, redirect_url: String.t} | nil
   def get_form_info(key, payload) do
     exists = @cache |> Cachex.get(key)
     case exists do
@@ -89,14 +90,14 @@ defmodule FredContent do
       el
       |> Floki.attribute("id")
       |> case do
-        nil -> ""
+        [] -> ""
         list -> List.first(list)
       end
     url =
       el
       |> Floki.attribute("redirecturl")
       |> case do
-        nil -> ""
+        [] -> nil
         list -> List.first(list)
       end
     %{form_id: id, redirect_url: url}
