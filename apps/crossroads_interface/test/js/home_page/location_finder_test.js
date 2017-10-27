@@ -6,7 +6,7 @@ describe('LocationFinder', () => {
   let locationFinder;
 
   beforeEach(() => {
-    window.env.gatewayServerEndpoint = 'https://gateway.crossroads.net/gateway';
+    window.env.gatewayServerEndpoint = 'https://gateway.crossroads.net/gateway/';
   });
 
   it('makes a call to MP with the proper arguments', () => {
@@ -15,7 +15,7 @@ describe('LocationFinder', () => {
     locationFinder.getLocationDistances('45243');
 
     expect($.ajax).toHaveBeenCalledWith({
-      url: `${window.env.gatewayServerEndpoint}/api/v1.0.0/locations/proximities`,
+      url: `${window.env.gatewayServerEndpoint}api/v1.0.0/locations/proximities`,
       dataType: 'json',
       crossDomain: true,
       data: {
