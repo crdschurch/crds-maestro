@@ -37,6 +37,7 @@ CRDS.DistanceSorter = class DistanceSorter {
         this.createDataAttributes();
         this.appendDistances();
         this.locationsCarousel.sortBy('distance');
+        this.anywhereCheck();
         this.clearError();
       })
       .fail((xhr, ajaxOptions, thrownError) => {
@@ -77,6 +78,14 @@ CRDS.DistanceSorter = class DistanceSorter {
     const errors = this.locationsCarousel.carousel.parentNode.getElementsByClassName('error-text');
     errors[0].parentElement.removeChild(errors[0]);
     this.searchInput.classList.remove('error');
+  }
+
+  anywhereCheck() {
+    if (this.locationDistances[0].distance > 30) {
+      this.cards[this.cards.length - 1].classList.add('order-first');
+    } else {
+      this.cards[this.cards.length - 1].classList.remove('order-first');
+    }
   }
 
   appendDistances() {

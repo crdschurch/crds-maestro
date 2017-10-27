@@ -6,6 +6,7 @@
 }
 
 #locations-search {
+  margin-top: 1rem;
   border-top: 1px solid rgba(151,151,151,.35);
   
   .collection-header {
@@ -36,6 +37,10 @@
     width: 100%;
     font-size: 1rem;
   }
+}
+
+.card.order-first {
+  order: 0 !important;
 }
 
 .distance.label {
