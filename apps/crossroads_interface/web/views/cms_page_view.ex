@@ -16,7 +16,7 @@ defmodule CrossroadsInterface.CmsPageView do
     contact_id = get_contact_id(conn)
     token = get_token(conn)
     form_id
-    |> FredContent.fetch_form(contact_id, redirect_url)
+    |> FredContent.fetch_form(contact_id, token, redirect_url)
     |> FredContent.inject_form(payload)
   end
   defp determine_payload(form, payload, conn), do: payload
