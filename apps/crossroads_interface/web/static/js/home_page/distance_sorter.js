@@ -16,7 +16,12 @@ CRDS.DistanceSorter = class DistanceSorter {
     this.searchForm = document.getElementById('locations-address-input');
     this.searchForm.addEventListener('submit', this.handleFormSubmit.bind(this));
     this.searchInput = this.searchForm.getElementsByTagName('input')[0];
-    this.cards = document.getElementById('section-locations').getElementsByClassName('card');
+    this.locationsCarousel = DistanceSorter.getLocationsCarousel();
+    this.cards = this.locationsCarousel.cards;
+  }
+
+  static getLocationsCarousel() {
+    return Object.values(CRDS._instances).find(instance => instance.carousel !== undefined && instance.carousel.id === 'section-locations');
   }
 
   handleFormSubmit(event) {
@@ -31,6 +36,7 @@ CRDS.DistanceSorter = class DistanceSorter {
         }
         this.createDataAttributes();
         this.appendDistances();
+        this.locationsCarousel.sortBy('distance');
       })
       .fail((xhr, ajaxOptions, thrownError) => {
         console.log(thrownError);
@@ -54,10 +60,16 @@ CRDS.DistanceSorter = class DistanceSorter {
     for (let i = 0; i < this.cards.length; i += 1) {
       const locationMatch = this.locationDistances.find(obj => obj.location === this.cards[i].dataset.location);
       if (locationMatch !== undefined) {
+        this.cards[i].dataset.distance = locationMatch.distance;
         const span = document.createElement('span');
         span.classList.add('distance');
         span.append(locationMatch.distance);
-        this.cards[i].getElementsByClassName('card-block')[0].appendChild(span);
+        const oldSpan = this.cards[i].getElementsByClassName('distance');
+        if (oldSpan.length === 0) {
+          this.cards[i].getElementsByClassName('card-block')[0].appendChild(span);
+        } else {
+          this.cards[i].getElementsByClassName('card-block')[0].replaceChild(span, oldSpan[0]);
+        }
       }
     }
   }

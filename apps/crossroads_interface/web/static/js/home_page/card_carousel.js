@@ -134,10 +134,18 @@ CRDS.CardCarousel = class CardCarousel {
       order = -1;
     }
     Array.from(this.cards).sort((a, b) => {
-      if (a[criterionField] < b[criterionField]) {
+      let aValue = parseFloat(a.dataset[criterionField], 10);
+      let bValue = parseFloat(b.dataset[criterionField], 10);
+      if (isNaN(aValue)) {
+        aValue = a.dataset[criterionField];
+      }
+      if (isNaN(bValue)) {
+        bValue = b.dataset[criterionField];
+      }
+      if (bValue == null || aValue < bValue) {
         return -1 * order;
       }
-      if (a[criterionField] > b[criterionField]) {
+      if (aValue == null || aValue > bValue) {
         return 1 * order;
       }
       return 0;
