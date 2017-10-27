@@ -62,7 +62,7 @@ CRDS.DistanceSorter = class DistanceSorter {
       if (locationMatch !== undefined) {
         this.cards[i].dataset.distance = locationMatch.distance;
         const span = document.createElement('span');
-        span.classList.add('distance');
+        span.classList.add('distance', 'label', 'font-family-base');
         span.append(`${locationMatch.distance} miles away`);
         const oldSpan = this.cards[i].getElementsByClassName('distance');
         if (oldSpan.length === 0) {
