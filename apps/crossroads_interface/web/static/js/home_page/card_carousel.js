@@ -42,8 +42,6 @@ CRDS.CardCarousel = class CardCarousel {
     this.cards = this.getCards();
     for (let i = 0; i < this.cards.length; i += 1) {
       this.cards[i].classList.add('carousel-cell');
-      this.cards[i].id = CardCarousel.generateId();
-      // console.log(`Carousel ${this.carousel.id} card ${i} ${this.cards[i].id}`);
     }
     this.fixImages();
   }
@@ -149,16 +147,10 @@ CRDS.CardCarousel = class CardCarousel {
         return 1 * order;
       }
       return 0;
-    }).forEach((card, idx) => {
-      // Update the visual position by changing the flexbox `order`.
-      // Find which element this card is
-      const cardElem = document.getElementById(card.id);
-      ['order', 'webkitOrder', 'msFlexOrder', 'mozBoxOrdinalGroup', 'webkitBoxOrdinalGroup'].some((value) => {
-        if (value in cardElem.style) {
-          cardElem.style[value] = idx + 1;
-        }
-        return cardElem.style[value];
-      });
+    }).forEach((card) => {
+      const parent = card.parentNode;
+      parent.removeChild(card);
+      parent.appendChild(card);
     });
   }
 };
