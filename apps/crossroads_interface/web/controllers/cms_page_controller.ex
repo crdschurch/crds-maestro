@@ -1,5 +1,4 @@
 defmodule CrossroadsInterface.CmsPageController do
-  require IEx
   use CrossroadsInterface.Web, :controller
   alias CrossroadsContent.Pages
   alias CrossroadsInterface.Plug.RedirectCookie
@@ -20,17 +19,17 @@ defmodule CrossroadsInterface.CmsPageController do
           |> Authorized.call([])
           |> RedirectCookie.call("content", "{\"link\":\"#{conn.assigns[:path]}\"}")
         if conn.assigns.authorized do
-          renderPage(page, conn)
+          renderPage(conn, page)
         else
           conn
           |> redirect(external: "/signin")
         end
       true ->
-        renderPage(page, conn)
+        renderPage(conn, page)
     end
   end
 
-  defp renderPage(page, conn) do
+  defp renderPage(conn, page) do
     crds_styles = getStylesClassFromPage(page)
     body_class = getBodyClassFromPage(page)
     layout = getLayoutFromPage(page)
@@ -40,9 +39,9 @@ defmodule CrossroadsInterface.CmsPageController do
     |> assign(:body_class, body_class)
     |> assign(:crds_styles, crds_styles)
     |> render(CrossroadsInterface.CmsPageView,
-              "index.html",
-              %{ payload: page["content"],
-              "css_files": [ "/css/app.css", "/js/legacy/legacy.css" ]})
+            "index.html",
+            %{payload: page["content"],
+              css_files: [ "/css/app.css", "/js/legacy/legacy.css" ]})
   end
 
   defp getStylesClassFromPage(page) do

@@ -1,16 +1,16 @@
 defmodule CrossroadsInterface.Plug.RedirectCookie do
   import Plug.Conn
+  require IEx
 
   def call(conn, url) do
     cookie_options = get_cookie_options()
-    conn |> put_resp_cookie("redirectUrl", url, cookie_options)
+    put_resp_cookie(conn, "redirectUrl", url, cookie_options)
   end
-
   def call(conn, url, params) do
     cookie_options = get_cookie_options()
     conn
-      |> put_resp_cookie("redirectUrl", URI.encode(url), cookie_options) 
-      |> put_resp_cookie("params", URI.encode(params), cookie_options)
+    |> put_resp_cookie("redirectUrl", URI.encode(url), cookie_options)
+    |> put_resp_cookie("params", URI.encode(params), cookie_options)
   end
 
   defp get_cookie_options() do

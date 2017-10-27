@@ -3,6 +3,7 @@ defmodule FredContent do
   Pulls html content from FRED for use on Crossroads.net
   """
   require Logger
+  require IEx
 
   @server Application.get_env(:fred_content, :fred_server_endpoint)
   @fredclass "fred-form"
@@ -19,8 +20,11 @@ defmodule FredContent do
     @cache
     |> Cachex.get(key_name)
     |> case do
-      {:ok, value} -> value
+      {:ok, value} ->
+        Logger.debug("found cached value for #{key_name}")
+        value
       _no_cache ->
+        Logger.debug("no cached value for #{key_name}")
         form_name
         |> build_url(redirect)
         |> HTTPoison.get(%{}, hackney: [cookie: ["userId=#{contact_id}"]])
@@ -81,19 +85,20 @@ defmodule FredContent do
 
   defp fred_attribute_values(nil), do: nil
   defp fred_attribute_values(el) do
-    id = Floki.attribute(el, "id")
-         |> case do
-           nil -> ""
-           [] -> ""
-           [el] -> el
-           [el | rest] -> el
-           anything -> anything
-         end
-    url = Floki.attribute(el, "redirecturl")
-          |> case do
-            nil -> ""
-            list -> List.first(list)
-          end
+    id =
+      el
+      |> Floki.attribute("id")
+      |> case do
+        nil -> ""
+        list -> List.first(list)
+      end
+    url =
+      el
+      |> Floki.attribute("redirecturl")
+      |> case do
+        nil -> ""
+        list -> List.first(list)
+      end
     %{form_id: id, redirect_url: url}
   end
 
@@ -119,5 +124,4 @@ defmodule FredContent do
       |> Enum.empty?
     !res
   end
-
 end

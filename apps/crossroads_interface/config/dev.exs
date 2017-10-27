@@ -17,13 +17,6 @@ config :crossroads_interface,
   streamspot_id: "crossr30e3",
   streamspot_key: "a0cb38cb-8146-47c2-b11f-6d93f4647389"
 
-
-# For development, we disable any cache and enable
-# debugging and code reloading.
-#
-# The watchers configuration can be used to run external
-# watchers to your application. For example, we use it
-# with brunch.io to recompile .js and .css sources.
 config :crossroads_interface, CrossroadsInterface.Endpoint,
   url: [host: "localhost", port: 4000],
   http: [port: 4000],
