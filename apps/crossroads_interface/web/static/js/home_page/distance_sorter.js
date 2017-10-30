@@ -59,6 +59,18 @@ CRDS.DistanceSorter = class DistanceSorter {
     }
   }
 
+  anywhereCheck() {
+    const cardsArray = Array.from(this.cards);
+    const anywhere = cardsArray.find(card => card.dataset.location === 'Anywhere');
+
+    if (this.locationDistances[0].distance > 30) {
+      this.locationsCarousel.carousel.insertBefore(anywhere, this.cards[0]);
+      anywhere.parentNode.insertBefore(anywhere, anywhere.parentNode.firstChild);
+    } else {
+      this.locationsCarousel.carousel.appendChild(anywhere);
+    }
+  }
+
   showError() {
     const errorText = document.createTextNode('We couldn\'t find what you were looking for. Try searching again.');
     const errorElement = document.createElement('div');
@@ -76,15 +88,9 @@ CRDS.DistanceSorter = class DistanceSorter {
 
   clearError() {
     const errors = this.locationsCarousel.carousel.parentNode.getElementsByClassName('error-text');
-    errors[0].parentElement.removeChild(errors[0]);
-    this.searchInput.classList.remove('error');
-  }
-
-  anywhereCheck() {
-    if (this.locationDistances[0].distance > 30) {
-      this.cards[this.cards.length - 1].classList.add('order-first');
-    } else {
-      this.cards[this.cards.length - 1].classList.remove('order-first');
+    if (errors !== null) {
+      errors[0].parentElement.removeChild(errors[0]);
+      this.searchInput.classList.remove('error');
     }
   }
 
