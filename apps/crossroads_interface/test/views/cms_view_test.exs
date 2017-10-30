@@ -21,13 +21,14 @@ defmodule CrossroadsInterface.CmsViewTest do
   test "injects fred form", %{conn: conn} do
     with_mocks([
       {FredContent, [], [get_form_info: fn(_path, @payload) -> @good_fred_form end]},
-      {FredContent, [], [fetch_form: fn("profile", @contact_id, "https://google.com") -> @good_form_response end]},
+      {FredContent, [], [fetch_form: fn("profile", @contact_id, token, "https://google.com") -> @good_form_response end]},
       {FredContent, [], [inject_form: fn(@good_form_response, @payload) -> @injected end]}
     ]) do
+      env = Application.get_env(:crossroads_interface, :cookie_prefix, "")
       conn =
         conn
         |> with_session
-        |> Map.put(:req_cookies, %{"intsessionId" => "1234"})
+        |> Map.put(:req_cookies, %{"#{env}sessionId" => "1234"})
         |> Map.put(:req_cookies, %{"userId" => @contact_id})
       view = CrossroadsInterface.CmsPageView.show_html(conn, @payload)
       assert view == {:safe, @injected}

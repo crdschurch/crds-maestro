@@ -31,10 +31,12 @@ defmodule FredContent do
         |> HTTPoison.get(%{}, hackney: [cookie: ["userId=#{contact_id}","#{@env}sessionId=#{token}"]])
         |> case do
           {:ok, %HTTPoison.Response{body: body}} ->
+            Logger.debug "caching and sending back the body #{inspect body}"
             Cachex.set(@cache, key_name, body, async: true, ttl: @cache_http_ttl)
             body
           {:error, _error} ->
             Cachex.set(@cache, key_name <> "#{contact_id}", "", async: true, ttl: @cache_http_ttl)
+            Logger.debug "caching and sending back and empty response"
             ""
         end
     end
