@@ -42,6 +42,10 @@ CRDS.CardCarousel.prototype.setup = function setup() {
   for (let i = 0; i < cards.length; i += 1) {
     cards[i].classList.add('carousel-cell');
   }
+  this.fixImages();
+};
+
+CRDS.CardCarousel.prototype.fixImages = function fixImages() {
   const images = this.getImages();
   imgixImagesLoaded(images, () => {
     window.dispatchEvent(new Event('resize'));
@@ -89,6 +93,7 @@ CRDS.CardCarousel.prototype.reload = function reload() {
     this.flickity.reloadCells();
     this.flickity.selectCell(0);
   }
+  this.fixImages();
 };
 
 CRDS.CardCarousel.prototype.addStyles = function addStyles() {

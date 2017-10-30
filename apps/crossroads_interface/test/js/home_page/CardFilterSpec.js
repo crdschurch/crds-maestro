@@ -1,6 +1,11 @@
 import { CardFilter } from '../../../web/static/js/home_page/card_filters';
 
+/* global CRDS Mustache */
+
 describe('CardFilter', () => {
+  window.Mustache = {
+    render() {}
+  };
   beforeEach(() => {
     const testDom = `
       <section class="container" ng-non-bindable="">
@@ -165,6 +170,7 @@ describe('CardFilter', () => {
     `;
 
     document.body.innerHTML = testDom;
+    spyOn(CRDS.CardFilter.prototype, 'refreshCarousel').and.returnValue({});
   });
 
   describe('new CardFilter()', () => {
@@ -173,19 +179,11 @@ describe('CardFilter', () => {
 
     const mustacheTemplate = '<button class="btn btn-outline btn-option dropdown-toggle soft-half-sides soft-quarter-ends" type="button" id="dropdownMenu-foobar" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><svg class="icon icon-1 pull-right push-left" viewBox="0 0 256 256"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#chevron-down"></use></svg><span data-current-label>mylabel</span></button><ul class="crds-list dropdown-menu" aria-labelledby="dropdownMenu-foobar"><li><a href="#" data-reset>myreset</a></li><li><a href="#" data-filter-select="southwest-ohio" class="block">My Wonderful Foobar</a></li></ul>';
 
-
     beforeEach(() => {
-      window.Mustache = {
-        render() {}
-      };
       element = document.querySelectorAll('[data-filterable]')[0];
       spyOn(Mustache, 'render').and.returnValue(mustacheTemplate);
       spyOn(CRDS.CardFilter.prototype, 'init').and.callThrough();
       cardFilter = new CRDS.CardFilter(element);
-    });
-
-    afterEach(() => {
-      window = {};
     });
 
     it("has an element className of 'card-deck carousel'", () => {
@@ -240,17 +238,29 @@ describe('CardFilter', () => {
       expect(locationsH3.innerHTML).toContain('div class="dropdown"');
     });
 
+    it('dropdown should contain data-filter-reset-label value at top of list', () => {
+      const args = { label: 'All Locations', reset: 'All Locations', filters: ['southwest-ohio', 'central-ohio', 'northern-ohio', 'northern-kentucky', 'central-kentucky'] };
+      cardFilter = new CRDS.CardFilter(element);
+      expect(Mustache.render).toHaveBeenCalledWith(jasmine.any(String), args);
+    });
+
     describe('#click(e)', () => {
+      const checkBlockStyling = (cardList) => {
+        let result;
+        for (let i = 0; i < cardList.length; i++) {
+          cardList[i].style.display != 'block' ? result = false : result = true;
+        }
+        return result;
+      };
       describe('resets and activates the filter', () => {
         beforeEach(() => {
-          spyOn(CRDS.CardFilter.prototype, 'refreshCarousel').and.returnValue({});
           cardFilter = new CRDS.CardFilter(element);
         });
 
-        it("when filter hasn't changed", () => {
-          const dataFilterSelect = document.querySelectorAll('[data-filter-select]')[0];
+        it('when reset option is selected', () => {
+          const dataFilterSelect = document.querySelectorAll('[data-reset]')[0];
           spyOn(CRDS.CardFilter.prototype, 'resetFilter');
-          spyOn(CRDS.CardFilter.prototype, 'activateFilter');
+          spyOn(CRDS.CardFilter, 'activateFilter');
           const domEvent = {
             preventDefault() {},
             currentTarget: dataFilterSelect
@@ -260,28 +270,19 @@ describe('CardFilter', () => {
           cardFilter.click(domEvent);
 
           expect(CRDS.CardFilter.prototype.resetFilter).toHaveBeenCalled();
-          expect(CRDS.CardFilter.prototype.activateFilter).toHaveBeenCalled();
+          expect(CRDS.CardFilter.activateFilter).toHaveBeenCalled();
         });
       });
 
       describe("when filter isn't the currently selected one and it is defined", () => {
         let dataFilterSelect;
         let domEvent;
-        let checkBlockStyling;
         beforeEach(() => {
-          spyOn(CRDS.CardFilter.prototype, 'refreshCarousel').and.returnValue({});
           cardFilter = new CRDS.CardFilter(element);
           dataFilterSelect = document.querySelectorAll('[data-filter-select]')[0];
           domEvent = {
             preventDefault() {},
             currentTarget: dataFilterSelect
-          };
-          checkBlockStyling = (cardList) => {
-            let result;
-            for (let i = 0; i < cardList.length; i++) {
-              cardList[i].style.display != 'block' ? result = false : result = true;
-            }
-            return result;
           };
         });
 
@@ -306,6 +307,28 @@ describe('CardFilter', () => {
           expect(cardFilter.currentFilter).toEqual(domEvent.currentTarget.dataset.filterSelect);
           expect(allCardsHaveStyleBlock).toEqual(true);
           expect(CRDS.CardFilter.prototype.refreshCarousel).toHaveBeenCalled();
+        });
+      });
+
+      describe('when data-filter-reset-label is set to an existing feature', () => {
+        beforeEach(() => {
+          element = document.querySelectorAll('[data-filter-reset-label]')[0];
+          element.setAttribute('data-filter-reset-label', 'central-ohio');
+        });
+        it('dropdown should contain data-filter-reset-label value only once at top of list', () => {
+          const args = { label: 'All Locations', reset: false, filters: ['central-ohio', 'southwest-ohio', 'northern-ohio', 'northern-kentucky', 'central-kentucky'] };
+          cardFilter = new CRDS.CardFilter(element);
+          expect(Mustache.render).toHaveBeenCalledWith(jasmine.any(String), args);
+        });
+        it('should by default show only features that have a filter matching data-filter-reset-label', () => {
+          cardFilter = new CRDS.CardFilter(element);
+          const filteredCardsList = document.querySelectorAll(':not([data-filter="central-ohio"])');
+          const filteredCardsHaveStyleBlock = checkBlockStyling(filteredCardsList);
+          expect(filteredCardsHaveStyleBlock).toEqual(false);
+          const displayedCardsList = document.querySelectorAll('[data-filter="central-ohio"]');
+          const displayedCardsHaveStyleBlock = checkBlockStyling(displayedCardsList);
+          expect(cardFilter.currentFilter).toEqual('central-ohio');
+          expect(displayedCardsHaveStyleBlock).toEqual(true);
         });
       });
     });
