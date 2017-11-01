@@ -170,24 +170,4 @@ defmodule CrossroadsInterface.CmsPageControllerTest do
       assert html_response(conn, 200)
     end
   end
-
-  #test "replaces div with class of 'fred-content' with form" do
-    #with_mocks([
-      #{CmsClient, [], [get_system_page: fn(page) -> {:ok, 200, fake_system_page(page)} end]},
-      #{CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
-      #{CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]},
-      #{Pages, [], [page_exists?: fn(_path) -> true end]},
-      #{Pages, [], [get_page: fn(_path) -> @get_auth_page_response end]},
-      #{Pages, [], [get_page: fn(_path, _) -> @get_auth_page_response end]},
-      #{ProxyHttp, [], [gateway_get: fn("api/authenticated", _headers) -> {:ok, %HTTPoison.Response{status_code: 200}} end]},
-      #{FredContent, [], [fetch_form: fn(_form_id, _contact_id, _redirect_url) -> @fred_tree end]}
-    #]) do
-      #conn =
-        #conn
-        #|> with_session
-        #|> Map.put(:req_cookies, %{"intsessionId" => "1234"})
-        #|> get "/form/"
-      #assert html_response(conn, 200)
-    #end
-  #end
 end
