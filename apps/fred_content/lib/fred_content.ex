@@ -3,7 +3,6 @@ defmodule FredContent do
   Pulls html content from FRED for use on Crossroads.net
   """
   require Logger
-  require IEx
 
   @env Application.get_env(:fred_content, :cookie_prefix, "")
   @server Application.get_env(:fred_content, :fred_server_endpoint)
@@ -21,23 +20,17 @@ defmodule FredContent do
     @cache
     |> Cachex.get(key_name)
     |> case do
-      {:ok, value} ->
-        Logger.debug("found cached value for #{key_name}")
-        value
+      {:ok, value} -> value
       _no_cache ->
-        Logger.debug("no cached value for #{key_name}")
         form_name
         |> build_url(redirect)
         |> HTTPoison.get(%{}, hackney: [cookie: ["userId=#{contact_id}","#{@env}sessionId=#{token}"], pool: :default])
         |> case do
           {:ok, %HTTPoison.Response{body: body}} ->
-            Logger.debug "caching and sending back the body #{inspect body}"
             Cachex.set(@cache, key_name, body, async: true, ttl: @cache_http_ttl)
             body
           {:error, error} ->
             Cachex.set(@cache, key_name <> "#{contact_id}", "", async: true, ttl: @cache_http_ttl)
-            Logger.debug "caching and sending back and empty response"
-            Logger.debug(inspect(error))
             ""
         end
     end
@@ -108,9 +101,7 @@ defmodule FredContent do
   end
 
   defp transform(el, to_inject) when is_list(el) do
-    Enum.map(el, fn(el1) ->
-      transform(el1, to_inject)
-    end)
+    Enum.map(el, &transform(&1, to_inject))
   end
   defp transform({el, attrs, rest}, to_inject) do
     cond do
