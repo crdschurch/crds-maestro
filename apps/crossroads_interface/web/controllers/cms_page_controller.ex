@@ -22,7 +22,7 @@ defmodule CrossroadsInterface.CmsPageController do
           renderPage(conn, page)
         else
           conn
-          |> redirect(external: "/signin")
+          |> redirect(to: "/signin")
         end
       true ->
         renderPage(conn, page)

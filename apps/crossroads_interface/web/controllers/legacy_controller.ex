@@ -22,7 +22,10 @@ defmodule CrossroadsInterface.LegacyController do
   end
 
   def noRedirect(conn, params) do
-    conn |> renderSite( conn: conn, params: params)
+    IO.puts "LEGACY CONTROLLER"
+    IO.inspect params
+    IO.inspect conn.cookies
+    conn |> renderSite(params)
   end
 
   defp renderSite(conn, params) do
@@ -60,7 +63,7 @@ defmodule CrossroadsInterface.LegacyController do
         "/js/legacy/ang.js",
         "/js/legacy/core.js",
         "/js/legacy/misc.js",
-        "/js/legacy/main.js"        
+        "/js/legacy/main.js"
       ], "css_files": [
        "/css/app.css",
        "/js/legacy/legacy.css"

@@ -28,15 +28,16 @@ defmodule FredContent do
         Logger.debug("no cached value for #{key_name}")
         form_name
         |> build_url(redirect)
-        |> HTTPoison.get(%{}, hackney: [cookie: ["userId=#{contact_id}","#{@env}sessionId=#{token}"]])
+        |> HTTPoison.get(%{}, hackney: [cookie: ["userId=#{contact_id}","#{@env}sessionId=#{token}"], pool: :default])
         |> case do
           {:ok, %HTTPoison.Response{body: body}} ->
             Logger.debug "caching and sending back the body #{inspect body}"
             Cachex.set(@cache, key_name, body, async: true, ttl: @cache_http_ttl)
             body
-          {:error, _error} ->
+          {:error, error} ->
             Cachex.set(@cache, key_name <> "#{contact_id}", "", async: true, ttl: @cache_http_ttl)
             Logger.debug "caching and sending back and empty response"
+            Logger.debug(inspect(error))
             ""
         end
     end
@@ -76,10 +77,11 @@ defmodule FredContent do
   @spec inject_form(nil | String.t, String.t) :: String.t
   def inject_form(nil, payload), do: payload
   def inject_form(form, payload) do
-    payload
+    res = payload
     |> Floki.parse
     |> transform(form)
-    |> Floki.raw_html
+
+    res |> Floki.raw_html
   end
 
   defp build_url(form_name, nil), do: "#{@server}/#{form_name}?partial=true"
@@ -106,11 +108,13 @@ defmodule FredContent do
   end
 
   defp transform(el, to_inject) when is_list(el) do
-    Enum.map(el, &transform(&1, to_inject))
+    Enum.map(el, fn(el1) ->
+      transform(el1, to_inject)
+    end)
   end
   defp transform({el, attrs, rest}, to_inject) do
     cond do
-      is_fred_div?(attrs) -> Floki.parse(to_inject)
+      is_fred_div?(attrs) -> {"div", [], Floki.parse(to_inject)}
       Enum.empty?(rest) -> {el, attrs, rest}
       true -> {el, attrs, transform(rest, to_inject)}
     end

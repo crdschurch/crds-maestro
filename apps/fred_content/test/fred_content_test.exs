@@ -21,7 +21,7 @@ defmodule FredContentTest do
   test "sends cookies in request" do
     with_mock HTTPoison, [get: fn(url, headers, options) -> FakeHttp.get(url, headers, options) end] do
       FredContent.fetch_form("goodForm", "2186211", "token")
-      assert called HTTPoison.get("https://embedint.crossroads.net/fred/goodForm?partial=true", %{}, hackney: [cookie: ["userId=2186211", "testsessionId=token"]])
+      assert called HTTPoison.get("https://embedint.crossroads.net/fred/goodForm?partial=true", %{}, hackney: [cookie: ["userId=2186211", "testsessionId=token"], pool: :default])
     end
   end
 
@@ -29,7 +29,7 @@ defmodule FredContentTest do
     with_mock HTTPoison, [get: fn(url, headers, options) -> FakeHttp.get(url, headers, options) end] do
       content = FredContent.fetch_form("redirectForm", "2186211", "token",  "https://google.com")
       assert content == "<a href='https://google.com'> </a>"
-      assert called HTTPoison.get("https://embedint.crossroads.net/fred/redirectForm?partial=true&redirecturl=https://google.com", %{}, hackney: [cookie: ["userId=2186211", "testsessionId=token"]])
+      assert called HTTPoison.get("https://embedint.crossroads.net/fred/redirectForm?partial=true&redirecturl=https://google.com", %{}, hackney: [cookie: ["userId=2186211", "testsessionId=token"], pool: :default])
     end
   end
 
@@ -88,7 +88,8 @@ defmodule FredContentTest do
     payload = "<div class='fred-form' id='formname'> </div>"
     form = "<div id=\"formio\">hello</div>"
     newpayload = FredContent.inject_form(form, payload)
-    assert form == newpayload
+    expected = "<div>#{form}</div>"
+    assert expected == newpayload
   end
 
   test "nil form does not need injecting" do
@@ -108,7 +109,15 @@ defmodule FredContentTest do
     """
     form = "<div id=\"formio\">hello</div>"
     newpayload = FredContent.inject_form(form, payload)
-    expected = "<div><p><div id=\"formio\">hello</div></p></div>"
+    expected = "<div><p><div><div id=\"formio\">hello</div></div></p></div>"
+    assert expected == newpayload
+  end
+
+  test "form with another node works correctly" do
+    payload = "<p> hello </p> <div class='fred-form' id='formname'> </div>"
+    form = "<script type=\"text/javascript\"></script><div id=\"formio\"> <h1> hello </h1> </div>"
+    newpayload = FredContent.inject_form(form, payload)
+    expected = "<p> hello </p><div><script type=\"text/javascript\"></script><div id=\"formio\"><h1> hello </h1></div></div>"
     assert expected == newpayload
   end
 
