@@ -22,9 +22,6 @@ defmodule CrossroadsInterface.LegacyController do
   end
 
   def noRedirect(conn, params) do
-    IO.puts "LEGACY CONTROLLER"
-    IO.inspect params
-    IO.inspect conn.cookies
     conn |> renderSite(params)
   end
 
