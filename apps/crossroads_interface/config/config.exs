@@ -50,7 +50,7 @@ config :ssl, protocol_version: :"tlsv1.2"
 
 # Configures the endpoint
 config :crossroads_interface, CrossroadsInterface.Endpoint,
-  url: [host: "local.crossroads.net"],
+  url: [host: "localhost"],
   root: Path.dirname(__DIR__),
   secret_key_base: "gBPm7fPmEX1U4BGnY+LuZnU576Vb1WWznKt2HDqFF6JQYFXPUOPPDblnHWnMbnf+",
   render_errors: [accepts: ~w(html json)],
