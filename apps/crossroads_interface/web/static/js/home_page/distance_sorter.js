@@ -26,6 +26,8 @@ CRDS.DistanceSorter = class DistanceSorter {
 
   handleFormSubmit(event) {
     event.preventDefault();
+    let formSubmit = this.searchForm.getElementsByTagName('button')[0];
+    formSubmit.disabled = true;
     this.getDistance()
       .done((locationDistances) => {
         for (let i = 0; i < locationDistances.length; i += 1) {
@@ -36,6 +38,7 @@ CRDS.DistanceSorter = class DistanceSorter {
         }
         this.createDataAttributes();
         this.appendDistances();
+        formSubmit.disabled = false;
         this.locationsCarousel.sortBy('distance');
         this.anywhereCheck();
         this.clearError();
@@ -43,6 +46,7 @@ CRDS.DistanceSorter = class DistanceSorter {
       .fail((xhr, ajaxOptions, thrownError) => {
         console.log(thrownError);
         this.showError();
+        formSubmit.disabled = false;
       });
   }
 
