@@ -47,6 +47,7 @@ CRDS.DistanceSorter = class DistanceSorter {
         console.log(thrownError);
         this.showError();
         formSubmit.disabled = false;
+        this.removeLabels();
       });
   }
 
@@ -113,6 +114,13 @@ CRDS.DistanceSorter = class DistanceSorter {
           this.cards[i].replaceChild(span, oldSpan[0]);
         }
       }
+    }
+  }
+
+  removeLabels() {
+    for (let i = 0; i < this.cards.length; i += 1) {
+      const distanceLabel = this.cards[i].getElementsByClassName('distance', 'label')[0];
+      distanceLabel.parentNode.removeChild(distanceLabel);
     }
   }
 };
