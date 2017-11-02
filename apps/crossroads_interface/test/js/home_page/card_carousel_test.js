@@ -5,22 +5,7 @@ import CardCarousel from '../../../web/static/js/home_page/card_carousel';
 window.Flickity = function (id, options) {};
 
 describe('CardCarousel', () => {
-  const cardCarouselDom = `<div id="locations-search" data-automation-id="locations-search" class="clearfix">
-      <h3 class="collection-header">locations</h3>
-      <form class="searchbar" id="locations-address-input">
-        <div class="input-group">
-          <input class="form-control" placeholder="Search by address or zip code" type="text">
-          <span class="input-group-btn">
-            <button class="btn btn-secondary" type="submit">
-              <svg class="icon icon-1" viewBox="0 0 256 256">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#search"></use>
-              </svg>
-            </button>
-          </span>
-        </div>
-      </form>
-    </div>
-    <div class="card-deck carousel" data-carousel="mobile-scroll" data-carousel-id="carousel-a1kj76" data-filter-reset-label="All Locations">
+  const cardCarouselDom = `<div class="card-deck carousel" data-carousel="mobile-scroll" data-carousel-id="carousel-a1kj76" data-filter-reset-label="All Locations">
     <div class="feature-cards card-deck--expanded-layout" data-carousel="mobile-scroll" id="section-locations">
       <div class="card" data-distance="112.4" data-filter="Central Kentucky" data-location="Andover" id="distance10location1" style="order: 10;">
         <a class="block" href="/andover/"><img alt="Andover" class="card-img-top imgix-fluid" data-src="//crds-cms-uploads.imgix.net/Uploads/crossroads-andover.jpg?h=200&amp;max-h=200w=300&amp;&amp;crop=top&amp;fit=clamp&amp;auto=format" src="http://crds-cms-uploads.imgix.net/Uploads/crossroads-andover.jpg?auto=format&amp;crop=top&amp;fit=clamp&amp;ixjsv=2.2.3&amp;w=170"></a>

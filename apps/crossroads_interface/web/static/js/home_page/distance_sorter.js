@@ -28,6 +28,8 @@ CRDS.DistanceSorter = class DistanceSorter {
 
   handleFormSubmit(event) {
     event.preventDefault();
+    let formSubmit = this.searchForm.getElementsByTagName('button')[0];
+    formSubmit.disabled = true;
     this.getDistance()
       .done((locationDistances) => {
         for (let i = 0; i < locationDistances.length; i += 1) {
@@ -41,10 +43,13 @@ CRDS.DistanceSorter = class DistanceSorter {
         this.locationsCarousel.sortBy('distance');
         this.anywhereCheck();
         this.clearError();
+        formSubmit.disabled = false;
       })
       .fail((xhr, ajaxOptions, thrownError) => {
         console.log(thrownError);
         this.showError();
+        formSubmit.disabled = false;
+        this.removeLabels();
       });
   }
 
@@ -110,6 +115,13 @@ CRDS.DistanceSorter = class DistanceSorter {
     if (errors !== null && errors.length > 0) {
       errors[0].parentElement.removeChild(errors[0]);
       this.searchInput.classList.remove('error');
+    }
+  }
+
+  removeLabels() {
+    for (let i = 0; i < this.cards.length; i += 1) {
+      const distanceLabel = this.cards[i].getElementsByClassName('distance', 'label')[0];
+      distanceLabel.parentNode.removeChild(distanceLabel);
     }
   }
 };
