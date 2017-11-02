@@ -38,10 +38,10 @@ CRDS.DistanceSorter = class DistanceSorter {
         }
         this.createDataAttributes();
         this.appendDistances();
-        formSubmit.disabled = false;
         this.locationsCarousel.sortBy('distance');
         this.anywhereCheck();
         this.clearError();
+        formSubmit.disabled = false;
       })
       .fail((xhr, ajaxOptions, thrownError) => {
         console.log(thrownError);
@@ -61,6 +61,24 @@ CRDS.DistanceSorter = class DistanceSorter {
     for (let i = 0; i < this.cards.length; i += 1) {
       const location = this.cards[i].getElementsByClassName('card-title')[0].children[0].textContent;
       this.cards[i].dataset.location = location;
+    }
+  }
+
+  appendDistances() {
+    for (let i = 0; i < this.cards.length; i += 1) {
+      const locationMatch = this.locationDistances.find(obj => obj.location === this.cards[i].dataset.location);
+      if (locationMatch !== undefined) {
+        this.cards[i].dataset.distance = locationMatch.distance;
+        const span = document.createElement('span');
+        span.classList.add('distance', 'label', 'font-family-base');
+        span.append(`${locationMatch.distance} miles`);
+        const oldSpan = this.cards[i].getElementsByClassName('distance');
+        if (oldSpan.length === 0) {
+          this.cards[i].insertBefore(span, this.cards[i].children[0]);
+        } else {
+          this.cards[i].replaceChild(span, oldSpan[0]);
+        }
+      }
     }
   }
 
@@ -96,24 +114,6 @@ CRDS.DistanceSorter = class DistanceSorter {
     if (errors !== null) {
       errors[0].parentElement.removeChild(errors[0]);
       this.searchInput.classList.remove('error');
-    }
-  }
-
-  appendDistances() {
-    for (let i = 0; i < this.cards.length; i += 1) {
-      const locationMatch = this.locationDistances.find(obj => obj.location === this.cards[i].dataset.location);
-      if (locationMatch !== undefined) {
-        this.cards[i].dataset.distance = locationMatch.distance;
-        const span = document.createElement('span');
-        span.classList.add('distance', 'label', 'font-family-base');
-        span.append(`${locationMatch.distance} miles`);
-        const oldSpan = this.cards[i].getElementsByClassName('distance');
-        if (oldSpan.length === 0) {
-          this.cards[i].insertBefore(span, this.cards[i].children[0]);
-        } else {
-          this.cards[i].replaceChild(span, oldSpan[0]);
-        }
-      }
     }
   }
 
