@@ -9,6 +9,7 @@ CRDS.DistanceSorter = class DistanceSorter {
     this.searchForm = undefined;
     this.searchInput = undefined;
     this.cards = undefined;
+    this.locationFinder = undefined;
     this.init();
   }
 
@@ -18,6 +19,7 @@ CRDS.DistanceSorter = class DistanceSorter {
     this.searchInput = this.searchForm.getElementsByTagName('input')[0];
     this.locationsCarousel = DistanceSorter.getLocationsCarousel();
     this.cards = this.locationsCarousel.cards;
+    this.locationFinder = new CRDS.LocationFinder();
   }
 
   static getLocationsCarousel() {
@@ -48,8 +50,7 @@ CRDS.DistanceSorter = class DistanceSorter {
 
   getDistance() {
     this.locationDistances = [];
-    const locationFinder = new CRDS.LocationFinder();
-    return locationFinder.getLocationDistances(this.searchInput.value);
+    return this.locationFinder.getLocationDistances(this.searchInput.value);
   }
 
   createDataAttributes() {
@@ -83,7 +84,7 @@ CRDS.DistanceSorter = class DistanceSorter {
 
     if (this.locationDistances[0].distance > 30) {
       this.locationsCarousel.carousel.insertBefore(anywhere, this.cards[0]);
-      anywhere.parentNode.insertBefore(anywhere, anywhere.parentNode.firstChild);
+      anywhere.parentNode.insertBefore(anywhere, anywhere.parentNode.firstElementChild);
     } else {
       this.locationsCarousel.carousel.appendChild(anywhere);
     }
@@ -106,7 +107,7 @@ CRDS.DistanceSorter = class DistanceSorter {
 
   clearError() {
     const errors = this.locationsCarousel.carousel.parentNode.getElementsByClassName('error-text');
-    if (errors !== null) {
+    if (errors !== null && errors.length > 0) {
       errors[0].parentElement.removeChild(errors[0]);
       this.searchInput.classList.remove('error');
     }
