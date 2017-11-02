@@ -116,6 +116,7 @@ describe('Countdown', () => {
   <div data-stream-upcoming='hide'>Not upcoming</div>
   <div data-stream-off='show'>Off</div>
   <div data-stream-off='hide'>Not off</div>
+  <div data-automation-id="offState"></div>
   <section class="container crds-countdown" id="crossroads_countdown">
   <div class="time countdown" data-stream-live="hide"><span class="countdown-header">Join the live stream in...</span>
   <ul class="countdown-timer list-inline">
@@ -193,6 +194,24 @@ describe('Countdown', () => {
     expect($("[data-stream-upcoming='hide']").hasClass('hide')).toBe(false);
     expect($("[data-stream-off='show']").hasClass('hide')).toBe(false);
     expect($("[data-stream-off='hide']").hasClass('hide')).toBe(true);
+    clearInterval(countdown.intervalId);
+  });
+
+  it('should show off stream elements if more than 0 days, less than X hours', () => {
+    // load 3 days, 10 min before broadcast[2] 
+    const startDate = CRDS.Countdown.convertDate(broadcasts[2].start);
+    const baseTime = new Date(startDate.getTime() - (3 * 24 * 60 * 60 * 1000) - (10 * 60 * 1000));
+    jasmine.clock().mockDate(baseTime);
+    spyOn($, 'ajax').and.returnValue($.Deferred().resolve(upcomingResponseOff).promise());
+    const countdown = new CRDS.Countdown();
+    expect($("[data-stream-live='show']").hasClass('hide')).toBe(true);
+    expect($("[data-stream-live='hide']").hasClass('hide')).toBe(false);
+    expect($("[data-stream-upcoming='show']").hasClass('hide')).toBe(true);
+    expect($("[data-stream-upcoming='hide']").hasClass('hide')).toBe(false);
+    expect($("[data-stream-off='show']").hasClass('hide')).toBe(false);
+    expect($("[data-stream-off='hide']").hasClass('hide')).toBe(true);
+    const dateHtml = '<h4 class="font-size-base">Next Live Stream</h4><h3>Saturday at 4:30pm EST</h3>';
+    expect($("[data-automation-id='offState']").html()).toContain(dateHtml);
     clearInterval(countdown.intervalId);
   });
 

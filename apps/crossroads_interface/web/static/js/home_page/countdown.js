@@ -17,6 +17,8 @@ CRDS.Countdown = class Countdown {
     this.streamStatus = undefined;
 
     this.UPCOMING_DURATION = 15; // hours
+    this.STREAM_OFFSET = 10; // minutes
+    this.MS_PER_MINUTE = 60000; // milliseconds
 
     // Streamspot url
     this.streamspotUrl = 'https://api.streamspot.com';
@@ -62,8 +64,48 @@ CRDS.Countdown = class Countdown {
         $("[data-stream-off='hide']").addClass('hide');
         $("[data-stream-upcoming='show']").addClass('hide');
         $("[data-stream-upcoming='hide']").removeClass('hide');
+
+        this.appendNextStreamDate();
       }
     }
+  }
+
+  appendNextStreamDate() {
+    const startDateTime = Countdown.convertDate(this.nextEvent.start);
+    const offsetStartDateTime = this.addOffsetTime(startDateTime);
+    const startDay = Countdown.getDayOfWeek(offsetStartDateTime);
+    const startTime = Countdown.get12HourTime(offsetStartDateTime);
+    const timeString = `${startDay} at ${startTime} EST`;
+    $("[data-automation-id='offState']").append(
+      $('<h4 class="font-size-base">').text('Next Live Stream')
+    ).append(
+      $('<h3>').text(timeString)
+    );
+  }
+
+  addOffsetTime(time) {
+    return new Date(time.getTime() + (this.STREAM_OFFSET * this.MS_PER_MINUTE));
+  }
+
+  static getDayOfWeek(date) {
+    // date comes in as YYYY-mm-dd format
+    const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday',
+      'Thursday', 'Friday', 'Saturday'];
+    const dayOfWeek = daysOfWeek[date.getDay()];
+    return dayOfWeek;
+  }
+
+  static get12HourTime(date) {
+    let hours = date.getHours();
+    const minutes = (`0${date.getMinutes()}`).slice(-2);
+    let ampm = 'am';
+
+    if (hours > 12) {
+      hours -= 12;
+      ampm = 'pm';
+    }
+
+    return `${hours}:${minutes}${ampm}`;
   }
 
   getStreamspotStatus() {
@@ -149,7 +191,8 @@ CRDS.Countdown = class Countdown {
     $('.crds-countdown .hours').html(Countdown.padZero(this.hours));
     $('.crds-countdown .minutes').html(Countdown.padZero(this.minutes));
     $('.crds-countdown .seconds').html(Countdown.padZero(this.seconds));
-    if (this.hours < this.UPCOMING_DURATION && this.streamStatus !== 'upcoming') {
+    const remainingSeconds = (this.seconds) + (this.minutes * 60) + (this.hours * 3600) + (this.days * 86400);
+    if (remainingSeconds < this.UPCOMING_DURATION * 3600 && this.streamStatus !== 'upcoming') {
       this.setStreamStatus('upcoming');
     }
     if (this.seconds === 0 && this.minutes === 0 && this.hours === 0 && this.days === 0) {
