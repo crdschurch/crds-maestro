@@ -46,6 +46,7 @@
         var env = window.env || {};
         env.streamspotId = "<%= Application.get_env(:crossroads_interface, :streamspot_id) %>";
         env.streamspotKey = "<%= Application.get_env(:crossroads_interface, :streamspot_key) %>";
+        env.gatewayServerEndpoint = "<%= Application.get_env(:crossroads_interface, :gateway_server_endpoint) %>";
     </script>
     <script src="<%= static_path(@conn, "/js/vendor.js ") %>"></script>
     <script src="<%= static_path(@conn, "/js/app.js ") %>"></script>
