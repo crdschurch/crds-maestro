@@ -72,7 +72,7 @@ CRDS.DistanceSorter = class DistanceSorter {
         this.cards[i].dataset.distance = locationMatch.distance;
         const span = document.createElement('span');
         span.classList.add('distance', 'label', 'font-family-base');
-        span.append(`${locationMatch.distance} miles`);
+        span.textContent = `${locationMatch.distance} miles`;
         const oldSpan = this.cards[i].getElementsByClassName('distance');
         if (oldSpan.length === 0) {
           this.cards[i].insertBefore(span, this.cards[i].children[0]);
