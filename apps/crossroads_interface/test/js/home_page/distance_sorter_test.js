@@ -2,7 +2,7 @@ import DistanceSorter from '../../../web/static/js/home_page/distance_sorter';
 
 /* global CRDS */
 
-fdescribe('DistanceSorter', () => {
+describe('DistanceSorter', () => {
   const cardCarouselDom = `<div id="locations-search" data-automation-id="locations-search" class="clearfix">
       <h3 class="collection-header">locations</h3>
       <form class="searchbar" id="locations-address-input">
@@ -64,7 +64,7 @@ fdescribe('DistanceSorter', () => {
   let distanceSorter;
   let carousels;
 
-  const apiResponse = [
+  const apiResponse1 = [
     {
       origin: '45243',
       location: {
@@ -76,7 +76,7 @@ fdescribe('DistanceSorter', () => {
         zip: '40509-9440',
         imageUrl: '//crds-cms-uploads.imgix.net/content/images/andover-sq.jpg'
       },
-      distance: 50
+      distance: 40
     },
     {
       origin: '45243',
@@ -89,9 +89,45 @@ fdescribe('DistanceSorter', () => {
         zip: '43054',
         imageUrl: null
       },
-      distance: 40
+      distance: 50
     },
   ];
+
+  const apiResponse2 = [
+    {
+      origin: '45243',
+      location: {
+        locationId: 19,
+        location: 'Andover',
+        address: '4128 TODDS RD',
+        city: 'LEXINGTON',
+        state: 'KY',
+        zip: '40509-9440',
+        imageUrl: '//crds-cms-uploads.imgix.net/content/images/andover-sq.jpg'
+      },
+      distance: 85
+    },
+    {
+      origin: '45243',
+      location: {
+        locationId: 21,
+        location: 'Columbus',
+        address: '150 West Main Street',
+        city: 'New Albany',
+        state: 'OH',
+        zip: '43054',
+        imageUrl: null
+      },
+      distance: 60
+    },
+  ];
+
+  const errorResponse = {
+    message: 'LocationController: GET locations proximities -- ',
+    errors: [
+      "Exception of type 'crds_angular.Exceptions.InvalidAddressException' was thrown."
+    ]
+  };
 
   beforeEach(() => {
     document.body.innerHTML = cardCarouselDom;
@@ -101,12 +137,17 @@ fdescribe('DistanceSorter', () => {
     distanceSorter = new CRDS.DistanceSorter();
   });
 
+  afterEach(() => {
+    document.body.innerHTML = '';
+    CRDS._instances = {};
+  });
+
   it('gets the user input from the form', () => {
     expect(distanceSorter.searchInput.value).toEqual('45243');
   });
 
   it('calls the API backend when the submit event listener is triggered', () => {
-    spyOn(distanceSorter.locationFinder, 'getLocationDistances').and.returnValue($.Deferred().resolve(apiResponse).promise());
+    spyOn(distanceSorter.locationFinder, 'getLocationDistances').and.returnValue($.Deferred().resolve(apiResponse1).promise());
     distanceSorter.handleFormSubmit({ preventDefault() { return {}; } });
     expect(distanceSorter.locationFinder.getLocationDistances).toHaveBeenCalledWith('45243');
   });
@@ -116,21 +157,52 @@ fdescribe('DistanceSorter', () => {
   });
 
   it('displays the Anywhere location card first when user is greater than 30 miles from nearest location', () => {
-    spyOn(distanceSorter, 'getDistance').and.returnValue($.Deferred().resolve(apiResponse).promise());
+    spyOn(distanceSorter, 'getDistance').and.returnValue($.Deferred().resolve(apiResponse1).promise());
     distanceSorter.handleFormSubmit({ preventDefault() { return {}; } });
     const firstCard = document.getElementsByClassName('card')[0];
     expect(firstCard.innerText).toContain('Anywhere');
   });
 
   describe('displays error messages when a user submits invalid input', () => {
-    it('and if an old error is not already displayed, the error message appears before the location carousel');
-    it('and if an olde error is already displayed, the new error replaces the old');
-    it('and if a subsequent valid search is conducted, the error message gets cleared from the DOM');
+    it('and if an old error is not already displayed, the error message appears before the location carousel', () => {
+      spyOn(distanceSorter.locationFinder, 'getLocationDistances').and.returnValue($.Deferred().reject(errorResponse).promise());
+      distanceSorter.handleFormSubmit({ preventDefault() { return {}; } });
+      expect(document.body.innerText).toContain('We couldn\'t find what you were looking for. Try searching again.');
+    });
+
+    it('and if an older error is already displayed, the new error replaces the old', () => {
+      spyOn(distanceSorter.locationFinder, 'getLocationDistances').and.returnValues($.Deferred().reject(errorResponse).promise(), $.Deferred().reject(errorResponse).promise());
+      distanceSorter.handleFormSubmit({ preventDefault() { return {}; } });
+      distanceSorter.handleFormSubmit({ preventDefault() { return {}; } });
+      const errorMessages = document.getElementsByClassName('error-text alert alert-danger');
+      expect(errorMessages.length).toEqual(1);
+    });
+
+    it('if a subsequent valid search is conducted, the error message gets cleared from the DOM', () => {
+      spyOn(distanceSorter.locationFinder, 'getLocationDistances').and.returnValues($.Deferred().reject(errorResponse).promise(), $.Deferred().resolve(apiResponse1).promise());
+      distanceSorter.handleFormSubmit({ preventDefault() { return {}; } });
+      distanceSorter.handleFormSubmit({ preventDefault() { return {}; } });
+      const errorMessages = document.getElementsByClassName('error-text alert alert-danger');
+      expect(errorMessages.length).toEqual(0);
+    });
   });
 
   describe('displays distances when a user submits input', () => {
-    it('if a match is found between the API locationDistance data and a DOM location card');
-    it('and if it is an initial submission, adds the distances to the DOM');
-    it('and if it is a subsequent submission, replaces the existing distances with new ones');
+    it('if a match is found between the API locationDistance data and a DOM location card', () => {
+      spyOn(distanceSorter.locationFinder, 'getLocationDistances').and.returnValue($.Deferred().resolve(apiResponse1).promise());
+      distanceSorter.handleFormSubmit({ preventDefault() { return {}; } });
+      const labels = document.getElementsByClassName('distance label');
+      expect(labels.length).toEqual(2);
+      expect(labels[0].innerText).toEqual('40 miles');
+    });
+
+    it('and if it is a subsequent successful submission, replaces the existing distances with new ones', () => {
+      spyOn(distanceSorter.locationFinder, 'getLocationDistances').and.returnValues($.Deferred().resolve(apiResponse1).promise(), $.Deferred().resolve(apiResponse2).promise());
+      distanceSorter.handleFormSubmit({ preventDefault() { return {}; } });
+      distanceSorter.handleFormSubmit({ preventDefault() { return {}; } });
+      const labels = document.getElementsByClassName('distance label');
+      expect(labels.length).toEqual(2);
+      expect(labels[0].innerText).toEqual('60 miles');
+    });
   });
 });

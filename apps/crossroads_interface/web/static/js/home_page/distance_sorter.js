@@ -119,9 +119,9 @@ CRDS.DistanceSorter = class DistanceSorter {
   }
 
   removeLabels() {
-    for (let i = 0; i < this.cards.length; i += 1) {
-      const distanceLabel = this.cards[i].getElementsByClassName('distance', 'label')[0];
-      distanceLabel.parentNode.removeChild(distanceLabel);
+    const distanceLabels = this.locationsCarousel.carousel.getElementsByClassName('distance', 'label');
+    while (distanceLabels[0]) {
+      distanceLabels[0].parentNode.removeChild(distanceLabels[0]);
     }
   }
 };
