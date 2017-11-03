@@ -4,7 +4,7 @@ config :crossroads_content,
   cms_server_endpoint: System.get_env("CRDS_CMS_SERVER_ENDPOINT") || "https://contentint.crossroads.net/"
 
 config :fred_content,
-  fred_server_endpoint: "http://local.crossroads.net:6060",
+  fred_server_endpoint: System.get_env("CRDS_FRED_ENDPOINT") || "http://local.crossroads.net:6060",
   http_cache_ttl: :timer.seconds(60),
   formname_cache_ttl: :timer.seconds(10)
 
