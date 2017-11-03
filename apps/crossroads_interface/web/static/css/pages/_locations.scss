@@ -12,14 +12,5 @@
             padding: .5rem;
             width: 50%;
         }
-
-        .form-control {
-            // reset bad styling => remove when fixed
-            // update to crds-styles v1.1.0 didn't seem to work
-            width: 100%;
-            position: relative;
-            height: 42px;
-            top: 0;
-        }
     }
 }
