@@ -39,10 +39,11 @@ defmodule CrossroadsInterface.CmsViewTest do
     with_mocks([
       {FredContent, [], [get_form_info: fn(_path, @payload) -> nil end]},
     ]) do
+      env = Application.get_env(:crossroads_interface, :cookie_prefix, "")
       conn =
         conn
         |> with_session
-        |> Map.put(:req_cookies, %{"intsessionId" => "1234"})
+        |> Map.put(:req_cookies, %{"#{env}sessionId" => "1234"})
         |> Map.put(:req_cookies, %{"userId" => @contact_id})
       view = CrossroadsInterface.CmsPageView.show_html(conn, @payload)
       assert view == {:safe, @payload}
