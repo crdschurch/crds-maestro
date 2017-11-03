@@ -96,12 +96,12 @@ CRDS.DistanceSorter = class DistanceSorter {
   }
 
   showError() {
-    const errorText = document.createTextNode('We couldn\'t find what you were looking for. Try searching again.');
+    const errorText = 'We couldn\'t find what you were looking for. Try searching again.';
     const errorElement = document.createElement('div');
     const parent = this.locationsCarousel.carousel.parentElement;
     this.searchInput.classList.add('error');
     errorElement.classList.add('error-text', 'alert', 'alert-danger');
-    errorElement.append(errorText);
+    errorElement.textContent = errorText;
     const oldError = parent.getElementsByClassName('error-text');
     if (oldError.length === 0) {
       parent.insertBefore(errorElement, this.locationsCarousel.carousel);
