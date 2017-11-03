@@ -72,7 +72,7 @@ CRDS.DistanceSorter = class DistanceSorter {
         this.cards[i].dataset.distance = locationMatch.distance;
         const span = document.createElement('span');
         span.classList.add('distance', 'label', 'font-family-base');
-        span.append(`${locationMatch.distance} miles`);
+        span.textContent = `${locationMatch.distance} miles`;
         const oldSpan = this.cards[i].getElementsByClassName('distance');
         if (oldSpan.length === 0) {
           this.cards[i].insertBefore(span, this.cards[i].children[0]);
@@ -96,12 +96,12 @@ CRDS.DistanceSorter = class DistanceSorter {
   }
 
   showError() {
-    const errorText = document.createTextNode('We couldn\'t find what you were looking for. Try searching again.');
+    const errorText = 'We couldn\'t find what you were looking for. Try searching again.';
     const errorElement = document.createElement('div');
     const parent = this.locationsCarousel.carousel.parentElement;
     this.searchInput.classList.add('error');
     errorElement.classList.add('error-text', 'alert', 'alert-danger');
-    errorElement.append(errorText);
+    errorElement.textContent = errorText;
     const oldError = parent.getElementsByClassName('error-text');
     if (oldError.length === 0) {
       parent.insertBefore(errorElement, this.locationsCarousel.carousel);
