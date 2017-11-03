@@ -1,6 +1,5 @@
 defmodule CrossroadsInterface.Plug.RedirectCookie do
   import Plug.Conn
-  require IEx
 
   def call(conn, url) do
     cookie_options = get_cookie_options()
