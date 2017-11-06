@@ -210,7 +210,7 @@ describe('Countdown', () => {
     expect($("[data-stream-upcoming='hide']").hasClass('hide')).toBe(false);
     expect($("[data-stream-off='show']").hasClass('hide')).toBe(false);
     expect($("[data-stream-off='hide']").hasClass('hide')).toBe(true);
-    const dateHtml = '<h4 class="font-size-base">Next Live Stream</h4><h3>Saturday at 4:30pm EST</h3>';
+    const dateHtml = '<h4 class="font-size-base">Next Live Stream</h4><h3>Saturday at 5:30pm EST</h3>';
     expect($("[data-automation-id='offState']").html()).toContain(dateHtml);
     clearInterval(countdown.intervalId);
   });
