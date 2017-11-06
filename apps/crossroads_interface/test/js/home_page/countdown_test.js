@@ -13,7 +13,7 @@ describe('Countdown', () => {
       title: 'Sunday 8:00pm',
       type: 'V',
       skip: 0,
-      'private': 0,
+      private: 0,
       exclude: 0,
       facebookLiveAccountTitle: null,
       vimeo: 0,
@@ -29,7 +29,7 @@ describe('Countdown', () => {
       title: 'Sunday 10:00pm',
       type: 'V',
       skip: 0,
-      'private': 0,
+      private: 0,
       exclude: 0,
       facebookLiveAccountTitle: null,
       vimeo: 0
@@ -43,7 +43,7 @@ describe('Countdown', () => {
       title: 'Saturday 4:30pm',
       type: 'R',
       skip: 0,
-      'private': 0,
+      private: 0,
       exclude: 0,
       facebookLiveAccountTitle: null,
       vimeo: 0
@@ -57,11 +57,26 @@ describe('Countdown', () => {
       title: 'Saturday 6:15pm',
       type: 'R',
       skip: 0,
-      'private': 0,
+      private: 0,
+      exclude: 0,
+      facebookLiveAccountTitle: null,
+      vimeo: 0
+    },
+    {
+      eventId: 1056215,
+      scheduleId: 2392,
+      startTime: 'Saturday 11/14/17 06:05:00 PM',
+      start: '2017-11-14 18:05:00',
+      end: '2017-11-14 19:23:00',
+      title: 'Saturday 6:15pm',
+      type: 'R',
+      skip: 0,
+      private: 0,
       exclude: 0,
       facebookLiveAccountTitle: null,
       vimeo: 0
     }
+
   ];
 
   // response from call to upcomingPlusCurrent when broadcasting, 
@@ -95,6 +110,18 @@ describe('Countdown', () => {
       broadcasts,
       current: null,
       next: broadcasts[1]
+    }
+  };
+
+  // response from call to upcomingPlusCurrent when not broadcasting, 
+  // next event soon
+  const upcomingResponseNoDST =
+  {
+    success: true,
+    data: {
+      broadcasts,
+      current: null,
+      next: broadcasts[4]
     }
   };
 
@@ -287,6 +314,35 @@ describe('Countdown', () => {
     expect($("[data-stream-off='show']").hasClass('hide')).toBe(true);
     expect($("[data-stream-off='hide']").hasClass('hide')).toBe(false);
     clearTimeout(countdown.timeoutId);
+    clearInterval(countdown.intervalId);
+  });
+
+  it('should show correct countdown time if DST in effect', () => {
+    // load 10 minutes before broadcast[1] start (at 2017-10-08 21:50:00)
+    const startDate = CRDS.Countdown.convertDate(broadcasts[1].start);
+    const baseTime = new Date(startDate.getTime() - (10 * 60 * 1000));
+    jasmine.clock().mockDate(baseTime);
+    spyOn($, 'ajax').and.returnValue($.Deferred().resolve(upcomingResponseUpcoming).promise());
+    const countdown = new CRDS.Countdown();
+    expect($('.crds-countdown .days').text()).toBe('00');
+    expect($('.crds-countdown .hours').text()).toBe('00');
+    expect($('.crds-countdown .minutes').text()).toBe('10');
+    expect($('.crds-countdown .seconds').text()).toBe('00');
+    clearInterval(countdown.intervalId);
+  });
+
+  it('should show correct countdown time if DST not in effect', () => {
+    // load 10 minutes before broadcast[4] start (at 2017-11-14 18:05:00)
+    const startDate = CRDS.Countdown.convertDate(broadcasts[4].start);
+    const baseTime = new Date(startDate.getTime() - (10 * 60 * 1000));
+    jasmine.clock().mockDate(baseTime);
+    spyOn($, 'ajax').and.returnValue($.Deferred().resolve(upcomingResponseNoDST).promise());
+    const countdown = new CRDS.Countdown();
+    expect(countdown.hours).toBe(0);
+    expect($('.crds-countdown .days').text()).toBe('00');
+    expect($('.crds-countdown .hours').text()).toBe('00');
+    expect($('.crds-countdown .minutes').text()).toBe('10');
+    expect($('.crds-countdown .seconds').text()).toBe('00');
     clearInterval(countdown.intervalId);
   });
 });
