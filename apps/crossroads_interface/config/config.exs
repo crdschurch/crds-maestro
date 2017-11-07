@@ -30,6 +30,12 @@ config :crossroads_content,
   cms_cache_ttl: 10 * 60 * 1000,
   cms_timeout: 10 * 60 * 1000
 
+config :fred_content,
+  fred_server_endpoint: System.get_env("CRDS_FRED_ENDPOINT"),
+  http_cache_ttl: :timer.seconds(60),
+  formname_cache_ttl: :timer.seconds(10),
+  cookie_prefix: System.get_env("CRDS_ENV")
+
 config :crossroads_interface,
   image_client_endpoint: "#{System.get_env("CRDS_GATEWAY_CLIENT_ENDPOINT")}api/image/profile/",
   cookie_prefix: System.get_env("CRDS_ENV"),

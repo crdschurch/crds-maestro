@@ -26,7 +26,7 @@ defmodule CrossroadsInterface.Mixfile do
         applications: [:phoenix, :phoenix_html, :phoenix_html_sanitizer, :logger_file_backend, :cowboy, :logger, :gettext, :ssl]]
     else
       [mod: {CrossroadsInterface, []},
-        applications: [:phoenix, :phoenix_html, :phoenix_html_sanitizer, :logger_file_backend, :cowboy, :logger, :gettext, :crossroads_content, :ssl]]
+        applications: [:phoenix, :phoenix_html, :phoenix_html_sanitizer, :logger_file_backend, :cowboy, :logger, :gettext, :crossroads_content, :ssl, :fred_content]]
     end
   end
 
@@ -36,12 +36,16 @@ defmodule CrossroadsInterface.Mixfile do
   defp deps do
     [{:phoenix, "~> 1.1.3"},
      {:phoenix_html, "~> 2.3"},
+     {:plug, "~> 1.3", override: true},
+     {:httpoison, "~> 0.13", override: true},
+     {:mochiweb, "~> 2.15", override: true},
      {:phoenix_html_sanitizer, "~> 1.0.0"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:logger_file_backend, "0.0.9"},
      {:gettext, "~> 0.9"},
-     {:cowboy, "~> 1.0"},     
+     {:cowboy, "~> 1.0"},
      {:crossroads_content, in_umbrella: true},
+     {:fred_content, in_umbrella: true},
      {:mix_test_watch, "~> 0.2", only: :dev},
      {:mock, "~> 0.3.1", only: :test}]
   end
