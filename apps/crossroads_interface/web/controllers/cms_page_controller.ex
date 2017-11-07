@@ -1,47 +1,31 @@
 defmodule CrossroadsInterface.CmsPageController do
+  require IEx
   use CrossroadsInterface.Web, :controller
   alias CrossroadsContent.Pages
-  alias CrossroadsInterface.Plug.RedirectCookie
-  alias CrossroadsInterface.Plug.Authorized
+
   plug CrossroadsInterface.Plug.PutMetaTemplate, "meta_tags.html"
   plug CrossroadsInterface.Plug.Meta
   plug CrossroadsInterface.Plug.ContentBlocks
 
   def index(conn, _) do
     page = conn.assigns[:page]
+
     cond do
       page["redirectUrl"] != nil ->
         conn
-        |> redirect(external: page["redirectUrl"])
-      page["canViewType"] == "LoggedInUsers" ->
-        conn =
-          conn
-          |> Authorized.call([])
-          |> RedirectCookie.call("content", "{\"link\":\"#{conn.assigns[:path]}\"}")
-        if conn.assigns.authorized do
-          renderPage(conn, page)
-        else
-          conn
-          |> redirect(to: "/signin")
-        end
+          |> redirect(external: page["redirectUrl"])
       true ->
-        renderPage(conn, page)
+        crds_styles = getStylesClassFromPage(page)
+        body_class = getBodyClassFromPage(page)
+        layout = getLayoutFromPage(page)
+        conn
+          |> CrossroadsInterface.Plug.RedirectCookie.call("content", "{\"link\":\"#{conn.assigns[:path]}\"}")
+          |> put_layout(layout)
+          |> assign(:body_class, body_class)
+          |> assign(:crds_styles, crds_styles)
+          |> render(CrossroadsInterface.CmsPageView, "index.html", %{ payload: page["content"],
+          "css_files": [ "/css/app.css", "/js/legacy/legacy.css" ]})
     end
-  end
-
-  defp renderPage(conn, page) do
-    crds_styles = getStylesClassFromPage(page)
-    body_class = getBodyClassFromPage(page)
-    layout = getLayoutFromPage(page)
-    conn
-    |> RedirectCookie.call("content", "{\"link\":\"#{conn.assigns[:path]}\"}")
-    |> put_layout(layout)
-    |> assign(:body_class, body_class)
-    |> assign(:crds_styles, crds_styles)
-    |> render(CrossroadsInterface.CmsPageView,
-            "index.html",
-            %{payload: page["content"],
-              css_files: [ "/css/app.css", "/js/legacy/legacy.css" ]})
   end
 
   defp getStylesClassFromPage(page) do

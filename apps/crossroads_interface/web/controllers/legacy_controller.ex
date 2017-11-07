@@ -22,7 +22,7 @@ defmodule CrossroadsInterface.LegacyController do
   end
 
   def noRedirect(conn, params) do
-    conn |> renderSite(params)
+    conn |> renderSite( conn: conn, params: params)
   end
 
   defp renderSite(conn, params) do

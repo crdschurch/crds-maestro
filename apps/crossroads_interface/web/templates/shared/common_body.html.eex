@@ -14,6 +14,7 @@
     <script src="//d1tmclqz61gqwd.cloudfront.net/javascripts/crds-shared-header-v0.4.16.min.js"></script>
     <script src="//d1tmclqz61gqwd.cloudfront.net/javascripts/crds-status-message-v0.0.10.min.js"></script>
     <script>new CRDS.StatusMessage({ config: '//crossroads-assets.s3.amazonaws.com/browsers.json' });</script>
+
     <script>
       imgix.onready(function() {
         imgix.fluid({

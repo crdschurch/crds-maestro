@@ -3,6 +3,7 @@ defmodule CrossroadsInterface.Plug.Meta do
   Get all required and optional META tag properties from the CMS
   and supply them to the template.
   """
+  require IEx
   import Plug.Conn
   alias CrossroadsContent.CmsClient
   alias CrossroadsContent.Pages
@@ -13,30 +14,23 @@ defmodule CrossroadsInterface.Plug.Meta do
   def init(default), do: default
 
   def call(conn, _default) do
-    exists? =
-      conn.request_path
-      |> ContentHelpers.add_trailing_slash_if_necessary
-      |> Pages.page_exists?
 
-    page =
-      if exists? do
-        conn.request_path
-        |> ContentHelpers.add_trailing_slash_if_necessary
-        |> Pages.get_page
-        |> match_page
-      else
-        conn.request_path
-        |> String.split("/")
-        |> Enum.filter(&(&1 != ""))
-        |> Enum.join(".")
-        |> CmsClient.get_system_page
-        |> match_system_pages
-      end
+    page = case conn.request_path |> ContentHelpers.add_trailing_slash_if_necessary |> Pages.page_exists? do
+      true -> conn.request_path 
+                |> ContentHelpers.add_trailing_slash_if_necessary 
+                |> Pages.get_page 
+                |> match_page
+      false -> conn.request_path 
+                |> String.split("/") 
+                |> Enum.filter(&(&1 != "")) 
+                |> Enum.join(".") 
+                |> CmsClient.get_system_page
+                |> match_system_pages
+    end
 
-    site_config =
-      1
-      |> CmsClient.get_site_config
-      |> match_site_config
+    site_config = 1
+                  |> CmsClient.get_site_config
+                  |> match_site_config
 
     conn
     |> assign(:meta_description, get_description(page))
@@ -60,25 +54,38 @@ defmodule CrossroadsInterface.Plug.Meta do
    end
   end
 
-  defp get_url(%{"uRL" => url}), do: url
-  defp get_url(%{"uRLSegment" => url_segment}), do: "/" <> url_segment
-  defp get_url(_), do: ""
+  defp get_url(%{"uRL" => url}) do
+    url
+  end
 
-  defp get_description(%{"description" => description}), do: description
+  defp get_url(%{"uRLSegment" => url_segment}) do
+    "/" <> url_segment
+  end
+
+  defp get_url(_) do
+    ""
+  end
+
+  defp get_description(%{"description" => description}) do
+    description
+  end
+
   defp get_description(%{"metaDescription" => description, "content" => content}) do
     case description do
-      nil ->
-        {:safe, content} = PhoenixHtmlSanitizer.Helpers.strip_tags(content)
+      nil -> {:safe, content} = PhoenixHtmlSanitizer.Helpers.strip_tags(content) 
         content |> String.slice(0, @max_description_len - 1)
-      _non_nil ->
-        description
+      _ -> description
     end
   end
-  defp get_description(_), do: ""
+
+  defp get_description(_) do
+    ""
+  end
 
   defp find_image(%{"image" => image}) do
     Map.get(image, "filename", @default_image)
   end
+
   defp find_image(_) do
     @default_image
   end
@@ -87,10 +94,11 @@ defmodule CrossroadsInterface.Plug.Meta do
     list = body |> Map.get("systemPages", [])
     if Enum.count(list) > 0 do
       List.first(list)
-    else
+    else 
       %{}
     end
   end
+
   defp match_system_pages({:error, resp_code, body}) do
     %{}
   end
@@ -99,6 +107,7 @@ defmodule CrossroadsInterface.Plug.Meta do
     body
     |> Map.get("siteConfig", %{})
   end
+
   defp match_site_config({:ok, resp_code, body}) do
     %{}
   end
@@ -107,6 +116,6 @@ defmodule CrossroadsInterface.Plug.Meta do
     case response do
       :error -> %{}
       {:ok, page} -> page
-    end
+    end    
   end
 end
