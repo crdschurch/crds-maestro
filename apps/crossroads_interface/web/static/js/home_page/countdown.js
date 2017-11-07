@@ -205,7 +205,7 @@ CRDS.Countdown = class Countdown {
 
   static convertDate(dateString) {
     const date = dateString.match(/^(\d{4})-0?(\d+)-0?(\d+)[T ]0?(\d+):0?(\d+):0?(\d+)$/);
-    const formattedDateString = `${date[2]}/${date[3]}/${date[1]} ${date[4]}:${date[5]}:${date[6]} -0400`;
+    const formattedDateString = `${date[2]}/${date[3]}/${date[1]} ${date[4]}:${date[5]}:${date[6]} -0500`;
     return new Date(formattedDateString);
   }
 
