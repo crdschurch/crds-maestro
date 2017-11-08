@@ -163,10 +163,12 @@ describe('CardCarousel', () => {
     </div>
   </div>`;
 
+  let mockFlickity;
+
   beforeEach(() => {
     document.body.innerHTML = cardCarouselDom;
-    jasmine.createSpyObj('Flickity', ['destroy', 'reloadCells', 'selectCell']);
-    spyOn(window, 'Flickity');
+    mockFlickity = jasmine.createSpyObj('Flickity', ['destroy', 'reloadCells', 'selectCell']);
+    spyOn(window, 'Flickity').and.returnValue(mockFlickity);
   });
 
   afterEach(() => {

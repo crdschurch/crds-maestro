@@ -129,10 +129,14 @@ describe('DistanceSorter', () => {
     ]
   };
 
+  let mockFlickity;
+
   beforeEach(() => {
     document.body.innerHTML = cardCarouselDom;
     document.getElementsByTagName('input')[0].value = '45243';
     // domCards.cards = document.getElementsByClassName('card');
+    mockFlickity = jasmine.createSpyObj('Flickity', ['destroy', 'reloadCells', 'selectCell']);
+    spyOn(window, 'Flickity').and.returnValue(mockFlickity);
     carousels = new CRDS.CardCarousels();
     distanceSorter = new CRDS.DistanceSorter();
   });
