@@ -152,5 +152,6 @@ CRDS.CardCarousel = class CardCarousel {
       parent.removeChild(card);
       parent.appendChild(card);
     });
+    this.reload();
   }
 };

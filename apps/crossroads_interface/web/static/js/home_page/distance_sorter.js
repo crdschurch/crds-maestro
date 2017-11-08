@@ -28,7 +28,7 @@ CRDS.DistanceSorter = class DistanceSorter {
 
   handleFormSubmit(event) {
     event.preventDefault();
-    let formSubmit = this.searchForm.getElementsByTagName('button')[0];
+    const formSubmit = this.searchForm.getElementsByTagName('button')[0];
     formSubmit.disabled = true;
     this.getDistance()
       .done((locationDistances) => {
@@ -88,11 +88,11 @@ CRDS.DistanceSorter = class DistanceSorter {
     const anywhere = cardsArray.find(card => card.dataset.location === 'Anywhere');
 
     if (this.locationDistances[0].distance > 30) {
-      this.locationsCarousel.carousel.insertBefore(anywhere, this.cards[0]);
       anywhere.parentNode.insertBefore(anywhere, anywhere.parentNode.firstElementChild);
     } else {
-      this.locationsCarousel.carousel.appendChild(anywhere);
+      anywhere.parentNode.carousel.appendChild(anywhere);
     }
+    this.locationsCarousel.reload();
   }
 
   showError() {
