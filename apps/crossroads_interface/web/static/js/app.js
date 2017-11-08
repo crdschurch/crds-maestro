@@ -7,6 +7,7 @@ import VideoModal from './home_page/video_modal';
 import Countdown from './home_page/countdown';
 import LocationFinder from './home_page/location_finder';
 import DistanceSorter from './home_page/distance_sorter';
+import DataTracker from './dataTracker';
 
 const domReady = (callback) => {
   document.addEventListener('DOMContentLoaded', callback);
@@ -19,6 +20,7 @@ export const App = {
       svgFixer();
       const iFrameResizer = require('iframe-resizer/js/iframeResizer.min.js');
       iFrameResizer({ log: true }, '#fred');
+      new CRDS.DataTracker();
     });
   }
 };
