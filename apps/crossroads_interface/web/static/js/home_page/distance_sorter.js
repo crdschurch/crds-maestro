@@ -90,7 +90,7 @@ CRDS.DistanceSorter = class DistanceSorter {
     if (this.locationDistances[0].distance > 30) {
       anywhere.parentNode.insertBefore(anywhere, anywhere.parentNode.firstElementChild);
     } else {
-      anywhere.parentNode.carousel.appendChild(anywhere);
+      anywhere.parentNode.appendChild(anywhere);
     }
     this.locationsCarousel.reload();
   }
