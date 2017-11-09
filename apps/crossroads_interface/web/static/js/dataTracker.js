@@ -44,7 +44,7 @@ CRDS.DataTracker = class DataTracker {
     event.preventDefault();
     const form = event.currentTarget;
     const searchInput = form.getElementsByTagName('input')[0];
-    this.analytics.track('Search', {
+    this.analytics.track('SearchRequested', {
       Name: form.dataset.trackSearch || form.id || 'Unnamed Search',
       Target: form.outerHTML,
       SearchTerm: searchInput.value
