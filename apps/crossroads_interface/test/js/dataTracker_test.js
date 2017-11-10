@@ -39,7 +39,7 @@ describe('DataTracker', () => {
       Target: search.outerHTML,
       SearchTerm: search.getElementsByTagName('input')[0].value
     };
-    expect(dataTracker.analytics.track).toHaveBeenCalledWith('Search', trackEventPayload);
+    expect(dataTracker.analytics.track).toHaveBeenCalledWith('SearchRequested', trackEventPayload);
   });
 
   it('should send analytics data for click events', () => {
