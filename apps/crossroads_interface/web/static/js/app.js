@@ -20,7 +20,6 @@ export const App = {
       svgFixer();
       const iFrameResizer = require('iframe-resizer/js/iframeResizer.min.js');
       iFrameResizer({ log: true }, '#fred');
-      new CRDS.DataTracker();
     });
   }
 };
