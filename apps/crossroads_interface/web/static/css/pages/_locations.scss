@@ -1,0 +1,16 @@
+.locations-header {
+    .component-header {
+        @media screen and (min-width: $screen-sm-min) {
+            float: left;
+        }
+    }
+    .searchbar {
+        margin: 1.25rem 0;
+        @media screen and (min-width: $screen-sm-min) {
+            float: right;
+            margin-bottom: .5rem;
+            padding: .5rem;
+            width: 50%;
+        }
+    }
+}

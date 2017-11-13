@@ -56,7 +56,7 @@ CRDS.CardFilter = class CardFilter {
     // if reset_label matches a filter, put it first and treat as default
     const resetIndex = this.filters.indexOf(this.reset_label);
     let filterOnLoad = false;
-    if (resetIndex > 0) {
+    if (resetIndex > -1) {
       this.filters.splice(resetIndex, 1);
       this.filters.unshift(this.reset_label);
       this.reset_label = false;
