@@ -320,6 +320,12 @@ describe('CardFilter', () => {
           cardFilter = new CRDS.CardFilter(element);
           expect(Mustache.render).toHaveBeenCalledWith(jasmine.any(String), args);
         });
+        it('dropdown should contain data-filter-reset-label value only once at top of list even when first already', () => {
+          element.setAttribute('data-filter-reset-label', 'southwest-ohio');
+          const args = { label: 'All Locations', reset: false, filters: ['southwest-ohio', 'central-ohio', 'northern-ohio', 'northern-kentucky', 'central-kentucky'] };
+          cardFilter = new CRDS.CardFilter(element);
+          expect(Mustache.render).toHaveBeenCalledWith(jasmine.any(String), args);
+        });
         it('should by default show only features that have a filter matching data-filter-reset-label', () => {
           cardFilter = new CRDS.CardFilter(element);
           const filteredCardsList = document.querySelectorAll(':not([data-filter="central-ohio"])');
