@@ -10,9 +10,9 @@ defmodule CrossroadsInterface.ProxyHelpers do
   """
   def match_response(resp) do
     case resp do
-      {:ok, %HTTPoison.Response{status_code: 404, body: body}} ->
+      {:ok, %HTTPoison.Response{status_code: 404}} ->
         {404, %{error: "route does not exist"}}
-      {:ok, %HTTPoison.Response{status_code: status_code, body: body}} -> 
+      {:ok, %HTTPoison.Response{status_code: status_code, body: body}} ->
         {status_code, body}
       {:error, %HTTPoison.Error{reason: reason}} ->
         {500, %{error: reason}}
