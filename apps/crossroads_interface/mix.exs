@@ -23,10 +23,10 @@ defmodule CrossroadsInterface.Mixfile do
   def application do
     if Mix.env == :test do
       [mod: {CrossroadsInterface, []},
-        applications: [:phoenix, :phoenix_html, :phoenix_html_sanitizer, :logger_file_backend, :cowboy, :logger, :ssl]]
+        applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :phoenix_html_sanitizer, :logger_file_backend, :cowboy, :logger, :ssl]]
     else
       [mod: {CrossroadsInterface, []},
-        applications: [:phoenix, :phoenix_html, :phoenix_html_sanitizer, :logger_file_backend, :cowboy, :logger, :gettext, :crossroads_content, :ssl]]
+        applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :phoenix_html_sanitizer, :logger_file_backend, :cowboy, :logger, :gettext, :crossroads_content, :ssl]]
     end
   end
 
@@ -36,6 +36,7 @@ defmodule CrossroadsInterface.Mixfile do
   defp deps do
     [{:phoenix, "~> 1.2.0"},
      {:phoenix_html, "~> 2.6"},
+     {:phoenix_pubsub, "~> 1.0"},
      {:phoenix_html_sanitizer, "~> 1.0.0"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:logger_file_backend, "0.0.9"},
