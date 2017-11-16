@@ -1,4 +1,7 @@
 defmodule CrossroadsInterface.Plug.NotFoundAssetsPlug do
+  @moduledoc """
+  Bypass specific extensions
+  """
   use Plug.Builder
   import Plug.Conn
   require Regex
@@ -12,8 +15,9 @@ defmodule CrossroadsInterface.Plug.NotFoundAssetsPlug do
   defp return_not_found_if_not_found(conn, _) do
     requested_asset = conn.request_path #Enum.at(conn.path_info, -1)
     is_match = Regex.match?(@regex_asset, requested_asset)
-    if (is_match) do
-      send_resp(conn, 404, "")
+    if is_match do
+      conn
+      |> send_resp(404, "")
       |> halt
     else
       conn

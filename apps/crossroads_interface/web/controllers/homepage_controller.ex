@@ -1,6 +1,5 @@
 defmodule CrossroadsInterface.HomepageController do
   use CrossroadsInterface.Web, :controller
-  alias CrossroadsContent.Pages
   alias CrossroadsInterface.Plug
 
   plug Plug.Meta

@@ -7,7 +7,7 @@ defmodule CrossroadsContentPagesTest do
 
   import Mock
   require IEx
-  
+
   test "loads CMS pages on start" do
     with_mock CmsClient, [get: fn(_url, _params) -> FakeHttp.get_pages() end] do     
       Pages.start_link([name: CrossroadsContent.Pages])
@@ -16,7 +16,7 @@ defmodule CrossroadsContentPagesTest do
   end
 
   test "returns empty cache on CMS pages request error" do
-    with_mock CmsClient, [get: fn(_url, _params) -> {:error, 500, %{error: "Your stoopid"}} end] do     
+    with_mock CmsClient, [get: fn(_url, _params) -> {:error, 500, %{error: "Your stoopid"}} end] do
       Pages.start_link([name: CrossroadsContent.Pages])
       assert Pages.get_page_cache() == %{}
     end
