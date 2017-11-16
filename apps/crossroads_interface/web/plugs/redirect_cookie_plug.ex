@@ -1,4 +1,7 @@
 defmodule CrossroadsInterface.Plug.RedirectCookie do
+  @moduledoc """
+  Handles setting the redirect cookie
+  """
   import Plug.Conn
 
   def call(conn, url) do

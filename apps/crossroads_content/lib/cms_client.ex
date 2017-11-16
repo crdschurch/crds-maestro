@@ -1,11 +1,9 @@
 defmodule CrossroadsContent.CmsClient do
   @moduledoc """
-    Handles getting all content from the CMS
+  Handles getting all content from the CMS
   """
   use GenServer
-
   require Logger
-  require IEx
 
   @base_url Application.get_env(:crossroads_content, :cms_server_endpoint)
   @timeout Application.get_env(:crossroads_content, :cms_timeout)
@@ -98,55 +96,56 @@ defmodule CrossroadsContent.CmsClient do
     make_call(path, state)
   end
 
-  @doc false
   defp make_cached_call(path, state) do
     {status, result} = Cachex.get(:cms_cache, path)
-    if status == :missing do
-      {:reply, result, state} = make_call(path,state)
-      if elem(result, 0) == :ok do
-        Cachex.set(:cms_cache, path, result)
-      end      
-    end
-    {:reply, result, state}
+    res =
+      if status == :missing do
+        {:reply, new_result, _state} = make_call(path, state)
+        if elem(new_result, 0) == :ok do
+          Cachex.set(:cms_cache, path, new_result)
+        end
+        new_result
+      else
+        result
+      end
+    {:reply, res, state}
   end
 
   defp make_call(path, state) do
-    result = match_response(HTTPoison.get("#{@base_url}/api/#{path}",["Accept": "application/json"], [recv_timeout: @timeout]))
+    result =
+      HTTPoison.get("#{@base_url}/api/#{path}",
+                    ["Accept": "application/json"],
+                    [recv_timeout: @timeout])
+      |> match_response
     {:reply, result, state}
   end
 
   defp match_response({:ok, %HTTPoison.Response{status_code: 404, body: body}}) do
     {:error, 404, decode_request(Poison.decode(body))}
   end
-
   defp match_response({:ok, %HTTPoison.Response{status_code: 200, body: body, headers: headers}}) do
     if determine_headers(headers) do
       {:error, 400, %{}}
-    else 
+    else
       {:ok, 200, decode_request(Poison.decode(body))}
     end
   end
-
   defp match_response({:error, %HTTPoison.Error{reason: reason}}) do
     {:error, 500, %{error: reason}}
   end
-
-  defp match_response(_), do: {:error, 0, %{error: "unknown response"}} 
+  defp match_response(_), do: {:error, 0, %{error: "unknown response"}}
 
   defp determine_headers(headers) do
     case Enum.filter(headers, &is_html/1) do
       [] -> false
       _  -> true
     end
-
   end
 
-  defp is_html({"Content-Type", type}) do
-    type == "text/html"
-  end
-  defp is_html(header), do: false
-  
-  defp decode_request({:ok, valid} = body), do: valid
-  defp decode_request({:error, _} = body), do: %{}
+  defp is_html({"Content-Type", "text/html"}), do: true
+  defp is_html(_header), do: false
+
+  defp decode_request({:ok, valid}), do: valid
+  defp decode_request({:error, _}), do: %{}
 
 end
