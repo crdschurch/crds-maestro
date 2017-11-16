@@ -1,9 +1,7 @@
 defmodule CrossroadsInterface.Plug.ContentBlocks do
-  @moduledoc """
-  Map content blocks from the CMS
-  """
   import Plug.Conn
   alias CrossroadsContent.CmsClient
+  require IEx
 
   def init(default), do: default
 

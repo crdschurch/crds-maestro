@@ -1,5 +1,4 @@
 defmodule CrossroadsInterface.GatewayProxyMock do
-  @moduledoc false
 
   def gateway_post(_path, %{"username" => "baduser", "password" => "badpass" }, headers) do
     {:ok, %HTTPoison.Response{

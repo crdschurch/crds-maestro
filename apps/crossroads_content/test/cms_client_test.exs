@@ -8,7 +8,7 @@ defmodule CrossroadsContent.CmsClientTest do
   import Mock
 
   setup_all do
-    {:ok, _cms_cache} = Cachex.start_link(:cms_cache, [default_ttl: Application.get_env(:crossroads_content, :cms_cache_ttl)])
+    {:ok, cms_cache} = Cachex.start_link(:cms_cache, [default_ttl: Application.get_env(:crossroads_content, :cms_cache_ttl)])
     {:ok, cms_client} = CmsClient.start_link([name: CrossroadsContent.CmsClient])
     {:ok, cms_client: cms_client}
   end
