@@ -2,11 +2,11 @@ defmodule CrossroadsInterface.ErrorView do
   use CrossroadsInterface.Web, :view
   require IEx
 
-  def render("404.html", _assigns) do
+  def render("404.html", assigns) do
     "404"
   end
 
-  def render("500.html", _assigns) do
+  def render("500.html", assigns) do
     "500"
   end
 

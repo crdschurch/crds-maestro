@@ -1,7 +1,4 @@
 defmodule CrossroadsInterface.Plug.Payload do
-  @moduledoc """
-  Assigns the payload from the CMS into the connection
-  """
   import Plug.Conn
   require IEx
 
@@ -11,7 +8,7 @@ defmodule CrossroadsInterface.Plug.Payload do
     assign(conn, :payload, default)
   end
 
-  def call(conn, _default) do
+  def call(conn, default) do
     assign(conn, :payload, "")
   end
 end

@@ -1,15 +1,12 @@
 defmodule CrossroadsInterface.ProxyHttp do
-  @moduledoc """
-  Handles requests to Ministry Platform
-  """
-
+  #TODO: pull this into it's own GenServer
   @gateway_server_endpoint Application.get_env(:crossroads_interface, :gateway_server_endpoint)
 
   @doc """
   Make a post request to the api server
   """
   def gateway_post(path, params, headers) do
-    HTTPoison.post("#{@gateway_server_endpoint}#{path}", Poison.encode!(params), headers, [recv_timeout: :infinity])
+    HTTPoison.post("#{@gateway_server_endpoint}#{path}",Poison.encode!(params), headers, [recv_timeout: :infinity])
   end
 
   @doc """

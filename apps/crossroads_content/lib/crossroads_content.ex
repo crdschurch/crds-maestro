@@ -1,5 +1,4 @@
 defmodule CrossroadsContent do
-  @moduledoc false
   use Application
 
   require IEx
