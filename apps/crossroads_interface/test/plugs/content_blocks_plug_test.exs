@@ -9,7 +9,7 @@ defmodule CrossroadsInterface.Plugs.ContentBlocksTest do
 
   test "given CmsClient.get_content_blocks/0 returns :ok, assigns :content_blocks", %{conn: _conn} do
     with_mock CmsClient, [get_content_blocks: fn() -> {:ok, 200, @content_block_call} end] do
-      conn = conn() |> CrossroadsInterface.Plug.ContentBlocks.call(%{})
+      conn = build_conn() |> CrossroadsInterface.Plug.ContentBlocks.call(%{})
       assert conn.assigns.content_blocks == @valid
     end
   end

@@ -17,11 +17,8 @@ config :crossroads_content,
 
 config :crossroads_interface, CrossroadsInterface.Endpoint,
   url: [host: System.get_env("MAESTRO_HOSTNAME"), port: System.get_env("MAESTRO_PORT")],
-  https: [port: System.get_env("MAESTRO_PORT"),
-    otp_app: :crossroads_interface,
-    keyfile: System.get_env("SSL_KEY_PATH"),
-    certfile: System.get_env("SSL_CERT_PATH"),
-    cacertfile: System.get_env("SSL_INTERMEDIATE_PATH")],
+  http: [port: System.get_env("MAESTRO_PORT"),
+    otp_app: :crossroads_interface],
   cache_static_manifest: "priv/static/manifest.json",
   server: true
 
@@ -31,6 +28,7 @@ config :logger,
 
 config :logger, :debug_log,
   path: "/var/log/maestro/maestro#{ConfigHelper.get_suffix()}.log",
+  format: "$date $time $metadata[$level] $message\n",
   level: :debug
 
 # Check `Plug.SSL` for all available options in `force_ssl`.

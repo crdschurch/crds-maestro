@@ -18,13 +18,13 @@ defmodule CrossroadsInterface.Plugs.MetaTest do
                 "disableCsrfSecurityToken" => "0", "enableLiveValidation" => "0",
                 "sideBar" => 2, "disableSaveSubmissions" => "0", "hasBrokenLink" => "0",
                 "type" => "website", 
-                "content" => "<h1 class=\"page-header\">ReachOut: Habitat</h1><h2 class=\"subheading\">Serving Habitat for Humanity</h
-                2><div>\n<p>We believe simple, decent, affordable housing for all people is something God cares about deeply. </p>\n<div>
-                \n<p>Our city has one of the lowest home ownership rates in the country. Only 42% of residents in our city own their home
-                s, compared to 68% nationally. Statistically speaking, home ownership leads to significant increases in family stability,
-                financial security and a sense of belonging to the community. And all of those things increase the likelihood that child
-                ren can escape a cycle of poverty.</p>\n</div>\n<p>Check back soon for projects that will be available this spring and su
-                mmer. </p>\n</div>", "bodyClasses" => nil,
+                "content" => "<h1 class=\"page-header\">ReachOut: Habitat</h1><h2 class=\"subheading\">Serving Habitat for Humanity</h2>" <>
+                  "<div><p>We believe simple, decent, affordable housing for all people is something God cares about deeply. </p><div>" <>
+                  "<p>Our city has one of the lowest home ownership rates in the country. Only 42% of residents in our city own their home" <>
+                  "s, compared to 68% nationally. Statistically speaking, home ownership leads to significant increases in family stability," <>
+                  "financial security and a sense of belonging to the community. And all of those things increase the likelihood that child" <>
+                  "ren can escape a cycle of poverty.</p></div><p>Check back soon for projects that will be available this spring and su" <>
+                  "mmer. </p></div>", "bodyClasses" => nil,
                 "menuTitle" => nil, "displayErrorMessagesAtTop" => "0",
                 "clearButtonText" => nil, "sort" => "5", "version" => "7",
                 "requiresAngular" => "0",
@@ -47,6 +47,8 @@ defmodule CrossroadsInterface.Plugs.MetaTest do
 
   @page_no_descripton Map.put(@page_response, "metaDescription", nil)
 
+  @page_title_with_site Map.put(@page_response, "title", "Wizard Cow | Crossroads")
+
   @system_page_response %{"systemPages" => [%{"bodyClasses" => nil,
                                               "card" => "summary",
                                               "className" => "SystemPage",
@@ -59,10 +61,20 @@ defmodule CrossroadsInterface.Plugs.MetaTest do
                                               "title" => "Register",
                                               "type" => "website",
                                               "uRL" => "/register"}]}
-  @site_config_data %{"siteConfig" => %{"title" => nil,
-                                        "locale" => "en_US",
+
+  @site_config_data %{"siteConfig" => %{"canCreateTopLevelType" => "LoggedInUsers", 
+                                        "canEditType" => "LoggedInUsers",
+                                        "canViewType" => "Anyone", 
+                                        "className" => "SiteConfig",
+                                        "created" => "2015-01-21T18:13:55-05:00", 
                                         "facebook" => "crdschurch",
-                                        "twitter" => "@crdschurch"}}
+                                        "id" => 1, 
+                                        "locale" => "en_US",                                        
+                                        "soundCloudURL" => "https://soundcloud.com/crdschurch/",
+                                        "tagline" => "Whatever your thoughts on church, whatever your beliefs about God, you are welcome here.",
+                                        "theme" => "admin-only", 
+                                        "title" => "Crossroads", 
+                                        "twitter" => "@crdschurch"}}                                        
 
   test "Sets meta data when request to a cms page route is made", %{conn: conn} do
     with_mocks([ {Pages, [], [page_exists?: fn(_path) -> true end]},
@@ -72,7 +84,7 @@ defmodule CrossroadsInterface.Plugs.MetaTest do
       conn = %{conn | request_path: "/wizardcow"}
                |> CrossroadsInterface.Plug.Meta.call(%{})
       
-      assert conn.assigns.meta_title == "Wizard Cow"
+      assert conn.assigns.meta_title == "Wizard Cow | Crossroads"
       assert conn.assigns.meta_description == "Wizard Cow is a hilariously renamed animal as per the internet"
       assert conn.assigns.meta_url == "/wizardcow"
       assert conn.assigns.meta_type == "website"
@@ -87,12 +99,27 @@ defmodule CrossroadsInterface.Plugs.MetaTest do
       conn = %{conn | request_path: "/wizardcow"}
                |> CrossroadsInterface.Plug.Meta.call(%{})
       
-      assert conn.assigns.meta_title == "Wizard Cow"
-      assert conn.assigns.meta_description == "ReachOut: HabitatServing Habitat for HumanityWe believe simple, decent, affordable housing for all people is something God cares about deeply. Our city has one of the lowest home ownership rates in the country. Only 42% of residents in our city own their home\n                s, compared to 68% nationall"
+      assert conn.assigns.meta_title == "Wizard Cow | Crossroads"
+      assert conn.assigns.meta_description == "ReachOut: HabitatServing Habitat for HumanityWe believe simple, decent, affordable housing for all people is something God cares about deeply. Our city has one of the lowest home ownership rates in the country. Only 42% of residents in our city own their homes, compared to 68% nationally. Statistically "
       assert conn.assigns.meta_url == "/wizardcow"
       assert conn.assigns.meta_type == "website"
     end
-  end                                  
+  end
+
+  test "Sets title to page_title | site_config_title when metadata contains site title", %{conn: conn} do
+    with_mocks([ {Pages, [], [page_exists?: fn(_path) -> true end]},
+                 {Pages, [], [get_page: fn(_path) -> {:ok, @page_title_with_site} end]},
+                 {CmsClient, [], [get_system_page: fn("register") -> {:ok, 200, @system_page_response} end]},
+                 {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
+      conn = %{conn | request_path: "/wizardcow"}
+               |> CrossroadsInterface.Plug.Meta.call(%{})
+      
+      assert conn.assigns.meta_title == "Wizard Cow | Crossroads"
+      assert conn.assigns.meta_description == "Wizard Cow is a hilariously renamed animal as per the internet"
+      assert conn.assigns.meta_url == "/wizardcow"
+      assert conn.assigns.meta_type == "website"
+    end
+  end                                       
 
   test "Sets meta data when request to a system page is made", %{conn: conn} do
     with_mocks([ {Pages, [], [page_exists?: fn(_path) -> false end]},
@@ -100,7 +127,7 @@ defmodule CrossroadsInterface.Plugs.MetaTest do
                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
       conn = %{conn | request_path: "/register"}
                |> CrossroadsInterface.Plug.Meta.call(%{})
-      assert conn.assigns.meta_title == "Register"
+      assert conn.assigns.meta_title == "Register | Crossroads"
       assert conn.assigns.meta_description == "We are glad you are here. Let's get your account set up!"
       assert conn.assigns.meta_url == "/register"
       assert conn.assigns.meta_type == "website"
@@ -118,4 +145,5 @@ defmodule CrossroadsInterface.Plugs.MetaTest do
       assert conn.assigns.meta_siteconfig_twitter == "@crdschurch"
     end
   end
+
 end

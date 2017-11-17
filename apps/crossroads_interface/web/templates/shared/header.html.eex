@@ -1,15 +1,18 @@
-<div class="crds-styles">
-  <div data-header></div>
+<div class="crds-shared-header">
+  <div data-header style="visibility: hidden;">
+    <%= raw(filter_content_blocks(@content_blocks, "sharedGlobalHeader")["content"]) %>
+  </div>
   <script>
-      (function(){
-          var options = {
-              cmsEndpoint: '<%= Application.get_env(:crossroads_interface, :cms_client_endpoint) %>',
-              appEndpoint: '<%= Application.get_env(:crossroads_interface, :app_client_endpoint) %>',
-              imgEndpoint: '<%= Application.get_env(:crossroads_interface, :image_client_endpoint) %>',
-              crdsCookiePrefix: '<%= Application.get_env(:crossroads_interface, :cookie_prefix) %>',
-              contentBlockTitle: 'sharedGlobalHeader' };
-          var header = new CRDS.SharedHeader(options);
-          header.render();
-      })();
+    svg4everybody();
+    (function(){
+      var options = {
+        cmsEndpoint: '<%= Application.get_env(:crossroads_interface, :cms_client_endpoint) %>',
+        appEndpoint: '<%= Application.get_env(:crossroads_interface, :app_client_endpoint) %>',
+        imgEndpoint: '<%= Application.get_env(:crossroads_interface, :image_client_endpoint) %>',
+        crdsCookiePrefix: '<%= Application.get_env(:crossroads_interface, :cookie_prefix) %>'
+      };
+      var header = new CRDS.SharedHeader(options);
+      header.render();
+    })();
   </script>
 </div>

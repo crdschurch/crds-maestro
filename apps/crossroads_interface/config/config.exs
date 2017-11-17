@@ -13,16 +13,14 @@ defmodule ConfigHelper do
   defp get_maestro_name_extension do
     case System.get_env("MAESTRO_NAME_EXTENSION") do
       "" -> ""
-      nil -> ""
-      _ -> System.get_env("MAESTRO_NAME_EXTENSION")
+      ext -> ext
     end
   end
 
   defp get_environment do
     case System.get_env("CRDS_ENV") do
       "" -> ""
-      nil -> ""
-      _ -> "-" <> System.get_env("CRDS_ENV")
+      env -> "-" <> env 
     end
   end
 end
@@ -41,7 +39,6 @@ config :crossroads_interface,
   app_client_endpoint: System.get_env("CRDS_APP_CLIENT_ENDPOINT"),
   streamspot_id: System.get_env("CRDS_STREAMSPOT_SSID"),
   streamspot_key: System.get_env("CRDS_STREAMSPOT_API_KEY")
-
 
 config :ssl, protocol_version: :"tlsv1.2"
 

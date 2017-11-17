@@ -6,7 +6,7 @@ config :crossroads_content,
 
 config :crossroads_interface,
   gateway_server_endpoint: "",
-  cookie_prefix: "",
+  cookie_prefix: "int",
   cookie_domain: ""
 
 # We don't run a server during test. If one is required,

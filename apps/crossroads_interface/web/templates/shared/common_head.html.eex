@@ -39,8 +39,6 @@
     <link rel="shortcut icon" href="//crossroads-media.s3.amazonaws.com/images/favicon/favicon.ico">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 
-    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>"/> 
-
     <style>
     @-webkit-keyframes spinnerRotate {
       100% {
@@ -69,9 +67,8 @@
 
     <%= if assigns[:css_files] do %>
         <%= for script_file <- @css_files do %>
-            <link href="<%= static_path(@conn, script_file)%>" type="text/css" rel="stylesheet"> </script>
+            <link href="<%= static_path(@conn, script_file)%>" type="text/css" rel="stylesheet" />
         <% end %>
     <% end %>
-
+    <link rel='stylesheet' href='https://unpkg.com/formiojs@latest/dist/formio.full.min.css'>
     <base href="<%= @base_href %>">
-

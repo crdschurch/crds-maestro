@@ -21,6 +21,7 @@ defmodule CrossroadsInterface.CrdsGroupLeaderController do
         "/js/group_leader/vendor.bundle.js",
         "/js/group_leader/main.bundle.js"
       ], "css_files": [ 
+        "/css/app.css",
         "/js/legacy/legacy.css",
         "/js/group_leader/styles.bundle.css" 
       ]})

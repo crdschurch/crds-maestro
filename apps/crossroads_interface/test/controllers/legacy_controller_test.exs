@@ -3,21 +3,40 @@ defmodule CrossroadsInterface.LegacyControllerTest do
   alias CrossroadsContent.CmsClient
   alias CrossroadsContent.Pages
   import Mock
+  require IEx
 
-  @content_block_call %{"contentBlocks" => [%{"id" => 1, "title" => "generalError"}]}
+  test "index/2 should return logged out user page when user is not authenticated", %{conn: conn} do
+    with_mocks([ {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
+                  {CmsClient, [], [get_system_page: fn("") -> {:ok, 200, fake_system_page("")} end]},
+                  {Pages, [], [get_page: fn(path, stage) -> CrossroadsContent.FakeHttp.get_page(path, stage) end]},
+                  {CrossroadsInterface.CmsPageController, [], [call: fn(conn, _method) -> conn end]},
+                  {CrossroadsInterface.Plug.Authorized, [], [call: fn(conn, _) -> assign(conn, :authorized, false) end]},
+                  {CrossroadsInterface.CmsPageController, [], [index: fn(conn, _) -> conn end]},
+                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
+      conn = conn
+        |> get("/")
 
-  @system_page_response %{"systemPages" => [%{"bodyClasses" => nil,
-                                              "card" => "summary",
-                                              "className" => "SystemPage",
-                                              "created" => "2015-09-24T13:52:49-04:00",
-                                              "description" => "We are glad you are here. Let's get your account set up!",
-                                              "id" => 59,
-                                              "keywords" => nil,
-                                              "legacyStyles" => "1",
-                                              "stateName" => "",
-                                              "title" => "Register",
-                                              "type" => "website",
-                                              "uRL" => "/register"}]}
+      assert called Pages.get_page("/", false)
+      assert conn.assigns[:path] == "/"
+      assert conn.assigns[:page] == %{"content" => "<h1>Logged out page</h1>"}
+    end
+  end
+
+  test "index/2 should return logged in user page when user is authenticated", %{conn: conn} do
+    with_mocks([ {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
+                  {CmsClient, [], [get_system_page: fn("") -> {:ok, 200, fake_system_page("")} end]},
+                  {Pages, [], [get_page: fn(path, stage) -> CrossroadsContent.FakeHttp.get_page(path, stage) end]},
+                  {CrossroadsInterface.CmsPageController, [], [call: fn(conn, _method) -> conn end]},
+                  {CrossroadsInterface.Plug.Authorized, [], [call: fn(conn, _) -> assign(conn, :authorized, true) end]},
+                  {CrossroadsInterface.CmsPageController, [], [index: fn(conn, _) -> conn end]},
+                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
+      conn = conn
+        |> get("/")
+      assert called Pages.get_page("/personalized/", false)
+      assert conn.assigns[:path] == "/"
+      assert conn.assigns[:page] == %{"content" => "<h1>Logged in page</h1>"}
+    end
+  end
 
   test "GET CMS page should get page and goto CmsPageController", %{conn: conn} do
     with_mocks([ {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
@@ -27,6 +46,7 @@ defmodule CrossroadsInterface.LegacyControllerTest do
                   {CrossroadsInterface.CmsPageController, [], [index: fn(conn, _) -> conn end]},
                   {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
       conn = get conn, "/"
+      assert conn.assigns[:path] == "/"
       assert conn.assigns[:page] == %{"content" => "<h1>Page</h1>"}
     end
   end

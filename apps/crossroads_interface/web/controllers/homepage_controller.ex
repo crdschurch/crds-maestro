@@ -1,10 +1,10 @@
 defmodule CrossroadsInterface.HomepageController do
   use CrossroadsInterface.Web, :controller
-  alias CrossroadsContent.Pages
   alias CrossroadsInterface.Plug
 
   plug Plug.Meta
   plug Plug.ContentBlocks
+  plug CrossroadsInterface.Plug.Authorized
   plug Plug.BodyClass, "crds-legacy-styles"
 
   plug :put_layout, "screen_width.html"
@@ -18,6 +18,7 @@ defmodule CrossroadsInterface.HomepageController do
     conn
     |> render(page,
               "css_files": [
+                "/css/app.css",
                 "/js/legacy/legacy.css"
               ])
   end

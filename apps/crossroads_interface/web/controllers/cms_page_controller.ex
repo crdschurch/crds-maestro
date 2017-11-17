@@ -1,24 +1,27 @@
 defmodule CrossroadsInterface.CmsPageController do
-  require IEx
   use CrossroadsInterface.Web, :controller
-  alias CrossroadsContent.Pages
 
   plug CrossroadsInterface.Plug.PutMetaTemplate, "meta_tags.html"
   plug CrossroadsInterface.Plug.Meta
   plug CrossroadsInterface.Plug.ContentBlocks
 
-  def index(conn, _) do    
+  def index(conn, _) do
     page = conn.assigns[:page]
-    crds_styles = getStylesClassFromPage(page)
-    body_class = getBodyClassFromPage(page)
-    layout = getLayoutFromPage(page)
-    conn
-      |> CrossroadsInterface.Plug.RedirectCookie.call("content", "{\"link\":\"#{conn.assigns[:path]}\"}")
-      |> put_layout(layout)
-      |> assign(:body_class, body_class)
-      |> assign(:crds_styles, crds_styles)
-      |> render(CrossroadsInterface.CmsPageView, "index.html", %{ payload: page["content"],
-      "css_files": [ "/js/legacy/legacy.css" ]})
+
+    if page["redirectUrl"] != nil do
+      conn |> redirect(external: page["redirectUrl"])
+    else
+      crds_styles = getStylesClassFromPage(page)
+      body_class = getBodyClassFromPage(page)
+      layout = getLayoutFromPage(page)
+      conn
+        |> CrossroadsInterface.Plug.RedirectCookie.call("content", "{\"link\":\"#{conn.assigns[:path]}\"}")
+        |> put_layout(layout)
+        |> assign(:body_class, body_class)
+        |> assign(:crds_styles, crds_styles)
+        |> render(CrossroadsInterface.CmsPageView, "index.html", %{ payload: page["content"],
+        "css_files": [ "/css/app.css", "/js/legacy/legacy.css" ]})
+    end
   end
 
   defp getStylesClassFromPage(page) do
@@ -31,7 +34,7 @@ defmodule CrossroadsInterface.CmsPageController do
 
   defp getBodyClassFromPage(page) do
     if page["bodyClasses"] do
-      body_class = String.replace(page["bodyClasses"], ",", " ")
+      String.replace(page["bodyClasses"], ",", " ")
     end
   end
 

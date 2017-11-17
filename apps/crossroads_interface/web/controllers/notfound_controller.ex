@@ -16,4 +16,11 @@ defmodule CrossroadsInterface.NotfoundController do
     |> render(CrossroadsInterface.ErrorView, "404.html",
         %{"css_files": [ "/js/legacy/legacy.css" ]})
    end
+   #|> render("404.html", %{ payload: page["content"],
+      #"css_files": [
+        #"/css/app.css",
+        #"/js/legacy/legacy.css"
+      #]
+    #})
+  #end
 end

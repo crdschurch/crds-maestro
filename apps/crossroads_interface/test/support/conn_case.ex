@@ -57,7 +57,6 @@ defmodule CrossroadsInterface.ConnCase do
   end
 
   setup tags do
-
-    {:ok, conn: Phoenix.ConnTest.conn()}
+    {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
 end

@@ -6,12 +6,10 @@ defmodule CrossroadsInterface.Router do
     plug :fetch_session
     plug :fetch_flash
     plug :protect_from_forgery
-    plug :put_secure_browser_headers
     plug CrossroadsInterface.Plug.PageType
     plug CrossroadsInterface.Plug.Payload
     plug CrossroadsInterface.Plug.BaseHref
     plug CrossroadsInterface.Plug.PutMetaTemplate
-    plug CrossroadsInterface.Plug.Authorized
     plug CrossroadsInterface.Plug.BodyClass
     plug CrossroadsInterface.Plug.CrdsStyles
   end
@@ -20,25 +18,22 @@ defmodule CrossroadsInterface.Router do
     plug :accepts, ["json"]
   end
 
- # scope "/proxy", CrossroadsInterface do
-    #pipe_through :api
-    #forward "/gateway", ProxyGatewayController, :handle_gateway_proxy
-    #forward "/content", ProxyContentController, :handle_content_proxy
-  #end
-
   scope "/", CrossroadsInterface do
     pipe_through :browser
+    get "/group-leader/*path", CrdsGroupLeaderController, :index
+    get "/connect/*path", CrdsConnectController, :index
+    get "/groups/search/*path", CrdsGroupsController, :index
+    get "/streaming/*path", CrdsStreamingController, :index
+    get "/srfp/*path", CrdsSrfpController, :index
 
-    forward "/group-leader", CrdsGroupLeaderController, :index
-    forward "/connect", CrdsConnectController, :index
-    forward "/groupsv2", CrdsGroupsController, :index
     get "/notfound", NotfoundController, :notfound
     get "/signout", LegacyController, :noRedirect
     get "/signin", LegacyController, :noRedirect
     get "/register", LegacyController, :noRedirect
     get "/homepage", HomepageController, :index
-    forward "/streaming", CrdsStreamingController, :index
-    forward "/", LegacyController, :index
+    get "/explore", DynamicController, :index
+    get "/atriumevents", DynamicController, :index
+    get "/*path", LegacyController, :index
   end
 
 end
