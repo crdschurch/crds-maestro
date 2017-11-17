@@ -3,8 +3,8 @@ defmodule CrossroadsInterface.ErrorView do
   alias CrossroadsContent.CmsClient
   require IEx
 
-  def render("404.html", _assigns) do
-    "404"
+  def render("404.html", assigns) do
+    render("404_page.html", assigns)
   end
 
   def render("500.html", _assigns) do
