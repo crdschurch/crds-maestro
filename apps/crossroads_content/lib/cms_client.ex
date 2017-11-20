@@ -111,15 +111,16 @@ defmodule CrossroadsContent.CmsClient do
     {:reply, res, state}
   end
 
+  @spec make_call(String.t, map()) :: {:reply, {:ok | :error, number(), any()}, map()}
   defp make_call(path, state) do
     result =
-      HTTPoison.get("#{@base_url}/api/#{path}",
-                    ["Accept": "application/json"],
-                    [recv_timeout: @timeout])
+      "#{@base_url}/api/#{path}"
+      |> HTTPoison.get(%{"Accept" =>  "application/json"}, recv_timeout: @timeout)
       |> match_response
     {:reply, result, state}
   end
 
+  @spec match_response({:ok | :error, HTTPoison.Response.t}) :: {:ok | :error, number(), any()}
   defp match_response({:ok, %HTTPoison.Response{status_code: 404, body: body}}) do
     {:error, 404, decode_request(Poison.decode(body))}
   end
