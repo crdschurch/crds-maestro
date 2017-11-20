@@ -6,6 +6,7 @@ defmodule CrossroadsInterface.Mixfile do
      version: revision("0.0.1"),
      elixir: "~> 1.0",
      elixirc_paths: elixirc_paths(Mix.env),
+     dialyzer: [plt_add_deps: :transitive],
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
