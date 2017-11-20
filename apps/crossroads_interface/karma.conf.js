@@ -15,7 +15,7 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
-            'https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js',
+            'node_modules/jquery/dist/jquery.js',
             'node_modules/babel-polyfill/dist/polyfill.js',
             'test/**/*.js'
         ],
