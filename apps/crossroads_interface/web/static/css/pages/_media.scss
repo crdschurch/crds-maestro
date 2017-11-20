@@ -5,6 +5,11 @@
 }
 
 .card--thumbnail {
+
+    a:hover {
+        text-decoration: none;
+    }
+
     .card-block {
         padding: .5rem 0;
 
