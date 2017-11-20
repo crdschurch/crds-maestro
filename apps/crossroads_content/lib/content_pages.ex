@@ -130,12 +130,12 @@ defmodule CrossroadsContent.Pages do
       {:ok, 200, response} ->
           id_map = get_redirector_targets(response)
           {:ok, 200, get_redirects(response, id_map)}
-      {:error, _, %{error: response}} ->
+      {:error, _, %{error: response}} = resp ->
         Logger.error("Error getting CMS redirection targets: #{response}")
-        %{}
-      _ ->
+        resp
+      err ->
         Logger.error("Error getting CMS redirection targets")
-        %{}
+        err
     end
   end
 
