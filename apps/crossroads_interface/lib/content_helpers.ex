@@ -1,4 +1,7 @@
 defmodule ContentHelpers do
+  @moduledoc """
+  Helpers for CMS Content pages
+  """
 
   alias CrossroadsContent.CmsClient
 

@@ -15,7 +15,7 @@ defmodule CrossroadsInterface.DynamicController do
   def index(conn, _params) do
     template = "js/static#{conn.request_path}/index.html"
     path = case System.get_env("MAESTRO_RUN_IN_DOCKER") do
-      nil -> Path.join(Application.app_dir(:crossroads_interface),"priv/static/#{template}")
+      nil -> Path.join(Application.app_dir(:crossroads_interface), "priv/static/#{template}")
       _ -> "/microclients/#{template}"
     end
     html(conn, File.read!(path))
