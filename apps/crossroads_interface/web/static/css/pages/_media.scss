@@ -17,5 +17,8 @@
 
 .media-section-heading .btn-group {
     margin-left: 1rem;
-    margin-top: 1.875rem;
+    margin-top: 1.25rem;
+    @media (min-width: $screen-xs-min) {
+        margin-top: 1.875rem;
+    }
 }
