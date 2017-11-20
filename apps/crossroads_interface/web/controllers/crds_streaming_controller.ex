@@ -15,7 +15,7 @@ defmodule CrossroadsInterface.CrdsStreamingController do
   def index(conn, _params) do
     conn
     |> CrossroadsInterface.Plug.RedirectCookie.call("/streaming")
-    |> render("app_root.html", %{ "js_files": [
+    |> render("app_root.html", %{"js_files": [
         "/js/crds_streaming/inline.bundle.js",
         "/js/crds_streaming/polyfills.bundle.js",
         "/js/crds_streaming/styles.bundle.js",

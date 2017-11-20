@@ -19,7 +19,7 @@ defmodule CrossroadsInterface.Plug.Authorized do
     request_path = "api/authenticated"
     headers = [{"Authorization", session_cookie}]
     case CrossroadsInterface.ProxyHttp.gateway_get(request_path, headers) do
-      { _, %HTTPoison.Response{ status_code: 200 }} -> true
+      {_, %HTTPoison.Response{status_code: 200}} -> true
       _ -> false
     end
   end

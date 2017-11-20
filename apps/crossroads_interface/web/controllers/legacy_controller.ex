@@ -11,18 +11,18 @@ defmodule CrossroadsInterface.LegacyController do
   plug CrossroadsInterface.Plug.Authorized
   plug :put_layout, "no_header_or_footer.html"
 
-  def index(conn, %{ "resolve" => "true" }) do
-    conn |> redirect( to: "/notfound")
+  def index(conn, %{"resolve" => "true"}) do
+    conn |> redirect(to: "/notfound")
   end
 
   def index(conn, params) do
     conn
     |> CrossroadsInterface.Plug.RedirectCookie.call(conn.request_path)
-    |> renderSite( conn: conn, params: params)
+    |> renderSite(conn: conn, params: params)
   end
 
   def noRedirect(conn, params) do
-    conn |> renderSite( conn: conn, params: params)
+    conn |> renderSite(conn: conn, params: params)
   end
 
   defp renderSite(conn, params) do
@@ -56,7 +56,7 @@ defmodule CrossroadsInterface.LegacyController do
   end
 
   defp renderLegacyApp(conn, _params) do
-    conn |> render("app_root.html", %{ "js_files": [
+    conn |> render("app_root.html", %{"js_files": [
         "/js/legacy/ang.js",
         "/js/legacy/core.js",
         "/js/legacy/misc.js",

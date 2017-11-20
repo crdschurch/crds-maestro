@@ -17,7 +17,7 @@ defmodule CrossroadsInterface.NotfoundController do
   defp renderPageContent(conn, page) do
     conn
     |> put_status(404)
-    |> render("404.html", %{ payload: page["content"],
+    |> render("404.html", %{payload: page["content"],
       "css_files": [
         "/css/app.css",
         "/js/legacy/legacy.css"
