@@ -20,7 +20,7 @@ defmodule CrossroadsContent.CmsClientTest do
 
   test "client handles a 404 response from get_site_config" do
     with_mock HTTPoison, [get: fn(url, _headers, _options) -> FakeHttp.get(url) end] do
-      non_existent_site_config_id = 13
+      non_existent_site_config_id = 12
       {result, status, _body} = CmsClient.get_site_config(non_existent_site_config_id)
       assert status == 404
       assert result == :error
