@@ -115,7 +115,7 @@ defmodule CrossroadsContent.CmsClient do
   defp make_call(path, state) do
     result =
       "#{@base_url}/api/#{path}"
-      |> HTTPoison.get(%{"Accept" =>  "application/json"}, recv_timeout: @timeout)
+      |> HTTPoison.get(%{"Accept" => "application/json"}, recv_timeout: @timeout)
       |> match_response
     {:reply, result, state}
   end
