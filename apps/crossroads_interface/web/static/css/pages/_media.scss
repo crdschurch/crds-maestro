@@ -1,0 +1,21 @@
+.card-deck--expanded-layout .card--thumbnail {
+    @media (min-width: $screen-sm-min) {
+        max-width: 16.66667%;
+    }
+}
+
+.card--thumbnail {
+    .card-block {
+        padding: .5rem 0;
+
+        .card-title {
+            margin: .25rem 0;
+            font-size: .875rem;
+        }
+    }
+}
+
+.media-section-heading .btn-group {
+    margin-left: 1rem;
+    margin-top: 1.875rem;
+}
