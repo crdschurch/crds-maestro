@@ -11,18 +11,29 @@ defmodule CrossroadsInterface.LegacyController do
   plug CrossroadsInterface.Plug.Authorized
   plug :put_layout, "no_header_or_footer.html"
 
+  @doc """
+  When angular can't find a route, it sends a request back with ?resolve=true
+  which in turn renders error view and the 404 template
+  """
   def index(conn, %{ "resolve" => "true" }) do
-    conn |> redirect( to: "/notfound")
+    conn
+    |> CrossroadsInterface.Plug.ContentBlocks.call("")
+    |> CrossroadsInterface.Plug.Meta.call("")
+    |> CrossroadsInterface.Plug.PutMetaTemplate.call("meta_tags.html")
+    |> put_layout("no_sidebar.html")
+    |> put_status(404)
+    |> render(CrossroadsInterface.ErrorView, "404.html",
+        %{"css_files": [ "/js/legacy/legacy.css" ]})
   end
 
   def index(conn, params) do
     conn
     |> CrossroadsInterface.Plug.RedirectCookie.call(conn.request_path)
-    |> renderSite( conn: conn, params: params)
+    |> renderSite(conn: conn, params: params)
   end
 
   def noRedirect(conn, params) do
-    conn |> renderSite( conn: conn, params: params)
+    conn |> renderSite(conn: conn, params: params)
   end
 
   defp renderSite(conn, params) do
@@ -56,7 +67,7 @@ defmodule CrossroadsInterface.LegacyController do
   end
 
   defp renderLegacyApp(conn, _params) do
-    conn |> render("app_root.html", %{ "js_files": [
+    conn |> render("app_root.html", %{"js_files": [
         "/js/legacy/ang.js",
         "/js/legacy/core.js",
         "/js/legacy/misc.js",
