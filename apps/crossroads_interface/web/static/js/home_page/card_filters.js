@@ -132,7 +132,7 @@ CRDS.CardFilter = class CardFilter {
   }
 
   refreshCarousel() {
-    if (this.el.dataset.carousel !== undefined) {
+    if (this.el.dataset.crdsCarousel !== undefined) {
       const id = this.el.dataset.carouselId;
       CRDS._instances[id].reload();
     }
