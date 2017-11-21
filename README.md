@@ -45,7 +45,7 @@ install using Chocolatey with the command `choco install python2`
 
 6. Link the assets of your microclient into the maestro project.  Each microclient will have it's own directory under `crossroads_interface/priv/static/js`, with a name that matches the controller created in Phoenix for the microclient.
 
-To link the assets for crds-angular and crds-connect:
+So to link the assets for crds-angular and crds-connect:
 ```
  cd crds-maestro/apps/crossroads_interface
  mkdir -p priv/static/js
