@@ -37,6 +37,9 @@ config :crossroads_interface,
 
 config :ssl, protocol_version: :"tlsv1.2"
 
+config :mpx,
+  mp_base_url: System.get_env("CRDS_MP_BASE_URL")
+
 config :crossroads_interface, CrossroadsInterface.Endpoint,
   url: [host: "localhost"],
   root: Path.dirname(__DIR__),
