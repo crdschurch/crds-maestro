@@ -17,7 +17,7 @@ describe('DistanceSorter', () => {
           </span>
         </div>
       </form>
-    </div> 
+    </div>
     <div class="card-deck carousel" data-carousel="mobile-scroll" data-carousel-id="carousel-a1kj76" data-filter-reset-label="All Locations">
       <div class="feature-cards card-deck--expanded-layout" data-carousel="mobile-scroll" id="section-locations">
 
@@ -32,7 +32,7 @@ describe('DistanceSorter', () => {
               SUN: 9:15 &amp; 11:00am</p>
             </div>
           </div>
-        </div>      
+        </div>
 
         <div class="card" data-filter="Central Ohio" data-location="Columbus">
           <a class="block" href="https://www.crossroads.net/columbus/"><img alt="Columbus" class="card-img-top imgix-fluid" data-src="//crds-cms-uploads.imgix.net/Uploads/locations-columbus3.jpg?h=200&amp;max-h=200w=300&amp;&amp;crop=top&amp;fit=clamp&amp;auto=format" src="http://crds-cms-uploads.imgix.net/Uploads/locations-columbus3.jpg?auto=format&amp;crop=top&amp;fit=clamp&amp;ixjsv=2.2.3&amp;w=170"></a>
@@ -129,14 +129,9 @@ describe('DistanceSorter', () => {
     ]
   };
 
-  let mockFlickity;
-
   beforeEach(() => {
     document.body.innerHTML = cardCarouselDom;
     document.getElementsByTagName('input')[0].value = '45243';
-    // domCards.cards = document.getElementsByClassName('card');
-    mockFlickity = jasmine.createSpyObj('Flickity', ['destroy', 'reloadCells', 'selectCell']);
-    spyOn(window, 'Flickity').and.returnValue(mockFlickity);
     carousels = new CRDS.CardCarousels();
     distanceSorter = new CRDS.DistanceSorter();
   });

@@ -17,6 +17,8 @@ module.exports = function(config) {
         files: [
             'node_modules/jquery/dist/jquery.js',
             'node_modules/babel-polyfill/dist/polyfill.js',
+            'node_modules/flickity/dist/flickity.pkgd.js',
+            'node_modules/crds-card-carousel/dist/crds-card-carousel-v0.0.1.js',
             'test/**/*.js'
         ],
 
