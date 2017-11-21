@@ -3,6 +3,7 @@ defmodule CrossroadsInterface.Plug.Authorized do
   Determines if the current user is actually authorized or not
   """
   import Plug.Conn
+  alias Mpx.Authentication
 
   @env Application.get_env(:crossroads_interface, :cookie_prefix, "")
 
@@ -16,11 +17,6 @@ defmodule CrossroadsInterface.Plug.Authorized do
   end
 
   defp is_authorized?(session_cookie) do
-    request_path = "api/authenticated"
-    headers = [{"Authorization", session_cookie}]
-    case CrossroadsInterface.ProxyHttp.gateway_get(request_path, headers) do
-      {_, %HTTPoison.Response{status_code: 200}} -> true
-      _ -> false
-    end
+    Authentication.valid_token?(session_cookie)
   end
 end
