@@ -1,11 +1,11 @@
 defmodule CrossroadsInterface.CrdsConnectController do
+  @moduledoc"""
+  This controller handles "/connect" (Finder) requests
+  """
   use CrossroadsInterface.Web, :controller
   require Logger
   require File
 
-  @moduledoc"""
-  This controller handles "/connect" (Finder) requests
-  """
   plug :put_layout, "screen_width.html"
   plug CrossroadsInterface.Plug.BaseHref, "/connect"
   plug CrossroadsInterface.Plug.ContentBlocks
@@ -15,7 +15,7 @@ defmodule CrossroadsInterface.CrdsConnectController do
   def index(conn, _params) do
     conn
       |> CrossroadsInterface.Plug.RedirectCookie.call("/connect")
-      |> render("app_root.html", %{ "js_files": [
+      |> render("app_root.html", %{"js_files": [
         "/js/crds_connect/inline.bundle.js",
         "/js/crds_connect/polyfills.bundle.js",
         "/js/crds_connect/styles.bundle.js",
