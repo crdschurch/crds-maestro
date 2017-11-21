@@ -7,7 +7,6 @@
   },
   "repository": {},
   "dependencies": {
-    "crds-card-carousel": "crdschurch/crds-card-carousel#feature/US10897-abstract-card-carousel",
     "crds-styles": "1.2.0",
     "iframe-resizer": "^3.5.14",
     "jquery": "^3.2.1",
