@@ -5,14 +5,15 @@
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
 
+    <script src="https://use.fontawesome.com/ccd1aba2f7.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdn.rawgit.com/imgix/imgix.js/2.2.3/dist/imgix.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/svg4everybody/2.1.8/svg4everybody.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/g/mutationobserver"></script>
-    <script src="//d1tmclqz61gqwd.cloudfront.net/tmp/crds-card-carousel-v0.0.1.min.js"></script>
-    <script src="//d1tmclqz61gqwd.cloudfront.net/javascripts/crds-shared-header-v0.5.0.min.js"></script>
+    <script src="//d1tmclqz61gqwd.cloudfront.net/javascripts/crds-card-carousel-v0.0.1.min.js"></script>
+    <script src="//d1tmclqz61gqwd.cloudfront.net/javascripts/crds-shared-header-v0.5.2.min.js"></script>
     <script src="//d1tmclqz61gqwd.cloudfront.net/javascripts/crds-status-message-v0.0.10.min.js"></script>
     <script>new CRDS.StatusMessage({ config: '//crossroads-assets.s3.amazonaws.com/browsers.json' });</script>
 

@@ -30,7 +30,7 @@ defmodule CrossroadsContent.Mixfile do
   defp deps do
     [{:cachex, "~> 2.1"},
      {:httpoison, "~> 0.13"},
-     {:poison, "~> 2.0"},
+     {:poison, "~> 3.1"},
      {:credo, "~> 0.8", only: [:dev, :test], runtime: false},
      {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
      {:mock, "~> 0.3.1", only: :test}

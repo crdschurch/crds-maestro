@@ -18,8 +18,8 @@ describe('DistanceSorter', () => {
         </div>
       </form>
     </div>
-    <div class="card-deck carousel" data-carousel="mobile-scroll" data-carousel-id="carousel-a1kj76" data-filter-reset-label="All Locations">
-      <div class="feature-cards card-deck--expanded-layout" data-carousel="mobile-scroll" id="section-locations">
+    <div class="card-deck carousel" data-crds-carousel="mobile-scroll" data-carousel-id="carousel-a1kj76" data-filter-reset-label="All Locations">
+      <div class="feature-cards card-deck--expanded-layout" data-crds-carousel="mobile-scroll" id="section-locations">
 
         <div class="card" data-filter="Central Kentucky" data-location="Andover">
           <a class="block" href="/andover/"><img alt="Andover" class="card-img-top imgix-fluid" data-src="//crds-cms-uploads.imgix.net/Uploads/crossroads-andover.jpg?h=200&amp;max-h=200w=300&amp;&amp;crop=top&amp;fit=clamp&amp;auto=format" src="http://crds-cms-uploads.imgix.net/Uploads/crossroads-andover.jpg?auto=format&amp;crop=top&amp;fit=clamp&amp;ixjsv=2.2.3&amp;w=170"></a>
