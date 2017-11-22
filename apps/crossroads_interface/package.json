@@ -7,7 +7,7 @@
   },
   "repository": {},
   "dependencies": {
-    "crds-styles": "crdschurch/crds-styles#development",
+    "crds-styles": "1.3.0",
     "iframe-resizer": "^3.5.14",
     "jquery": "^3.2.1",
     "phoenix": "file:../../deps/phoenix",
