@@ -1,11 +1,10 @@
 defmodule CrossroadsContent.Pages do
   @moduledoc """
-    Handles getting all content from the CMS
+  Handles getting all content from the CMS
   """
   use GenServer
-
   require Logger
-  require IEx
+  alias CrossroadsContent.CmsClient
 
   @timeout Application.get_env(:crossroads_content, :cms_timeout)
 
@@ -30,12 +29,12 @@ defmodule CrossroadsContent.Pages do
   end
 
   @spec get_page_routes() :: [String.t]
-  def get_page_routes() do
+  def get_page_routes do
     GenServer.call(__MODULE__, {:routes}, @timeout)
   end
 
   @spec get_page_cache() :: map
-  def get_page_cache() do
+  def get_page_cache do
     GenServer.call(__MODULE__, {:cache}, @timeout)
   end
 
@@ -56,10 +55,12 @@ defmodule CrossroadsContent.Pages do
   end
 
   def handle_call({:get, url, true}, _from, cms_page_cache) do
-    page = case get_non_angular_page(url, true) do
-      {:ok, _, %{"pages" => page_list}} when length(page_list) > 0 -> {:ok, List.first(page_list)}
-      _ -> :error
-    end
+    page =
+      case get_non_angular_page(url, true) do
+        {:ok, _, %{"pages" => page_list}} when length(page_list) > 0 ->
+          {:ok, List.first(page_list)}
+        _ -> :error
+      end
     {:reply, page, cms_page_cache}
   end
 
@@ -82,7 +83,7 @@ defmodule CrossroadsContent.Pages do
     {:ok, %{}}
   end
 
-  def handle_info(:refresh_cms_page_cache, cms_page_cache) do
+  def handle_info(:refresh_cms_page_cache, _cms_page_cache) do
     schedule_refresh_cms_page_cache()
     cms_page_cache = load_cms_page_cache()
     {:noreply, cms_page_cache}
@@ -109,57 +110,69 @@ defmodule CrossroadsContent.Pages do
 
   defp get_non_angular_pages(stage) do
     params = Map.new |> set_angular_not_required |> set_stage(stage)
-    CrossroadsContent.CmsClient.get("Page", params)
+    CmsClient.get("Page", params)
   end
 
   defp get_non_angular_page(url, stage) do
-    params = Map.new |> set_angular_not_required |> set_stage(stage) |> set_link(url)
-    CrossroadsContent.CmsClient.get("Page", params)
+    params =
+      Map.new
+      |> set_angular_not_required
+      |> set_stage(stage)
+      |> set_link(url)
+    CmsClient.get("Page", params)
   end
 
   defp get_redirector_pages(stage) do
     params = Map.new |> set_redirector_pagetype |> set_stage(stage)
-    redirector_pages = CrossroadsContent.CmsClient.get("Page", params)
+    redirector_pages = CmsClient.get("Page", params)
 
     case redirector_pages do
       {:ok, 200, response} ->
           id_map = get_redirector_targets(response)
           {:ok, 200, get_redirects(response, id_map)}
-      {:error, _, %{error: response}} -> Logger.error("Error getting CMS redirection targets: #{response}"); %{}
-      _ -> Logger.error("Error getting CMS redirection targets"); %{}
+      {:error, _, %{error: response}} = resp ->
+        Logger.error("Error getting CMS redirection targets: #{response}")
+        resp
+      err ->
+        Logger.error("Error getting CMS redirection targets")
+        err
     end
   end
 
   defp get_redirects(redirector_pages, id_map) do
     Enum.reduce(redirector_pages["pages"], %{}, fn(page, acc) ->
-      url = cond do
-        page["redirectionType"] == "Internal" -> id_map[page["linkTo"]]["link"]
-        true -> page["externalURL"]
+      url = if page["redirectionType"] == "Internal" do
+        id_map[page["linkTo"]]["link"]
+      else
+        page["externalURL"]
       end
 
-      cond do
-        url != nil -> Map.put(acc, page["link"], %{ "id" => page["id"], "link" => page["link"], "redirectUrl" => url })
-        true -> acc
+      if url != nil do
+        Map.put(acc, page["link"], %{"id" => page["id"], "link" => page["link"], "redirectUrl" => url})
+      else
+        acc
       end
-    end )
+    end)
   end
 
   defp get_redirector_targets(redirector_pages) do
-    # Call the CMS with up to 125 IDs at a time. Ideally we would make a single CMS call,
-    # but URLs are limited to 2K characters, so batching in chunks of 125 will keep us from
+    # Call the CMS with up to 125 IDs at a time.
+    # Ideally we would make a single CMS call,
+    # but URLs are limited to 2K characters,
+    # so batching in chunks of 125 will keep us from
     # exceeding the max URL length.
-    get_target_page_ids(redirector_pages)
-        |> split_ids_into_chunks(125)
-        |> load_cms_pages_in_chunks
-        |> build_redirect_map
+    redirector_pages
+    |> get_target_page_ids
+    |> split_ids_into_chunks(125)
+    |> load_cms_pages_in_chunks
+    |> build_redirect_map
   end
 
   defp get_target_page_ids(redirector_pages) do
     redirector_pages
       |> Map.get("pages", [])
-      |> Enum.filter_map(
-          fn page -> page["linkTo"] != nil end,
-          fn page -> page["linkTo"] end)
+      |> Enum.filter(fn page -> page["linkTo"] != nil end)
+      |> Enum.map(fn page -> page["linkTo"] end)
       |> Enum.uniq
   end
 
@@ -175,59 +188,74 @@ defmodule CrossroadsContent.Pages do
 
   defp load_cms_pages_in_chunks(id_chunks) do
     id_chunks
-        |> Enum.map(fn query -> CrossroadsContent.CmsClient.get("Page", query) end)
-        |> Enum.reduce([], fn(x, acc) ->
-            case x do
-              {:ok, 200, response} -> [response["pages"] | acc] |> List.flatten
-              {:error, _, %{error: response}} -> Logger.error "Error getting redirection pages: #{response}"; acc
-              _ -> Logger.error "Error getting redirection pages"; acc
-            end
-          end)
+    |> Enum.map(fn query -> CmsClient.get("Page", query) end)
+    |> Enum.reduce([], fn(x, acc) ->
+        case x do
+          {:ok, 200, response} -> [response["pages"] | acc] |> List.flatten
+          {:error, _, %{error: response}} ->
+            Logger.error "Error getting redirection pages: #{response}"
+            acc
+          _ ->
+            Logger.error "Error getting redirection pages"
+            acc
+        end
+      end)
   end
 
   # return a map keyed by page ID
   defp build_redirect_map(page_list) do
     page_list
-        |> Enum.reduce(%{}, fn(page, acc) ->
-            redirectData = %{
-              "title" => page["title"],
-              "link" => page["link"],
-            }
-            Map.put(acc, page["id"], redirectData)
-          end )
+    |> Enum.reduce(%{}, fn(page, acc) ->
+      redirect_data = %{
+        "title" => page["title"],
+        "link" => page["link"],
+      }
+      Map.put(acc, page["id"], redirect_data)
+    end)
   end
 
-  defp load_cms_page_cache() do
+  defp load_cms_page_cache do
     Logger.debug("Loading all CMS pages")
 
-    # get map of all RedirectorPages (regardless of whether "Requires Angular" is set)
+    # get map of all RedirectorPages
+    # regardless of whether "Requires Angular" is set
     redirector_pages = case get_redirector_pages(false) do
       {:ok, 200, response} -> response
-      {:error, _, %{error: response}} -> Logger.error("Error getting CMS RedirectorPage pages: #{response}"); %{}
-      _ -> Logger.error("Error getting CMS RedirectorPage pages"); %{}
+      {:error, _, %{error: response}} ->
+        Logger.error("Error getting CMS RedirectorPage pages: #{response}")
+        %{}
+      _ ->
+        Logger.error("Error getting CMS RedirectorPage pages")
+        %{}
     end
 
     # get map of pages that do not require Angular
     non_angular_pages = case get_non_angular_pages(false) do
-      {:ok, 200, response} -> create_page_map_from_response(response)
-      {:error, _, %{error: response}} -> Logger.error("Error getting CMS pages: #{response}"); %{}
-      _ -> Logger.error("Error getting CMS pages"); %{}
+      {:ok, 200, response} ->
+        create_page_map_from_response(response)
+      {:error, _, %{error: response}} ->
+        Logger.error("Error getting CMS pages: #{response}")
+        %{}
+      _ ->
+        Logger.error("Error getting CMS pages")
+        %{}
     end
 
     # combine (redirector_pages take precedence if there are duplicate keys)
     cms_page_cache = Map.merge(non_angular_pages, redirector_pages)
-
     Logger.debug("CMS page loading complete")
-
     cms_page_cache
   end
 
-  @doc "Convert the list of \"pages\" to a map keyed by the page \"link\""
   defp create_page_map_from_response(pages_response_body) do
-    Enum.reduce(pages_response_body["pages"], %{}, fn(x, acc) -> Map.put(acc, x["link"], x) end)
+    # Convert the list of \"pages\" to a map keyed by the page \"link\"
+    Enum.reduce(pages_response_body["pages"], %{}, fn(x, acc) ->
+      Map.put(acc, x["link"], x) end)
   end
 
-  defp schedule_refresh_cms_page_cache() do
-    Process.send_after(self(), :refresh_cms_page_cache, Application.get_env(:crossroads_content, :cms_cache_ttl))
+  defp schedule_refresh_cms_page_cache do
+    Process.send_after(self(),
+                       :refresh_cms_page_cache,
+                       Application.get_env(:crossroads_content, :cms_cache_ttl))
   end
 end

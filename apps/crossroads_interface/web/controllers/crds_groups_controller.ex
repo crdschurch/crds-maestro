@@ -16,7 +16,7 @@ defmodule CrossroadsInterface.CrdsGroupsController do
   def index(conn, _params) do
     conn
       |> CrossroadsInterface.Plug.RedirectCookie.call("/groups/search")
-      |> render("app_root.html", %{ "js_files": [
+      |> render("app_root.html", %{"js_files": [
         "/js/crds_connect/inline.bundle.js",
         "/js/crds_connect/polyfills.bundle.js",
         "/js/crds_connect/styles.bundle.js",
