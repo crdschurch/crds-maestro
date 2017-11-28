@@ -1,8 +1,3 @@
-# This file is responsible for configuring your application
-# and its dependencies with the aid of the Mix.Config module.
-#
-# This configuration file is loaded before any dependency and
-# is restricted to this project.
 use Mix.Config
 
 defmodule ConfigHelper do
@@ -42,7 +37,9 @@ config :crossroads_interface,
 
 config :ssl, protocol_version: :"tlsv1.2"
 
-# Configures the endpoint
+config :mpx,
+  mp_base_url: System.get_env("CRDS_MP_BASE_URL")
+
 config :crossroads_interface, CrossroadsInterface.Endpoint,
   url: [host: "localhost"],
   root: Path.dirname(__DIR__),
@@ -51,7 +48,6 @@ config :crossroads_interface, CrossroadsInterface.Endpoint,
   pubsub: [name: CrossroadsInterface.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
-# Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]

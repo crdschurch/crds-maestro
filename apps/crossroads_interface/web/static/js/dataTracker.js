@@ -31,7 +31,6 @@ CRDS.DataTracker = class DataTracker {
   }
 
   handleClick(event) {
-    event.preventDefault();
     const el = event.currentTarget;
     this.analytics.track('ElementClicked', {
       Name: el.dataset.trackClick || el.id || 'Unnamed Click Event',

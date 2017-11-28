@@ -10,7 +10,7 @@ CRDS.CardCarousels = class CardCarousels {
   constructor(selector = undefined) {
     CRDS._instances = CRDS._instances || {};
     this.carousels = [];
-    const els = document.querySelectorAll(selector || '[data-carousel]');
+    const els = document.querySelectorAll(selector || '[data-crds-carousel]');
     for (let i = 0; i < els.length; i += 1) {
       this.carousels[i] = new CRDS.CardCarousel(els[i]);
     }
@@ -31,7 +31,7 @@ CRDS.CardCarousel = class CardCarousel {
 
     this.carousel = el.querySelector('.feature-cards');
     if (this.carousel) {
-      this.carousel.dataset.carousel = el.dataset.carousel;
+      this.carousel.dataset.crdsCarousel = el.dataset.crdsCarousel;
       this.setup();
       this.addStyles();
       this.addEvents();
@@ -98,7 +98,7 @@ CRDS.CardCarousel = class CardCarousel {
   }
 
   addStyles() {
-    const carouselType = this.carousel.dataset.carousel;
+    const carouselType = this.carousel.dataset.crdsCarousel;
 
     if (carouselType === 'mobile-scroll') {
       if (window.matchMedia('(max-width: 769px)').matches) {

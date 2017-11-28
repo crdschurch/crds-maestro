@@ -4,6 +4,7 @@ defmodule CrossroadsContent.Pages do
   """
   use GenServer
   require Logger
+  alias CrossroadsContent.CmsClient
 
   @timeout Application.get_env(:crossroads_content, :cms_timeout)
 
@@ -28,12 +29,12 @@ defmodule CrossroadsContent.Pages do
   end
 
   @spec get_page_routes() :: [String.t]
-  def get_page_routes() do
+  def get_page_routes do
     GenServer.call(__MODULE__, {:routes}, @timeout)
   end
 
   @spec get_page_cache() :: map
-  def get_page_cache() do
+  def get_page_cache do
     GenServer.call(__MODULE__, {:cache}, @timeout)
   end
 
@@ -54,10 +55,12 @@ defmodule CrossroadsContent.Pages do
   end
 
   def handle_call({:get, url, true}, _from, cms_page_cache) do
-    page = case get_non_angular_page(url, true) do
-      {:ok, _, %{"pages" => page_list}} when length(page_list) > 0 -> {:ok, List.first(page_list)}
-      _ -> :error
-    end
+    page =
+      case get_non_angular_page(url, true) do
+        {:ok, _, %{"pages" => page_list}} when length(page_list) > 0 ->
+          {:ok, List.first(page_list)}
+        _ -> :error
+      end
     {:reply, page, cms_page_cache}
   end
 
@@ -107,28 +110,32 @@ defmodule CrossroadsContent.Pages do
 
   defp get_non_angular_pages(stage) do
     params = Map.new |> set_angular_not_required |> set_stage(stage)
-    CrossroadsContent.CmsClient.get("Page", params)
+    CmsClient.get("Page", params)
   end
 
   defp get_non_angular_page(url, stage) do
-    params = Map.new |> set_angular_not_required |> set_stage(stage) |> set_link(url)
-    CrossroadsContent.CmsClient.get("Page", params)
+    params =
+      Map.new
+      |> set_angular_not_required
+      |> set_stage(stage)
+      |> set_link(url)
+    CmsClient.get("Page", params)
   end
 
   defp get_redirector_pages(stage) do
     params = Map.new |> set_redirector_pagetype |> set_stage(stage)
-    redirector_pages = CrossroadsContent.CmsClient.get("Page", params)
+    redirector_pages = CmsClient.get("Page", params)
 
     case redirector_pages do
       {:ok, 200, response} ->
           id_map = get_redirector_targets(response)
           {:ok, 200, get_redirects(response, id_map)}
-      {:error, _, %{error: response}} -> 
+      {:error, _, %{error: response}} = resp ->
         Logger.error("Error getting CMS redirection targets: #{response}")
-        %{}
-      _ ->
+        resp
+      err ->
         Logger.error("Error getting CMS redirection targets")
-        %{}
+        err
     end
   end
 
@@ -141,16 +148,18 @@ defmodule CrossroadsContent.Pages do
       end
 
       if url != nil do
-        Map.put(acc, page["link"], %{ "id" => page["id"], "link" => page["link"], "redirectUrl" => url })
+        Map.put(acc, page["link"], %{"id" => page["id"], "link" => page["link"], "redirectUrl" => url})
       else
         acc
       end
-    end )
+    end)
   end
 
   defp get_redirector_targets(redirector_pages) do
-    # Call the CMS with up to 125 IDs at a time. Ideally we would make a single CMS call,
-    # but URLs are limited to 2K characters, so batching in chunks of 125 will keep us from
+    # Call the CMS with up to 125 IDs at a time.
+    # Ideally we would make a single CMS call,
+    # but URLs are limited to 2K characters,
+    # so batching in chunks of 125 will keep us from
     # exceeding the max URL length.
     redirector_pages
     |> get_target_page_ids
@@ -179,7 +188,7 @@ defmodule CrossroadsContent.Pages do
 
   defp load_cms_pages_in_chunks(id_chunks) do
     id_chunks
-    |> Enum.map(fn query -> CrossroadsContent.CmsClient.get("Page", query) end)
+    |> Enum.map(fn query -> CmsClient.get("Page", query) end)
     |> Enum.reduce([], fn(x, acc) ->
         case x do
           {:ok, 200, response} -> [response["pages"] | acc] |> List.flatten
@@ -202,13 +211,14 @@ defmodule CrossroadsContent.Pages do
         "link" => page["link"],
       }
       Map.put(acc, page["id"], redirect_data)
-    end )
+    end)
   end
 
-  defp load_cms_page_cache() do
+  defp load_cms_page_cache do
     Logger.debug("Loading all CMS pages")
 
-    # get map of all RedirectorPages (regardless of whether "Requires Angular" is set)
+    # get map of all RedirectorPages
+    # regardless of whether "Requires Angular" is set
     redirector_pages = case get_redirector_pages(false) do
       {:ok, 200, response} -> response
       {:error, _, %{error: response}} ->
@@ -239,10 +249,13 @@ defmodule CrossroadsContent.Pages do
 
   defp create_page_map_from_response(pages_response_body) do
     # Convert the list of \"pages\" to a map keyed by the page \"link\"
-    Enum.reduce(pages_response_body["pages"], %{}, fn(x, acc) -> Map.put(acc, x["link"], x) end)
+    Enum.reduce(pages_response_body["pages"], %{}, fn(x, acc) ->
+      Map.put(acc, x["link"], x) end)
   end
 
-  defp schedule_refresh_cms_page_cache() do
-    Process.send_after(self(), :refresh_cms_page_cache, Application.get_env(:crossroads_content, :cms_cache_ttl))
+  defp schedule_refresh_cms_page_cache do
+    Process.send_after(self(),
+                       :refresh_cms_page_cache,
+                       Application.get_env(:crossroads_content, :cms_cache_ttl))
   end
 end
