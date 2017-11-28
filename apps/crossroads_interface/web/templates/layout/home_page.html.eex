@@ -1,9 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="crossroads">
   <head>
-    <!-- Begin Monetate ExpressTag Sync v8.1. Place at start of document head. DO NOT ALTER. -->
-    <script type="text/javascript">var monetateT = new Date().getTime();</script>
-    <script type="text/javascript" src="//se.monetate.net/js/2/a-ad392f3b/d/crossroads.net/entry.js"></script>
+    <!-- Begin Monetate ExpressTag Async v6.1. Place at start of document head. DO NOT ALTER. -->
+    <script type="text/javascript">
+    var monetateT = new Date().getTime();
+    (function() {
+        var p = document.location.protocol;
+        if (p == "http:" || p == "https:") {
+            var m = document.createElement('script'); m.type = 'text/javascript'; m.async = true; m.src = (p == "https:" ? "https://s" : "http://") + "e.monetate.net/js/2/a-ad392f3b/d/crossroads.net/custom.js";
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(m, s);
+        }
+    })();
+    </script>
     <!-- End Monetate tag. -->
     <%= render_existing CrossroadsInterface.SharedView, @meta_template, assigns %>
     <%= render CrossroadsInterface.SharedView, "common_head.html", assigns %>
