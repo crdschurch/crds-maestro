@@ -1,29 +1,47 @@
+.card-deck--wrap {
+  flex-wrap: wrap;
+}
+
 .card-deck--expanded-layout .card.card--thumbnail {
-    @media (min-width: $screen-sm-min) {
-        max-width: 16.66667%;
-    }
+  max-width: 50%;
+  @media (min-width: $screen-sm-min) {
+    max-width: 16.66667%;
+  }
 }
 
 .card--thumbnail {
+  a:hover {
+    text-decoration: none;
+  }
 
-    a:hover {
-        text-decoration: none;
+  .card-block {
+    padding: 0.5rem 0;
+
+    .card-title {
+      margin: 0.25rem 0;
+      font-size: 0.875rem;
     }
-
-    .card-block {
-        padding: .5rem 0;
-
-        .card-title {
-            margin: .25rem 0;
-            font-size: .875rem;
-        }
-    }
+  }
 }
 
 .media-section-heading .btn-group {
-    margin-left: 1rem;
-    margin-top: 1.25rem;
-    @media (min-width: $screen-xs-min) {
-        margin-top: 1.875rem;
-    }
+  margin-left: 1rem;
+  margin-top: 1.25rem;
+  @media (min-width: $screen-xs-min) {
+    margin-top: 1.875rem;
+  }
+}
+
+// Music Page
+.jumbotron.music-jumbotron {
+  background: url(//crds-cms-uploads.imgix.net/content/images/music-intro-bg.jpg) top center no-repeat;
+  background-size: cover;
+  color: $cr-white;
+
+  p.lead {
+    padding: 0 2rem;
+    margin-top: 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+  }
 }
