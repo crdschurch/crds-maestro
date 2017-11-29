@@ -14,7 +14,7 @@ defmodule CrossroadsInterface.CrdsGroupLeaderController do
   def index(conn, _params) do
     conn
     |> CrossroadsInterface.Plug.RedirectCookie.call("/group-leader")
-    |> render("app_root.html", %{ "js_files": [
+    |> render("app_root.html", %{"js_files": [
         "/js/group_leader/inline.bundle.js",
         "/js/group_leader/polyfills.bundle.js",
         "/js/group_leader/styles.bundle.js",
