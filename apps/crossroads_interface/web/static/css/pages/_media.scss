@@ -4,6 +4,9 @@
 
 .card-deck--expanded-layout .card.card--thumbnail {
   max-width: 50%;
+  @media (min-width: $screen-xs-min) {
+    max-width: 25%;
+  }
   @media (min-width: $screen-sm-min) {
     max-width: 16.66667%;
   }
@@ -28,7 +31,7 @@
   .btn-group {
     margin: 1rem 0;
   
-    @media (min-width: $screen-sm-min) {
+    @media (min-width: $screen-xs-min) {
       margin-left: 1rem;
       margin-top: 1.875rem;
     }
@@ -38,7 +41,7 @@
     float: none;
     margin-bottom: 0;
 
-    @media (min-width: $screen-sm-min) {
+    @media (min-width: $screen-xs-min) {
       float: left;
       margin-bottom: 1.5rem;
     }
