@@ -11,7 +11,9 @@ config :crossroads_interface,
   app_client_endpoint: "/",
   streamspot_id: "crossr30e3",
   streamspot_key: "a0cb38cb-8146-47c2-b11f-6d93f4647389"
-
+  
+config :mpx,
+  mp_base_url: System.get_env("CRDS_MP_BASE_URL") || "https://adminint.crossroads.net"
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
