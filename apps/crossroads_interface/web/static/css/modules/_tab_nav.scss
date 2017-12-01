@@ -17,6 +17,7 @@
 
   @media (min-width: $screen-sm-min) {
     position: relative;
+    position: -webkit-sticky;
     position: sticky;
     top: 0;
     margin-bottom: 1.5rem;
@@ -157,6 +158,7 @@
 
     @media (min-width: $screen-sm-min) {
       position: relative;
+      position: -webkit-sticky;
       position: sticky;
     }
   }
