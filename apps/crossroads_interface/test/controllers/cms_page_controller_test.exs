@@ -30,6 +30,29 @@ defmodule CrossroadsInterface.CmsPageControllerTest do
         "disableAuthenicatedFinishAction" => nil, "link" => "/habitat/",
         "onCompleteMessage" => nil, "legacyStyles" => "1", "canEditType" => nil}}
 
+  @get_auth_page_response {:ok,
+      %{"title" => "Form",
+        "canViewType" => "LoggedInUsers",
+        "uRLSegment" => "form",
+        "id" => 268,
+        "content" => "<div class='fred-form' id='formid' redirecturl='https://google.com'></div>",
+        "bodyClasses" => "dad-bod,goofy",
+        "className" => "CenteredContentPage",
+        "pageType" => "CenteredContentPage",
+        "link" => "/form/",
+        "legacyStyles" => "0",
+        "canEditType" => nil}}
+
+  def with_session(conn) do
+    session_opts = Plug.Session.init(store: :cookie, key: "_app",
+                                      encryption_salt: "abc", signing_salt: "abc")
+    conn()
+    |> Map.put(:secret_key_base, String.duplicate("abcdefgh", 8))
+    |> Plug.Session.call(session_opts)
+    |> Plug.Conn.fetch_session()
+    |> Plug.Conn.fetch_query_params()
+  end
+
   test "Getting a page that exists at /habitat/", %{conn: conn} do
     with_mocks([ {CmsClient, [], [get_system_page: fn(page) -> {:ok, 200, fake_system_page(page)} end]},
                  {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
@@ -64,7 +87,7 @@ defmodule CrossroadsInterface.CmsPageControllerTest do
                  {Pages, [], [get_page: fn(_path) -> @get_page_response end ]},
                  {Pages, [], [get_page: fn(_path, _) -> @get_page_response end ]}]) do
       conn = get conn, "/habitat/"
-      assert conn.assigns[:layout] =={CrossroadsInterface.LayoutView, "centered_content_page.html"}
+      assert conn.assigns[:layout] == {CrossroadsInterface.LayoutView, "centered_content_page.html"}
     end
   end
 
@@ -92,4 +115,52 @@ defmodule CrossroadsInterface.CmsPageControllerTest do
     end
   end
   
+  test "Getting LoggedInUsers protected page with redirect if not authorized" do
+    with_mocks([ {CmsClient, [], [get_system_page: fn(page) -> {:ok, 200, fake_system_page(page)} end]},
+                 {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
+                 {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]},
+                 {Pages, [], [page_exists?: fn(_path) -> true end]},
+                 {Pages, [], [get_page: fn(_path) -> @get_auth_page_response end ]},
+                 {Pages, [], [get_page: fn(_path, _) -> @get_auth_page_response end ]},
+                 {CrossroadsInterface.Plug.Authorized, [], [call: fn(conn, _) -> assign(conn, :authorized, false) end]}
+              ]) do
+      conn = get conn, "/form/"
+      assert html_response(conn, 302)
+    end
+  end
+
+  test "getting authorized cms page should set cookies correctly" do
+     with_mocks([
+       {CmsClient, [], [get_system_page: fn(page) -> {:ok, 200, fake_system_page(page)} end]},
+       {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
+       {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]},
+       {Pages, [], [page_exists?: fn(_path) -> true end]},
+       {Pages, [], [get_page: fn(_path) -> @get_auth_page_response end ]},
+       {Pages, [], [get_page: fn(_path, _) -> @get_auth_page_response end ]},
+       {CrossroadsInterface.Plug.Authorized, [], [call: fn(conn, _) -> assign(conn, :authorized, true) end]}
+     ]) do
+      conn = get conn, "/form/"
+      assert conn.resp_cookies["redirectUrl"].value == "content"
+      assert conn.resp_cookies["params"].value == "%7B%22link%22:%22/form/%22%7D"
+    end
+  end
+
+  test "getting authorized cms page when authorized should allow" do
+    with_mocks([
+      {CmsClient, [], [get_system_page: fn(page) -> {:ok, 200, fake_system_page(page)} end]},
+      {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
+      {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]},
+      {Pages, [], [page_exists?: fn(_path) -> true end]},
+      {Pages, [], [get_page: fn(_path) -> @get_auth_page_response end]},
+      {Pages, [], [get_page: fn(_path, _) -> @get_auth_page_response end]},
+      {CrossroadsInterface.Plug.Authorized, [], [call: fn(conn, _) -> assign(conn, :authorized, true) end]}
+    ]) do
+      conn =
+        conn
+        |> with_session
+        |> Map.put(:req_cookies, %{"intsessionId" => "1234"})
+        |> get "/form/"
+      assert html_response(conn, 200)
+    end
+  end
 end
