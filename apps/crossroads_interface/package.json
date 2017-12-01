@@ -22,7 +22,6 @@
     "brunch": "^2.1.3",
     "clean-css-brunch": ">= 1.0 < 1.8",
     "copycat-brunch": "^1.1.0",
-    "crds-card-carousel": "crdschurch/crds-card-carousel#development",
     "css-brunch": ">= 1.0 < 1.8",
     "eslint": "^4.5.0",
     "eslint-config-airbnb-base": "^11.3.2",
