@@ -1,12 +1,12 @@
 // CRDS Tab Nav
 .crds-tab-nav {
   display: block;
-  padding: 0;
   margin: 0;
+  padding: 0;
   height: 60px;
   background-color: $cr-cyan;
-  z-index: 10;
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.15);
+  z-index: 10;
 
   // Using boostrap variables to support tablets
   // We can have a deeper conversation in the future about
@@ -26,21 +26,21 @@
   }
 
   .tab-container {
-      @media (min-width: $screen-sm-min) {
-        max-width: 720px;
-        margin-left: auto;
-        margin-right: auto;
-        padding-bottom: 17px;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-      }
+    @media (min-width: $screen-sm-min) {
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 720px;
+      padding-bottom: 17px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    }
 
-      @media (min-width: $screen-md-min) {
-          max-width: 940px;
-      }
+    @media (min-width: $screen-md-min) {
+      max-width: 940px;
+    }
 
-      @media (min-width: $screen-lg-min) {
-          max-width: 1140px;
-      }
+    @media (min-width: $screen-lg-min) {
+      max-width: 1140px;
+    }
   }
 
   a {
@@ -66,8 +66,8 @@
       padding-right: 0.5rem;
       padding-left: 0.5rem;
       font-size: 1rem;
-      line-height: 1;
       font-weight: 400;
+      line-height: 1;
       color: $cr-gray;
     }
 
@@ -111,6 +111,15 @@
 
   &.dark {
     background-color: $cr-blue-dark;
+
+    a {
+      color: $cr-gray-light; 
+    }
+
+    .active {
+      color: $cr-gray-lighter;
+    }
+    
   }
 
   &.light {
@@ -124,6 +133,11 @@
     a:hover {
       color: #1d3647;
     }
+  }
+
+  &.dark .tab-container,
+  &.light .tab-container {
+    border-bottom: 0;
   }
 
   &.top {
@@ -142,8 +156,8 @@
     transform: translateZ(0);
 
     @media (min-width: $screen-sm-min) {
-        position: relative;
-        position: sticky;
+      position: relative;
+      position: sticky;
     }
   }
 }
