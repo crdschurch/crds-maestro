@@ -27,7 +27,7 @@ describe('UserService', () => {
     deleteCookie('username');
   });
 
-  fit('should customize the welcome message based on user name', () => {
+  it('should customize the welcome message based on user name', () => {
     document.cookie = 'username=Rodney';
     user = new CRDS.UserService();
     user.customizeName('foo', 'Cool Guy');
