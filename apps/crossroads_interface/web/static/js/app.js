@@ -8,7 +8,7 @@ import Countdown from './home_page/countdown';
 import LocationFinder from './home_page/location_finder';
 import DistanceSorter from './home_page/distance_sorter';
 import DataTracker from './dataTracker';
-
+import UserService from './userService';
 const domReady = (callback) => {
   document.addEventListener('DOMContentLoaded', callback);
 };
