@@ -26,7 +26,7 @@ defmodule CrossroadsInterface.LegacyController do
     path = conn.request_path |> ContentHelpers.add_trailing_slash_if_necessary
     case CrossroadsContent.Pages.get_page(determine_authorized_path(conn, path),
                                           ContentHelpers.is_stage_request?(conn.params)) do      
-      {:ok, page}      
+      {:ok, page}
         -> conn
           |> assign(:path, path)
           |> assign(:page, page)
@@ -65,7 +65,7 @@ defmodule CrossroadsInterface.LegacyController do
 
   defp renderLegacyApp(conn, _params) do
     if conn.assigns[:redirect] do
-      conn |> CrossroadsInterface.Plug.RedirectCookie.call(conn.request_path)
+      conn = conn |> CrossroadsInterface.Plug.RedirectCookie.call(conn.request_path)
     end
     conn |> render("app_root.html", %{"js_files": [
         "/js/legacy/ang.js",

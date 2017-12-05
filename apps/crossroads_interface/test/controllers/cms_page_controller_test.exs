@@ -4,8 +4,6 @@ defmodule CrossroadsInterface.CmsPageControllerTest do
   alias CrossroadsContent.Pages
   import Mock
 
-  require IEx
-
   @get_page_response {:ok,
         %{"submitButtonText" => nil, "title" => "Habitat",
         "created" => "2015-08-24T14:06:05-04:00", "canViewType" => nil,
@@ -115,7 +113,7 @@ defmodule CrossroadsInterface.CmsPageControllerTest do
     end
   end
   
-  test "Getting LoggedInUsers protected page with redirect if not authorized" do
+  test "Getting authorized page with redirect if not authorized" do
     with_mocks([ {CmsClient, [], [get_system_page: fn(page) -> {:ok, 200, fake_system_page(page)} end]},
                  {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]},

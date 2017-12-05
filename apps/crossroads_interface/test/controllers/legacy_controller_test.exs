@@ -3,7 +3,6 @@ defmodule CrossroadsInterface.LegacyControllerTest do
   alias CrossroadsContent.CmsClient
   alias CrossroadsContent.Pages
   import Mock
-  require IEx
 
   test "index/2 should return logged out user page when user is not authenticated", %{conn: conn} do
     with_mocks([ {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
@@ -66,8 +65,8 @@ defmodule CrossroadsInterface.LegacyControllerTest do
                  {CmsClient, [], [get_system_page: fn("") -> {:ok, 200, fake_system_page("")} end]},
                  {Pages, [], [get_page: fn(_path, _stage) -> :error end]},
                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
-      conn = get conn, "/"
-      assert conn.assigns[:redirect] == true
+      conn = get conn, "/legacypage"
+      assert conn.resp_cookies["redirectUrl"].value == "/legacypage"
     end
   end
 
@@ -99,7 +98,7 @@ defmodule CrossroadsInterface.LegacyControllerTest do
                   {Pages, [], [get_page: fn(_path, _stage) -> :error end]},
                   {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
       conn = get conn, "/signin"
-      assert conn.assigns[:redirect] == false
+      assert !Map.has_key?(conn.resp_cookies, "redirectUrl")
     end
   end
 
