@@ -27,6 +27,7 @@
     "eslint": "^4.5.0",
     "eslint-config-airbnb-base": "^11.3.2",
     "eslint-plugin-import": "^2.7.0",
+    "flickity": "^2.0.10",
     "jasmine-core": "^2.7.0",
     "jasmine-es6": "^0.4.0",
     "javascript-brunch": ">= 1.0 < 1.8",
