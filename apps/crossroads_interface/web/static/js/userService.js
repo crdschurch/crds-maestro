@@ -10,11 +10,10 @@ CRDS.UserService = class UserService {
   }
 
   customizeName(htmlId, fallbackName) {
-    if (htmlId !== undefined) {
+    const el = document.getElementById(htmlId);
+    if (el !== null) {
       const elText = this.profileName !== undefined ? this.profileName : fallbackName;
       document.getElementById(htmlId).innerText = elText;
-    } else {
-      console.warn(`${htmlId} does not exist on the page.`);
     }
   }
 };
