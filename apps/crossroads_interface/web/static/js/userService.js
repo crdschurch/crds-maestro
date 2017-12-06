@@ -12,7 +12,9 @@ CRDS.UserService = class UserService {
   customizeName(htmlId, fallbackName) {
     const el = document.getElementById(htmlId);
     if (el !== null) {
-      const elText = this.profileName !== undefined ? this.profileName : fallbackName;
+      const elText = this.profileName !== '' && this.profileName !== undefined
+        ? this.profileName
+        : fallbackName;
       document.getElementById(htmlId).innerText = elText;
     }
   }
