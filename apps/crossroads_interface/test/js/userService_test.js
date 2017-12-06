@@ -38,4 +38,9 @@ describe('UserService', () => {
     user.customizeName('foo', 'Bodacious Dude');
     expect(welcomeTitle.innerText).toEqual('Bodacious Dude');
   });
+
+  it('should not do anything if the ID is not on the page', () => {
+    user.customizeName('beef', 'Fellow Carnivore');
+    expect(welcomeTitle.innerText).toEqual('');
+  });
 });
