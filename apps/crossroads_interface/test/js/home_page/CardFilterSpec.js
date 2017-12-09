@@ -6,6 +6,9 @@ describe('CardFilter', () => {
   window.Mustache = {
     render() {}
   };
+  window.imgix = {
+    fluid() {}
+  };
   beforeEach(() => {
     const testDom = `
       <section class="container" ng-non-bindable="">
@@ -166,7 +169,7 @@ describe('CardFilter', () => {
             </div>
           </div>
         </div>
-      </section>  
+      </section>
     `;
 
     document.body.innerHTML = testDom;
