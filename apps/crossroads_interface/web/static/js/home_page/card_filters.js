@@ -125,6 +125,9 @@ CRDS.CardFilter = class CardFilter {
     if (el) {
       el.classList.add('on');
     }
+    if (imgix) {
+      imgix.fluid();
+    }
   }
 
   setCurrentLabel(str) {
