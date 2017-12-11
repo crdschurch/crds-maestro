@@ -8,6 +8,8 @@ import LocationFinder from './home_page/location_finder';
 import DistanceSorter from './home_page/distance_sorter';
 import DataTracker from './dataTracker';
 import UserService from './userService';
+import imgixImagesLoaded from './imgixImagesLoaded';
+
 const domReady = (callback) => {
   document.addEventListener('DOMContentLoaded', callback);
 };
@@ -16,7 +18,9 @@ export const App = {
   run: () => {
     phoenixEventListener();
     domReady(() => {
-      svgFixer();
+    svgFixer();
+    window.CRDS = window.CRDS || {};
+    window.CRDS.imgixImagesLoaded = imgixImagesLoaded; 
       const iFrameResizer = require('iframe-resizer/js/iframeResizer.min.js');
       iFrameResizer({ log: true }, '#fred');
     });
