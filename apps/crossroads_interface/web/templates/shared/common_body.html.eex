@@ -12,7 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/svg4everybody/2.1.8/svg4everybody.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/g/mutationobserver"></script>
-    <script src="//d1tmclqz61gqwd.cloudfront.net/javascripts/crds-card-carousel-v0.1.0.min.js"></script>
+    <script src="//d1tmclqz61gqwd.cloudfront.net/javascripts/crds-card-carousel-v0.1.1.min.js"></script>
     <script src="//d1tmclqz61gqwd.cloudfront.net/javascripts/crds-shared-header-v0.5.5.min.js"></script>
     <script src="//d1tmclqz61gqwd.cloudfront.net/javascripts/crds-status-message-v0.0.10.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.19/webcomponents-lite.js"></script>
