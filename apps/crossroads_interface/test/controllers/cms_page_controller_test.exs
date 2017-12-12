@@ -139,7 +139,7 @@ defmodule CrossroadsInterface.CmsPageControllerTest do
      ]) do
       conn = get conn, "/form/"
       assert conn.resp_cookies["redirectUrl"].value == "content"
-      assert conn.resp_cookies["params"].value == "%7B%22link%22:%22/form/%22%7D"
+      assert conn.resp_cookies["params"].value == URI.encode("{\"link\":\"/form/\"}")
     end
   end
 

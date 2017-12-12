@@ -11,7 +11,7 @@ defmodule CrossroadsInterface.LegacyController do
   plug :put_layout, "no_header_or_footer.html"
 
   @doc """
-  When angular can't find a route, it sends a request back with ?resolve=true
+  When angular can't find a route, it sets a cookie notlegacy=<route>
   which in turn renders error view and the 404 template
   """
   def index(conn, params) do
@@ -52,7 +52,7 @@ defmodule CrossroadsInterface.LegacyController do
     end
   end
 
-  defp renderLegacyApp(conn, %{ "resolve" => "true" }) do
+  defp renderNotFound(conn) do
     conn
     |> CrossroadsInterface.Plug.ContentBlocks.call("")
     |> CrossroadsInterface.Plug.Meta.call("")
@@ -64,19 +64,28 @@ defmodule CrossroadsInterface.LegacyController do
   end
 
   defp renderLegacyApp(conn, _params) do
-    if conn.assigns[:redirect] do
-      conn = conn |> CrossroadsInterface.Plug.RedirectCookie.call(conn.request_path)
+    # when legacy app encounters a route it cannot serve, it sets cookie "notlegacy" with value of that route
+    if conn.cookies["notlegacy"] != nil && URI.decode(conn.cookies["notlegacy"]) == conn.request_path |> ContentHelpers.add_trailing_slash_if_necessary do      
+      conn 
+      |> CrossroadsInterface.Plug.Cookie.call("notlegacy", "") 
+      |> renderNotFound()
+    else    
+      if conn.assigns[:redirect] do
+        conn = conn |> CrossroadsInterface.Plug.RedirectCookie.call(conn.request_path)
+      end
+      conn 
+      |> CrossroadsInterface.Plug.Cookie.call("notlegacy", "") 
+      |> render("app_root.html", %{"js_files": [
+          "/js/legacy/ang.js",
+          "/js/legacy/core.js",
+          "/js/legacy/misc.js",
+          "/js/legacy/main.js"
+        ], "css_files": [
+        "/css/app.css",
+        "/js/legacy/legacy.css",
+        "/js/legacy/core.css"
+        ], "base_href": "/"})
     end
-    conn |> render("app_root.html", %{"js_files": [
-        "/js/legacy/ang.js",
-        "/js/legacy/core.js",
-        "/js/legacy/misc.js",
-        "/js/legacy/main.js"
-      ], "css_files": [
-       "/css/app.css",
-       "/js/legacy/legacy.css",
-       "/js/legacy/core.css"
-      ], "base_href": "/"})
   end
 
 end
