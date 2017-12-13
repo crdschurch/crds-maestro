@@ -13,8 +13,8 @@
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/svg4everybody/2.1.8/svg4everybody.min.js"></script>
     <script type="text/javascript" src="//cdn.jsdelivr.net/g/mutationobserver"></script>
     <script src="//d1tmclqz61gqwd.cloudfront.net/javascripts/crds-card-carousel-v0.1.0.min.js"></script>
-    <script src="//d1tmclqz61gqwd.cloudfront.net/javascripts/crds-shared-header-v0.5.3.min.js"></script>
-    <script src="//d1tmclqz61gqwd.cloudfront.net/javascripts/crds-status-message-v0.1.0.min.js"></script>
+    <script src="//d1tmclqz61gqwd.cloudfront.net/javascripts/crds-shared-header-v0.5.5.min.js"></script>
+    <script src="//d1tmclqz61gqwd.cloudfront.net/javascripts/crds-status-message-v0.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.19/webcomponents-lite.js"></script>
     <script src="<%= @embed_url %>/fred/js/simplefred.min.js"></script>
     <script>new CRDS.StatusMessage({ config: '//crossroads-assets.s3.amazonaws.com/browsers.json' });</script>
