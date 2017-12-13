@@ -11,7 +11,7 @@ defmodule CrossroadsInterface.LegacyController do
   plug :put_layout, "no_header_or_footer.html"
 
   @doc """
-  When angular can't find a route, it sets a cookie notlegacy=<route>
+  When angular can't find a route, it sets a cookie unmatchedLegacyRoute=<route>
   which in turn renders error view and the 404 template
   """
   def index(conn, params) do
@@ -64,17 +64,17 @@ defmodule CrossroadsInterface.LegacyController do
   end
 
   defp renderLegacyApp(conn, _params) do
-    # when legacy app encounters a route it cannot serve, it sets cookie "notlegacy" with value of that route
-    if conn.cookies["notlegacy"] != nil && URI.decode(conn.cookies["notlegacy"]) == conn.request_path |> ContentHelpers.add_trailing_slash_if_necessary do      
+    # when legacy app encounters a route it cannot serve, it sets cookie "unmatchedLegacyRoute" with value of that route
+    if conn.cookies["unmatchedLegacyRoute"] != nil && URI.decode(conn.cookies["unmatchedLegacyRoute"]) == conn.request_path |> ContentHelpers.add_trailing_slash_if_necessary do      
       conn 
-      |> CrossroadsInterface.Plug.Cookie.call("notlegacy", "") 
+      |> CrossroadsInterface.Plug.Cookie.call("unmatchedLegacyRoute", "") 
       |> renderNotFound()
     else    
       if conn.assigns[:redirect] do
         conn = conn |> CrossroadsInterface.Plug.RedirectCookie.call(conn.request_path)
       end
       conn 
-      |> CrossroadsInterface.Plug.Cookie.call("notlegacy", "") 
+      |> CrossroadsInterface.Plug.Cookie.call("unmatchedLegacyRoute", "") 
       |> render("app_root.html", %{"js_files": [
           "/js/legacy/ang.js",
           "/js/legacy/core.js",
