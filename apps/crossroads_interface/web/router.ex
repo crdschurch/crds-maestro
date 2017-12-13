@@ -12,6 +12,7 @@ defmodule CrossroadsInterface.Router do
     plug CrossroadsInterface.Plug.PutMetaTemplate
     plug CrossroadsInterface.Plug.BodyClass
     plug CrossroadsInterface.Plug.CrdsStyles
+    plug CrossroadsInterface.Plug.EmbedUrl
   end
 
   pipeline :api do

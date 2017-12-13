@@ -3,7 +3,6 @@ defmodule CrossroadsInterface.LegacyControllerTest do
   alias CrossroadsContent.CmsClient
   alias CrossroadsContent.Pages
   import Mock
-  require IEx
 
   test "index/2 should return logged out user page when user is not authenticated", %{conn: conn} do
     with_mocks([ {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
@@ -61,6 +60,16 @@ defmodule CrossroadsInterface.LegacyControllerTest do
     end
   end
 
+  test "GET non CMS page sets redirectUrl", %{conn: conn} do
+    with_mocks([ {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
+                 {CmsClient, [], [get_system_page: fn("") -> {:ok, 200, fake_system_page("")} end]},
+                 {Pages, [], [get_page: fn(_path, _stage) -> :error end]},
+                 {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
+      conn = get conn, "/legacypage"
+      assert conn.resp_cookies["redirectUrl"].value == "/legacypage"
+    end
+  end
+
   test "GET /non-existant?resolve=true is 404", %{conn: conn} do
     with_mocks([ {Pages,     [], [page_exists?: fn(_page) -> false end]},
                  {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
@@ -80,6 +89,16 @@ defmodule CrossroadsInterface.LegacyControllerTest do
                   {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
       conn = get conn, "/signin"
       assert html_response(conn, 200)
+    end
+  end
+
+  test "GET /signin does not set redirectUrl", %{conn: conn} do
+    with_mocks([ {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
+                  {CmsClient, [], [get_system_page: fn("signin") -> {:ok, 200, fake_system_page("signin")} end]},
+                  {Pages, [], [get_page: fn(_path, _stage) -> :error end]},
+                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
+      conn = get conn, "/signin"
+      assert !Map.has_key?(conn.resp_cookies, "redirectUrl")
     end
   end
 

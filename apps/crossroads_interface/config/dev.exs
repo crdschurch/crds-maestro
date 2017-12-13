@@ -6,12 +6,14 @@ config :crossroads_content,
 config :crossroads_interface,	
   gateway_server_endpoint: System.get_env("CRDS_GATEWAY_SERVER_ENDPOINT") || "https://gatewayint.crossroads.net/gateway/",
   cms_client_endpoint: System.get_env("CRDS_CMS_CLIENT_ENDPOINT") || "https://contentint.crossroads.net/",
-  cookie_prefix: "",
+  cookie_prefix: System.get_env("CRDS_ENV") || "",
   cookie_domain: "",
   app_client_endpoint: "/",
   streamspot_id: "crossr30e3",
   streamspot_key: "a0cb38cb-8146-47c2-b11f-6d93f4647389"
-
+  
+config :mpx,
+  mp_base_url: System.get_env("CRDS_MP_BASE_URL") || "https://adminint.crossroads.net"
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
