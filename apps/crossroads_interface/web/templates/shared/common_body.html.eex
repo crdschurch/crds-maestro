@@ -15,9 +15,13 @@
     <script src="//d1tmclqz61gqwd.cloudfront.net/javascripts/crds-card-carousel-v0.1.1.min.js"></script>
     <script src="//d1tmclqz61gqwd.cloudfront.net/javascripts/crds-shared-header-v0.5.5.min.js"></script>
     <script src="//d1tmclqz61gqwd.cloudfront.net/javascripts/crds-status-message-v0.1.1.min.js"></script>
+    <script src="//d1tmclqz61gqwd.cloudfront.net/javascripts/crds-jumbotron-video-v0.1.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.19/webcomponents-lite.js"></script>
     <script src="<%= @embed_url %>/fred/js/simplefred.min.js"></script>
-    <script>new CRDS.StatusMessage({ config: '//crossroads-assets.s3.amazonaws.com/browsers.json' });</script>
+    <script>
+      new CRDS.StatusMessage({ config: '//crossroads-assets.s3.amazonaws.com/browsers.json' });
+      CRDS.JumbotronVideoPlayers = CRDS.JumbotronVideos;
+    </script>
 
     <script>
       imgix.onready(function() {

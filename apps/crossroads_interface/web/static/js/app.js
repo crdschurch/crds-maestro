@@ -1,6 +1,5 @@
 import phoenixEventListener from './phoenixEventListener';
 import svgFixer from './svgFixer';
-import JumbotronVideoPlayer from './home_page/jumbotron_video_player';
 import CardFilters from './home_page/card_filters';
 import VideoModal from './home_page/video_modal';
 import Countdown from './home_page/countdown';
@@ -20,7 +19,7 @@ export const App = {
     domReady(() => {
     svgFixer();
     window.CRDS = window.CRDS || {};
-    window.CRDS.imgixImagesLoaded = imgixImagesLoaded; 
+    window.CRDS.imgixImagesLoaded = imgixImagesLoaded;
       const iFrameResizer = require('iframe-resizer/js/iframeResizer.min.js');
       iFrameResizer({ log: true }, '#fred');
     });
