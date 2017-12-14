@@ -18,7 +18,7 @@ module.exports = function(config) {
             'node_modules/jquery/dist/jquery.js',
             'node_modules/babel-polyfill/dist/polyfill.js',
             'node_modules/flickity/dist/flickity.pkgd.js',
-            'https://d1tmclqz61gqwd.cloudfront.net/javascripts/crds-card-carousel-v0.1.0.min.js',
+            'https://d1tmclqz61gqwd.cloudfront.net/javascripts/crds-card-carousel-v0.1.1.min.js',
             'test/**/*.js'
         ],
 
