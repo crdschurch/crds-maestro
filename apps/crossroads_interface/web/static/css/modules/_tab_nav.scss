@@ -42,12 +42,28 @@
     @media (min-width: $screen-lg-min) {
       max-width: 1140px;
     }
+
+    &.tabs-3x a {
+      width: calc(100%/3);
+    }
+  
+    &.tabs-4x a {
+      width: calc(100%/4);
+    }
+  
+    &.tabs-5x a {
+      width: calc(100%/5);
+    }
+  
+    &.tabs-6x a {
+      width: calc(100%/6);
+    }
+
   }
 
   a {
     float: left;
     padding-top: 0.25rem;
-    width: 20%;
     height: 100%;
     font-size: 0.6875rem;
     font-weight: 600;
