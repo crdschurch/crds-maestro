@@ -1,4 +1,4 @@
-defmodule CrossroadsContent.Pages do
+defmodule CrossroadsContent.PagesExp do
   @moduledoc """
   Handles getting all content from the CMS
   """
@@ -88,6 +88,17 @@ defmodule CrossroadsContent.Pages do
     schedule_refresh_cms_page_cache()
     cms_page_cache = load_cms_page_cache(@retry_interval)
     {:noreply, cms_page_cache}
+  end
+
+  def handle_info(:load_cms_page_cache, _cms_page_cache) do    
+    cms_page_cache = load_cms_page_cache(@retry_interval)
+    {:noreply, cms_page_cache}
+  end
+
+  def handle_info(:load_cms_page_cache, delay, _cms_page_cache) do
+    # Process.send_after(self(), :load_cms_page_cache, delay)
+    cms_page_cache = load_cms_page_cache(delay)
+    {:noreply, %{}}
   end
 
   defp set_angular_not_required(params) do
@@ -256,8 +267,7 @@ defmodule CrossroadsContent.Pages do
 
   defp retry_cms_refresh([time|times]) do
     Logger.debug("Retry loading all CMS pages in #{time} seconds")
-    Process.sleep(time * 1000)
-    load_cms_page_cache(times)
+    Process.send_after(self(), :load_cms_page_cache, time * 1000)
   end
 
   defp retry_cms_refresh([]), do: %{}
