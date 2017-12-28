@@ -1,0 +1,13 @@
+<img src=<%= assigns.series_still %> />
+<h1><%= assigns.series_title %></h1>
+<p><%= raw assigns.series_description %></p>
+<p><%= assigns.series_start_date %> - <%= assigns.series_end_date %></p>
+<ul>
+<%= for message <- assigns.series_messages do %>
+  <li>
+    <h3><%= message.title %></h3>
+    <img src=<%= message.message_still %> />
+    <span><%= message.message_date %></span>
+  </li>
+<% end %>
+</ul>
