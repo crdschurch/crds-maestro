@@ -2,7 +2,10 @@ defmodule CrossroadsInterface.CmsSeriesController do
   use CrossroadsInterface.Web, :controller
   alias CrossroadsInterface.Plug
 
-  plug :put_layout, "screen_width_2.html"
+  plug Plug.Meta
+  plug Plug.ContentBlocks
+  plug Plug.BodyClass, "crds-styles"
+  plug :put_layout, "screen_width.html"
 
   @base_url Application.get_env(:crossroads_content, :cms_server_endpoint)
   @timeout Application.get_env(:crossroads_content, :cms_timeout)
@@ -21,12 +24,14 @@ defmodule CrossroadsInterface.CmsSeriesController do
         message_id: x["id"],
         message_date: x["date"] } end )
 
-    render conn, "my_template.html", %{series_title: series_title,
+    render conn, "individual_series.html", %{series_title: series_title,
       series_description: series_description,
       series_still: series_still,
       series_start_date: series_start_date,
       series_end_date: series_end_date,
-      series_messages: series_messages}
+      series_messages: series_messages,
+      css_files: [ "/css/app.css", "/js/legacy/legacy.css" ]
+    }
   end
 
   defp get_decoded_series(id) do
