@@ -1,5 +1,8 @@
 defmodule CrossroadsInterface.CmsSeriesController do
   use CrossroadsInterface.Web, :controller
+  alias CrossroadsInterface.Plug
+
+  plug :put_layout, "screen_width_2.html"
 
   @base_url Application.get_env(:crossroads_content, :cms_server_endpoint)
   @timeout Application.get_env(:crossroads_content, :cms_timeout)
