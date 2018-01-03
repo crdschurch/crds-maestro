@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-4 col-sm-5">
                 <div class="sixteen-nine">
-                    <img data-src="<%= assigns.series_still %>" class="img-responsive imgix-fluid img-full-width mobile-push-bottom center" alt="<%= assigns.series_title %>"
+                    <img data-src="<%= get_in(assigns.series, ["image", "filename"]) %>" class="img-responsive imgix-fluid img-full-width mobile-push-bottom center" alt="<%= assigns.series["title"] %>"
                     />
                 </div>
             </div>
@@ -11,15 +11,15 @@
                 <div class="mobile-push push-right">
                     <div class="row">
                         <h2 class="component-header push-top mobile-flush-top text-white">
-                            <%= assigns.series_title %>
+                            <%= assigns.series["title"] %>
                         </h2>
                         <%# <span class="metadata soft-quarter-left"> %>
-                            <%# <%= assigns.series_start_date %>
-                                <%# <%= assigns.series_end_date %>
+                            <%# <%= assigns.series["startDate"] %>
+                            <%# <%= assigns.series["endDate"] %>
                         <%# </span> %>
                     </div>
                     <div class="row quiet" style="color: #E7E7E7;">
-                        <%= raw assigns.series_description %>
+                        <%= raw assigns.series["description"] %>
                     </div>
                 </div>
             </div>
@@ -28,21 +28,23 @@
     <div class="row">
         <div class="card-deck">
             <div class="card-deck--expanded-layout card-deck--wrap" style="padding-left: .5rem; padding-right: .5rem;">
-                <%= for message <- assigns.series_messages do %>
+                <%= for message <- assigns.series["messages"] do %>
+                  <%= if get_message_still(message) do %>
                     <div class="card card--thumbnail">
-                        <a href="#" class="block">
-                            <img alt="<%= message.title %>" data-src="<%= message.message_still %>" class="card-img-top imgix-fluid" />
+                      <a href="/message/<%= message["id"] %>/<%= linkify_title(message["title"]) %>/" class="block">
+                            <img alt="<%= message["title"] %>" data-src="<%= get_message_still(message) %>" class="card-img-top imgix-fluid" />
                         </a>
                         <div class="card-block">
                             <h4 class="card-title ellipsis">
-                                <%= message.title %>
+                                <%= message["title"] %>
                             </h4>
                             <p class="text-muted">
-                                <%= message.message_date %>
+                                <%= message["date"] %>
                             </p>
                         </div>
                     </div>
-                    <% end %>
+                  <% end %>
+                <% end %>
             </div>
         </div>
     </div>
