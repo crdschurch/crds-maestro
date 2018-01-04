@@ -18,6 +18,11 @@ defmodule CrossroadsContent.CmsClient do
     GenServer.call(__MODULE__, {:content_blocks}, @timeout)
   end
 
+  @spec get_series_by_id(Integer) :: {:ok | :error, number, map}
+  def get_series_by_id(id) do
+    GenServer.call(__MODULE__, {:series, id}, @timeout)
+  end
+
   @spec get_system_page(String.t) :: {:ok | :error, number, map}
   def get_system_page(state_name) do
     GenServer.call(__MODULE__, {:system_page, state_name}, @timeout)
@@ -58,6 +63,12 @@ defmodule CrossroadsContent.CmsClient do
   def handle_call({:content_blocks}, _from, state) do
     path = "ContentBlock"
     make_cached_call(path, state)
+  end
+
+  @doc false
+  def handle_call({:series, id}, _from, state) do
+    path = "series/#{id}/"
+    make_call(path, state)
   end
 
   @doc false
