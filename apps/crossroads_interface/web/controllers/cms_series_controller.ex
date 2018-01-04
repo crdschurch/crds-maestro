@@ -1,8 +1,9 @@
 defmodule CrossroadsInterface.CmsSeriesController do
   use CrossroadsInterface.Web, :controller
+  alias CrossroadsInterface.Plug
+  alias CrossroadsContent.CmsClient
   require Logger
   require IEx
-  alias CrossroadsInterface.Plug
 
   plug Plug.Meta
   plug Plug.ContentBlocks
@@ -13,39 +14,30 @@ defmodule CrossroadsInterface.CmsSeriesController do
   @timeout Application.get_env(:crossroads_content, :cms_timeout)
 
   def show(conn, %{"id" => id}) do
-    series = get_decoded_series(id)
+    series = CmsClient.get_series_by_id(id)
 
-    render conn, "individual_series.html", %{series: series,
-      css_files: [ "/css/app.css", "/js/legacy/legacy.css" ]
-    }
-  end
-
-  defp get_decoded_series(id) do
-    decoded_body = get_body(id)
-      |>Poison.decode!()
-
-    %{"series" => [series]} = decoded_body
-    series
-  end
-
-  defp get_body(id) do
-    response = get_series_from_cms(id)
-
-    series_body = case response do
-      {:ok, %{body: body, headers: _headers, request_url: _req_url, status_code: 200}} ->
-        body
-      {:ok, %{body: body, headers: _headers, request_url: _req_url, status_code: status_code}} ->
-        Logger.error("Error getting series data from CMS | Status: #{status_code} | Body: #{body}")
-      {:error, data} ->
-        Logger.error("Error getting series data from CMS: #{data}")
-      err ->
-        Logger.error("Error getting series data from CMS: #{err}")
+    case series do
+      {:ok, _response_code, %{"series" => series}} ->
+        render conn, "individual_series.html", %{series: series,
+          css_files: [ "/css/app.css", "/js/legacy/legacy.css" ]}
+      {:error, _response_code, response_data} ->
+        Logger.error("Error getting series data from CMS | Response: #{response_data["message"]}")
+        render_not_found(conn)
+      _ ->
+        Logger.error("Error getting series data from CMS")
+        render_not_found(conn)
     end
-
-    series_body
   end
 
-  defp get_series_from_cms(id) do
-    HTTPoison.get("#{@base_url}/api/series?id=#{id}", %{"Accept" => "application/json"}, recv_timeout: @timeout)
+  defp render_not_found(conn) do
+    conn
+    |> CrossroadsInterface.Plug.ContentBlocks.call("")
+    |> CrossroadsInterface.Plug.Meta.call("")
+    |> CrossroadsInterface.Plug.PutMetaTemplate.call("meta_tags.html")
+    |> put_layout("no_sidebar.html")
+    |> put_status(404)
+    |> render(CrossroadsInterface.ErrorView, "404.html",
+        %{"css_files": [ "/js/legacy/legacy.css" ]})
   end
+
 end
