@@ -3,7 +3,6 @@ defmodule CrossroadsInterface.CmsSeriesController do
   alias CrossroadsInterface.Plug
   alias CrossroadsContent.CmsClient
   require Logger
-  require IEx
 
   plug Plug.Meta
   plug Plug.ContentBlocks

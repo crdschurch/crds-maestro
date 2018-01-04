@@ -3,7 +3,6 @@ defmodule CrossroadsInterface.CmsSeriesControllerTest do
   alias CrossroadsContent.Pages
   use CrossroadsInterface.ConnCase
   import Mock
-  require IEx
 
   @get_page_response {:ok,
         %{"submitButtonText" => nil, "title" => "Habitat",
@@ -75,7 +74,6 @@ defmodule CrossroadsInterface.CmsSeriesControllerTest do
                  {Pages, [], [page_exists?: fn(_path) -> true end]},
                  {Pages, [], [get_page: fn(_path) -> @get_page_response end ]},
                  {Pages, [], [get_page: fn(_path, _stage) -> @get_page_response end ]}]) do
-      IEx.pry
       conn = get conn, "/series/897547895"
       assert called CmsClient.get_series_by_id("897547895")
       assert html_response(conn, 404)
