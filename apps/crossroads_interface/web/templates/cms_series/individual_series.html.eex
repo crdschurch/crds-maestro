@@ -29,7 +29,7 @@
         <div class="card-deck">
             <div class="card-deck--expanded-layout card-deck--wrap" style="padding-left: .5rem; padding-right: .5rem;">
                 <%= for message <- assigns.series["messages"] do %>
-                  <%= if get_message_still(message) do %>
+                  <%= if message_valid?(message) do %>
                     <div class="card card--thumbnail">
                       <a href="/message/<%= message["id"] %>/<%= linkify_title(message["title"]) %>/" class="block">
                             <img alt="<%= message["title"] %>" data-src="<%= get_message_still(message) %>" class="card-img-top imgix-fluid" />
