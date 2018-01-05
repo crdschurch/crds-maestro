@@ -1,6 +1,7 @@
 defmodule CrossroadsInterface.CmsSeriesController do
   use CrossroadsInterface.Web, :controller
   alias CrossroadsInterface.Plug
+  alias CrossroadsInterface.NotfoundController
   alias CrossroadsContent.CmsClient
   require Logger
 
@@ -21,22 +22,10 @@ defmodule CrossroadsInterface.CmsSeriesController do
           css_files: [ "/css/app.css", "/js/legacy/legacy.css" ]}
       {:error, _response_code, response_data} ->
         Logger.error("Error getting series data from CMS | Response: #{response_data["message"]}")
-        render_not_found(conn)
+        NotfoundController.notfound(conn, %{})
       _ ->
         Logger.error("Error getting series data from CMS")
-        render_not_found(conn)
+        NotfoundController.notfound(conn, %{})
     end
   end
-
-  defp render_not_found(conn) do
-    conn
-    |> CrossroadsInterface.Plug.ContentBlocks.call("")
-    |> CrossroadsInterface.Plug.Meta.call("")
-    |> CrossroadsInterface.Plug.PutMetaTemplate.call("meta_tags.html")
-    |> put_layout("no_sidebar.html")
-    |> put_status(404)
-    |> render(CrossroadsInterface.ErrorView, "404.html",
-        %{"css_files": [ "/js/legacy/legacy.css" ]})
-  end
-
 end
