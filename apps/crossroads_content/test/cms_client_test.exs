@@ -48,8 +48,8 @@ defmodule CrossroadsContent.CmsClientTest do
 
   test "client handles a 404 response from get_series_by_id/1" do
     with_mock HTTPoison, [get: fn(url, _headers, _options) -> FakeHttp.get(url) end] do
-      non_existent_site_config_id = 12
-      {result, status, _body} = CmsClient.get_series_by_id(non_existent_site_config_id)
+      non_existent_series_id = 12
+      {result, status, _body} = CmsClient.get_series_by_id(non_existent_series_id)
       assert status == 404
       assert result == :error
     end
@@ -57,8 +57,8 @@ defmodule CrossroadsContent.CmsClientTest do
 
   test "client handles a 500 response from get_series_by_id/1" do
     with_mock HTTPoison, [get: fn(url, _headers, _options) -> FakeHttp.get(url) end] do
-      error_site_config_id = 500
-      {result, status, _body} = CmsClient.get_series_by_id(error_site_config_id)
+      error_series_id = 500
+      {result, status, _body} = CmsClient.get_series_by_id(error_series_id)
       assert status == 500
       assert result == :error
     end
@@ -66,11 +66,30 @@ defmodule CrossroadsContent.CmsClientTest do
 
   test "get_series_by_id/1 returns valid value" do
     with_mock HTTPoison, [get: fn(url, _headers, _options) -> FakeHttp.get(url) end] do
-      valid_site_config_id = 2
-      {result, status, body} = CmsClient.get_series_by_id(valid_site_config_id)
+      valid_series_id = 2
+      {result, status, body} = CmsClient.get_series_by_id(valid_series_id)
       assert status == 200
       assert result == :ok
       assert body["siteConfig"]["id"] == 2
+    end
+  end
+
+  test "client handles a 404 response from get_message_by_id" do
+    with_mock HTTPoison, [get: fn(url, _headers, _options) -> FakeHttp.get(url) end] do
+      non_existent_message_id = 01
+      {result, status, _body} = CmsClient.get_message_by_id(non_existent_message_id)
+      assert status == 404
+      assert result == :error
+    end
+  end
+
+  test "client gets a 200 response from valid message id" do
+    with_mock HTTPoison, [get: fn(url, _headers, _options) -> FakeHttp.get(url) end] do
+      valid_message_id = 3883
+      {result, status, body} = CmsClient.get_message_by_id(valid_message_id)
+      assert status == 200
+      assert result == :ok
+      assert body["message"]["id"] == 3883
     end
   end
 

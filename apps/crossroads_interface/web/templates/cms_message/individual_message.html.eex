@@ -1,4 +1,4 @@
-<div class="jumbotron inline-video jumbotron-xl flush-bottom" style="background-image: url(<%= get_in(assigns.message, ["messageVideo", "still", "filename"]) %>);">
+<div class="jumbotron inline-video jumbotron-xl flush-bottom" style="background-image: url(<%= get_in(assigns.message, ["messageVideo", "still", "filename"]) %>); background-position-y: top;">
     <div class="inline-video-player"></div>
     <div class="jumbotron-overlay" style="opacity: .45; z-index: 0;"></div>
     <div class="jumbotron-content">
@@ -16,7 +16,7 @@
     <div class="row push-ends">
         <div class="messsage-about col-md-7 soft-bottom">
             <h3 class="component-header">About</h3>
-            <div class="message-description push-bottom"><%= raw assigns.message["description"] %></div>
+            <div class="message-description font-size-base push-bottom"><%= raw assigns.message["description"] %></div>
             <%= if has_topics?(assigns.message) do %>
             <div class="topics">
                 <h4 class="list-header">Topics</h4>
@@ -36,12 +36,7 @@
             </div>
             <div class="messge-social">
                 <h4 class="list-header">Share To Social</h4>
-                <a href="" class="btn btn-sm" style="background: #3b5998;">
-                    <svg class="icon" viewBox="0 0 256 256"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#facebook"></use></svg>
-                </a>
-                <a href="" class="btn btn-sm" style="background: #3b5998;">
-                    <svg class="icon" viewBox="0 0 256 256"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#facebook"></use></svg>
-                </a>
+                <div class="sharethis-inline-share-buttons"></div>
             </div>
         </div>
     </div>
@@ -86,3 +81,4 @@
     })();
     // ]]>
 </script>
+<script type="text/javascript" src="//platform-api.sharethis.com/js/sharethis.js#property=5a4fb8f4f59fa3001222ff52&product=inline-share-buttons"></script>

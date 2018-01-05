@@ -10,7 +10,7 @@ defmodule CrossroadsInterface.CmsMessageView do
   end
 
   def has_related_messages?(message) do
-    message["relatedMessages"] != []
+    message["relatedMessages"] != [] && message["relatedMessages"] != nil
   end
 
   def has_topics?(message) do
