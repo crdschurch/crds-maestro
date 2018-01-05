@@ -5,18 +5,18 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <a href="#" class="inline-video-trigger" data-video-id="<%= get_in(assigns.message, ["messageVideo", "serviceId"]) %>"></a>
-                <h1 class="component-header"><%= assigns.message["title"] %></h1>
-                <h4 class="subtitle text-white"><a href="/series/<%= get_in(assigns.message, ["series", "id"]) %>/<%= get_in(assigns.message, ["series", "title"]) %>">Series: <%= get_in(assigns.message, ["series", "title"]) %></a></h4>
-                <h4 class="metadata"><%= assigns.message["date"] %></h4>
+                <h1 class="message-title component-header"><%= assigns.message["title"] %></h1>
+                <h4 class="message-series subtitle text-white"><a href="/series/<%= get_in(assigns.message, ["series", "id"]) %>/<%= get_in(assigns.message, ["series", "title"]) %>">Series: <%= get_in(assigns.message, ["series", "title"]) %></a></h4>
+                <h5 class="message-date font-family-accent font-size-small text-white"><%= convert_date_string(assigns.message["date"]) %></h4>
             </div>
         </div>
     </div>
 </div>
 <div class="container">
     <div class="row push-ends">
-        <div class="about col-md-7">
+        <div class="messsage-about col-md-7 soft-bottom">
             <h3 class="component-header">About</h3>
-            <p class="lead"><%= raw assigns.message["description"] %></p>
+            <div class="message-description push-bottom"><%= raw assigns.message["description"] %></div>
             <%= if has_topics?(assigns.message) do %>
             <div class="topics">
                 <h4 class="list-header">Topics</h4>
@@ -29,10 +29,19 @@
         <div class="col-md-4 col-md-offset-1">
             <h3 class="component-header">More Actions</h3>
             <div class="message-action-buttons">
-                <a class="btn btn-gray">Stream Audio</a>
-                <a href="<%= get_in(assigns.message, ["program", "filename"]) %>" target="_blank" class="btn btn-gray">View Program</a>
-                <a href="<%= get_in(assigns.message, ["messageVideo", "source", "filename"]) %>" target="_blank" class="btn btn-gray">Download Video (MP4)</a>
-                <a href="<%= get_in(assigns.message, ["messageAudio", "source", "filename"]) %>" target="_blank" class="btn btn-gray">Download Audio (MP3)</a>
+                <%# <a class="btn btn-gray block">Stream Audio</a> %>
+                <a href="<%= get_in(assigns.message, ["program", "filename"]) %>" target="_blank" class="btn btn-gray block">View Program</a>
+                <a href="<%= get_in(assigns.message, ["messageVideo", "source", "filename"]) %>" target="_blank" class="btn btn-gray block">Download Video (MP4)</a>
+                <a href="<%= get_in(assigns.message, ["messageAudio", "source", "filename"]) %>" target="_blank" class="btn btn-gray block">Download Audio (MP3)</a>
+            </div>
+            <div class="messge-social">
+                <h4 class="list-header">Share To Social</h4>
+                <a href="" class="btn btn-sm" style="background: #3b5998;">
+                    <svg class="icon" viewBox="0 0 256 256"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#facebook"></use></svg>
+                </a>
+                <a href="" class="btn btn-sm" style="background: #3b5998;">
+                    <svg class="icon" viewBox="0 0 256 256"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#facebook"></use></svg>
+                </a>
             </div>
         </div>
     </div>

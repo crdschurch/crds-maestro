@@ -16,4 +16,10 @@ defmodule CrossroadsInterface.CmsMessageView do
   def has_topics?(message) do
     message["combinedTags"] != []
   end
+
+  def convert_date_string(date) do
+    {:ok, parsed_date} = Timex.parse(date, "%Y-%m-%d", :strftime)
+    {:ok, formatted_date} = Timex.Format.DateTime.Formatters.Strftime.format(parsed_date, "%A, %B %d, %Y")
+    formatted_date
+  end
 end
