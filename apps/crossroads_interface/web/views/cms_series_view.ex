@@ -3,8 +3,9 @@ defmodule CrossroadsInterface.CmsSeriesView do
 
   def message_valid?(message) do
     (message["title"] != nil) &&
-      (message["messageVideo"] != nil && message["messageVideo"] != %{})
-      && (get_in(message, ["messageVideo", "still", "filename"]) != nil)
+      (message["messageVideo"] != nil && message["messageVideo"] != %{}) &&
+      (get_in(message, ["messageVideo", "source"]) != nil) &&
+      (get_in(message, ["messageVideo", "still", "filename"]) != nil)
   end
 
   def get_message_still(message) do
