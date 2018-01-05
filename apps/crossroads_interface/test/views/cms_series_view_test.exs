@@ -4,6 +4,7 @@ defmodule CrossroadsInterface.CmsSeriesViewTest do
 
   @truthy_message %{"date" => "2017-11-25", "id" => 3883,
     "messageVideo" => %{
+      "source" => %{"my_key" => "my_value"},
       "still" => %{
         "filename" => "https://crds-cms-uploads.imgix.net/media/messages/stills/Screen-Shot-2017-11-25-at-7.56.07-PM.png",
       }
