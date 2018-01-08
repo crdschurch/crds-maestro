@@ -18,9 +18,7 @@ defmodule CrossroadsInterface.CmsSeriesView do
   end
 
   defp has_message_video?(message) do
-    (message["messageVideo"] != nil && message["messageVideo"] != %{}) &&
-    ((get_in(message, ["messageVideo", "source"]) != nil) ||
-    (get_in(message, ["messageVideo", "sourcePath"]) != nil))
+    (message["messageVideo"] != nil && message["messageVideo"] != %{})
   end
 
   defp has_message_still?(message) do
