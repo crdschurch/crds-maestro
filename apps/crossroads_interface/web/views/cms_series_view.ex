@@ -5,6 +5,7 @@ defmodule CrossroadsInterface.CmsSeriesView do
     (message["title"] != nil) &&
       (message["messageVideo"] != nil && message["messageVideo"] != %{}) &&
       (get_in(message, ["messageVideo", "source"]) != nil) &&
+      (get_in(message, ["messageVideo", "sourcePath"]) != nil) &&
       (get_in(message, ["messageVideo", "still", "filename"]) != nil)
   end
 
