@@ -1,5 +1,6 @@
 defmodule CrossroadsInterface.LegacyController do
   use CrossroadsInterface.Web, :controller
+  alias CrossroadsInterface.NotfoundController
   @moduledoc"""
   This controller is called from the fall through route in the router.
   The purpose is to handle serving up the 'legacy' angular application using
@@ -52,23 +53,12 @@ defmodule CrossroadsInterface.LegacyController do
     end
   end
 
-  defp renderNotFound(conn) do
-    conn
-    |> CrossroadsInterface.Plug.ContentBlocks.call("")
-    |> CrossroadsInterface.Plug.Meta.call("")
-    |> CrossroadsInterface.Plug.PutMetaTemplate.call("meta_tags.html")
-    |> put_layout("no_sidebar.html")
-    |> put_status(404)
-    |> render(CrossroadsInterface.ErrorView, "404.html",
-        %{"css_files": [ "/js/legacy/legacy.css" ]})
-  end
-
   defp renderLegacyApp(conn, _params) do
     # when legacy app encounters a route it cannot serve, it sets cookie "unmatchedLegacyRoute" with value of that route
     if conn.cookies["unmatchedLegacyRoute"] != nil && URI.decode(conn.cookies["unmatchedLegacyRoute"]) == conn.request_path |> ContentHelpers.add_trailing_slash_if_necessary do      
       conn 
       |> CrossroadsInterface.Plug.Cookie.call("unmatchedLegacyRoute", "") 
-      |> renderNotFound()
+      |> NotfoundController.notfound(_params)
     else    
       if conn.assigns[:redirect] do
         conn = conn |> CrossroadsInterface.Plug.RedirectCookie.call(conn.request_path)
