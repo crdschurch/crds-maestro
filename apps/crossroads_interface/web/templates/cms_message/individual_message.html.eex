@@ -2,7 +2,7 @@
     <div class="inline-video-player"></div>
     <div class="jumbotron-overlay" style="opacity: .45; z-index: 0;"></div>
     <div class="jumbotron-content">
-        <div class="row">
+        <div class="container">
             <div class="col-md-8 col-md-offset-2">
                 <a href="#" class="inline-video-trigger" data-video-id="<%= get_in(assigns.message, ["messageVideo", "serviceId"]) %>"></a>
                 <h1 class="message-title component-header"><%= assigns.message["title"] %></h1>
