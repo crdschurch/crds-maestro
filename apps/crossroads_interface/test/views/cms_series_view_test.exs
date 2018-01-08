@@ -22,31 +22,7 @@ defmodule CrossroadsInterface.CmsSeriesViewTest do
     }
   }
 
-  @source_missing %{"date" => "2017-11-25", "id" => 3883,
-    "messageVideo" => %{
-      "sourcePath" => "http://mystupidvideopath.com/mystupidvideo.mp4",
-      "still" => %{
-        "filename" => "https://crds-cms-uploads.imgix.net/media/messages/stills/Screen-Shot-2017-11-25-at-7.56.07-PM.png",
-      }
-    },
-    "title" => "Say No To Good Things for the Sake of Great Things"}
-
-  @source_path_missing %{"date" => "2017-11-25", "id" => 3883,
-    "messageVideo" => %{
-      "source" => %{"my_key" => "my_value"},
-      "still" => %{
-        "filename" => "https://crds-cms-uploads.imgix.net/media/messages/stills/Screen-Shot-2017-11-25-at-7.56.07-PM.png",
-      }
-    },
-    "title" => "Say No To Good Things for the Sake of Great Things"}
-
-  @source_and_source_path_missing %{"date" => "2017-11-25", "id" => 3883,
-    "messageVideo" => %{
-      "still" => %{
-        "filename" => "https://crds-cms-uploads.imgix.net/media/messages/stills/Screen-Shot-2017-11-25-at-7.56.07-PM.png",
-      }
-    },
-    "title" => "Say No To Good Things for the Sake of Great Things"}
+  @message_video_missing %{"date" => "2017-11-25", "id" => 3883}
 
   @still_missing %{"date" => "2017-11-25", "id" => 3883,
     "messageVideo" => %{
@@ -71,22 +47,8 @@ defmodule CrossroadsInterface.CmsSeriesViewTest do
     assert actual == expected
   end
 
-  test "message_valid?/1 returns true when just video source is missing" do
-    actual = CmsSeriesView.message_valid?(@source_missing)
-    expected = true
-
-    assert actual == expected
-  end
-
-  test "message_valid?/1 returns true when just video sourcePath is missing" do
-    actual = CmsSeriesView.message_valid?(@source_path_missing)
-    expected = true
-
-    assert actual == expected
-  end
-
-  test "message_valid?/1 returns false when both video source and sourcePath is missing" do
-    actual = CmsSeriesView.message_valid?(@source_and_source_path_missing)
+  test "message_valid?/1 returns false when message video is missing" do
+    actual = CmsSeriesView.message_valid?(@still_missing)
     expected = false
 
     assert actual == expected
