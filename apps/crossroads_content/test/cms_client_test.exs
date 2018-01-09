@@ -1,7 +1,6 @@
 defmodule CrossroadsContent.CmsClientTest do
   use ExUnit.Case, async: false
   doctest CrossroadsContent.CmsClient
-
   alias CrossroadsContent.CmsClient
   alias CrossroadsContent.FakeHttp
 
@@ -76,7 +75,7 @@ defmodule CrossroadsContent.CmsClientTest do
 
   test "client handles a 404 response from get_message_by_id" do
     with_mock HTTPoison, [get: fn(url, _headers, _options) -> FakeHttp.get(url) end] do
-      non_existent_message_id = 01
+      non_existent_message_id = 1
       {result, status, _body} = CmsClient.get_message_by_id(non_existent_message_id)
       assert status == 404
       assert result == :error
@@ -89,7 +88,16 @@ defmodule CrossroadsContent.CmsClientTest do
       {result, status, body} = CmsClient.get_message_by_id(valid_message_id)
       assert status == 200
       assert result == :ok
-      assert body["message"]["id"] == 3883
+      assert body["siteConfig"]["id"] == 3883
+    end
+  end
+
+  test "client handles a 500 response from get_message_by_id/1" do
+    with_mock HTTPoison, [get: fn(url, _headers, _options) -> FakeHttp.get(url) end] do
+      error_message_id = 500
+      {result, status, _body} = CmsClient.get_series_by_id(error_message_id)
+      assert status == 500
+      assert result == :error
     end
   end
 
