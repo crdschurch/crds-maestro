@@ -1,4 +1,5 @@
 defmodule CrossroadsInterface.LegacyController do
+  require Logger
   use CrossroadsInterface.Web, :controller
   @moduledoc"""
   This controller is called from the fall through route in the router.
@@ -15,14 +16,7 @@ defmodule CrossroadsInterface.LegacyController do
   which in turn renders error view and the 404 template
   """
   def index(conn, params) do
-    conn |> assign(:redirect, true) |> renderSite(params)
-  end
 
-  def noRedirect(conn, params) do
-    conn |> assign(:redirect, false) |> renderSite(params)
-  end
-
-  defp renderSite(conn, params) do
     path = conn.request_path |> ContentHelpers.add_trailing_slash_if_necessary
     case CrossroadsContent.Pages.get_page(determine_authorized_path(conn, path),
                                           ContentHelpers.is_stage_request?(conn.params)) do      
@@ -65,14 +59,11 @@ defmodule CrossroadsInterface.LegacyController do
 
   defp renderLegacyApp(conn, _params) do
     # when legacy app encounters a route it cannot serve, it sets cookie "unmatchedLegacyRoute" with value of that route
-    if conn.cookies["unmatchedLegacyRoute"] != nil && URI.decode(conn.cookies["unmatchedLegacyRoute"]) == conn.request_path |> ContentHelpers.add_trailing_slash_if_necessary do      
+    if conn.cookies["unmatchedLegacyRoute"] != nil && URI.decode(conn.cookies["unmatchedLegacyRoute"]) == conn.request_path |> ContentHelpers.add_trailing_slash_if_necessary |> URI.decode do      
       conn 
       |> CrossroadsInterface.Plug.Cookie.call("unmatchedLegacyRoute", "") 
       |> renderNotFound()
     else    
-      if conn.assigns[:redirect] do
-        conn = conn |> CrossroadsInterface.Plug.RedirectCookie.call(conn.request_path)
-      end
       conn 
       |> CrossroadsInterface.Plug.Cookie.call("unmatchedLegacyRoute", "") 
       |> render("app_root.html", %{"js_files": [

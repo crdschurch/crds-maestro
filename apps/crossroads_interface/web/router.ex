@@ -27,9 +27,6 @@ defmodule CrossroadsInterface.Router do
     get "/srfp/*path", CrdsSrfpController, :index
 
     get "/notfound", NotfoundController, :notfound
-    get "/signout", LegacyController, :noRedirect
-    get "/signin", LegacyController, :noRedirect
-    get "/register", LegacyController, :noRedirect
     get "/homepage", HomepageController, :index
     get "/explore", DynamicController, :index
     get "/atriumevents", DynamicController, :index

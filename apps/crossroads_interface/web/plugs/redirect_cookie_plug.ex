@@ -5,7 +5,9 @@ defmodule CrossroadsInterface.Plug.RedirectCookie do
   import Plug.Conn
 
   def call(conn, url) do
-    conn |> CrossroadsInterface.Plug.Cookie.call("redirectUrl", url)
+    conn 
+      |> CrossroadsInterface.Plug.Cookie.call("redirectUrl", url)
+      |> CrossroadsInterface.Plug.Cookie.call("params", "")
   end
 
   def call(conn, url, params) do    

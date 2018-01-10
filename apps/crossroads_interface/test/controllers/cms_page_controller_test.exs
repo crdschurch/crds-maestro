@@ -138,8 +138,8 @@ defmodule CrossroadsInterface.CmsPageControllerTest do
        {CrossroadsInterface.Plug.Authorized, [], [call: fn(conn, _) -> assign(conn, :authorized, true) end]}
      ]) do
       conn = get conn, "/form/"
-      assert conn.resp_cookies["redirectUrl"].value == "content"
-      assert conn.resp_cookies["params"].value == URI.encode("{\"link\":\"/form/\"}")
+      assert conn.resp_cookies["redirectUrl"].value == "/form/"
+      assert conn.resp_cookies["params"].value == ""
     end
   end
 
