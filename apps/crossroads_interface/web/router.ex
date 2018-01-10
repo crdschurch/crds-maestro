@@ -25,6 +25,7 @@ defmodule CrossroadsInterface.Router do
     get "/connect/*path", CrdsConnectController, :index
     get "/groups/search/*path", CrdsGroupsController, :index
     get "/srfp/*path", CrdsSrfpController, :index
+    get "/series/:id/*path", CmsSeriesController, :show
 
     get "/notfound", NotfoundController, :notfound
     get "/homepage", HomepageController, :index
