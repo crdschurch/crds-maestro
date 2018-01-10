@@ -24,4 +24,10 @@ defmodule CrossroadsInterface.CmsSeriesView do
   defp has_message_still?(message) do
     (get_in(message, ["messageVideo", "still", "filename"]) != nil)
   end
+
+  def convert_date_string(date) do
+    {:ok, parsed_date} = Timex.parse(date, "%Y-%m-%d", :strftime)
+    {:ok, formatted_date} = Timex.Format.DateTime.Formatters.Strftime.format(parsed_date, "%m.%d.%Y")
+    formatted_date
+  end
 end

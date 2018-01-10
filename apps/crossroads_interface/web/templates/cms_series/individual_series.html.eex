@@ -13,10 +13,6 @@
                         <h2 class="component-header push-top mobile-flush-top text-white">
                             <%= assigns.series["title"] %>
                         </h2>
-                        <%# <span class="metadata soft-quarter-left"> %>
-                            <%# <%= assigns.series["startDate"] %>
-                            <%# <%= assigns.series["endDate"] %>
-                        <%# </span> %>
                     </div>
                     <div class="row quiet" style="color: #E7E7E7;">
                         <%= raw assigns.series["description"] %>
@@ -35,12 +31,14 @@
                             <img alt="<%= message["title"] %>" data-src="<%= get_message_still(message) %>" class="card-img-top imgix-fluid" />
                         </a>
                         <div class="card-block">
-                            <h4 class="card-title ellipsis">
-                                <%= message["title"] %>
-                            </h4>
-                            <p class="text-muted">
-                                <%= message["date"] %>
-                            </p>
+                            <a href="/message/<%= message["id"] %>/<%= linkify_title(message["title"]) %>/">
+                                <h4 class="card-title ellipsis">
+                                    <%= message["title"] %>
+                                </h4>
+                                <p class="text-muted">
+                                    <%= convert_date_string(message["date"]) %>
+                                </p>
+                            </a>
                         </div>
                     </div>
                   <% end %>
