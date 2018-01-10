@@ -36,7 +36,7 @@ defmodule CrossroadsInterface.CrdsConnectControllerTest do
                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
       Application.put_env(:crossroads_interface, :cookie_domain, ".crossroads.net")
       conn = get conn, "/connect"
-      assert conn.resp_cookies == %{"redirectUrl" => %{http_only: false, value: "/connect", domain: ".crossroads.net"}}
+      assert conn.resp_cookies == %{"redirectUrl" => %{http_only: false, value: "/connect", domain: ".crossroads.net"}, "params" => %{domain: ".crossroads.net", http_only: false, value: ""}}
     end
   end
   
