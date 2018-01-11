@@ -1,0 +1,6 @@
+<%= for post <- assigns.posts do %>
+  <a href=<%= create_link(post) %>>
+    <%= get_title_from_post(post) %>
+  </a>
+  <br/>
+<% end %>
