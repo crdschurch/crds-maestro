@@ -16,7 +16,7 @@ defmodule CrossroadsInterface.CmsPageController do
         conn =
           conn
           |> Authorized.call([])
-          |> RedirectCookie.call("content", "{\"link\":\"#{conn.assigns[:path]}\"}")
+          |> RedirectCookie.call(conn.assigns[:path])
         if conn.assigns.authorized do
           renderPage(conn, page)
         else
@@ -33,7 +33,7 @@ defmodule CrossroadsInterface.CmsPageController do
     body_class = getBodyClassFromPage(page)
     layout = getLayoutFromPage(page)
     conn
-    |> RedirectCookie.call("content", "{\"link\":\"#{conn.assigns[:path]}\"}")
+    |> RedirectCookie.call(conn.assigns[:path])
     |> put_layout(layout)
     |> assign(:body_class, body_class)
     |> assign(:crds_styles, crds_styles)
