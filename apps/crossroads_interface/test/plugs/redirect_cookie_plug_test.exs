@@ -5,14 +5,14 @@ defmodule CrossroadsInterface.RedirectCookiePlugTest do
     Application.put_env(:crossroads_interface, :cookie_domain, "")
 
     conn = conn |> CrossroadsInterface.Plug.RedirectCookie.call("/path")
-    assert conn.resp_cookies == %{"redirectUrl" => %{http_only: false, value: "/path"}}
+    assert conn.resp_cookies == %{"redirectUrl" => %{http_only: false, value: "/path"}, "params" => %{http_only: false, value: ""}}
   end
 
   test "it should create a redirectUrl cookie with a domain", %{conn: conn} do
     Application.put_env(:crossroads_interface, :cookie_domain, ".crossroads.net")
 
     conn = conn |> CrossroadsInterface.Plug.RedirectCookie.call("/path")
-    assert conn.resp_cookies == %{"redirectUrl" => %{http_only: false, value: "/path", domain: ".crossroads.net"}}
+    assert conn.resp_cookies == %{"redirectUrl" => %{http_only: false, value: "/path", domain: ".crossroads.net"}, "params" => %{domain: ".crossroads.net", http_only: false, value: ""}}
   end
 
   test "it should create a redirectUrl cookie with params", %{conn: conn} do

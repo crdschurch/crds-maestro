@@ -60,13 +60,13 @@ defmodule CrossroadsInterface.LegacyControllerTest do
     end
   end
 
-  test "GET non CMS page sets redirectUrl", %{conn: conn} do
+  test "GET non CMS page does NOT set redirectUrl", %{conn: conn} do
     with_mocks([ {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
                  {CmsClient, [], [get_system_page: fn("") -> {:ok, 200, fake_system_page("")} end]},
                  {Pages, [], [get_page: fn(_path, _stage) -> :error end]},
                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
       conn = get conn, "/legacypage"
-      assert conn.resp_cookies["redirectUrl"].value == "/legacypage"
+      assert conn.resp_cookies["redirectUrl"] == nil
     end
   end
 
