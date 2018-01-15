@@ -1,6 +1,15 @@
-<%= for post <- assigns.posts do %>
-  <a href=<%= create_link(post) %>>
-    <%= get_title_from_post(post) %>
-  </a>
-  <br/>
-<% end %>
+<div class="row">
+  <%= for post <- assigns.posts do %>
+    <div class="col-md-4">
+      <div class="card">
+        <img alt="Card image caption" class="card-img-top img-responsive" src="https://cdn-images-1.medium.com/<%= post.image %>">
+        <div class="card-block">
+          <h4 class="card-title"><%= post.title %></h4>
+          <p class="card-text"><%= post.subtitle %></p>
+          <h5 class="card-subtitle">Reading time: <%= round(post.reading_time) %> minutes | Word Count: <%= post.word_count %></h5>
+          <a class="card-link" href="<%= "/articles/" <> post.slug %>">Read More</a>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
