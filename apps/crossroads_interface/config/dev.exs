@@ -22,8 +22,11 @@ config :mpx,
 # watchers to your application. For example, we use it
 # with brunch.io to recompile .js and .css sources.
 config :crossroads_interface, CrossroadsInterface.Endpoint,
-  url: [host: "localhost", port: 4000],
-  http: [port: 4000],
+  http: [port: 80],
+  https: [port: 443,
+    otp_app: :crossroads_interface,
+    keyfile: "priv/keys/tls.key",
+    certfile: "priv/keys/tls.crt"],
   debug_errors: false,
   code_reloader: true,
   check_origin: false,
