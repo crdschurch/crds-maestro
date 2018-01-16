@@ -4,11 +4,9 @@ config :crossroads_content,
   cms_server_endpoint: System.get_env("CRDS_CMS_SERVER_ENDPOINT")
 
 config :crossroads_interface, CrossroadsInterface.Endpoint,
-  http: [port: 80],
-  https: [port: 443,
-    otp_app: :crossroads_interface,
-    keyfile: "priv/keys/tls.key",
-    certfile: "priv/keys/tls.crt"],
+  url: [host: System.get_env("MAESTRO_HOSTNAME"), port: System.get_env("MAESTRO_PORT")],
+  http: [port: System.get_env("MAESTRO_PORT"),
+    otp_app: :crossroads_interface],
   cache_static_manifest: "priv/static/manifest.json",
   server: true
 
