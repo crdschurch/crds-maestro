@@ -6,9 +6,8 @@ defmodule CrossroadsInterface.Plug.BaseHref do
 
   def init(default), do: default
 
-  def call(conn, [] = _default) do
-    assign(conn, :base_href, "/")
-  end
+  def call(conn, [] = _default), do: conn
+
   def call(conn, default) do
     assign(conn, :base_href, default)
   end
