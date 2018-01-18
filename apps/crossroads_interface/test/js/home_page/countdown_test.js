@@ -3,6 +3,8 @@ import Countdown from '../../../web/static/js/home_page/countdown';
 /* global CRDS */
 
 describe('Countdown', () => {
+  const dst_offset = "-0400";
+  const standard_offset = "-0500";
   const broadcasts = [
     {
       eventId: 1039015,
@@ -13,7 +15,7 @@ describe('Countdown', () => {
       title: 'Sunday 8:00pm',
       type: 'V',
       skip: 0,
-      'private': 0,
+      private: 0,
       exclude: 0,
       facebookLiveAccountTitle: null,
       vimeo: 0,
@@ -29,7 +31,7 @@ describe('Countdown', () => {
       title: 'Sunday 10:00pm',
       type: 'V',
       skip: 0,
-      'private': 0,
+      private: 0,
       exclude: 0,
       facebookLiveAccountTitle: null,
       vimeo: 0
@@ -43,7 +45,7 @@ describe('Countdown', () => {
       title: 'Saturday 4:30pm',
       type: 'R',
       skip: 0,
-      'private': 0,
+      private: 0,
       exclude: 0,
       facebookLiveAccountTitle: null,
       vimeo: 0
@@ -57,11 +59,26 @@ describe('Countdown', () => {
       title: 'Saturday 6:15pm',
       type: 'R',
       skip: 0,
-      'private': 0,
+      private: 0,
+      exclude: 0,
+      facebookLiveAccountTitle: null,
+      vimeo: 0
+    },
+    {
+      eventId: 1056215,
+      scheduleId: 2392,
+      startTime: 'Saturday 11/14/17 06:05:00 PM',
+      start: '2017-11-14 18:05:00',
+      end: '2017-11-14 19:23:00',
+      title: 'Saturday 6:15pm',
+      type: 'R',
+      skip: 0,
+      private: 0,
       exclude: 0,
       facebookLiveAccountTitle: null,
       vimeo: 0
     }
+
   ];
 
   // response from call to upcomingPlusCurrent when broadcasting, 
@@ -95,6 +112,18 @@ describe('Countdown', () => {
       broadcasts,
       current: null,
       next: broadcasts[1]
+    }
+  };
+
+  // response from call to upcomingPlusCurrent when not broadcasting, 
+  // next event soon
+  const upcomingResponseNoDST =
+  {
+    success: true,
+    data: {
+      broadcasts,
+      current: null,
+      next: broadcasts[4]
     }
   };
 
@@ -143,7 +172,7 @@ describe('Countdown', () => {
 
   it('should set status when loading complete', () => {
     // load during broadcast[0]
-    const startDate = CRDS.Countdown.convertDate(broadcasts[0].start);
+    const startDate = CRDS.Countdown.convertDate(broadcasts[0].start, dst_offset);
     const baseTime = new Date(startDate.getTime() + (10 * 60 * 1000));
     jasmine.clock().mockDate(baseTime);
     spyOn($, 'ajax').and.returnValue($.Deferred().resolve(upcomingResponseLive).promise());
@@ -155,7 +184,7 @@ describe('Countdown', () => {
 
   it('should show live stream elements if broadcasting', () => {
     // load during broadcast[0]
-    const startDate = CRDS.Countdown.convertDate(broadcasts[0].start);
+    const startDate = CRDS.Countdown.convertDate(broadcasts[0].start, dst_offset);
     const baseTime = new Date(startDate.getTime() + (10 * 60 * 1000));
     jasmine.clock().mockDate(baseTime);
     spyOn($, 'ajax').and.returnValue($.Deferred().resolve(upcomingResponseLive).promise());
@@ -167,7 +196,7 @@ describe('Countdown', () => {
 
   it('should show upcoming stream elements if within X hours of next countdown', () => {
     // load just before broadcast[1]
-    const startDate = CRDS.Countdown.convertDate(broadcasts[1].start);
+    const startDate = CRDS.Countdown.convertDate(broadcasts[1].start, dst_offset);
     const baseTime = new Date(startDate.getTime() - (10 * 60 * 1000));
     jasmine.clock().mockDate(baseTime);
     spyOn($, 'ajax').and.returnValue($.Deferred().resolve(upcomingResponseUpcoming).promise());
@@ -183,7 +212,7 @@ describe('Countdown', () => {
 
   it('should not show upcoming stream elements if more than X hours of next countdown', () => {
     // load after broadcast[1]
-    const startDate = CRDS.Countdown.convertDate(broadcasts[1].end);
+    const startDate = CRDS.Countdown.convertDate(broadcasts[1].end, dst_offset);
     const baseTime = new Date(startDate.getTime() + (10 * 60 * 1000));
     jasmine.clock().mockDate(baseTime);
     spyOn($, 'ajax').and.returnValue($.Deferred().resolve(upcomingResponseOff).promise());
@@ -199,7 +228,7 @@ describe('Countdown', () => {
 
   it('should show off stream elements if more than 0 days, less than X hours', () => {
     // load 3 days, 10 min before broadcast[2] 
-    const startDate = CRDS.Countdown.convertDate(broadcasts[2].start);
+    const startDate = CRDS.Countdown.convertDate(broadcasts[2].start, dst_offset);
     const baseTime = new Date(startDate.getTime() - (3 * 24 * 60 * 60 * 1000) - (10 * 60 * 1000));
     jasmine.clock().mockDate(baseTime);
     spyOn($, 'ajax').and.returnValue($.Deferred().resolve(upcomingResponseOff).promise());
@@ -211,14 +240,14 @@ describe('Countdown', () => {
     expect($("[data-stream-off='show']").hasClass('hide')).toBe(false);
     expect($("[data-stream-off='hide']").hasClass('hide')).toBe(true);
     // Saturday 10/14/17 04:30:00 PM EDT is 5:30 EST
-    const dateHtml = '<h4 class="font-size-base">Next Live Stream</h4><h3>Saturday at 5:30pm EST</h3>';
+    const dateHtml = '<h4 class="font-size-base">Next Live Stream</h4><h3>Saturday at 4:30pm ET</h3>';
     expect($("[data-automation-id='offState']").html()).toContain(dateHtml);
     clearInterval(countdown.intervalId);
   });
 
   it('should transition from upcoming to live', () => {
     // load one minute before broadcast[1]
-    const startDate = CRDS.Countdown.convertDate(broadcasts[1].start);
+    const startDate = CRDS.Countdown.convertDate(broadcasts[1].start, dst_offset);
     const baseTime = new Date(startDate.getTime() - (1 * 60 * 1000));
     jasmine.clock().mockDate(baseTime);
     spyOn(CRDS.Countdown.prototype, 'getEvents').and.returnValues($.Deferred().resolve(upcomingResponseUpcoming).promise(), $.Deferred().resolve(upcomingResponseLive2).promise());
@@ -236,7 +265,7 @@ describe('Countdown', () => {
 
   it('should transition from off to upcoming', () => {
     // load X hours and 1 minute before broadcast[2]
-    const startDate = CRDS.Countdown.convertDate(broadcasts[2].start);
+    const startDate = CRDS.Countdown.convertDate(broadcasts[2].start, dst_offset);
     const baseTime = new Date(startDate.getTime() - (15 * 60 * 60 * 1000) - (1 * 60 * 1000));
     jasmine.clock().mockDate(baseTime);
     spyOn($, 'ajax').and.returnValue($.Deferred().resolve(upcomingResponseOff).promise());
@@ -255,7 +284,7 @@ describe('Countdown', () => {
 
   it('should transition from live to off', () => {
     // load 1 minute before broadcast[1] ends
-    const startDate = CRDS.Countdown.convertDate(broadcasts[1].end);
+    const startDate = CRDS.Countdown.convertDate(broadcasts[1].end, dst_offset);
     const baseTime = new Date(startDate.getTime() - (1 * 60 * 1000));
     jasmine.clock().mockDate(baseTime);
     spyOn(CRDS.Countdown.prototype, 'getEvents').and.returnValues($.Deferred().resolve(upcomingResponseLive2).promise(), $.Deferred().resolve(upcomingResponseOff).promise());
@@ -274,7 +303,7 @@ describe('Countdown', () => {
 
   it('should transition from live to upcoming', () => {
     // load 1 minute before broadcast[0] ends
-    const startDate = CRDS.Countdown.convertDate(broadcasts[0].end);
+    const startDate = CRDS.Countdown.convertDate(broadcasts[0].end, dst_offset);
     const baseTime = new Date(startDate.getTime() - (1 * 60 * 1000));
     jasmine.clock().mockDate(baseTime);
     spyOn(CRDS.Countdown.prototype, 'getEvents').and.returnValues($.Deferred().resolve(upcomingResponseLive).promise(), $.Deferred().resolve(upcomingResponseUpcoming).promise());
@@ -288,6 +317,35 @@ describe('Countdown', () => {
     expect($("[data-stream-off='show']").hasClass('hide')).toBe(true);
     expect($("[data-stream-off='hide']").hasClass('hide')).toBe(false);
     clearTimeout(countdown.timeoutId);
+    clearInterval(countdown.intervalId);
+  });
+
+  it('should show correct countdown time if DST in effect', () => {
+    // load 10 minutes before broadcast[1] start (at 2017-10-08 21:50:00)
+    const startDate = CRDS.Countdown.convertDate(broadcasts[1].start, dst_offset);
+    const baseTime = new Date(startDate.getTime() - (10 * 60 * 1000));
+    jasmine.clock().mockDate(baseTime);
+    spyOn($, 'ajax').and.returnValue($.Deferred().resolve(upcomingResponseUpcoming).promise());
+    const countdown = new CRDS.Countdown();
+    expect($('.crds-countdown .days').text()).toBe('00');
+    expect($('.crds-countdown .hours').text()).toBe('00');
+    expect($('.crds-countdown .minutes').text()).toBe('10');
+    expect($('.crds-countdown .seconds').text()).toBe('00');
+    clearInterval(countdown.intervalId);
+  });
+
+  it('should show correct countdown time if DST not in effect', () => {
+    // load 10 minutes before broadcast[4] start (at 2017-11-14 18:05:00)
+    const startDate = CRDS.Countdown.convertDate(broadcasts[4].start, standard_offset);
+    const baseTime = new Date(startDate.getTime() - (10 * 60 * 1000));
+    jasmine.clock().mockDate(baseTime);
+    spyOn($, 'ajax').and.returnValue($.Deferred().resolve(upcomingResponseNoDST).promise());
+    const countdown = new CRDS.Countdown();
+    expect(countdown.hours).toBe(0);
+    expect($('.crds-countdown .days').text()).toBe('00');
+    expect($('.crds-countdown .hours').text()).toBe('00');
+    expect($('.crds-countdown .minutes').text()).toBe('10');
+    expect($('.crds-countdown .seconds').text()).toBe('00');
     clearInterval(countdown.intervalId);
   });
 });
