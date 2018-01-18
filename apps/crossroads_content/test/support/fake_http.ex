@@ -28,13 +28,44 @@ defmodule CrossroadsContent.FakeHttp do
   def get("/api/SiteConfig/500") do
     {:error, %HTTPoison.Error{reason: "Some reason from the server"}}
   end
-
+  
   def get("/api/SiteConfig/" <> id) do
     {:ok, %HTTPoison.Response{
       body: "{\"siteConfig\":{\"id\":#{id},\"title\":\"Crossroads\",\"tagline\":\"Whatever your thoughts on church, whatever your beliefs about God, you are welcome here.\",\"theme\":\"admin-only\",\"canViewType\":\"Anyone\",\"canEditType\":\"LoggedInUsers\",\"canCreateTopLevelType\":\"LoggedInUsers\",\"soundCloudURL\":\"https:\\/\\/soundcloud.com\\/crdschurch\\/\",\"twitter\":\"@crdschurch\",\"facebook\":\"crdschurch\",\"locale\":\"en_US\",\"rSS_AtomLink_href\":\"http:\\/\\/www.crossroads.net\",\"rSS_Link\":\"http:\\/\\/www.crossroads.net\",\"rSS_Language\":\"en-us\",\"rSS_Copyright\":\"Please redistribute\",\"rSS_iTunesAuthor\":\"Crossroads\",\"rSS_iTunesSummary\":\"Crossroads Church in Cincinnati, Ohio is a community for people who are seeking God - from those who are brand new to the whole \\\"church\\\" thing to committed followers of Jesus.\",\"rSS_Description\":\"Crossroads Church in Cincinnati, Ohio is a community for people who are seeking God - from those who are brand new to the whole \\\"church\\\" thing to committed followers of Jesus.\",\"rSS_iTunesOwnerName\":\"Crossroads\",\"rSS_iTunesOwnerEmail\":\"websitefeedback@crossroads.net\",\"rSS_Atom10Link_href\":\"http:\\/\\/www.w3.org\\/2005\\/Atom\",\"rSS_MediaCopyright\":\"Please redistribute\",\"rSS_MediaKeywords\":\"Crossroads,Cincinnati,church,Tome,Brian,Tome,Chuck,Mingo,Mingo\",\"rSS_MediaCategory\":\"Religion &amp; Spirituality\\/Christianity\",\"rSS_iTunesExplicit\":\"no\",\"rSS_iTunesKeywords\":\"Crossroads,Cincinnati,church,Tome,Brian,Tome,Chuck,Mingo,Mingo\",\"rSS_iTunesSubtitle\":\"Crossroads Church in Cincinnati, Ohio is a community for people who are seeking God - from those who are brand new to the whole \\\"church\\\" thing to committed followers of Jesus.\",\"rSS_iTunesCategory\":\"Religion &amp; Spirituality\",\"rSS_iTunesSubCategory\":\"Christianity\",\"created\":\"2015-01-21T18:13:55-05:00\",\"className\":\"SiteConfig\"}}",
       status_code: 200
     }}
   end
+
+  def get("/api/series/12/") do
+    {:ok, %HTTPoison.Response{
+      body: "{\"code\":404,\"message\":\"Model 12 of SiteConfig not found.\"}",
+      headers: [{"Date", "Tue, 27 Dec 2016 14:11:20 GMT"},
+        {"Server", "Apache"}, {"Access-Control-Allow-Origin", "*"},
+        {"Access-Control-Allow-Headers", ""},
+        {"Access-Control-Allow-Methods", "OPTIONS, GET"},
+        {"Access-Control-Max-Age", "86400"},
+        {"Cache-Control", "max-age=60, must-revalidate, no-transform"},
+        {"Pragma", ""},
+        {"Vary", "Cookie,X-Forwarded-Protocol,User-Agent,Accept,Accept-Encoding"},
+        {"Strict-Transport-Security", "max-age=63072000; preload"},
+        {"X-Content-Type-Options", "nosniff"},
+        {"Transfer-Encoding", "chunked"},
+        {"Content-Type", "application/json; charset=utf-8"}
+      ], status_code: 404
+    }}
+  end
+
+  def get("/api/series/500/") do
+    {:error, %HTTPoison.Error{reason: "Some reason from the server"}}
+  end
+  
+  def get("/api/series/2/") do
+    {:ok, %HTTPoison.Response{
+      body: "{\"siteConfig\":{\"id\":2,\"title\":\"Crossroads\",\"tagline\":\"Whatever your thoughts on church, whatever your beliefs about God, you are welcome here.\",\"theme\":\"admin-only\",\"canViewType\":\"Anyone\",\"canEditType\":\"LoggedInUsers\",\"canCreateTopLevelType\":\"LoggedInUsers\",\"soundCloudURL\":\"https:\\/\\/soundcloud.com\\/crdschurch\\/\",\"twitter\":\"@crdschurch\",\"facebook\":\"crdschurch\",\"locale\":\"en_US\",\"rSS_AtomLink_href\":\"http:\\/\\/www.crossroads.net\",\"rSS_Link\":\"http:\\/\\/www.crossroads.net\",\"rSS_Language\":\"en-us\",\"rSS_Copyright\":\"Please redistribute\",\"rSS_iTunesAuthor\":\"Crossroads\",\"rSS_iTunesSummary\":\"Crossroads Church in Cincinnati, Ohio is a community for people who are seeking God - from those who are brand new to the whole \\\"church\\\" thing to committed followers of Jesus.\",\"rSS_Description\":\"Crossroads Church in Cincinnati, Ohio is a community for people who are seeking God - from those who are brand new to the whole \\\"church\\\" thing to committed followers of Jesus.\",\"rSS_iTunesOwnerName\":\"Crossroads\",\"rSS_iTunesOwnerEmail\":\"websitefeedback@crossroads.net\",\"rSS_Atom10Link_href\":\"http:\\/\\/www.w3.org\\/2005\\/Atom\",\"rSS_MediaCopyright\":\"Please redistribute\",\"rSS_MediaKeywords\":\"Crossroads,Cincinnati,church,Tome,Brian,Tome,Chuck,Mingo,Mingo\",\"rSS_MediaCategory\":\"Religion &amp; Spirituality\\/Christianity\",\"rSS_iTunesExplicit\":\"no\",\"rSS_iTunesKeywords\":\"Crossroads,Cincinnati,church,Tome,Brian,Tome,Chuck,Mingo,Mingo\",\"rSS_iTunesSubtitle\":\"Crossroads Church in Cincinnati, Ohio is a community for people who are seeking God - from those who are brand new to the whole \\\"church\\\" thing to committed followers of Jesus.\",\"rSS_iTunesCategory\":\"Religion &amp; Spirituality\",\"rSS_iTunesSubCategory\":\"Christianity\",\"created\":\"2015-01-21T18:13:55-05:00\",\"className\":\"SiteConfig\"}}",
+      status_code: 200
+    }}
+  end
+
 
   def get("/api/ContentBlock") do
     {:ok, %HTTPoison.Response{ status_code: 200, body: "{\"contentBlocks\": [{\"id\":1,\"title\":\"generalError\",\"content\":\"<p><strong>Oh no!<\\/strong> Looks like there's and error. Pleas fix and try again.<\\/p>\", \"type\":\"error\",\"category\":\"common\",\"className\":\"ContentBlock\"}]}"}} end

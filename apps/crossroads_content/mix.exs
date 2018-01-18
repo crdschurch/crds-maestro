@@ -8,7 +8,7 @@ defmodule CrossroadsContent.Mixfile do
      config_path: "../../config/config.exs",
      deps_path: "../../deps",
      lockfile: "../../mix.lock",
-     elixir: "~> 1.3",
+     elixir: "~> 1.4",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      elixirc_paths: elixirc_paths(Mix.env),
@@ -18,34 +18,23 @@ defmodule CrossroadsContent.Mixfile do
 
   defp aliases do
   [
-    test: "test --no-start" #(2)
+    test: "test --no-start"
   ]
   end
-  # Configuration for the OTP application
-  #
-  # Type "mix help compile.app" for more information
+
   def application do
-   [applications: [:logger, :httpoison, :cachex],
+   [extra_applications: [:logger],
     mod: {CrossroadsContent, []}]
   end
 
   defp deps do
-    [ {:cachex, "~> 2.1"},
-      {:httpoison, "~> 0.9.0"},
-      {:poison, "~> 2.0"},
-      {:mock, "~> 0.3.1", only: :test}
+    [{:cachex, "~> 2.1"},
+     {:httpoison, "~> 0.13"},
+     {:poison, "~> 3.1"},
+     {:credo, "~> 0.8", only: [:dev, :test], runtime: false},
+     {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
+     {:mock, "~> 0.3.1", only: :test}
     ]
-  end
-
-  def append_revision(version) do
-    "#{version}+#{revision()}"
-  end
-
-  defp revision() do
-    "git"
-    |> System.cmd(["rev-parse", "--short", "HEAD"])
-    |> elem(0)
-    |> String.rstrip
   end
 
   defp elixirc_paths(:test) do

@@ -6,11 +6,14 @@ describe('CardFilter', () => {
   window.Mustache = {
     render() {}
   };
+  window.imgix = {
+    fluid() {}
+  };
   beforeEach(() => {
     const testDom = `
       <section class="container" ng-non-bindable="">
         <h3 id="locations-filter-label" class="collection-header clearfix">locations</h3>
-        <div class="card-deck carousel" data-carousel="mobile-scroll" data-filterable="" data-filter-label="All Locations" data-filter-parent="#locations-filter-label" data-filter-reset-label="All Locations">
+        <div class="card-deck carousel" data-crds-carousel="mobile-scroll" data-filterable="" data-filter-label="All Locations" data-filter-parent="#locations-filter-label" data-filter-reset-label="All Locations">
           <div id="section-locations" class="feature-cards">
             <div class="card" data-filter="southwest-ohio">
               <a href="https://int.crossroads.net/mason/" class="block"><img alt="Mason" class="card-img-top imgix-fluid" data-src="//crds-cms-uploads.imgix.net/content/images/locations-mason.jpg?h=200&amp;max-h=200w=300&amp;&amp;crop=top&amp;fit=clamp&amp;auto=format"></a>
@@ -166,7 +169,7 @@ describe('CardFilter', () => {
             </div>
           </div>
         </div>
-      </section>  
+      </section>
     `;
 
     document.body.innerHTML = testDom;
@@ -317,6 +320,12 @@ describe('CardFilter', () => {
         });
         it('dropdown should contain data-filter-reset-label value only once at top of list', () => {
           const args = { label: 'All Locations', reset: false, filters: ['central-ohio', 'southwest-ohio', 'northern-ohio', 'northern-kentucky', 'central-kentucky'] };
+          cardFilter = new CRDS.CardFilter(element);
+          expect(Mustache.render).toHaveBeenCalledWith(jasmine.any(String), args);
+        });
+        it('dropdown should contain data-filter-reset-label value only once at top of list even when first already', () => {
+          element.setAttribute('data-filter-reset-label', 'southwest-ohio');
+          const args = { label: 'All Locations', reset: false, filters: ['southwest-ohio', 'central-ohio', 'northern-ohio', 'northern-kentucky', 'central-kentucky'] };
           cardFilter = new CRDS.CardFilter(element);
           expect(Mustache.render).toHaveBeenCalledWith(jasmine.any(String), args);
         });

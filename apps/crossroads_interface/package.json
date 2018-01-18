@@ -7,8 +7,10 @@
   },
   "repository": {},
   "dependencies": {
-    "crds-styles": "1.0.0",
+    "crds-styles": "crdschurch/crds-styles#development",
     "iframe-resizer": "^3.5.14",
+    "jquery": "^3.2.1",
+    "js-cookie": "^2.2.0",
     "phoenix": "file:../../deps/phoenix",
     "phoenix_html": "file:../../deps/phoenix_html"
   },
@@ -25,6 +27,7 @@
     "eslint": "^4.5.0",
     "eslint-config-airbnb-base": "^11.3.2",
     "eslint-plugin-import": "^2.7.0",
+    "flickity": "^2.0.10",
     "jasmine-core": "^2.7.0",
     "jasmine-es6": "^0.4.0",
     "javascript-brunch": ">= 1.0 < 1.8",
@@ -34,7 +37,7 @@
     "karma-mocha-reporter": "^2.2.4",
     "karma-phantomjs-launcher": "^1.0.4",
     "sass-brunch": "^2.10.4",
-    "uglify-js-brunch": ">= 1.0 < 1.8",
+    "uglify-js-brunch": "^2.0.0",
     "watchify": "^3.9.0"
   }
 }

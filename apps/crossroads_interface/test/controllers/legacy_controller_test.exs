@@ -3,7 +3,6 @@ defmodule CrossroadsInterface.LegacyControllerTest do
   alias CrossroadsContent.CmsClient
   alias CrossroadsContent.Pages
   import Mock
-  require IEx
 
   test "index/2 should return logged out user page when user is not authenticated", %{conn: conn} do
     with_mocks([ {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
@@ -53,11 +52,37 @@ defmodule CrossroadsInterface.LegacyControllerTest do
 
   test "GET non CMS page ", %{conn: conn} do
     with_mocks([ {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
-                  {CmsClient, [], [get_system_page: fn("") -> {:ok, 200, fake_system_page("")} end]},
-                  {Pages, [], [get_page: fn(_path, _stage) -> :error end]},
-                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
+                 {CmsClient, [], [get_system_page: fn("") -> {:ok, 200, fake_system_page("")} end]},
+                 {Pages, [], [get_page: fn(_path, _stage) -> :error end]},
+                 {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
       conn = get conn, "/"
       assert html_response(conn, 200)
+    end
+  end
+
+  test "GET non CMS page does NOT set redirectUrl", %{conn: conn} do
+    with_mocks([ {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
+                 {CmsClient, [], [get_system_page: fn("") -> {:ok, 200, fake_system_page("")} end]},
+                 {Pages, [], [get_page: fn(_path, _stage) -> :error end]},
+                 {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
+      conn = get conn, "/legacypage"
+      assert conn.resp_cookies["redirectUrl"] == nil
+    end
+  end
+
+  test "GET /non-existent is 404 when cookie unmatchedLegacyRoute=/non-existent/", %{conn: conn} do
+    with_mocks([ {Pages,     [], [page_exists?: fn(_page) -> false end]},
+                 {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
+                 {CmsClient, [], [get_system_page: fn("non-existent") -> {:ok, 200, fake_system_page("")} end]},
+                 {Pages,     [], [get_page: fn(_path, _stage) -> :error end]},
+                 {CmsClient, [], [get_page: fn("/servererror/", false) -> {:ok, 200, fake_error_page()} end]},
+                 {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
+      conn = build_conn()
+      |> put_req_header("content-type", "text/html")
+      |> put_req_cookie("unmatchedLegacyRoute", "/non-existent/")
+      |> fetch_cookies()
+      |> get("/non-existent")
+      assert html_response(conn, 404)
     end
   end
 
@@ -68,6 +93,16 @@ defmodule CrossroadsInterface.LegacyControllerTest do
                   {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
       conn = get conn, "/signin"
       assert html_response(conn, 200)
+    end
+  end
+
+  test "GET /signin does not set redirectUrl", %{conn: conn} do
+    with_mocks([ {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
+                  {CmsClient, [], [get_system_page: fn("signin") -> {:ok, 200, fake_system_page("signin")} end]},
+                  {Pages, [], [get_page: fn(_path, _stage) -> :error end]},
+                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
+      conn = get conn, "/signin"
+      assert !Map.has_key?(conn.resp_cookies, "redirectUrl")
     end
   end
 

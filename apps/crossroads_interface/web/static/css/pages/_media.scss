@@ -1,0 +1,66 @@
+.card-deck--wrap {
+  flex-wrap: wrap;
+}
+
+.card-deck--expanded-layout .card.card--thumbnail {
+  max-width: 50%;
+  @media (min-width: $screen-xs-min) {
+    max-width: 25%;
+  }
+  @media (min-width: $screen-sm-min) {
+    max-width: 16.66667%;
+  }
+}
+
+.card--thumbnail {
+  a:hover {
+    text-decoration: none;
+  }
+
+  .card-block {
+    padding: 0.5rem 0;
+    font-size: 1rem;
+
+    .card-title {
+      margin: 0.25rem 0;
+      font-size: 0.875rem;
+      line-height: 1.45;
+    }
+  }
+}
+
+.media-section-heading {
+  .btn-group {
+    margin: 1rem 0;
+  
+    @media (min-width: $screen-xs-min) {
+      margin-left: 1rem;
+      margin-top: 1.875rem;
+    }
+  }
+
+  .section-header {
+    float: none;
+    margin-bottom: 0;
+
+    @media (min-width: $screen-xs-min) {
+      float: left;
+      margin-bottom: 1.5rem;
+    }
+  }
+}
+
+// Music Page
+.jumbotron.music-jumbotron {
+  background: url(//crds-cms-uploads.imgix.net/content/images/music-intro-bg.jpg)
+    top center no-repeat;
+  background-size: cover;
+  color: $cr-white;
+
+  p.lead {
+    padding: 0 2rem;
+    margin-top: 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+}

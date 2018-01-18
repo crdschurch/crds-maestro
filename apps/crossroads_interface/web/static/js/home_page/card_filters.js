@@ -56,7 +56,7 @@ CRDS.CardFilter = class CardFilter {
     // if reset_label matches a filter, put it first and treat as default
     const resetIndex = this.filters.indexOf(this.reset_label);
     let filterOnLoad = false;
-    if (resetIndex > 0) {
+    if (resetIndex > -1) {
       this.filters.splice(resetIndex, 1);
       this.filters.unshift(this.reset_label);
       this.reset_label = false;
@@ -125,6 +125,9 @@ CRDS.CardFilter = class CardFilter {
     if (el) {
       el.classList.add('on');
     }
+    if (imgix) {
+      imgix.fluid();
+    }
   }
 
   setCurrentLabel(str) {
@@ -132,7 +135,7 @@ CRDS.CardFilter = class CardFilter {
   }
 
   refreshCarousel() {
-    if (this.el.dataset.carousel !== undefined) {
+    if (this.el.dataset.crdsCarousel !== undefined) {
       const id = this.el.dataset.carouselId;
       CRDS._instances[id].reload();
     }
@@ -140,6 +143,6 @@ CRDS.CardFilter = class CardFilter {
 
   static filterHTML() {
     const id = Math.random().toString(36).substring(7);
-    return `<button class="btn btn-outline btn-option dropdown-toggle soft-half-sides soft-quarter-ends" type="button" id="dropdownMenu-${id}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><svg class="icon icon-1 pull-right push-left" viewBox="0 0 256 256"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#chevron-down"></use></svg> <span data-current-label>{{label}}</span></button><ul class="crds-list dropdown-menu" aria-labelledby="dropdownMenu-${id}">{{#reset}}<li><a href="#" data-reset>{{reset}}</a></li>{{/reset}}{{#filters}}<li><a href="#" data-filter-select="{{.}}" class="block">{{.}}</a>{{/filters}}</li></ul>`;
+    return `<button class="btn btn-outline btn-gray-light dropdown-toggle soft-half-sides soft-quarter-ends" type="button" id="dropdownMenu-${id}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><svg class="icon icon-1 pull-right push-left" viewBox="0 0 256 256"><use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#chevron-down"></use></svg> <span data-current-label>{{label}}</span></button><ul class="crds-list dropdown-menu" aria-labelledby="dropdownMenu-${id}">{{#reset}}<li><a href="#" data-reset>{{reset}}</a></li>{{/reset}}{{#filters}}<li><a href="#" data-filter-select="{{.}}" class="block">{{.}}</a>{{/filters}}</li></ul>`;
   }
 };

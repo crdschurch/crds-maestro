@@ -1,0 +1,51 @@
+<div class="container">
+    <div class="well hard push-bottom bg-charcoal" style="border: 1px solid #000; overflow: hidden;">
+        <div class="row">
+            <div class="col-md-4 col-sm-5">
+                <div class="sixteen-nine">
+                    <img data-src="<%= get_in(assigns.series, ["image", "filename"]) %>" class="img-responsive imgix-fluid img-full-width mobile-push-bottom center" alt="<%= assigns.series["title"] %>"
+                    />
+                </div>
+            </div>
+            <div class="col-md-8 col-sm-7">
+                <div class="mobile-push push-right">
+                    <div class="row">
+                        <h2 class="component-header push-top mobile-flush-top text-white">
+                            <%= assigns.series["title"] %>
+                        </h2>
+                    </div>
+                    <div class="row quiet" style="color: #E7E7E7;">
+                        <%= raw assigns.series["description"] %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="card-deck">
+            <div class="card-deck--expanded-layout card-deck--wrap" style="padding-left: .5rem; padding-right: .5rem;">
+              <%= if has_messages?(assigns.series["messages"]) do %>
+                <%= for message <- Enum.reverse(assigns.series["messages"]) do %>
+                  <%= if message_valid?(message) do %>
+                    <div class="card card--thumbnail">
+                      <a href="/message/<%= message["id"] %>/<%= linkify_title(message["title"]) %>/" class="block">
+                            <img alt="<%= message["title"] %>" data-src="<%= get_message_still(message) %>" class="card-img-top imgix-fluid" />
+                        </a>
+                        <div class="card-block">
+                            <a href="/message/<%= message["id"] %>/<%= linkify_title(message["title"]) %>/">
+                                <h4 class="card-title ellipsis">
+                                    <%= message["title"] %>
+                                </h4>
+                                <p class="text-muted">
+                                    <%= convert_date_string(message["date"]) %>
+                                </p>
+                            </a>
+                        </div>
+                    </div>
+                  <% end %>
+                <% end %>
+              <% end %>
+            </div>
+        </div>
+    </div>
+</div>

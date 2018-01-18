@@ -7,5 +7,4 @@ config :crossroads_content,
   cms_cache_ttl: 10 * 60 * 1000,
   cms_timeout: 10 * 60 * 1000
 
-
 import_config "#{Mix.env}.exs"
