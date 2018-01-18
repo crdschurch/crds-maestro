@@ -220,7 +220,12 @@ CRDS.Countdown = class Countdown {
   }
 
   static convertDate(dateString, timeZone) {
+    // Expected format of dateString: YYYY-MM-DD HH:MM:SS
+    // Output of dateString.match is an array
     const date = dateString.match(/^(\d{4})-0?(\d+)-0?(\d+)[T ]0?(\d+):0?(\d+):0?(\d+)$/);
+    // Here we assemble the array values to: M/D/YYYY HH:MM:SS TZ
+    // We do this because this is the most commonly accepted format by our support
+    // browsers
     const formattedDateString = `${date[2]}/${date[3]}/${date[1]} ${date[4]}:${date[5]}:${date[6]} ${timeZone}`;
     return new Date(formattedDateString);
   }
