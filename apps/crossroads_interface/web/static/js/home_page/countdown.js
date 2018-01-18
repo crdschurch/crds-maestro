@@ -82,11 +82,11 @@ CRDS.Countdown = class Countdown {
   }
 
   appendNextStreamDate() {
-    const startDateTime = this.convertDate(this.nextEvent.start);
+    const startDateTime = Countdown.convertDate(this.nextEvent.start, this.TIMEZONE_OFFSET);
     const offsetStartDateTime = this.addOffsetTime(startDateTime);
     const startDay = Countdown.getDayOfWeek(offsetStartDateTime);
     const startTime = Countdown.get12HourTime(offsetStartDateTime);
-    const timeString = `${startDay} at ${startTime} EST`;
+    const timeString = `${startDay} at ${startTime} ET`;
     $("[data-automation-id='offState']").append(
       $('<h4 class="font-size-base">').text('Next Live Stream')
     ).append(
@@ -154,7 +154,7 @@ CRDS.Countdown = class Countdown {
     this.setStreamStatus('live');
 
     const currentEndDate = this.currentEvent.end;
-    const secondsUntilStreamEnd = (this.convertDate(currentEndDate) - (new Date())) / 1000;
+    const secondsUntilStreamEnd = (Countdown.convertDate(currentEndDate, this.TIMEZONE_OFFSET) - (new Date())) / 1000;
 
     this.timeoutId = setTimeout(() => {
       if (this.nextEvent == null) {
@@ -168,7 +168,7 @@ CRDS.Countdown = class Countdown {
   showCountdown() {
     $('.crds-countdown').show();
 
-    const secondsUntilNextEvent = (this.convertDate(this.nextEvent.start) - (new Date())) / 1000;
+    const secondsUntilNextEvent = (Countdown.convertDate(this.nextEvent.start, this.TIMEZONE_OFFSET) - (new Date())) / 1000;
     if (secondsUntilNextEvent < this.UPCOMING_DURATION * 60 * 60) {
       this.setStreamStatus('upcoming');
     } else {
@@ -219,9 +219,9 @@ CRDS.Countdown = class Countdown {
     $('.crds-countdown .seconds').html(Countdown.padZero(this.seconds));
   }
 
-  convertDate(dateString) {
+  static convertDate(dateString, timeZone) {
     const date = dateString.match(/^(\d{4})-0?(\d+)-0?(\d+)[T ]0?(\d+):0?(\d+):0?(\d+)$/);
-    const formattedDateString = `${date[2]}/${date[3]}/${date[1]} ${date[4]}:${date[5]}:${date[6]} ${this.TIMEZONE_OFFSET}`;
+    const formattedDateString = `${date[2]}/${date[3]}/${date[1]} ${date[4]}:${date[5]}:${date[6]} ${timeZone}`;
     return new Date(formattedDateString);
   }
 
