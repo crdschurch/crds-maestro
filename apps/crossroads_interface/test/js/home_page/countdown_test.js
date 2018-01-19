@@ -39,10 +39,10 @@ describe('Countdown', () => {
     {
       eventId: 1056214,
       scheduleId: 2391,
-      startTime: 'Saturday 10/14/17 04:20:00 PM',
-      start: '2017-10-14 16:20:00',
-      end: '2017-10-14 17:40:00',
-      title: 'Saturday 4:30pm',
+      startTime: 'Saturday 10/14/17 12:45:00 PM',
+      start: '2017-10-14 12:45:00',
+      end: '2017-10-14 13:45:00',
+      title: 'Saturday 12:55pm',
       type: 'R',
       skip: 0,
       private: 0,
@@ -240,7 +240,7 @@ describe('Countdown', () => {
     expect($("[data-stream-off='show']").hasClass('hide')).toBe(false);
     expect($("[data-stream-off='hide']").hasClass('hide')).toBe(true);
     // Saturday 10/14/17 04:30:00 PM EDT is 5:30 EST
-    const dateHtml = '<h4 class="font-size-base">Next Live Stream</h4><h3>Saturday at 4:30pm ET</h3>';
+    const dateHtml = '<h4 class="font-size-base">Next Live Stream</h4><h3>Saturday at 12:55pm ET</h3>';
     expect($("[data-automation-id='offState']").html()).toContain(dateHtml);
     clearInterval(countdown.intervalId);
   });
