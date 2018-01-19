@@ -111,6 +111,9 @@ CRDS.Countdown = class Countdown {
     const minutes = (`0${date.getMinutes()}`).slice(-2);
     let ampm = 'am';
 
+    if (hours == 12) {
+      ampm = 'pm';
+    }
     if (hours > 12) {
       hours -= 12;
       ampm = 'pm';
