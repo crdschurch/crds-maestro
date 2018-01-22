@@ -3,6 +3,16 @@
 
 window.CRDS = window.CRDS || {};
 
+Date.prototype.stdTimezoneOffset = function () {
+  const jan = new Date(this.getFullYear(), 0, 1);
+  const jul = new Date(this.getFullYear(), 6, 1);
+  return Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
+};
+
+Date.prototype.dst = function () {
+  return this.getTimezoneOffset() < this.stdTimezoneOffset();
+};
+
 CRDS.Countdown = class Countdown {
   constructor() {
     this.days = undefined;
@@ -19,6 +29,7 @@ CRDS.Countdown = class Countdown {
     this.UPCOMING_DURATION = 15; // hours
     this.STREAM_OFFSET = 10; // minutes
     this.MS_PER_MINUTE = 60000; // milliseconds
+    this.TIMEZONE_OFFSET = ((new Date()).dst()) ? '-0400' : '-0500';
 
     // Streamspot url
     this.streamspotUrl = 'https://api.streamspot.com';
@@ -71,11 +82,11 @@ CRDS.Countdown = class Countdown {
   }
 
   appendNextStreamDate() {
-    const startDateTime = Countdown.convertDate(this.nextEvent.start);
+    const startDateTime = Countdown.convertDate(this.nextEvent.start, this.TIMEZONE_OFFSET);
     const offsetStartDateTime = this.addOffsetTime(startDateTime);
     const startDay = Countdown.getDayOfWeek(offsetStartDateTime);
     const startTime = Countdown.get12HourTime(offsetStartDateTime);
-    const timeString = `${startDay} at ${startTime} EST`;
+    const timeString = `${startDay} at ${startTime} ET`;
     $("[data-automation-id='offState']").append(
       $('<h4 class="font-size-base">').text('Next Live Stream')
     ).append(
@@ -100,6 +111,9 @@ CRDS.Countdown = class Countdown {
     const minutes = (`0${date.getMinutes()}`).slice(-2);
     let ampm = 'am';
 
+    if (hours == 12) {
+      ampm = 'pm';
+    }
     if (hours > 12) {
       hours -= 12;
       ampm = 'pm';
@@ -143,7 +157,7 @@ CRDS.Countdown = class Countdown {
     this.setStreamStatus('live');
 
     const currentEndDate = this.currentEvent.end;
-    const secondsUntilStreamEnd = (Countdown.convertDate(currentEndDate) - (new Date())) / 1000;
+    const secondsUntilStreamEnd = (Countdown.convertDate(currentEndDate, this.TIMEZONE_OFFSET) - (new Date())) / 1000;
 
     this.timeoutId = setTimeout(() => {
       if (this.nextEvent == null) {
@@ -157,7 +171,7 @@ CRDS.Countdown = class Countdown {
   showCountdown() {
     $('.crds-countdown').show();
 
-    const secondsUntilNextEvent = (Countdown.convertDate(this.nextEvent.start) - (new Date())) / 1000;
+    const secondsUntilNextEvent = (Countdown.convertDate(this.nextEvent.start, this.TIMEZONE_OFFSET) - (new Date())) / 1000;
     if (secondsUntilNextEvent < this.UPCOMING_DURATION * 60 * 60) {
       this.setStreamStatus('upcoming');
     } else {
@@ -168,6 +182,7 @@ CRDS.Countdown = class Countdown {
     this.hours = Math.floor((secondsUntilNextEvent % 86400) / 3600);
     this.minutes = Math.floor((secondsUntilNextEvent % 3600) / 60);
     this.seconds = Math.floor(secondsUntilNextEvent % 60);
+    this.setCountdownTime();
 
     this.intervalId = setInterval(() => {
       this.updateCountdown();
@@ -187,10 +202,7 @@ CRDS.Countdown = class Countdown {
         }
       }
     }
-    $('.crds-countdown .days').html(Countdown.padZero(this.days));
-    $('.crds-countdown .hours').html(Countdown.padZero(this.hours));
-    $('.crds-countdown .minutes').html(Countdown.padZero(this.minutes));
-    $('.crds-countdown .seconds').html(Countdown.padZero(this.seconds));
+    this.setCountdownTime();
     const remainingSeconds = (this.seconds) + (this.minutes * 60) + (this.hours * 3600) + (this.days * 86400);
     if (remainingSeconds < this.UPCOMING_DURATION * 3600 && this.streamStatus !== 'upcoming') {
       this.setStreamStatus('upcoming');
@@ -203,9 +215,21 @@ CRDS.Countdown = class Countdown {
     }
   }
 
-  static convertDate(dateString) {
+  setCountdownTime() {
+    $('.crds-countdown .days').html(Countdown.padZero(this.days));
+    $('.crds-countdown .hours').html(Countdown.padZero(this.hours));
+    $('.crds-countdown .minutes').html(Countdown.padZero(this.minutes));
+    $('.crds-countdown .seconds').html(Countdown.padZero(this.seconds));
+  }
+
+  static convertDate(dateString, timeZone) {
+    // Expected format of dateString: YYYY-MM-DD HH:MM:SS
+    // Output of dateString.match is an array
     const date = dateString.match(/^(\d{4})-0?(\d+)-0?(\d+)[T ]0?(\d+):0?(\d+):0?(\d+)$/);
-    const formattedDateString = `${date[2]}/${date[3]}/${date[1]} ${date[4]}:${date[5]}:${date[6]} -0500`;
+    // Here we assemble the array values to: M/D/YYYY HH:MM:SS TZ
+    // We do this because this is the most commonly accepted format by our support
+    // browsers
+    const formattedDateString = `${date[2]}/${date[3]}/${date[1]} ${date[4]}:${date[5]}:${date[6]} ${timeZone}`;
     return new Date(formattedDateString);
   }
 

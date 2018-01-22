@@ -18,8 +18,9 @@ defmodule CrossroadsInterface.CmsSeriesController do
 
     case series do
       {:ok, _response_code, %{"series" => series}} ->
-        render conn, "individual_series.html", %{series: series,
-          css_files: [ "/css/app.css", "/js/legacy/legacy.css" ]}
+        Plug.MediaMeta.call(conn, series)
+        |> render("individual_series.html", %{series: series,
+          css_files: [ "/css/app.css", "/js/legacy/legacy.css" ]})
       {:error, _response_code, response_data} ->
         Logger.error("Error getting series data from CMS | Response: #{response_data["message"]}")
         NotfoundController.notfound(conn, %{})
