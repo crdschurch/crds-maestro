@@ -1,6 +1,10 @@
 defmodule CrossroadsInterface.CmsSeriesView do
   use CrossroadsInterface.Web, :view
 
+  def has_messages?(article_messages) do
+    article_messages != nil && article_messages != []
+  end
+
   def message_valid?(message) do
     has_title?(message) && has_message_video?(message) && has_message_still?(message)
   end

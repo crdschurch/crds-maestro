@@ -21,7 +21,6 @@ describe('UserService', () => {
   });
 
   it('should customize the welcome message based on user name', () => {
-    debugger;    
     document.cookie = 'username=Rodney';
     user = new CRDS.UserService();
     user.customizeName('foo', 'Cool Guy');
@@ -29,14 +28,12 @@ describe('UserService', () => {
   });
 
   it('should fallback if no name is detected', () => {
-    debugger;
     user = new CRDS.UserService();
     user.customizeName('foo', 'Bodacious Dude');
     expect(welcomeTitle.innerText).toEqual('Bodacious Dude');
   });
 
   it('should fallback if name is set to an empty string', () => {
-    debugger;
     document.cookie = 'username= ';
     user = new CRDS.UserService();
     user.customizeName('foo', 'No Name');
@@ -44,7 +41,6 @@ describe('UserService', () => {
   });
 
   it('should not do anything if the ID is not on the page', () => {
-    debugger;    
     user = new CRDS.UserService();
     user.customizeName('beef', 'Fellow Carnivore');
     expect(welcomeTitle.innerText).toEqual('');
