@@ -2,8 +2,10 @@ use Mix.Config
 
 config :crossroads_interface, CrossroadsInterface.Endpoint,
   url: [host: {:system, "MAESTRO_HOSTNAME"}, port: {:system, "MAESTRO_PORT"}],
-  http: [port: {:system, "MAESTRO_PORT"},
-    otp_app: :crossroads_interface],
+  https: [port: {:system, "MAESTRO_PORT"},
+    otp_app: :crossroads_interface,
+    keyfile: "/certificates/tls.key",
+    certfile: "/certificates/tls.crt"],
   cache_static_manifest: "priv/static/manifest.json",
   server: true
 
