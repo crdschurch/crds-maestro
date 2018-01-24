@@ -196,7 +196,7 @@ defmodule CrossroadsContent.Pages do
 
   defp load_cms_page_cache do
     Logger.debug("Loading all CMS pages")
-    
+
     # get map of all RedirectorPages
     # regardless of whether "Requires Angular" is set
     redirector_pages = case get_redirector_pages(false) do

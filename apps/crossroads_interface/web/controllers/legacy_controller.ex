@@ -1,6 +1,5 @@
 defmodule CrossroadsInterface.LegacyController do
   require Logger
-  require IEx
   use CrossroadsInterface.Web, :controller
   alias CrossroadsInterface.NotfoundController
   @moduledoc"""

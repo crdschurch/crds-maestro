@@ -90,20 +90,4 @@ defmodule CrossroadsContentPagesTest do
     end
   end
 
-  
-
-  
-
-
-
-  
-
-
-
-  
-
-  
-
-  
-
 end
