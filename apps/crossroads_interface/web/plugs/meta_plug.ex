@@ -14,17 +14,14 @@ defmodule CrossroadsInterface.Plug.Meta do
 
   def call(conn, _default) do
 
-    page = case conn.request_path |> ContentHelpers.add_trailing_slash_if_necessary |> Pages.page_exists? do
-      true -> conn.request_path 
-                |> ContentHelpers.add_trailing_slash_if_necessary 
-                |> Pages.get_page 
-                |> match_page
-      false -> conn.request_path 
-                |> String.split("/") 
-                |> Enum.filter(&(&1 != "")) 
-                |> Enum.join(".") 
-                |> CmsClient.get_system_page
-                |> match_system_pages
+    page = case conn.assigns[:page] do
+      nil -> conn.request_path
+              |> String.split("/") 
+              |> Enum.filter(&(&1 != "")) 
+              |> Enum.join(".") 
+              |> CmsClient.get_system_page
+              |> match_system_pages                
+      _ -> conn.assigns[:page]
     end
 
     site_config = 1

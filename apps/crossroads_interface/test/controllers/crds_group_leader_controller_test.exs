@@ -6,8 +6,7 @@ defmodule CrossroadsInterface.CrdsGroupLeaderControllerTest do
 
   describe "renders correctly" do
     test "GET /group-leader", %{conn: conn} do
-      with_mocks([ {Pages, [], [page_exists?: fn(_path) -> false end]},
-                   {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
+      with_mocks([ {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
                    {CmsClient, [], [get_system_page: fn("group-leader") -> {:ok, 200, fake_system_page("group-leader")} end]},
                    {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
         conn = get conn, "/group-leader"
@@ -16,8 +15,7 @@ defmodule CrossroadsInterface.CrdsGroupLeaderControllerTest do
     end
 
     test "GET /group-leader displays <app-root>", %{conn: conn} do
-      with_mocks([ {Pages, [], [page_exists?: fn(_path) -> false end]},
-                   {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
+      with_mocks([ {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
                    {CmsClient, [], [get_system_page: fn("group-leader") -> {:ok, 200, fake_system_page("group-leader")} end]},
                    {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
         conn = get conn, "/group-leader"
@@ -27,8 +25,7 @@ defmodule CrossroadsInterface.CrdsGroupLeaderControllerTest do
   end
 
   test "GET /group-leader sets correct base_href", %{conn: conn} do
-    with_mocks([ {Pages, [], [page_exists?: fn(_path) -> false end]},
-                 {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
+    with_mocks([ {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
                  {CmsClient, [], [get_system_page: fn("group-leader") -> {:ok, 200, fake_system_page("group-leader")} end]},
                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
       conn = get conn, "/group-leader"
@@ -37,8 +34,7 @@ defmodule CrossroadsInterface.CrdsGroupLeaderControllerTest do
   end
 
   test "GET /group-leader sets correct layout", %{conn: conn} do
-    with_mocks([ {Pages, [], [page_exists?: fn(_path) -> false end]},
-                 {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
+    with_mocks([ {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
                  {CmsClient, [], [get_system_page: fn("group-leader") -> {:ok, 200, fake_system_page("group-leader")} end]},
                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
       conn = get conn, "/group-leader"
