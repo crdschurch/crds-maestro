@@ -6,14 +6,14 @@ defmodule ConfigHelper do
   end
 
   defp get_maestro_name_extension do
-    case System.get_env("MAESTRO_NAME_EXTENSION") do
+    case "#{System.get_env("MAESTRO_NAME_EXTENSION")}" do
       "" -> ""
       ext -> ext
     end
   end
 
   defp get_environment do
-    case System.get_env("CRDS_ENV") do
+    case "#{System.get_env("CRDS_ENV")}" do
       "" -> ""
       env -> "-" <> env 
     end
