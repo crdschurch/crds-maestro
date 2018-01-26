@@ -44,7 +44,13 @@
   @import './pages/homepage';
   @import './pages/locations';
   @import './pages/media';
+
+  .bg-repeated {
+    background-repeat: repeat;
+    background-size: contain;
+  }
 }
+
 
 .noscroll {
   position: fixed;
