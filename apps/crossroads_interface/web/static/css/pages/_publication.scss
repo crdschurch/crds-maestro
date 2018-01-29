@@ -9,6 +9,23 @@
     color: $cr-cyan;
     font-size: 16px;
   }
+
+  .publication_hero--video {
+    height: 56.25vw;
+    max-height: 720px;
+
+    .jumbotron {
+      height: 100%;
+    }
+
+    .jumbotron-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+  }
+
   .publication_shareBtn {
     position: relative;
     display: inline-flex;
