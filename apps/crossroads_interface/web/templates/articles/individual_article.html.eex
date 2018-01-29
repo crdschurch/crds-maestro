@@ -1,49 +1,49 @@
-<div class="article">
-    <div class="article_header push-top">
+<div class="publication">
+    <div class="publication_header push-top">
         <div class="container">
             <div class="col-md-6 col-md-offset-3">
-                <h5 class="article_meta metadata flush">Culture -
-                    <span class="article_readTime">5 min read</span>
+                <h5 class="publication_meta metadata flush">Culture -
+                    <span class="publication_duration">5 min read</span>
                 </h5>
-                <h2 class="article_title section-header flush">Our Culture of Abusive Men</h2>
+                <h2 class="publication_title section-header flush">Our Culture of Abusive Men</h2>
                 <div>
-                    <h4 class="article_author inline">Brian Tome</h4> | <span class="article_date">Dec 16, 2017</span>
+                    <h4 class="publication_series inline">Brian Tome</h4> | <span class="article_date">Dec 16, 2017</span>
                 </div>
             </div>
         </div>
     </div>
-    <div class="article_hero push-ends">
+    <div class="publication_hero push-ends">
         <img src="https://images.unsplash.com/photo-1479030160180-b1860951d696?ixlib=rb-0.3.5&amp;s=18920a3e5e23474110262c6333ef174f&amp;auto=format&amp;fit=crop&amp;w=1350&amp;q=80"
             alt="Weinstein" title="" style="width: 100%; height: 500px; object-fit: cover;" />
-        <span class="article_heroCaption text-center block push-half-top push-bottom">Richard Shotwell/Invision, via Associated Press</span>
+        <span class="publication_heroCaption text-center block push-half-top push-bottom">Richard Shotwell/Invision, via Associated Press</span>
     </div>
-    <div class="article_body">
+    <div class="publication_body article">
         <div class="container">
             <div class="col-md-3">
-                <div class="article_share push-bottom">
+                <div class="publication_share push-bottom">
                     <h5 class="control-label">Share</h5>
-                    <button id="shareFB" class="article_shareBtn article_shareBtn--facebook">
+                    <button id="shareFB" class="publication_shareBtn publication_shareBtn--facebook">
                         <svg class="icon" viewBox="0 0 256 256">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#facebook"></use>
                         </svg>
                     </button>
-                    <button id="shareTW" class="article_shareBtn article_shareBtn--twitter">
+                    <button id="shareTW" class="publication_shareBtn publication_shareBtn--twitter">
                         <svg class="icon" viewBox="0 0 256 256">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#twitter"></use>
                         </svg>
                     </button>
-                    <button id="shareEM" class="article_shareBtn article_shareBtn--email">
+                    <button id="shareEM" class="publication_shareBtn publication_shareBtn--email">
                         <svg class="icon" viewBox="0 0 256 256">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#facebook"></use>
                         </svg>
                     </button>
-                    <button id="shareTX" class="article_shareBtn article_shareBtn--text">
+                    <button id="shareTX" class="publication_shareBtn publication_shareBtn--text">
                         <svg class="icon" viewBox="0 0 256 256">
                             <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#share"></use>
                         </svg>
                     </button>
                 </div>
-                <div class="article_tags">
+                <div class="publication_tags">
                     <h5 class="control-label">Tags</h5>
                     <span class="label label-default">Men</span>
                     <span class="label label-default">Culture</span>
@@ -161,40 +161,42 @@
             </div>
         </div>
     </div>
-    <div class="article_more">
+    <div class="publication_more">
         <div class="container">
-            <h4 class="collection-header push-bottom">more articles</h4>
-            <div class="card-deck card-deck--expanded-layout">
-                <div class="card">
-                    <img alt="Card image caption" class="card-img-top img-responsive" src="https://cdn-images-1.medium.com/max/600/1*8VmXU0OvDYTpOOzi-U8Cgw.png">
-                    <div class="card-block">
-                        <h4 class="card-title card-title--overlap text-uppercase">My Super Bowl Gift to You</h4>
-                        <h5 class="card-subtitle">Culture - 4 min read</h5>
-                        <p class="card-text"><a>Steve Manuel</a> - Jan 25, 2018</p>
+            <h4 class="collection-header push-bottom">you may also like</h4>
+            <div class="card-deck carousel" data-crds-carousel="mobile-scroll">
+                <div class="feature-cards card-deck--expanded-layout">
+                    <div class="card cell">
+                        <img alt="Card image caption" class="card-img-top img-responsive" src="https://cdn-images-1.medium.com/max/600/1*8VmXU0OvDYTpOOzi-U8Cgw.png">
+                        <div class="card-block">
+                            <h4 class="card-title card-title--overlap text-uppercase">My Super Bowl Gift to You</h4>
+                            <h5 class="card-subtitle">Culture - 4 min read</h5>
+                            <p class="card-text"><a>Steve Manuel</a> - Jan 25, 2018</p>
+                        </div>
                     </div>
-                </div>
-                <div class="card">
-                    <img alt="Card image caption" class="card-img-top img-responsive" src="https://cdn-images-1.medium.com/max/2000/1*TOuvM7X0V2l3UvyhpzP8mw.jpeg">
-                    <div class="card-block">
-                        <h4 class="card-title card-title--overlap text-uppercase">How to Build a Brotherhood</h4>
-                        <h5 class="card-subtitle">Family - 8 min read</h5>
-                        <p class="card-text"><a>Craig Dockery</a> - Jan 25, 2018</p>
+                    <div class="card cell">
+                        <img alt="Card image caption" class="card-img-top img-responsive" src="https://cdn-images-1.medium.com/max/2000/1*TOuvM7X0V2l3UvyhpzP8mw.jpeg">
+                        <div class="card-block">
+                            <h4 class="card-title card-title--overlap text-uppercase">How to Build a Brotherhood</h4>
+                            <h5 class="card-subtitle">Family - 8 min read</h5>
+                            <p class="card-text"><a>Craig Dockery</a> - Jan 25, 2018</p>
+                        </div>
                     </div>
-                </div>
-                <div class="card">
-                    <img alt="Card image caption" class="card-img-top img-responsive" src="https://cdn-images-1.medium.com/max/800/1*6tpf7YWdmD3KaRjmHwZqqQ.jpeg">
-                    <div class="card-block">
-                        <h4 class="card-title card-title--overlap text-uppercase">Wash the Sheets, Skip the Advice</h4>
-                        <h5 class="card-subtitle">Family - 7 min read</h5>
-                        <p class="card-text"><a>Kim Botto</a> - Jan 19, 2018</p>
+                    <div class="card cell">
+                        <img alt="Card image caption" class="card-img-top img-responsive" src="https://cdn-images-1.medium.com/max/800/1*6tpf7YWdmD3KaRjmHwZqqQ.jpeg">
+                        <div class="card-block">
+                            <h4 class="card-title card-title--overlap text-uppercase">Wash the Sheets, Skip the Advice</h4>
+                            <h5 class="card-subtitle">Family - 7 min read</h5>
+                            <p class="card-text"><a>Kim Botto</a> - Jan 19, 2018</p>
+                        </div>
                     </div>
-                </div>
-                <div class="card">
-                    <img alt="Card image caption" class="card-img-top img-responsive" src="https://cdn-images-1.medium.com/max/800/1*mPA6uyIK_xUqVeymsIiysw.jpeg">
-                    <div class="card-block">
-                        <h4 class="card-title card-title--overlap text-uppercase">I’m an Unabashed Trump Supporter (But for a Different Reason Than You May Think)</h4>
-                        <h5 class="card-subtitle">Culture - 5 min read</h5>
-                        <p class="card-text"><a>Steve Manuel</a> - Jan 18, 2018</p>
+                    <div class="card cell">
+                        <img alt="Card image caption" class="card-img-top img-responsive" src="https://cdn-images-1.medium.com/max/800/1*mPA6uyIK_xUqVeymsIiysw.jpeg">
+                        <div class="card-block">
+                            <h4 class="card-title card-title--overlap text-uppercase">I’m an Unabashed Trump Supporter (But for a Different Reason Than You May Think)</h4>
+                            <h5 class="card-subtitle">Culture - 5 min read</h5>
+                            <p class="card-text"><a>Steve Manuel</a> - Jan 18, 2018</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -203,11 +205,12 @@
 </div>
 <script type="text/javascript">
     // <![CDATA[
-    var articleBody = document.getElementsByClassName('article_body')[0];
-    var containerHeight = articleBody.firstElementChild.offsetHeight;
-    var articleSidebar = document.getElementsByClassName('article_column')[0];
-    if (window.innerWidth > 991) {
-        articleSidebar.style.height = containerHeight + 'px';
-    }
+        new CRDS.CardCarousels('[data-crds-carousel]');
+        var articleBody = document.getElementsByClassName('article')[0];
+        var containerHeight = articleBody.firstElementChild.offsetHeight;
+        var articleSidebar = document.getElementsByClassName('article_column')[0];
+        if (window.innerWidth > 991) {
+            articleSidebar.style.height = containerHeight + 'px';
+        }
     // ]]>
 </script>

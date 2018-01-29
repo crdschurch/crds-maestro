@@ -26,6 +26,10 @@ defmodule CrossroadsInterface.Router do
     get "/groups/search/*path", CrdsGroupsController, :index
     get "/srfp/*path", CrdsSrfpController, :index
     get "/series/:id/*path", CmsSeriesController, :show
+    get "/articles", ArticlesController, :index
+    get "/articles/:id/*path", ArticlesController, :show
+    get "/videos", VideosController, :index
+    get "/videos/:id/*path", VideosController, :show
 
     get "/notfound", NotfoundController, :notfound
     get "/homepage", HomepageController, :index
