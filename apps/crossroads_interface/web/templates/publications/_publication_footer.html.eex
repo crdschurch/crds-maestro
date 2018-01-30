@@ -1,0 +1,42 @@
+<div class="publication_more">
+    <div class="container">
+        <h4 class="collection-header push-bottom clearfix">you may also like
+            <a href="#" class="btn btn-outline btn-blue" style="float: right;">See all publications</a></h4>
+        <div class="card-deck carousel" data-crds-carousel="mobile-scroll">
+            <div class="feature-cards card-deck--expanded-layout">
+                <div class="card cell">
+                    <img alt="Card image caption" class="card-img-top img-responsive" src="https://cdn-images-1.medium.com/max/600/1*8VmXU0OvDYTpOOzi-U8Cgw.png">
+                    <div class="card-block">
+                        <h4 class="card-title card-title--overlap text-uppercase">My Super Bowl Gift to You</h4>
+                        <h5 class="card-subtitle">Culture - 4 min read</h5>
+                        <p class="card-text"><a>Steve Manuel</a> - Jan 25, 2018</p>
+                    </div>
+                </div>
+                <div class="card cell">
+                    <img alt="Card image caption" class="card-img-top img-responsive" src="https://cdn-images-1.medium.com/max/2000/1*TOuvM7X0V2l3UvyhpzP8mw.jpeg">
+                    <div class="card-block">
+                        <h4 class="card-title card-title--overlap text-uppercase">How to Build a Brotherhood</h4>
+                        <h5 class="card-subtitle">Family - 8 min read</h5>
+                        <p class="card-text"><a>Craig Dockery</a> - Jan 25, 2018</p>
+                    </div>
+                </div>
+                <div class="card cell">
+                    <img alt="Card image caption" class="card-img-top img-responsive" src="https://cdn-images-1.medium.com/max/800/1*6tpf7YWdmD3KaRjmHwZqqQ.jpeg">
+                    <div class="card-block">
+                        <h4 class="card-title card-title--overlap text-uppercase">Wash the Sheets, Skip the Advice</h4>
+                        <h5 class="card-subtitle">Family - 7 min read</h5>
+                        <p class="card-text"><a>Kim Botto</a> - Jan 19, 2018</p>
+                    </div>
+                </div>
+                <div class="card cell">
+                    <img alt="Card image caption" class="card-img-top img-responsive" src="https://cdn-images-1.medium.com/max/800/1*mPA6uyIK_xUqVeymsIiysw.jpeg">
+                    <div class="card-block">
+                        <h4 class="card-title card-title--overlap text-uppercase">I’m an Unabashed Trump Supporter (But for a Different Reason Than You May Think)</h4>
+                        <h5 class="card-subtitle">Culture - 5 min read</h5>
+                        <p class="card-text"><a>Steve Manuel</a> - Jan 18, 2018</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
