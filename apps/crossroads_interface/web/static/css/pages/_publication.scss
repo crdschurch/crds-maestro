@@ -1,10 +1,4 @@
 .publication {
-  .publication_body {
-    margin: 3rem 0;
-    p {
-      margin-bottom: 1.5rem;
-    }
-  }
   .publication_series {
     color: $cr-cyan;
     font-size: 16px;
@@ -24,6 +18,12 @@
       justify-content: center;
       height: 100%;
     }
+  }
+
+  .publication_stickyContent {
+    position: sticky;
+    top: 1rem;
+    margin-bottom: 1rem;
   }
 
   .publication_shareBtn {
@@ -66,6 +66,7 @@
   .article_para {
     font-size: 17px;
     line-height: 1.55;
+    margin-bottom: 1.5rem;
   }
   .article_blockquote {
     padding: 24px;
@@ -74,11 +75,6 @@
     border-right: 0;
     border-bottom: 0;
     font-size: 32px;
-  }
-  .article_sidebar {
-    position: sticky;
-    top: 1rem;
-    margin-bottom: 1rem;
   }
   .article_authorBlock {
     display: flex;
