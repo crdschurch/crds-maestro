@@ -1,0 +1,21 @@
+.btn-live-schedule-trigger {
+  color: $cr-white;
+  display: flex;
+  float: right;
+  margin: 0;
+  padding-left: .75rem;
+  padding-right: .75rem;
+  text-transform: uppercase;
+
+  > * {
+    margin: 0 .25rem;
+  }
+
+  &:active,
+  &:focus,
+  &:hover,
+  &.active {
+    color: $cr-white;
+    text-decoration: none;
+  }
+}

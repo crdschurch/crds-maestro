@@ -55,7 +55,6 @@ defmodule CrossroadsInterface.CmsPageControllerTest do
     with_mocks([ {CmsClient, [], [get_system_page: fn(page) -> {:ok, 200, fake_system_page(page)} end]},
                  {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]},
-                 {Pages, [], [page_exists?: fn(_path) -> true end]},
                  {Pages, [], [get_page: fn(_path) -> @get_page_response end ]},
                  {Pages, [], [get_page: fn(_path, _stage) -> @get_page_response end ]}]) do
       conn = get conn, "/habitat/"
@@ -68,7 +67,6 @@ defmodule CrossroadsInterface.CmsPageControllerTest do
     with_mocks([ {CmsClient, [], [get_system_page: fn(page) -> {:ok, 200, fake_system_page(page)} end]},
                  {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]},
-                 {Pages, [], [page_exists?: fn(_path) -> true end]},
                  {Pages, [], [get_page: fn(_path) -> @get_page_response end ]},
                  {Pages, [], [get_page: fn(_path, _stage) -> @get_page_response end ]}]) do
       conn = get conn, "/habitat/", %{"stage" => "Stage"}
@@ -81,7 +79,6 @@ defmodule CrossroadsInterface.CmsPageControllerTest do
     with_mocks([ {CmsClient, [], [get_system_page: fn(page) -> {:ok, 200, fake_system_page(page)} end]},
                  {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]},
-                 {Pages, [], [page_exists?: fn(_path) -> true end]},
                  {Pages, [], [get_page: fn(_path) -> @get_page_response end ]},
                  {Pages, [], [get_page: fn(_path, _) -> @get_page_response end ]}]) do
       conn = get conn, "/habitat/"
@@ -93,7 +90,6 @@ defmodule CrossroadsInterface.CmsPageControllerTest do
       with_mocks([ {CmsClient, [], [get_system_page: fn(page) -> {:ok, 200, fake_system_page(page)} end]},
                  {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]},
-                 {Pages, [], [page_exists?: fn(_path) -> true end]},
                  {Pages, [], [get_page: fn(_path) -> @get_page_response end ]},
                  {Pages, [], [get_page: fn(_path, _) -> @get_page_response end ]}]) do
       conn = get conn, "/habitat/"
@@ -105,7 +101,6 @@ defmodule CrossroadsInterface.CmsPageControllerTest do
     with_mocks([ {CmsClient, [], [get_system_page: fn(page) -> {:ok, 200, fake_system_page(page)} end]},
                  {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]},
-                 {Pages, [], [page_exists?: fn(_path) -> true end]},
                  {Pages, [], [get_page: fn(_path) -> @get_page_response end ]},
                  {Pages, [], [get_page: fn(_path, _) -> @get_page_response end ]}]) do
       conn = get conn, "/habitat/"
@@ -117,7 +112,6 @@ defmodule CrossroadsInterface.CmsPageControllerTest do
     with_mocks([ {CmsClient, [], [get_system_page: fn(page) -> {:ok, 200, fake_system_page(page)} end]},
                  {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]},
-                 {Pages, [], [page_exists?: fn(_path) -> true end]},
                  {Pages, [], [get_page: fn(_path) -> @get_auth_page_response end ]},
                  {Pages, [], [get_page: fn(_path, _) -> @get_auth_page_response end ]},
                  {CrossroadsInterface.Plug.Authorized, [], [call: fn(conn, _) -> assign(conn, :authorized, false) end]}
@@ -132,7 +126,6 @@ defmodule CrossroadsInterface.CmsPageControllerTest do
        {CmsClient, [], [get_system_page: fn(page) -> {:ok, 200, fake_system_page(page)} end]},
        {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
        {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]},
-       {Pages, [], [page_exists?: fn(_path) -> true end]},
        {Pages, [], [get_page: fn(_path) -> @get_auth_page_response end ]},
        {Pages, [], [get_page: fn(_path, _) -> @get_auth_page_response end ]},
        {CrossroadsInterface.Plug.Authorized, [], [call: fn(conn, _) -> assign(conn, :authorized, true) end]}
@@ -148,7 +141,6 @@ defmodule CrossroadsInterface.CmsPageControllerTest do
       {CmsClient, [], [get_system_page: fn(page) -> {:ok, 200, fake_system_page(page)} end]},
       {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
       {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]},
-      {Pages, [], [page_exists?: fn(_path) -> true end]},
       {Pages, [], [get_page: fn(_path) -> @get_auth_page_response end]},
       {Pages, [], [get_page: fn(_path, _) -> @get_auth_page_response end]},
       {CrossroadsInterface.Plug.Authorized, [], [call: fn(conn, _) -> assign(conn, :authorized, true) end]}
