@@ -1,4 +1,4 @@
-defmodule CrossroadsInterface.ArticlesController do
+defmodule CrossroadsInterface.PublicationsController do
   use CrossroadsInterface.Web, :controller
   alias CrossroadsInterface.Plug
   alias CrossroadsInterface.NotfoundController
@@ -10,10 +10,11 @@ defmodule CrossroadsInterface.ArticlesController do
   def index do
   end
 
-  def show(conn, %{"id" => id}) do
+  def show(conn, %{"id" => id, "medium" => medium}) do
     conn
+    |> assign(:medium, medium)
     |> put_layout("screen_width.html")
-    |> render("individual_article.html", %{
+    |> render("publication.html", %{
       css_files: [ "/css/app.css", "/js/legacy/legacy.css" ]})
   end
 end
