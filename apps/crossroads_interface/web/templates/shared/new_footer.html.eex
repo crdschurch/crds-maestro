@@ -1,0 +1,152 @@
+<footer class="crds-footer soft-ends">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-2">
+        <h5 class="crds-footer-header">
+          <a class="secondary" href="[sitetree_link,id=215]">One Church, Many Locations</a>
+        </h5>
+
+        <h6 class="crds-footer-subheader">Cincinnati Area</h6>
+        <ul class="list-unstyled">
+          <li>
+            <a class="secondary" href="[sitetree_link,id=225]">Florence</a>
+          </li>
+          <li>
+            <a class="secondary" href="[sitetree_link,id=217]">Mason</a>
+          </li>
+          <li>
+            <a class="secondary" href="[sitetree_link,id=222]">Oakley</a>
+          </li>
+          <li>
+            <a class="secondary" href="[sitetree_link,id=1474]">Oxford</a>
+          </li>
+          <li>
+            <a class="secondary" href="[sitetree_link,id=224]">Uptown</a>
+          </li>
+          <li>
+            <a class="secondary" href="[sitetree_link,id=223]">West Side</a>
+          </li>
+        </ul>
+
+        <h6 class="crds-footer-subheader">Central Kentucky Area</h6>
+        <ul class="list-unstyled">
+          <li>
+            <a class="secondary" href="[sitetree_link,id=2724]">Andover</a>
+          </li>
+          <li>
+            <a class="secondary" href="[sitetree_link,id=2744]">Georgetown</a>
+          </li>
+          <li>
+            <a class="secondary" href="[sitetree_link,id=2743]">Richmond</a>
+          </li>
+        </ul>
+
+        <ul class="list-unstyled">
+          <li>
+            <a class="secondary" href="[sitetree_link,id=2314]">Anywhere</a>
+          </li>
+          <li>
+            <a class="secondary" href="[sitetree_link,id=2769]">Cleveland</a>
+          </li>
+          <li>
+            <a class="secondary" href="[sitetree_link,id=2697]">Columbus</a>
+          </li>
+          <li>
+            <a class="secondary" href="[sitetree_link,id=2780]">Dayton</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-md-2">
+        <h5 class="crds-footer-header">
+          <a class="secondary" href="http://imincampaign.net/" target="_blank">I&rsquo;m IN Campaign</a>
+        </h5>
+
+        <ul class="list-unstyled">
+          <li>
+            <a class="secondary" href="[sitetree_link,id=2876]">Commit to I'M IN</a>
+          </li>
+          <li>
+            <a class="secondary" href="mailto:campaign@crossroads.net">I'M IN questions</a>
+          </li>
+          <li>
+            <a class="secondary" href="/leaveyourmark">Campaign Status</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-md-2">
+        <h5 class="crds-footer-header">Contact</h5>
+
+        <ul class="list-unstyled">
+          <li>
+            <a class="secondary" href="[sitetree_link,id=290]">Prayer Requests</a>
+          </li>
+          <li>
+            <a class="secondary" href="[sitetree_link,id=807]">Share Your Story</a>
+          </li>
+          <li>
+            <a class="secondary" href="[sitetree_link,id=324]">Contact Us</a>
+          </li>
+          <li>
+            <a class="secondary" href="[sitetree_link,id=13]">Privacy Policy</a>
+          </li>
+          <li>
+            <a class="secondary" href="#" id="website-feedback">Website Feedback</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-md-2">
+        <h5 class="crds-footer-header">Resources</h5>
+
+        <ul class="list-unstyled">
+          <li>
+            <a class="secondary" href="[sitetree_link,id=2430]">In The News</a>
+          </li>
+          <li>
+            <a class="secondary" href="[sitetree_link,id=436]">Church Resources</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="col-md-4">
+        <ul class="list-inline list-unstyled crds-footer-social">
+          <li>
+            <a class="secondary" href="https://twitter.com/crdschurch/" target="_blank">
+              <svg class="icon icon-2" viewBox="0 0 256 256">
+                <use xlink:href="/assets/svgs/icons.svg#twitter"></use>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a class="secondary" href="https://www.facebook.com/crdschurch/?_rdr=p" target="_blank">
+              <svg class="icon icon-2" viewBox="0 0 256 256">
+                <use xlink:href="/assets/svgs/icons.svg#facebook"></use>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a class="secondary" href="https://www.youtube.com/user/crdschurch" target="_blank">
+              <svg class="icon icon-2" viewBox="0 0 256 256">
+                <use xlink:href="/assets/svgs/icons.svg#youtube"></use>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a class="secondary" href="https://www.instagram.com/crdschurch/" target="_blank">
+              <svg class="icon icon-2" viewBox="0 0 256 256">
+                <use xlink:href="/assets/svgs/icons.svg#instagram"></use>
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">// <![CDATA[
+    $("#website-feedback").click(function () {
+      hj('trigger', 'feedback');
+    });
+  // ]]></script>
+</footer>

@@ -11,9 +11,7 @@
     <%= render CrossroadsInterface.SharedView, "header.html", %{content_blocks: @content_blocks, conn: @conn } %>
     <div class="<%= @crds_styles %>">
       <%= render @view_module, @view_template, assigns %>
-      <%= render CrossroadsInterface.SharedView, "new_footer.html" %>
     </div>
-    <%#= render CrossroadsInterface.SharedView, "footer.html", %{content_blocks: @content_blocks } %>
     <%= render CrossroadsInterface.SharedView, "js_files.html", assigns %>
   </body>
 </html>
