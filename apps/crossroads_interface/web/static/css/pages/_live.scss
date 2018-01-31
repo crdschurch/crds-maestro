@@ -1,11 +1,13 @@
 .btn-live-schedule-trigger {
   color: $cr-white;
   display: flex;
-  float: right;
-  margin: 0;
+  margin: -1.375rem 0 0;
   padding-left: .75rem;
   padding-right: .75rem;
+  position: absolute;
+  right: 0;
   text-transform: uppercase;
+  top: 50%;
 
   > * {
     margin: 0 .25rem;
