@@ -112,34 +112,34 @@
 
       <div class="col-md-4">
         <ul class="list-inline list-unstyled crds-footer-social">
-          <li>
-            <a class="secondary" href="https://twitter.com/crdschurch/" target="_blank">
-              <svg class="icon icon-2" viewBox="0 0 256 256">
+          <a class="secondary" href="https://twitter.com/crdschurch/" target="_blank">
+            <li>
+              <svg class="icon icon-1" viewBox="0 0 256 256">
                 <use xlink:href="/assets/svgs/icons.svg#twitter"></use>
               </svg>
-            </a>
-          </li>
-          <li>
-            <a class="secondary" href="https://www.facebook.com/crdschurch/?_rdr=p" target="_blank">
-              <svg class="icon icon-2" viewBox="0 0 256 256">
+            </li>
+          </a>
+          <a class="secondary" href="https://www.facebook.com/crdschurch/?_rdr=p" target="_blank">
+            <li>
+              <svg class="icon icon-1" viewBox="0 0 256 256">
                 <use xlink:href="/assets/svgs/icons.svg#facebook"></use>
               </svg>
-            </a>
-          </li>
-          <li>
-            <a class="secondary" href="https://www.youtube.com/user/crdschurch" target="_blank">
-              <svg class="icon icon-2" viewBox="0 0 256 256">
+            </li>
+          </a>
+          <a class="secondary" href="https://www.youtube.com/user/crdschurch" target="_blank">
+            <li>
+              <svg class="icon icon-1" viewBox="0 0 256 256">
                 <use xlink:href="/assets/svgs/icons.svg#youtube"></use>
               </svg>
-            </a>
-          </li>
-          <li>
-            <a class="secondary" href="https://www.instagram.com/crdschurch/" target="_blank">
-              <svg class="icon icon-2" viewBox="0 0 256 256">
+            </li>
+          </a>
+          <a class="secondary" href="https://www.instagram.com/crdschurch/" target="_blank">
+            <li>
+              <svg class="icon icon-1" viewBox="0 0 256 256">
                 <use xlink:href="/assets/svgs/icons.svg#instagram"></use>
               </svg>
-            </a>
-          </li>
+            </li>
+          </a>
         </ul>
       </div>
     </div>
