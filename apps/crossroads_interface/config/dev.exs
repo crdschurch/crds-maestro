@@ -42,7 +42,9 @@ config :crossroads_interface, CrossroadsInterface.Endpoint,
   ]
 
 # Do not include metadata nor timestamps in development logs
-config :logger, :console, format: "[$level] $message\n", level: :debug
+config :logger,
+   level: :debug,
+   truncate: :infinity
 
 # Set a higher stacktrace during development.
 # Do not configure such in production as keeping

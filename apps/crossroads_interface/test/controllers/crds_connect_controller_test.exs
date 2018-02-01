@@ -37,6 +37,4 @@ defmodule CrossroadsInterface.CrdsConnectControllerTest do
       assert conn.resp_cookies == %{"redirectUrl" => %{http_only: false, value: "/connect", domain: ".crossroads.net"}, "params" => %{domain: ".crossroads.net", http_only: false, value: ""}}
     end
   end
-  
 end
-
