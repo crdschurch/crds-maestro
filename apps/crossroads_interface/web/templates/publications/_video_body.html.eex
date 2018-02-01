@@ -8,6 +8,9 @@
                     <div class="col-md-8 col-md-offset-2">
                         <a href="#" class="inline-video-trigger" data-video-id="IwG24OhFdzk"></a>
                     </div>
+                    <script type="text/javascript">
+                        new CRDS.JumbotronVideos()
+                    </script>
                 </div>
             </div>
         </div>
