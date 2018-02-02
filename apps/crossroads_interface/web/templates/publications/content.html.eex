@@ -1,0 +1,5 @@
+<div class="jumbotron">
+  <%= for article <- @articles do %>
+    <p><%= article["title"] %></p>
+  <% end %>
+</div>
