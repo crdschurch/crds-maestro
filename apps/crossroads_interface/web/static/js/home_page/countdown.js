@@ -234,7 +234,7 @@ CRDS.Countdown = class Countdown {
   }
 
   // Convert Single Digit to Double Digit
-  // check if value is < 10 
+  // check if value is < 10
   // if yes, then add a 0 onto the front
   // if no, then nothing
   static padZero(number) {

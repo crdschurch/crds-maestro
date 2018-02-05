@@ -6,14 +6,14 @@ defmodule ConfigHelper do
   end
 
   defp get_maestro_name_extension do
-    case System.get_env("MAESTRO_NAME_EXTENSION") do
+    case "#{System.get_env("MAESTRO_NAME_EXTENSION")}" do
       "" -> ""
       ext -> ext
     end
   end
 
   defp get_environment do
-    case System.get_env("CRDS_ENV") do
+    case "#{System.get_env("CRDS_ENV")}" do
       "" -> ""
       env -> "-" <> env 
     end
@@ -23,7 +23,8 @@ end
 config :crossroads_content,
   cms_server_endpoint: System.get_env("CRDS_CMS_SERVER_ENDPOINT"),
   cms_cache_ttl: 10 * 60 * 1000,
-  cms_timeout: 10 * 60 * 1000
+  cms_timeout: 10 * 60 * 1000,
+  cms_use_cache: false
 
 config :crossroads_interface,
   image_client_endpoint: "#{System.get_env("CRDS_GATEWAY_CLIENT_ENDPOINT")}api/image/profile/",
