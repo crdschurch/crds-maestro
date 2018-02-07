@@ -1,3 +1,6 @@
+/*
+ * Live
+ */
 .btn-live-schedule-trigger {
   color: $cr-white;
   display: flex;
@@ -19,5 +22,37 @@
   &.active {
     color: $cr-white;
     text-decoration: none;
+  }
+}
+
+
+
+
+/*
+ * Live Stream
+ */
+.crds-shared-header .header--live-stream {
+  li {
+    padding: .625rem 0;
+
+    > a:not(.cta) {
+      color: $cr-white;
+      padding: 0;
+    }
+
+    a:not(.cta):hover {
+      background-color: transparent;
+      color: $cr-gray-light;
+    }
+
+    .link-icon-text {
+      vertical-align: middle;
+    }
+  }
+
+  ul.nav-pills > li > a > svg {
+    display: inline-block;
+    margin: 0 .25rem 0 0;
+    vertical-align: middle;
   }
 }
