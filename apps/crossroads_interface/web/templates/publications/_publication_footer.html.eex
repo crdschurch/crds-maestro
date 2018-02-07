@@ -1,18 +1,18 @@
-<%# <%= if has_messages?(assigns.series["messages"]) do %>
+<%= if assigns[:content]["moreContent"] do %>
 <div class="publication_more push-top soft-top">
     <div class="container">
         <h4 class="collection-header push-bottom clearfix">you may also like
             <a href="#" class="btn btn-outline btn-blue" style="float: right;">See all publications</a></h4>
         <div class="card-deck carousel" data-crds-carousel="mobile-scroll">
             <div class="feature-cards card-deck--expanded-layout">
-            <%= for related <- Enum.reverse(assigns[:content]["related"]) do %>
+            <%= for more <- Enum.reverse(assigns[:content]["moreContent"]) do %>
                 <div class="card cell">
-                    <a href="<%= related["link"] %>">
-                    <img alt="Card image caption" class="card-img-top img-responsive" src="<%= related["thumbnail"] %>">
+                    <a href="<%= more["link"] %>">
+                    <img alt="Card image caption" class="card-img-top img-responsive" src="<%= more["thumbnail"] %>">
                     <div class="card-block">
-                        <h4 class="card-title card-title--overlap text-uppercase"><%= related["title"] %></h4>
-                        <h5 class="card-subtitle"><%= related["topic"] %> - <%= related["duration"] %></h5>
-                        <p class="card-text"><a><%= related["author"] %></a> - <%= related["date"] %></p>
+                        <h4 class="card-title card-title--overlap text-uppercase"><%= more["title"] %></h4>
+                        <h5 class="card-subtitle"><%= more["topic"] %> - <%= more["duration"] %></h5>
+                        <p class="card-text"><a><%= more["author"] %></a> - <%= more["date"] %></p>
                     </div>
                 </div>
             <%= end %>
@@ -20,4 +20,4 @@
         </div>
     </div>
 </div>
-<%# <%= end %>
+<%= end %>

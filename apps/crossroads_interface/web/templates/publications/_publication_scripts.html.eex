@@ -1,14 +1,9 @@
 <script type="text/javascript">
     // <![CDATA[
     // related articles scrolling
-    var publicationBody = document.getElementsByClassName('publication_body')[0];
-    var containerHeight;
-    for (var i = 0; i < publicationBody.childNodes.length; i++) {
-        if (publicationBody.childNodes[i].id == "scrollDistance") {
-            containerHeight = publicationBody.childNodes[i].offsetHeight;
-            break;
-        }        
-    };
+    var scrollContainer = document.getElementById('scrollDistance');
+    var containerHeight = scrollContainer.offsetHeight;
+  
     var publicationSidebar = document.getElementsByClassName('publication_sidebar')[0];
     if (window.innerWidth > 991) {
         publicationSidebar.style.height = containerHeight + 'px';

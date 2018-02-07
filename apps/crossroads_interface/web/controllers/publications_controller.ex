@@ -15,7 +15,7 @@ defmodule CrossroadsInterface.PublicationsController do
       "duration" => "5 min read",
       "author" => "Brian Tome",
       "date" => "Dec 14, 2017",
-      "body" => ~S(<div class="col-md-6">
+      "body" => ~S(
       <p class="lead">As stories of men behaving badly continue to roll in, we can no longer only ask what is wrong with the accused
           individual. This isn&rsquo;t a story about an individual or even a few individuals. It is a story about
           a sizable segment of the male population in America. That means this isn&rsquo;t just a male nor individual
@@ -37,64 +37,6 @@ defmodule CrossroadsInterface.PublicationsController do
           and how they seem to exist to turn you on doesn&rsquo;t help a man reinforce a healthy and proper stereotype
           of women.</p>
       <blockquote class="article_blockquote">This  article is to remind myself why Awaited must go away and to give you some additional perspective…</blockquote>
-  </div>
-  <div class="col-md-3 publication_sidebar">
-      <div class="publication_stickyContent">
-          <h4 class="collection-header">related</h4>
-          <div class="card card--media">
-              <a href="#">
-                  <img alt="Card image caption" class="card-img-top img-responsive" src="https://cdn-images-1.medium.com/max/600/0*a9E54W3HGR5cRh3W."
-                      title="" />
-              </a>
-              <div class="card-block">
-                  <h4 class="list-header">New Year, New You, No Nudes</h4>
-                  <h5 class="tagline">Dec 30, 2017</h5>
-              </div>
-          </div>
-          <div class="card card--media">
-              <a href="#">
-                  <img alt="Card image caption" class="card-img-top img-responsive" src="https://cdn-images-1.medium.com/max/600/0*a9E54W3HGR5cRh3W."
-                      title="" />
-              </a>
-              <div class="card-block">
-                  <h4 class="list-header">New Year, New You, No Nudes</h4>
-                  <h5 class="tagline">Dec 30, 2017</h5>
-              </div>
-          </div>
-          <div class="card card--media">
-              <a href="#">
-                  <img alt="Card image caption" class="card-img-top img-responsive" src="https://cdn-images-1.medium.com/max/600/0*a9E54W3HGR5cRh3W."
-                      title="" />
-              </a>
-              <div class="card-block">
-                  <h4 class="list-header">New Year, New You, No Nudes</h4>
-                  <h5 class="tagline">Dec 30, 2017</h5>
-              </div>
-          </div>
-          <div class="card card--media">
-              <a href="#">
-                  <img alt="Card image caption" class="card-img-top img-responsive" src="https://cdn-images-1.medium.com/max/600/0*a9E54W3HGR5cRh3W."
-                      title="" />
-              </a>
-              <div class="card-block">
-                  <h4 class="list-header">New Year, New You, No Nudes</h4>
-                  <h5 class="tagline">Dec 30, 2017</h5>
-              </div>
-          </div>
-      </div>
-  </div>
-</div>
-<div class="article_fullImg">
-  <div class="container">
-      <div class="col-md-8 col-md-offset-2">
-          <img class="push-half-bottom" src="https://images.unsplash.com/photo-1501812325367-78e47cf01c0b?ixlib=rb-0.3.5&amp;s=06483018f699d0e1ae4494b2bd5ab345&amp;auto=format&amp;fit=crop&amp;w=1050&amp;q=80"
-              alt="" title="" />
-          <span class="tagline text-center block push-bottom">A sample caption</span>
-      </div>
-  </div>
-</div>
-<div class="container">
-  <div class="col-md-6 col-md-offset-3">
     <p class="article_para">I sat with an entire row of my family during a recent Awaited production with tears in my eyes for two reasons. First, the production is often mesmerizing regarding the most powerfully true story ever told. Second, it is emotional to end a dream I had commissioned our creative folks with over a decade ago. That dream came to fruition. We had created a Cincinnati institution, and in the process earned the respect of the arts community. As I sat with moist eyes I asked myself again, “Did we really want to end all this in hopes of something better?”</p>
     <p class="article_para">Because this decision is so big, complex, and for many, unexpected, it is understandable that people have not heard all of the reasons why we feel God leading us this way. The average person thinks everything comes down to money, and that’s why Awaited is going away. Sorry, it doesn’t. If it was only about money, Awaited might stay.</p>
     <p class="article_para">If you&rsquo;re a guy on this holiday, you get to trade the beauty prep for pressure. If you have a date
@@ -115,12 +57,11 @@ defmodule CrossroadsInterface.PublicationsController do
           any of the physical proximity. In that moment, he has masterfully succeeded in getting her naked with
           zero cost to himself. It&rsquo;s a transaction, goods for services if you will. The woman has become
           his porn. The only difference between her and Tila Tequila is she doesn&rsquo;t want this.
-      </p>
-  </div>),
+      </p>),
       "heroImg" => 
         %{"source" => "https://images.unsplash.com/photo-1479030160180-b1860951d696?ixlib=rb-0.3.5&amp;s=18920a3e5e23474110262c6333ef174f&amp;auto=format&amp;fit=crop&amp;w=1350&amp;q=80",
         "caption" => "Richard Shotwell/Invision, via Associated Press"},
-      "related" => [
+        "moreContent" => [
           %{
             "title" => "Best related post ever",
             "thumbnail" => "https://cdn-images-1.medium.com/max/600/1*8VmXU0OvDYTpOOzi-U8Cgw.png",
@@ -139,7 +80,36 @@ defmodule CrossroadsInterface.PublicationsController do
             "duration" => "5 min watch",
             "medium" => "Video",
             "author" => "Dudes Drinking Beers"
-          }
+        }],
+        "related" => [
+            %{
+              "title" => "Why I Chose Censorship",
+              "thumbnail" => "",
+              "link" => "https://medium.com/crdschurch/why-i-chose-censorship-d9b48e217b83",
+              "date" => "Jan 29, 2018",
+              "topic" => "Culture",
+              "duration" => "3 min read",
+              "medium" => "article",
+              "author" => "Brian Tome"
+            }, %{
+              "title" => "You're insecure. Me too. Let's get over it.",
+              "thumbnail" => "https://cdn-images-1.medium.com/max/2000/1*LdLGfjqFJVVvpxHQdGcqTw.jpeg",
+              "link" => "https://medium.com/crdschurch/youre-insecure-me-too-let-s-get-over-it-e90ecf397afb",
+              "date" => "Jan 25, 2018",
+              "topic" => "Personal",
+              "duration" => "7 min read",
+              "medium" => "Article",
+              "author" => "Craig Dockery"
+            }, %{
+                "title" => "Wash the Sheets, Skip the Advice",
+                "thumbnail" => "https://cdn-images-1.medium.com/max/800/1*6tpf7YWdmD3KaRjmHwZqqQ.jpeg",
+                "link" => "https://medium.com/crdschurch/wash-the-sheets-skip-the-advice-7fe08b147d52",
+                "date" => "Jan 19, 2018",
+                "topic" => "Family",
+                "duration" => "7 min read",
+                "medium" => "Article",
+                "author" => "Kim Botto"
+            }
         ]
   }}
 

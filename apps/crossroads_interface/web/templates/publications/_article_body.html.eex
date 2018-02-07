@@ -4,8 +4,8 @@
             alt="Weinstein" title="" style="width: 100%; height: 500px; object-fit: cover;" />
         <span class="publication_heroCaption text-center block push-half-top push-bottom"><%= get_article_hero_caption(assigns[:content]) %></span>
     </div>
-    <div class="container soft-top" id="scrollDistance">
-        <div class="col-md-3">
+    <div class="container soft-top">
+        <div class="col-md-3 push-bottom">
             <div class="publication_share push-bottom">
                 <h5 class="control-label">Share</h5>
                 <button id="shareFB" class="publication_shareBtn publication_shareBtn--facebook">
@@ -36,7 +36,31 @@
                 <span class="label label-default">Sexual Assault</span>
             </div>
         </div>
-        <%= raw assigns[:content]["body"] %>
+        <div class="col-md-6" id="scrollDistance">
+            <%= raw assigns[:content]["body"] %>
+        </div>
+        <div class="col-md-3 hidden-xs hidden-sm publication_sidebar">
+            <%= if assigns[:content]["related"] do %>
+            <div class="publication_stickyContent">
+                <h4 class="collection-header">related</h4>
+                <%= for related <- Enum.reverse(assigns[:content]["related"]) do %>
+                    <div class="card card--media">
+                        <a href="<%= related["link"] %>">
+                        <%= if related["thumbnail"] !== "" do %>
+                            <img alt="Card image caption" class="card-img-top img-responsive" src="<%= related["thumbnail"] %>" title="" />
+                        <%= end %>
+                        </a>
+                        <div class="card-block">
+                            <a href="<%= related["link"] %>">
+                                <h4 class="list-header"><%= related["title"] %></h4>
+                                <h5 class="tagline"><%= related["date"] %></h5>
+                            </a>
+                        </div>
+                    </div>
+                <%= end %>
+            </div>
+            <%= end %>
+        </div>
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <div class="article_authorBlock">
