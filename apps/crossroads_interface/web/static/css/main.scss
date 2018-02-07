@@ -44,6 +44,17 @@
   @import './pages/homepage';
   @import './pages/locations';
   @import './pages/media';
+  @import './pages/article';
+  @import './pages/live';
+
+  .bg-repeated {
+    background-repeat: repeat;
+    background-size: contain;
+  }
+
+  .w-60 {
+    max-width: 60%;
+  }
 }
 
 .noscroll {
