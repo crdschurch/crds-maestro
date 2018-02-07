@@ -65,11 +65,6 @@
   left: 0;
 }
 
-body.dark-theme {
-  background-color: rgba(0,0,0,1); // #000000
-  color: rgba(115,115,115,1); // #737373
-
-  hr {
-    border-top-color: darken(rgba(77,77,77,1), 15);
-  }
-}
+// Load dark-theme styles outside the crds-styles context.
+@import 'node_modules/crds-styles/assets/stylesheets/variables';
+@import 'node_modules/crds-styles/assets/stylesheets/themes/dark';
