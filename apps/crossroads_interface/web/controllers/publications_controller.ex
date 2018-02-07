@@ -147,16 +147,27 @@ defmodule CrossroadsInterface.PublicationsController do
       content
   end
 
-  def index do
+  def indexArticles do
   end
 
-  def show(conn, %{"id" => id, "medium" => medium}) do
+  def indexVideos do
+  end
+
+  def showArticle(conn, %{"id" => id}) do
     content = get_content()
     conn
-    |> assign(:medium, medium)
     |> assign(:content, content)
     |> put_layout("screen_width.html")
-    |> render("publication.html", %{
+    |> render("article.html", %{
+      css_files: [ "/css/app.css", "/js/legacy/legacy.css" ]})  
+  end
+
+  def showVideo(conn, %{"id" => id}) do
+    content = get_content()
+    conn
+    |> assign(:content, content)
+    |> put_layout("screen_width.html")
+    |> render("video.html", %{
       css_files: [ "/css/app.css", "/js/legacy/legacy.css" ]})  
   end
 end
