@@ -4,7 +4,7 @@
         <h4 class="collection-header push-bottom clearfix">you may also like
             <a href="#" class="btn btn-outline btn-blue" style="float: right;">See all publications</a></h4>
         <div class="card-deck carousel" data-crds-carousel="mobile-scroll">
-            <div class="feature-cards card-deck--expanded-layout">
+            <div class="feature-cards card-deck--expanded-layout" data-crds-carousel="mobile-scroll">
             <%= for more <- Enum.reverse(assigns[:content]["moreContent"]) do %>
                 <div class="card cell">
                     <a href="<%= more["link"] %>">

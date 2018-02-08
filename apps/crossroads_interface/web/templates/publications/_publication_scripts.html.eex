@@ -1,15 +1,16 @@
 <script type="text/javascript">
     // <![CDATA[
-    // related articles scrolling
-    var scrollContainer = document.getElementById('scrollDistance');
-    var containerHeight = scrollContainer.offsetHeight;
-  
-    var publicationSidebar = document.getElementsByClassName('publication_sidebar')[0];
-    if (window.innerWidth > 991) {
-        publicationSidebar.style.height = containerHeight + 'px';
-    }
-        (function () { 
-        new CRDS.CardCarousels('[data-crds-carousel]');
+    $(document).ready(function () {
+        // related articles scrolling
+        var scrollContainer = document.getElementById('scrollDistance');
+        var containerHeight = scrollContainer.offsetHeight;
+    
+        var publicationSidebar = document.getElementsByClassName('publication_sidebar')[0];
+        if (window.innerWidth > 991) {
+            publicationSidebar.style.height = containerHeight + 'px';
+        }
+
+        new CRDS.CardCarousels();
     })
     // ]]>
 </script>
