@@ -31,28 +31,43 @@
 /*
  * Live Stream
  */
-.crds-shared-header .header--live-stream {
-  li {
-    padding: .625rem 0;
+.page--live-stream & {
+  .crds-shared-header .header {
+    li {
+      padding: .625rem 0;
 
-    > a:not(.cta) {
-      color: $cr-white;
-      padding: 0;
+      > a:not(.cta) {
+        color: $cr-white;
+        padding: 0;
+      }
+
+      a:not(.cta):hover {
+        background-color: transparent;
+        color: $cr-gray-light;
+      }
+
+      .link-icon-text {
+        vertical-align: middle;
+      }
     }
 
-    a:not(.cta):hover {
-      background-color: transparent;
-      color: $cr-gray-light;
-    }
-
-    .link-icon-text {
+    ul.nav-pills > li > a > svg {
+      display: inline-block;
+      margin: 0 .25rem 0 0;
       vertical-align: middle;
     }
   }
 
-  ul.nav-pills > li > a > svg {
-    display: inline-block;
-    margin: 0 .25rem 0 0;
-    vertical-align: middle;
+  .well {
+    background-color: $cr-gray-darker;
+    border: none;
+
+    * {
+      color: $cr-gray;
+    }
+
+    iframe {
+      width: 100%;
+    }
   }
 }
