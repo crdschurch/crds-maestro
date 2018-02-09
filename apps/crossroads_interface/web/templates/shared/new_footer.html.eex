@@ -1,5 +1,0 @@
-<div class="crds-styles">
-  <footer class="crds-footer soft-ends hidden-print">
-    <%= raw(filter_content_blocks(@content_blocks, "footer_reskin")["content"]) %>
-  </footer>
-</div>
