@@ -61,7 +61,6 @@ defmodule CrossroadsInterface.CmsPageController do
     case page["pageType"] do
       "NoHeaderOrFooter" -> "no_header_or_footer.html"
       "ScreenWidth" -> "screen_width.html"
-      "ScreenWidthNoFooter" -> "screen_width_no_footer.html"
       "HomePage" -> "home_page.html"
       "CenteredContentPage" -> "centered_content_page.html"
       "GoCincinnati" -> "go_cincinnati.html"
