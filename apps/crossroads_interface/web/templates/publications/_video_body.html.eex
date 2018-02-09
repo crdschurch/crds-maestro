@@ -1,0 +1,54 @@
+<div class="publication_body video">
+    <div class="publication_hero publication_hero--video push-ends">
+        <div class="jumbotron inline-video jumbotron-xl flush-bottom" style="background-image: url('https://images.unsplash.com/photo-1512567100135-223e140cd167?ixlib=rb-0.3.5&s=665f0a178139c2de3f3dc8c56f77d696&auto=format&fit=crop&w=1950&q=80'); background-position-y: top;">
+            <div class="jumbotron-overlay" style="z-index:0;opacity:.25;"></div>
+            <div class="inline-video-player"></div>
+            <div class="jumbotron-content">
+                <div class="container">
+                    <div class="col-md-8 col-md-offset-2">
+                        <a href="#" class="inline-video-trigger" data-video-id="IwG24OhFdzk"></a>
+                    </div>
+                    <script type="text/javascript">
+                        new CRDS.JumbotronVideos()
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container soft-top">
+        <div class="col-md-3">
+            <div class="publication_share push-bottom">
+                <h5 class="control-label">Share</h5>
+                <button id="shareFB" class="publication_shareBtn publication_shareBtn--facebook">
+                    <svg class="icon" viewBox="0 0 256 256">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#facebook"></use>
+                    </svg>
+                </button>
+                <button id="shareTW" class="publication_shareBtn publication_shareBtn--twitter">
+                    <svg class="icon" viewBox="0 0 256 256">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#twitter"></use>
+                    </svg>
+                </button>
+                <button id="shareEM" class="publication_shareBtn publication_shareBtn--email">
+                    <svg class="icon" viewBox="0 0 256 256">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#facebook"></use>
+                    </svg>
+                </button>
+                <button id="shareTX" class="publication_shareBtn publication_shareBtn--text">
+                    <svg class="icon" viewBox="0 0 256 256">
+                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#share"></use>
+                    </svg>
+                </button>
+            </div>
+            <div class="publication_tags">
+                <h5 class="control-label">Tags</h5>
+                <span class="label label-default">Beer</span>
+                <span class="label label-default">Interview</span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h4 class="component-header">Episode transcript</h4>
+            <p>Here is where a video transcript could live.</p>
+        </div>
+    </div>
+</div>
