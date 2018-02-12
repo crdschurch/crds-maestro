@@ -31,7 +31,7 @@
 /*
  * Live Stream
  */
- .page--live-stream & {
+.page--live-stream & {
   .crds-shared-header .header {
     ul.nav-pills > li:not(.open) {
       padding: .625rem 0;
@@ -71,5 +71,22 @@
     iframe {
       width: 100%;
     }
+  }
+
+  .carousel-cell {
+    @media (min-width: $screen-md) {
+      width: calc(30% - 1rem);
+    }
+
+    img {
+      height: 130px;
+      object-fit: cover;
+      object-position: center;
+      width: 100%;
+    }
+  }
+
+  .card-title--overlap {
+    background-color: $cr-gray-darker;
   }
 }
