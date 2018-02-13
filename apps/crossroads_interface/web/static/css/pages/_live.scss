@@ -33,28 +33,30 @@
  */
 .page--live-stream & {
   .crds-shared-header .header {
-    li {
+    ul.nav-pills > li:not(.open) {
       padding: .625rem 0;
 
       > a:not(.cta) {
         color: $cr-white;
         padding: 0;
+
+        &:hover,
+        &:focus,
+        &:active {
+          background-color: transparent;
+          color: $cr-gray-light;
+        }
       }
 
-      a:not(.cta):hover {
-        background-color: transparent;
-        color: $cr-gray-light;
+      a > svg {
+        display: inline-block;
+        margin: 0 .25rem 0 0;
+        vertical-align: middle;
       }
 
       .link-icon-text {
         vertical-align: middle;
       }
-    }
-
-    ul.nav-pills > li > a > svg {
-      display: inline-block;
-      margin: 0 .25rem 0 0;
-      vertical-align: middle;
     }
   }
 
