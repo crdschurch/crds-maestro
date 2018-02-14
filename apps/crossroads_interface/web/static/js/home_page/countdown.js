@@ -159,6 +159,9 @@ CRDS.Countdown = class Countdown {
     const currentEndDate = this.currentEvent.end;
     const secondsUntilStreamEnd = (Countdown.convertDate(currentEndDate, this.TIMEZONE_OFFSET) - (new Date())) / 1000;
 
+    let streamspotPlayerUrl = `https://player2.streamspot.com/?playerId=1adb55de`;
+    $('[data-streamspot-player]').attr('src', streamspotPlayerUrl);
+
     this.timeoutId = setTimeout(() => {
       if (this.nextEvent == null) {
         this.getStreamspotStatus();
