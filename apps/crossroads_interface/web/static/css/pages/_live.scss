@@ -72,4 +72,21 @@
       width: 100%;
     }
   }
+
+  .carousel-cell {
+    @media (min-width: $screen-md) {
+      width: calc(45% - 1rem);
+    }
+
+    img {
+      height: 130px;
+      object-fit: cover;
+      object-position: center;
+      width: 100%;
+    }
+  }
+
+  .card-title--overlap {
+    background-color: $cr-gray-darker;
+  }
 }
