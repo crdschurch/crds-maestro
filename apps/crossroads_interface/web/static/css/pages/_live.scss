@@ -111,4 +111,8 @@
   .card-title--overlap {
     background-color: $cr-gray-darker;
   }
+
+  [data-streamspot-player] {
+    width: 100%;
+  }
 }
