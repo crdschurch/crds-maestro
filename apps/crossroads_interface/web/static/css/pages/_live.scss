@@ -60,6 +60,19 @@
     }
   }
 
+  .well {
+    background-color: $cr-gray-darker;
+    border: none;
+
+    * {
+      color: $cr-gray;
+    }
+
+    iframe {
+      width: 100%;
+    }
+  }
+
   [data-streamspot-player] {
     width: 100%;
   }
