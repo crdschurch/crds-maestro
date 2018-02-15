@@ -25,6 +25,28 @@
   }
 }
 
+.page--live & {
+  .card-deck {
+    .card-img-top {
+      object-fit: cover;
+      width: 100%;
+      max-height: 151px;
+
+      @media screen and (min-width: $screen-sm + 1) {
+        max-height: 95px;
+      }
+
+      @media screen and (min-width: $screen-md + 1) {
+        max-height: 124px;
+      }
+
+      @media screen and (min-width: $screen-lg) {
+        max-height: 152px;
+      }
+    }
+  }
+}
+
 
 
 
@@ -71,6 +93,23 @@
     iframe {
       width: 100%;
     }
+  }
+
+  .carousel-cell {
+    @media (min-width: $screen-md) {
+      width: calc(45% - 1rem);
+    }
+
+    img {
+      height: 130px;
+      object-fit: cover;
+      object-position: center;
+      width: 100%;
+    }
+  }
+
+  .card-title--overlap {
+    background-color: $cr-gray-darker;
   }
 
   [data-streamspot-player] {
