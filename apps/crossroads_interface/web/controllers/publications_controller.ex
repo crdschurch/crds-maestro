@@ -12,23 +12,11 @@ defmodule CrossroadsInterface.PublicationsController do
     {:ok, resp} = HTTPoison.get "http://localhost:5000/api/content/articles"
     %{body: posts, headers: _headers, request_url: _req, status_code: _stat} = resp
 
-    posts = Poison.decode!(posts)
+    articles = Poison.decode!(posts)
 
     conn
     |> put_layout("screen_width.html")
-    |> render("article_index.html", %{ posts: posts,
-      css_files: [ "/css/app.css", "/js/legacy/legacy.css" ]})
-  end
-
-  def indexVideos(conn, _) do
-    {:ok, resp} = HTTPoison.get "http://localhost:5000/api/content/articles"
-    %{body: videos, headers: _headers, request_url: _req, status_code: _stat} = resp
-
-    videos = Poison.decode!(videos)
-
-    conn
-    |> put_layout("screen_width.html")
-    |> render("article_index.html", %{ videos: videos,
+    |> render("publications.html", %{ articles: articles,
       css_files: [ "/css/app.css", "/js/legacy/legacy.css" ]})
   end
 
@@ -39,16 +27,8 @@ defmodule CrossroadsInterface.PublicationsController do
 
     conn
     |> put_layout("screen_width.html")
-    |> render("article.html", %{ content: article,
+    |> render("article.html", %{ article: article,
       css_files: [ "/css/app.css", "/js/legacy/legacy.css" ]})  
   end
 
-  # def showVideo(conn, %{"id" => id}) do
-  #   content = get_content()
-  #   conn
-  #   |> assign(:content, content)
-  #   |> put_layout("screen_width.html")
-  #   |> render("video.html", %{
-  #     css_files: [ "/css/app.css", "/js/legacy/legacy.css" ]})  
-  # end
 end

@@ -1,7 +1,6 @@
 <div class="publication_body article">
     <div class="publication_hero push-ends">
-        <img src="<%= get_article_hero(assigns[:content]) %>"
-            alt="Weinstein" title="" style="width: 100%; height: 500px; object-fit: cover;" />
+        <img src="<%= assigns[:article]["image"]["filename"] %>" alt="<%= assigns[:article]["image"]["title"] %>" title="" style="width: 100%; height: 500px; object-fit: cover;" />
         <span class="publication_heroCaption text-center block push-half-top push-bottom"><%= get_article_hero_caption(assigns[:content]) %></span>
     </div>
     <div class="container soft-top">
@@ -37,13 +36,13 @@
             </div>
         </div>
         <div class="col-md-6" id="scrollDistance">
-            <%= raw assigns[:content]["body"] %>
+            <%= raw assigns[:article]["body"] %>
         </div>
         <div class="col-md-3 hidden-xs hidden-sm publication_sidebar">
-            <%= if assigns[:content]["related"] do %>
+            <%= if assigns[:article]["related"] do %>
             <div class="publication_stickyContent">
                 <h4 class="collection-header">related</h4>
-                <%= for related <- Enum.reverse(assigns[:content]["related"]) do %>
+                <%= for related <- Enum.reverse(assigns[:article]["related"]) do %>
                     <div class="card card--media">
                         <a href="<%= related["link"] %>">
                         <%= if related["thumbnail"] !== "" do %>
@@ -64,11 +63,12 @@
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
                 <div class="article_authorBlock">
-                    <img class="article_authorAvatar img-circle" src="https://cdn-images-1.medium.com/fit/c/60/60/1*cSAYRIzpcfpWgat5fKXhgw.jpeg"
+                    <img class="article_authorAvatar img-circle" src="https://cdn-images-1.medium.com/fit/c/120/120/1*dSazj8dkkFmBVwF2LA50qw.jpeg"
                         alt="" title="" />
                     <p class="inline-block">
-                        <a class="article_author">Brian Tome</a> is an Adventure Rider, Senior Pastor of Crossroads Church, Husband, Father, Author,
-                        Equal Opportunity Offender/Encourager.</p>
+                        <a class="article_author block"><%= assigns[:article]["author"] %></a>
+                        <span class="block">Mom to adventurous & fun crew. Prefers to sit at the kid table. Loves avocado. Loves Jesus more. Believes every kid deserves a home. Fights for the fatherless.</span>
+                    </p>
                     <a class="btn btn-outline btn-blue inline-block" href="#">Follow</a>
                 </div>
             </div>
