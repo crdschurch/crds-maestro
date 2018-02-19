@@ -77,11 +77,10 @@ defmodule CrossroadsInterface.Plugs.MetaTest do
                                         "twitter" => "@crdschurch"}}                                        
 
   test "Sets meta data when request to a cms page route is made", %{conn: conn} do
-    with_mocks([ {Pages, [], [page_exists?: fn(_path) -> true end]},
-                 {Pages, [], [get_page: fn(_path) -> {:ok, @page_response} end]},
-                 {CmsClient, [], [get_system_page: fn("register") -> {:ok, 200, @system_page_response} end]},
+    with_mocks([ {CmsClient, [], [get_system_page: fn("register") -> {:ok, 200, @system_page_response} end]},
                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
       conn = %{conn | request_path: "/wizardcow"}
+               |> assign(:page, @page_response)
                |> CrossroadsInterface.Plug.Meta.call(%{})
       
       assert conn.assigns.meta_title == "Wizard Cow | Crossroads"
@@ -92,11 +91,10 @@ defmodule CrossroadsInterface.Plugs.MetaTest do
   end     
 
   test "Sets meta description when metaDescription is not set from content", %{conn: conn} do
-    with_mocks([ {Pages, [], [page_exists?: fn(_path) -> true end]},
-                 {Pages, [], [get_page: fn(_path) -> {:ok, @page_no_descripton } end ]},
-                 {CmsClient, [], [get_system_page: fn("register") -> {:ok, 200, @system_page_response} end]},
+    with_mocks([ {CmsClient, [], [get_system_page: fn("register") -> {:ok, 200, @system_page_response} end]},
                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
       conn = %{conn | request_path: "/wizardcow"}
+               |> assign(:page, @page_no_descripton)
                |> CrossroadsInterface.Plug.Meta.call(%{})
       
       assert conn.assigns.meta_title == "Wizard Cow | Crossroads"
@@ -107,11 +105,11 @@ defmodule CrossroadsInterface.Plugs.MetaTest do
   end
 
   test "Sets title to page_title | site_config_title when metadata contains site title", %{conn: conn} do
-    with_mocks([ {Pages, [], [page_exists?: fn(_path) -> true end]},
-                 {Pages, [], [get_page: fn(_path) -> {:ok, @page_title_with_site} end]},
-                 {CmsClient, [], [get_system_page: fn("register") -> {:ok, 200, @system_page_response} end]},
+    with_mocks([ {CmsClient, [], [get_system_page: fn("register") -> {:ok, 200, @system_page_response} end]},
                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
+
       conn = %{conn | request_path: "/wizardcow"}
+               |> assign(:page, @page_title_with_site)
                |> CrossroadsInterface.Plug.Meta.call(%{})
       
       assert conn.assigns.meta_title == "Wizard Cow | Crossroads"
@@ -122,8 +120,7 @@ defmodule CrossroadsInterface.Plugs.MetaTest do
   end                                       
 
   test "Sets meta data when request to a system page is made", %{conn: conn} do
-    with_mocks([ {Pages, [], [page_exists?: fn(_path) -> false end]},
-                 {CmsClient, [], [get_system_page: fn("register") -> {:ok, 200, @system_page_response} end]},
+    with_mocks([ {CmsClient, [], [get_system_page: fn("register") -> {:ok, 200, @system_page_response} end]},
                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
       conn = %{conn | request_path: "/register"}
                |> CrossroadsInterface.Plug.Meta.call(%{})
@@ -135,8 +132,7 @@ defmodule CrossroadsInterface.Plugs.MetaTest do
   end
 
   test "Sets site config data when request to a route is made", %{conn: conn} do
-    with_mocks([ {Pages, [], [page_exists?: fn(_path) -> false end]},
-                 {CmsClient, [], [get_system_page: fn("register") -> {:ok, 200, @system_page_response} end]},
+    with_mocks([ {CmsClient, [], [get_system_page: fn("register") -> {:ok, 200, @system_page_response} end]},
                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, @site_config_data} end]} ]) do
       conn = %{conn | request_path: "/register"}
                |> CrossroadsInterface.Plug.Meta.call(%{})

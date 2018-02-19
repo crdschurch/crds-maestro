@@ -8,6 +8,8 @@ import DistanceSorter from './home_page/distance_sorter';
 import DataTracker from './dataTracker';
 import UserService from './userService';
 import imgixImagesLoaded from './imgixImagesLoaded';
+import * as SmoothScroller from './web_components/smooth_scroller';
+import HeightWatcher from './web_components/height_watcher';
 
 const domReady = (callback) => {
   document.addEventListener('DOMContentLoaded', callback);

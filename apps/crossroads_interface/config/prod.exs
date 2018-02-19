@@ -1,12 +1,18 @@
 use Mix.Config
 
-config :crossroads_content,
-  cms_server_endpoint: System.get_env("CRDS_CMS_SERVER_ENDPOINT")
+if "#{System.get_env("MAESTRO_SSL")}" == "true" do
+  config :crossroads_interface, CrossroadsInterface.Endpoint,
+    https: [port: System.get_env("MAESTRO_PORT"),
+      otp_app: :crossroads_interface,
+      keyfile: "/certificates/tls.key",
+      certfile: "/certificates/tls.crt"]
+else
+  config :crossroads_interface, CrossroadsInterface.Endpoint,
+    http: [port: System.get_env("MAESTRO_PORT"), otp_app: :crossroads_interface]
+end
 
 config :crossroads_interface, CrossroadsInterface.Endpoint,
   url: [host: System.get_env("MAESTRO_HOSTNAME"), port: System.get_env("MAESTRO_PORT")],
-  http: [port: System.get_env("MAESTRO_PORT"),
-    otp_app: :crossroads_interface],
   cache_static_manifest: "priv/static/manifest.json",
   server: true
 

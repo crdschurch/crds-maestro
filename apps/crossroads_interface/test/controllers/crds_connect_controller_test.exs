@@ -20,8 +20,7 @@ defmodule CrossroadsInterface.CrdsConnectControllerTest do
                                               "uRL" => "/register"}]}
 
   test "GET /connect should return 200 status", %{conn: conn} do
-    with_mocks([ {Pages, [], [page_exists?: fn(_path) -> false end]},
-                 {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, @content_block_call} end]},
+    with_mocks([ {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, @content_block_call} end]},
                  {CmsClient, [], [get_system_page: fn("connect") -> {:ok, 200, @system_page_response} end]},
                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
       conn = get conn, "/connect"
@@ -30,8 +29,7 @@ defmodule CrossroadsInterface.CrdsConnectControllerTest do
   end
 
   test "GET /connect should set redirectUrl cookie", %{conn: conn} do
-    with_mocks([ {Pages, [], [page_exists?: fn(_path) -> false end]},
-                 {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, @content_block_call} end]},
+    with_mocks([ {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, @content_block_call} end]},
                  {CmsClient, [], [get_system_page: fn("connect") -> {:ok, 200, @system_page_response} end]},
                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
       Application.put_env(:crossroads_interface, :cookie_domain, ".crossroads.net")
@@ -39,6 +37,4 @@ defmodule CrossroadsInterface.CrdsConnectControllerTest do
       assert conn.resp_cookies == %{"redirectUrl" => %{http_only: false, value: "/connect", domain: ".crossroads.net"}, "params" => %{domain: ".crossroads.net", http_only: false, value: ""}}
     end
   end
-  
 end
-

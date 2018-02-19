@@ -71,4 +71,7 @@
         <% end %>
     <% end %>
     <link rel='stylesheet' href='https://unpkg.com/formiojs@latest/dist/formio.full.min.css'>
-    <base href="<%= @base_href %>">
+    <%= if assigns[:base_href] do %>
+      <base href="<%= @base_href %>">
+    <% end %>
+    
