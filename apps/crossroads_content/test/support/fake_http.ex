@@ -66,9 +66,9 @@ defmodule CrossroadsContent.FakeHttp do
     }}
   end
 
-
   def get("/api/ContentBlock") do
-    {:ok, %HTTPoison.Response{ status_code: 200, body: "{\"contentBlocks\": [{\"id\":1,\"title\":\"generalError\",\"content\":\"<p><strong>Oh no!<\\/strong> Looks like there's and error. Pleas fix and try again.<\\/p>\", \"type\":\"error\",\"category\":\"common\",\"className\":\"ContentBlock\"}]}"}} end
+    {:ok, %HTTPoison.Response{ status_code: 200, body: "{\"contentBlocks\": [{\"id\":1,\"title\":\"generalError\",\"content\":\"<p><strong>Oh no!<\\/strong> Looks like there's and error. Pleas fix and try again.<\\/p>\", \"type\":\"error\",\"category\":\"common\",\"className\":\"ContentBlock\"}]}"}} 
+  end
 
   def get("/api/SystemPage/?StateName=login") do
     {:ok, %HTTPoison.Response{ status_code: 200, body: "{\"systemPages\":[{\"id\":57,\"title\":\"Sign In\",\"uRL\":\"\\/signin\",\"stateName\":\"login\",\"description\":\"Let's get you signed in so you can begin exploring Crossroads.net.\",\"keywords\":null,\"bodyClasses\":null,\"legacyStyles\":\"1\",\"type\":\"website\",\"card\":\"summary\",\"created\":\"2015-09-24T13:52:48-04:00\",\"className\":\"SystemPage\"}]}" }}
