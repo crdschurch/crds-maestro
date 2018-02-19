@@ -28,7 +28,7 @@ defmodule CrossroadsInterface.Router do
     get "/series/:id/*path", CmsSeriesController, :show
     get "/publications/articles/:id/*path", PublicationsController, :showArticle
     get "/publications/videos/:id/*path", PublicationsController, :showVideo
-    # get "/publications/articles", PublicationsController, :indexArticles
+    get "/publications/articles", PublicationsController, :indexArticles
     # get "/publications/videos", PublicationsController, :indexVideos
     # get "/publications/podcasts", PublicationsController, :indexPodcasts
     # get "/publications/audio", PublicationsController, :indexAudio
