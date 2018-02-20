@@ -1,6 +1,6 @@
 <div class="publication_body article">
     <div class="publication_hero push-ends">
-        <img src="<%= assigns[:article]["image"]["filename"] %>" alt="<%= assigns[:article]["image"]["title"] %>" title="" style="width: 100%; height: 500px; object-fit: cover;" />
+        <img src="<%= assigns[:article]["image"] %>" alt="" title="" style="width: 100%; height: 500px; object-fit: cover;" />
         <span class="publication_heroCaption text-center block push-half-top push-bottom"><%= get_article_hero_caption(assigns[:content]) %></span>
     </div>
     <div class="container soft-top">

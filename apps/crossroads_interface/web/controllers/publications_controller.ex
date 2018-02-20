@@ -20,10 +20,12 @@ defmodule CrossroadsInterface.PublicationsController do
       css_files: [ "/css/app.css", "/js/legacy/legacy.css" ]})
   end
 
-  def showArticle(conn, %{"id" => id}) do
-    {:ok, resp} = HTTPoison.get "http://localhost:8080/api/articles/#{id}"
-    %{body: body, headers: _, request_url: _, status_code: _} = resp
-    %{"article" => article} = Poison.decode!(body)
+  def showArticle(conn, %{"id" => id, "source" => source}) do
+    {:ok, resp} = HTTPoison.get "http://localhost:5000/api/content/articles/#{id}/#{source}"
+    %{body: article, headers: _, request_url: _, status_code: _} = resp
+
+    article = Poison.decode!(article)
+    IEx.pry
 
     conn
     |> put_layout("screen_width.html")
