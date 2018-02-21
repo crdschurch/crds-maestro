@@ -1,5 +1,0 @@
-<%= for paragraph <- assigns.paragraphs do %>
-    <p class="main">
-      <%= paragraph["text"] %>
-    </p>
-<% end %>
