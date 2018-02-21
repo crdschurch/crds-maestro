@@ -44,7 +44,7 @@
   @import './pages/homepage';
   @import './pages/locations';
   @import './pages/media';
-  @import './pages/article';
+  @import './pages/publication';
   @import './pages/live';
 
   .bg-repeated {
@@ -64,3 +64,7 @@
   bottom: 0;
   left: 0;
 }
+
+// Load dark-theme styles outside the crds-styles context.
+@import 'node_modules/crds-styles/assets/stylesheets/variables';
+@import 'node_modules/crds-styles/assets/stylesheets/themes/dark';
