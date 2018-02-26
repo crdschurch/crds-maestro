@@ -4,7 +4,6 @@ defmodule CrossroadsContent.PublicationsClient do
   """
   use GenServer
   require Logger
-  require IEx
 
   @base_url "http://localhost:5000/api"
 
@@ -41,12 +40,10 @@ defmodule CrossroadsContent.PublicationsClient do
 
   @spec make_call(String.t, Map) :: {:reply, {:ok | :error, number(), any()}, map()}
   defp make_call(path, state) do
-    IEx.pry
     result =
       "#{@base_url}#{path}"
       |> HTTPoison.get(%{"Accept" => "application/json"})
       |> match_response
-    IEx.pry
     {:reply, result, state}
   end
 

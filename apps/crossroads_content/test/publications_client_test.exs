@@ -2,10 +2,8 @@ defmodule PublicationsTest do
   use ExUnit.Case, async: false
 
   alias CrossroadsContent.PublicationsClient
-  alias CrossroadsContent.FakeHttp
 
   import Mock
-  require IEx
 
   describe "PublicationsClient " do
 
@@ -55,16 +53,16 @@ defmodule PublicationsTest do
       end
     end
 
-    test "get_articles/1 returns an individual article" do
+    test "get_article/2 returns an individual article" do
       with_mock HTTPoison, [get: fn(_url, _params) -> @article end] do
 
-        expected = {:ok, 200, [
+        expected = {:ok, 200,
           %{"author" => "Wayne Newton", "body" => "Body 1", "id" => "0001",
             "image" => "https://cdn.com/jpeg1.jpg", "source" => 1,
             "tags" => ["tag1", "tag2", "tag3"], "title" => "Title 1"
           }
-        ]}
-        actual = PublicationsClient.get_articles("0001", 1)
+        }
+        actual = PublicationsClient.get_article("0001", 1)
 
         assert expected == actual
       end
