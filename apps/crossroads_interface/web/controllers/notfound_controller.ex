@@ -1,6 +1,5 @@
 defmodule CrossroadsInterface.NotfoundController do
   use CrossroadsInterface.Web, :controller
-  alias CrossroadsContent.CmsClient
 
   plug :put_layout, "no_sidebar.html"
   plug CrossroadsInterface.Plug.Meta

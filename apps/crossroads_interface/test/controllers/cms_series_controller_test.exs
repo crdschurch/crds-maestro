@@ -1,6 +1,4 @@
 defmodule CrossroadsInterface.CmsSeriesControllerTest do
-  alias CrossroadsContent.CmsClient
-  alias CrossroadsContent.Pages
   use CrossroadsInterface.ConnCase
   import Mock
   
@@ -41,24 +39,24 @@ defmodule CrossroadsInterface.CmsSeriesControllerTest do
                                               "uRL" => "/register"}]}
 
   test "getting an individual series", %{conn: conn} do
-    with_mocks([ {CmsClient, [], [get_system_page: fn(_page) -> {:ok, 200, @system_page_response} end]},
-                 {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, %{}} end]},
-                 {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]},
-                 {CmsClient, [], [get_series_by_id: fn(_id) -> @get_series_200_response end]}]) do
+    with_mocks([ {CrossroadsContent.CmsClient, [], [get_system_page: fn(_page) -> {:ok, 200, @system_page_response} end]},
+                 {CrossroadsContent.CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, %{}} end]},
+                 {CrossroadsContent.CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]},
+                 {CrossroadsContent.CmsClient, [], [get_series_by_id: fn(_id) -> @get_series_200_response end]}]) do
       conn = get conn, "/series/584"
-      assert called CmsClient.get_series_by_id("584")
+      assert called CrossroadsContent.CmsClient.get_series_by_id("584")
       assert html_response(conn, 200)
     end
   end
 
   test "handling when getting series results in a 404", %{conn: conn} do
-    with_mocks([ {CmsClient, [], [get_system_page: fn(_page) -> {:ok, 200, @system_page_response} end]},
-                 {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, %{}} end]},
-                 {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]},
-                 {CmsClient, [], [get_series_by_id: fn(_id) -> @get_series_404_response end]},
-                 {CmsClient, [], [get_page: fn("/servererror/", false) -> {:ok, 200, fake_error_page()} end]}]) do
+    with_mocks([ {CrossroadsContent.CmsClient, [], [get_system_page: fn(_page) -> {:ok, 200, @system_page_response} end]},
+                 {CrossroadsContent.CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, %{}} end]},
+                 {CrossroadsContent.CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]},
+                 {CrossroadsContent.CmsClient, [], [get_series_by_id: fn(_id) -> @get_series_404_response end]},
+                 {CrossroadsContent.CmsClient, [], [get_page: fn("/servererror/", false) -> {:ok, 200, fake_error_page()} end]}]) do
       conn = get conn, "/series/897547895"
-      assert called CmsClient.get_series_by_id("897547895")
+      assert called CrossroadsContent.CmsClient.get_series_by_id("897547895")
       assert html_response(conn, 404)
     end
   end
