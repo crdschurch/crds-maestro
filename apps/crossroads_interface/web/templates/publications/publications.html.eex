@@ -25,6 +25,6 @@
                     </div>
                 </a>
             </div>
-        <%= end %>
+        <% end %>
     </div>
 </div>
