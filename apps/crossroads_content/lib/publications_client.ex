@@ -13,8 +13,8 @@ defmodule CrossroadsContent.PublicationsClient do
     GenServer.call(__MODULE__, {:articles}, 60000)
   end
 
-  @spec get_articles(Integer, Integer) :: {:ok | :error, map}
-  def get_articles(id, source) do
+  @spec get_article(Integer, Integer) :: {:ok | :error, map}
+  def get_article(id, source) do
     GenServer.call(__MODULE__, {:articles, id, source}, 60000)
   end
 
@@ -46,7 +46,6 @@ defmodule CrossroadsContent.PublicationsClient do
       "#{@base_url}#{path}"
       |> HTTPoison.get(%{"Accept" => "application/json"})
       |> match_response
-
     IEx.pry
     {:reply, result, state}
   end

@@ -149,7 +149,7 @@ defmodule CrossroadsInterface.CmsPageControllerTest do
         conn
         |> with_session
         |> Map.put(:req_cookies, %{"intsessionId" => "1234"})
-        |> get "/form/"
+        |> get("/form/")
       assert html_response(conn, 200)
     end
   end
