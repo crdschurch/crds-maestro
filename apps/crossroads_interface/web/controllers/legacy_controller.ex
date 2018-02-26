@@ -2,7 +2,6 @@ defmodule CrossroadsInterface.LegacyController do
   require Logger
   use CrossroadsInterface.Web, :controller
   alias CrossroadsInterface.NotfoundController
-  require IEx
 
   @moduledoc"""
   This controller is called from the fall through route in the router.
@@ -14,7 +13,6 @@ defmodule CrossroadsInterface.LegacyController do
   plug CrossroadsInterface.Plug.Authorized
   plug CrossroadsInterface.Plug.CmsPage
   plug :put_layout, "no_header_or_footer.html"
-  IEx.pry
 
   @doc """
   When angular can't find a route, it sets a cookie unmatchedLegacyRoute=<route>
