@@ -26,12 +26,12 @@ defmodule CrossroadsInterface.LegacyController do
     end
   end
 
-  defp renderLegacyApp(conn, _params) do
+  defp renderLegacyApp(conn, params) do
     # when legacy app encounters a route it cannot serve, it sets cookie "unmatchedLegacyRoute" with value of that route
     if conn.cookies["unmatchedLegacyRoute"] != nil && URI.decode(conn.cookies["unmatchedLegacyRoute"]) == conn.request_path |> ContentHelpers.add_trailing_slash_if_necessary |> URI.decode do      
       conn 
       |> CrossroadsInterface.Plug.Cookie.call("unmatchedLegacyRoute", "") 
-      |> NotfoundController.notfound(_params)
+      |> NotfoundController.notfound(params)
     else    
       conn 
       |> CrossroadsInterface.Plug.Cookie.call("unmatchedLegacyRoute", "") 

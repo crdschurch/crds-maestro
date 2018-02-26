@@ -10,9 +10,6 @@ defmodule CrossroadsInterface.CmsSeriesController do
   plug Plug.BodyClass, "crds-styles"
   plug :put_layout, "screen_width.html"
 
-  @base_url Application.get_env(:crossroads_content, :cms_server_endpoint)
-  @timeout Application.get_env(:crossroads_content, :cms_timeout)
-
   def show(conn, %{"id" => id}) do
     series = CmsClient.get_series_by_id(id)
 

@@ -41,69 +41,69 @@ defmodule CrossroadsInterface.CmsPageControllerTest do
         "legacyStyles" => "0",
         "canEditType" => nil}}
 
-  def with_session(conn) do
+  def with_session(_conn) do
     session_opts = Plug.Session.init(store: :cookie, key: "_app",
                                       encryption_salt: "abc", signing_salt: "abc")
-    conn()
+    build_conn()
     |> Map.put(:secret_key_base, String.duplicate("abcdefgh", 8))
     |> Plug.Session.call(session_opts)
     |> Plug.Conn.fetch_session()
     |> Plug.Conn.fetch_query_params()
   end
 
-  test "Getting a page that exists at /habitat/", %{conn: conn} do
+  test "Getting a page that exists at /habitat/", %{conn: _conn} do
     with_mocks([ {CmsClient, [], [get_system_page: fn(page) -> {:ok, 200, fake_system_page(page)} end]},
                  {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]},
                  {Pages, [], [get_page: fn(_path) -> @get_page_response end ]},
                  {Pages, [], [get_page: fn(_path, _stage) -> @get_page_response end ]}]) do
-      conn = get conn, "/habitat/"
+      conn = get build_conn(), "/habitat/"
       assert html_response(conn, 200)
       assert called Pages.get_page("/habitat/", false)
     end
   end
 
-  test "Getting a staged page that exists at /habitat/", %{conn: conn} do
+  test "Getting a staged page that exists at /habitat/", %{conn: _conn} do
     with_mocks([ {CmsClient, [], [get_system_page: fn(page) -> {:ok, 200, fake_system_page(page)} end]},
                  {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]},
                  {Pages, [], [get_page: fn(_path) -> @get_page_response end ]},
                  {Pages, [], [get_page: fn(_path, _stage) -> @get_page_response end ]}]) do
-      conn = get conn, "/habitat/", %{"stage" => "Stage"}
+      conn = get build_conn(), "/habitat/", %{"stage" => "Stage"}
       assert html_response(conn, 200)
       assert called Pages.get_page("/habitat/", true)
     end
   end
 
-  test "Get should get layout from page", %{conn: conn} do
+  test "Get should get layout from page", %{conn: _conn} do
     with_mocks([ {CmsClient, [], [get_system_page: fn(page) -> {:ok, 200, fake_system_page(page)} end]},
                  {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]},
                  {Pages, [], [get_page: fn(_path) -> @get_page_response end ]},
                  {Pages, [], [get_page: fn(_path, _) -> @get_page_response end ]}]) do
-      conn = get conn, "/habitat/"
+      conn = get build_conn(), "/habitat/"
       assert conn.assigns[:layout] == {CrossroadsInterface.LayoutView, "centered_content_page.html"}
     end
   end
 
-  test "Get should get crds styles from page", %{conn: conn} do
+  test "Get should get crds styles from page", %{conn: _conn} do
       with_mocks([ {CmsClient, [], [get_system_page: fn(page) -> {:ok, 200, fake_system_page(page)} end]},
                  {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]},
                  {Pages, [], [get_page: fn(_path) -> @get_page_response end ]},
                  {Pages, [], [get_page: fn(_path, _) -> @get_page_response end ]}]) do
-      conn = get conn, "/habitat/"
+      conn = get build_conn(), "/habitat/"
       assert conn.assigns[:crds_styles] == "crds-legacy-styles"
     end
   end
 
-  test "Get should get body styles from page", %{conn: conn} do
+  test "Get should get body styles from page", %{conn: _conn} do
     with_mocks([ {CmsClient, [], [get_system_page: fn(page) -> {:ok, 200, fake_system_page(page)} end]},
                  {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
                  {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]},
                  {Pages, [], [get_page: fn(_path) -> @get_page_response end ]},
                  {Pages, [], [get_page: fn(_path, _) -> @get_page_response end ]}]) do
-      conn = get conn, "/habitat/"
+      conn = get build_conn(), "/habitat/"
       assert conn.assigns[:body_class] == "dad-bod goofy"
     end
   end
@@ -116,7 +116,7 @@ defmodule CrossroadsInterface.CmsPageControllerTest do
                  {Pages, [], [get_page: fn(_path, _) -> @get_auth_page_response end ]},
                  {CrossroadsInterface.Plug.Authorized, [], [call: fn(conn, _) -> assign(conn, :authorized, false) end]}
               ]) do
-      conn = get conn, "/form/"
+      conn = get build_conn(), "/form/"
       assert html_response(conn, 302)
     end
   end
@@ -130,7 +130,7 @@ defmodule CrossroadsInterface.CmsPageControllerTest do
        {Pages, [], [get_page: fn(_path, _) -> @get_auth_page_response end ]},
        {CrossroadsInterface.Plug.Authorized, [], [call: fn(conn, _) -> assign(conn, :authorized, true) end]}
      ]) do
-      conn = get conn, "/form/"
+      conn = get build_conn(), "/form/"
       assert conn.resp_cookies["redirectUrl"].value == "/form/"
       assert conn.resp_cookies["params"].value == ""
     end
@@ -146,7 +146,7 @@ defmodule CrossroadsInterface.CmsPageControllerTest do
       {CrossroadsInterface.Plug.Authorized, [], [call: fn(conn, _) -> assign(conn, :authorized, true) end]}
     ]) do
       conn =
-        conn
+        build_conn()
         |> with_session
         |> Map.put(:req_cookies, %{"intsessionId" => "1234"})
         |> get("/form/")

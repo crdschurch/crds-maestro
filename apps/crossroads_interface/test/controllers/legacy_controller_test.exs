@@ -70,7 +70,7 @@ defmodule CrossroadsInterface.LegacyControllerTest do
     end
   end
 
-  test "GET /non-existent is 404 when cookie unmatchedLegacyRoute=/non-existent/", %{conn: conn} do
+  test "GET /non-existent is 404 when cookie unmatchedLegacyRoute=/non-existent/", %{conn: _conn} do
     with_mocks([ {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
                  {CmsClient, [], [get_system_page: fn("non-existent") -> {:ok, 200, fake_system_page("")} end]},
                  {Pages,     [], [get_page: fn(_path, _stage) -> :error end]},

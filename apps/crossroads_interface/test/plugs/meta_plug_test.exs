@@ -1,7 +1,6 @@
 defmodule CrossroadsInterface.Plugs.MetaTest do
   use CrossroadsInterface.ConnCase
   alias CrossroadsContent.CmsClient
-  alias CrossroadsContent.Pages
   import Mock
 
   @page_response  %{"submitButtonText" => nil, "title" => "Wizard Cow",
