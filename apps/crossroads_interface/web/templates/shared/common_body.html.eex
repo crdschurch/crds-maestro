@@ -22,8 +22,11 @@
     <script>
       new CRDS.StatusMessage({ config: '//crossroads-assets.s3.amazonaws.com/browsers.json' });
       CRDS.JumbotronVideoPlayers = CRDS.JumbotronVideos;
+      new CRDS.StatusMessage({
+        message: "Have an account? God knows your profile but we don't! <a href=\"/profile/personal\">Click here to update your profile</a>",
+        style: 'info',
+        strict: false});
     </script>
-
     <script>
       imgix.onready(function() {
         var initializeImgix = function(selector) {
