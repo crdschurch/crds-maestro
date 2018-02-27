@@ -5,7 +5,7 @@ defmodule PublicationsTest do
 
   import Mock
 
-  describe "PublicationsClient " do
+  describe "PublicationsClient success paths " do
 
     @articles {:ok,
       %HTTPoison.Response{
@@ -68,4 +68,95 @@ defmodule PublicationsTest do
       end
     end
   end
+
+  describe "PublicationsClient get_articles/0 error paths " do
+
+    setup do
+      Application.put_env(:crossroads_content, :cms_use_cache, true)
+      PublicationsClient.start_link([name: CrossroadsContent.PublicationsClient])
+      :ok
+    end
+
+    test "return an empty map on 404" do
+      response = {:ok, %HTTPoison.Response{body: "",
+        headers: [{"Server", "Kestrel"}, {"X-Powered-By", "ASP.NET"},
+                  {"Date", "Tue, 27 Feb 2018 17:16:37 GMT"}, {"Content-Length", "0"}],
+        request_url: "https://gatewayint.crossroads.net/content/api/content/helloz",
+        status_code: 404}}
+
+      with_mock HTTPoison, [get: fn(_url, _params) -> response end] do
+        expected = {:error, 404, %{}}
+
+        actual = PublicationsClient.get_articles()
+
+        assert expected == actual
+      end
+    end
+
+    test "returns an error reason on 500" do
+      response = {:error, %HTTPoison.Error{id: nil, reason: :nxdomain}}
+
+      with_mock HTTPoison, [get: fn(_url, _params) -> response end] do
+        expected = {:error, 500, %{error: :nxdomain}}
+
+        actual = PublicationsClient.get_articles()
+
+        assert expected == actual
+      end
+    end
+  end
+
+  describe "PublicationsClient get_article/2 error paths " do
+
+    setup do
+      Application.put_env(:crossroads_content, :cms_use_cache, true)
+      PublicationsClient.start_link([name: CrossroadsContent.PublicationsClient])
+      :ok
+    end
+
+    test "return an empty map on 204" do
+      response = {:ok, %HTTPoison.Response{body: "",
+        headers: [{"Server", "Kestrel"}, {"X-Powered-By", "ASP.NET"},
+                  {"Date", "Tue, 27 Feb 2018 17:16:37 GMT"}],
+        request_url: "https://gatewayint.crossroads.net/content/api/content/articles/5587664776/2",
+        status_code: 204}}
+
+      with_mock HTTPoison, [get: fn(_url, _params) -> response end] do
+        expected = {:error, 0, %{error: "unknown response"}}
+
+        actual = PublicationsClient.get_articles()
+
+        assert expected == actual
+      end
+    end
+
+    test "return an empty map on 404" do
+      response = {:ok, %HTTPoison.Response{body: "",
+        headers: [{"Server", "Kestrel"}, {"X-Powered-By", "ASP.NET"},
+                  {"Date", "Tue, 27 Feb 2018 17:16:37 GMT"}, {"Content-Length", "0"}],
+        request_url: "https://gatewayint.crossroads.net/content/api/content/articlez/5587664776/1",
+        status_code: 404}}
+
+      with_mock HTTPoison, [get: fn(_url, _params) -> response end] do
+        expected = {:error, 404, %{}}
+
+        actual = PublicationsClient.get_articles()
+
+        assert expected == actual
+      end
+    end
+
+    test "returns an error reason on 500" do
+      response = {:error, %HTTPoison.Error{id: nil, reason: :nxdomain}}
+
+      with_mock HTTPoison, [get: fn(_url, _params) -> response end] do
+        expected = {:error, 500, %{error: :nxdomain}}
+
+        actual = PublicationsClient.get_articles()
+
+        assert expected == actual
+      end
+    end
+  end
+
 end

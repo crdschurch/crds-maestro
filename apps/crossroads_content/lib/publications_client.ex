@@ -5,17 +5,8 @@ defmodule CrossroadsContent.PublicationsClient do
   use GenServer
   require Logger
 
-  @base_url "http://localhost:5000/api"
-
-  @spec get_articles() :: {:ok | :error, map}
-  def get_articles() do
-    GenServer.call(__MODULE__, {:articles}, 60000)
-  end
-
-  @spec get_article(Integer, Integer) :: {:ok | :error, map}
-  def get_article(id, source) do
-    GenServer.call(__MODULE__, {:articles, id, source}, 60000)
-  end
+  @base_url Application.get_env(:crossroads_content, :publications_server_endpoint)
+  @timeout Application.get_env(:crossroads_content, :cms_timeout)
 
   @doc false
   def start_link(opts \\ []) do
@@ -27,12 +18,23 @@ defmodule CrossroadsContent.PublicationsClient do
     {:ok, %{}}
   end
 
+  @spec get_articles() :: {:ok | :error, map}
+  def get_articles() do
+    GenServer.call(__MODULE__, {:articles}, @timeout)
+  end
+
   @doc false
   def handle_call({:articles}, _from, state) do
     path = "/content/articles"
     make_call(path, state)
   end
 
+  @spec get_article(Integer, Integer) :: {:ok | :error, map}
+  def get_article(id, source) do
+    GenServer.call(__MODULE__, {:articles, id, source}, @timeout)
+  end
+
+  @doc false
   def handle_call({:articles, id, source}, _from, state) do
     path = "/content/articles/#{id}/#{source}"
     make_call(path, state)
@@ -51,6 +53,7 @@ defmodule CrossroadsContent.PublicationsClient do
   defp match_response({:ok, %HTTPoison.Response{status_code: 404, body: body}}) do
     {:error, 404, decode_request(Poison.decode(body))}
   end
+
   defp match_response({:ok, %HTTPoison.Response{status_code: 200, body: body, headers: headers, request_url: _req_url}}) do
     if determine_headers(headers) do
       {:error, 400, %{}}
@@ -58,16 +61,15 @@ defmodule CrossroadsContent.PublicationsClient do
       {:ok, 200, decode_request(Poison.decode(body))}
     end
   end
+
   defp match_response({:error, %HTTPoison.Error{reason: reason}}) do
     {:error, 500, %{error: reason}}
   end
+
   defp match_response(_), do: {:error, 0, %{error: "unknown response"}}
 
   defp determine_headers(headers) do
-    case Enum.filter(headers, &is_html/1) do
-      [] -> false
-      _  -> true
-    end
+    Enum.any?(headers, fn(x) -> x == {"Content-Type", "text/html"} end)
   end
 
   defp is_html({"Content-Type", "text/html"}), do: true
@@ -75,5 +77,6 @@ defmodule CrossroadsContent.PublicationsClient do
 
   defp decode_request({:ok, valid}), do: valid
   defp decode_request({:error, _}), do: %{}
+  defp decode_request({:error, _, _}), do: %{}
 
 end
