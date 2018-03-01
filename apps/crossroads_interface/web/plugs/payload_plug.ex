@@ -3,7 +3,6 @@ defmodule CrossroadsInterface.Plug.Payload do
   Assigns the payload from the CMS into the connection
   """
   import Plug.Conn
-  require IEx
 
   def init(default), do: default
 

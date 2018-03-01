@@ -1,7 +1,6 @@
 defmodule CrossroadsInterface.CrdsGroupLeaderController do
   use CrossroadsInterface.Web, :controller
   require Logger
-  require IEx
 
   @moduledoc"""
   Handles all requests to /group-leader

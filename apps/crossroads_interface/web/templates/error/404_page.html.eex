@@ -1,7 +1,7 @@
 <div class="crds-legacy-styles">
   <div class="container">
     <div class="row">
-      <%= raw(server_error_payload()) %>
+      <%= raw(not_found_payload()) %>
     </div>
   </div>
 </div>

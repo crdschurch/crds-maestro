@@ -2,6 +2,7 @@ defmodule CrossroadsInterface.LegacyController do
   require Logger
   use CrossroadsInterface.Web, :controller
   alias CrossroadsInterface.NotfoundController
+
   @moduledoc"""
   This controller is called from the fall through route in the router.
   The purpose is to handle serving up the 'legacy' angular application using

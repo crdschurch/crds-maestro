@@ -5,7 +5,6 @@ defmodule CrossroadsInterface.Plug.CmsPage do
     """
     import Plug.Conn
     alias CrossroadsContent.Pages
-    require IEx
 
     def init(default), do: default
   
