@@ -54,7 +54,7 @@ defmodule CrossroadsInterface.CmsSeriesControllerTest do
                  {CrossroadsContent.CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, %{}} end]},
                  {CrossroadsContent.CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]},
                  {CrossroadsContent.CmsClient, [], [get_series_by_id: fn(_id) -> @get_series_404_response end]},
-                 {CrossroadsContent.CmsClient, [], [get_page: fn("/servererror/", false) -> {:ok, 200, fake_error_page()} end]}]) do
+                 {CrossroadsContent.CmsClient, [], [get_page: fn(page, false) -> {:ok, 200, fake_server_error_page()} end]}]) do
       conn = get conn, "/series/897547895"
       assert called CrossroadsContent.CmsClient.get_series_by_id("897547895")
       assert html_response(conn, 404)
