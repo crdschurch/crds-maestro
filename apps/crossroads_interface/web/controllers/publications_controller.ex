@@ -26,13 +26,19 @@ defmodule CrossroadsInterface.PublicationsController do
   end
 
   def show_article(conn, %{"id" => id, "source" => source}) do
-    resp = PublicationsClient.get_article(id, source)
-    {:ok, 200, article} = resp
-
-    conn
-    |> put_layout("screen_width.html")
-    |> render("article.html", %{ article: article,
-      css_files: [ "/css/app.css", "/js/legacy/legacy.css" ]})  
+    case PublicationsClient.get_article(id, source) do
+      {:ok, _response_code, article} ->
+        conn
+        |> put_layout("screen_width.html")
+        |> render("article.html", %{ article: article,
+          css_files: [ "/css/app.css", "/js/legacy/legacy.css" ]})
+      {:error, _response_code, response_data} ->
+        Logger.error("Error getting Publications | Response: Article Not Found")
+        NotfoundController.notfound(conn, %{})
+      _ ->
+        Logger.error("Error getting Publications")
+        NotfoundController.notfound(conn, %{})
+    end
   end
 
   def show_article(conn, %{"id" => id}) do

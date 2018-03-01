@@ -15,7 +15,7 @@ defmodule CrossroadsInterface.ErrorViewTest do
 
     test "renders 500.html" do
       with_mock CmsClient, [get_page: fn("/servererror/", false) -> {:ok, 200, fake_server_error_page()} end] do
-        assert render_to_string(CrossroadsInterface.ErrorView, "500.html", []) =~ "500"
+        assert render_to_string(CrossroadsInterface.ErrorView, "500.html", []) == "500"
       end
     end
 

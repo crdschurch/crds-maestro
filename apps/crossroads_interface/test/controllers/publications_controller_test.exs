@@ -74,7 +74,6 @@ defmodule CrossroadsInterface.PublicationsControllerTest do
 
   describe "Unhappy path" do
     @notfound {:error, 404, %{}}
-    # @servererror {:error, 500, %{error: :nxdomain}}
     @errorpage {:ok, 200, %{"pages" => [%{"content" => "foobar"}]}}
 
     test "for index_articles/0 404 not found results in not found page" do

@@ -72,9 +72,6 @@ defmodule CrossroadsContent.PublicationsClient do
     Enum.any?(headers, fn(x) -> x == {"Content-Type", "text/html"} end)
   end
 
-  defp is_html({"Content-Type", "text/html"}), do: true
-  defp is_html(_header), do: false
-
   defp decode_request({:ok, valid}), do: valid
   defp decode_request({:error, _}), do: %{}
   defp decode_request({:error, _, _}), do: %{}
