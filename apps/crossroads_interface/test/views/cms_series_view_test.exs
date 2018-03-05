@@ -25,8 +25,6 @@ defmodule CrossroadsInterface.CmsSeriesViewTest do
     }
   }
 
-  @message_video_missing %{"date" => "2017-11-25", "id" => 3883}
-
   @still_missing %{"date" => "2017-11-25", "id" => 3883,
     "messageVideo" => %{
       "source" => %{"my_key" => "my_value"},

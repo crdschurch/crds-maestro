@@ -5,7 +5,7 @@ defmodule CrossroadsInterface.AuthorizedPlugTest do
   import Mock
 
   test "should call the gateway with the cookie value", %{conn: conn} do
-    with_mock Authentication, [valid_token?: fn(token) -> true end] do
+    with_mock Authentication, [valid_token?: fn(_token) -> true end] do
       cookie_value = "@verySp#C!$lc)0k!e"
       conn
       |> put_req_cookie("intsessionId", cookie_value)
@@ -16,7 +16,7 @@ defmodule CrossroadsInterface.AuthorizedPlugTest do
   end
 
   test "should return true when a sessionId cookie is present and cookie is still valid", %{conn: conn} do
-    with_mock Authentication, [valid_token?: fn(token) -> true end] do
+    with_mock Authentication, [valid_token?: fn(_token) -> true end] do
       conn = conn
       |> put_req_cookie("intsessionId", "@verySp#C!$lc)0k!e")
       |> fetch_cookies()
@@ -26,7 +26,7 @@ defmodule CrossroadsInterface.AuthorizedPlugTest do
   end
 
   test "should return false when a sessionId cookie is present, but cookie is invalid", %{conn: conn} do
-    with_mock Authentication, [valid_token?: fn(token) -> false end] do
+    with_mock Authentication, [valid_token?: fn(_token) -> false end] do
       conn = conn
         |> put_req_cookie("intsessionId", "@verySp#C!$lc)0k!e")
         |> fetch_cookies()

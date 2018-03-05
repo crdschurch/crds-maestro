@@ -1,0 +1,30 @@
+<div class="jumbotron bg-blue">
+    <h1 class="section-header text-white">Read. Watch. Learn.</h1>
+    <p style="max-width: 640px; margin-left: auto; margin-right: auto;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut sed erat ut nulla dignissim ultricies.</p>
+    <%# <div class="publications_feature col-md-10 col-md-offset-1">
+        <div class="card">
+            <figure class="sixteen-nine">
+                <img alt="Card image caption" class="card-img-top img-responsive" src="https://cdn-images-1.medium.com/max/2000/1*TOuvM7X0V2l3UvyhpzP8mw.jpeg">
+            </figure>
+            <div class="card-block text-left">
+                <h4 class="card-title card-title--overlap text-uppercase">How to Build a Brotherhood</h4>
+                <p class="card-text"><a href="#" class="publication_author">Craig Dockery</a> | <span class="publication_date">Nov 12, 2018</span></p>
+            </div>
+        </div>
+    </div> %>
+</div>
+<div class="container">
+    <div class="card-deck card-deck--expanded-layout">
+        <%= for article <- Enum.reverse(assigns[:articles]) do %>
+            <div class="card">
+              <a href="/publications/articles/<%= article["id"] %>?source=<%= article["source"] %>">
+                    <img alt="Card image caption" class="card-img-top img-responsive" src="<%= article["image"] %>">
+                    <div class="card-block">
+                        <h4 class="card-title card-title--overlap text-uppercase"><%= article["title"] %></h4>
+                        <p class="card-text"><a><%= article["author"] %></a></p>
+                    </div>
+                </a>
+            </div>
+        <% end %>
+    </div>
+</div>

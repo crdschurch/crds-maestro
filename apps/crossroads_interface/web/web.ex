@@ -42,7 +42,6 @@ defmodule CrossroadsInterface.Web do
       use Phoenix.HTML
 
       import CrossroadsInterface.Router.Helpers
-      import CrossroadsInterface.ErrorHelpers
       import CrossroadsInterface.Gettext
     end
   end

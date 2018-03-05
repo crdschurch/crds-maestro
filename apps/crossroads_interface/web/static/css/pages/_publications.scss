@@ -1,0 +1,15 @@
+.sixteen-nine {
+  margin: 0;
+  overflow: hidden;
+  position: inherit;
+  img {
+    display: block;
+    width: 100%;
+    /*crop to 16/9*/
+    margin:-21.875% 0;
+  }
+}
+
+.publications_feature .card {
+  transform: translateY(-30%);
+}
