@@ -24,37 +24,6 @@
     top: 1rem;
     margin-bottom: 1rem;
   }
-
-  .publication_shareBtn {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 3rem;
-    height: 3rem;
-    color: white;
-    background-color: $cr-cyan;
-    border: 0;
-    &:hover {
-      cursor: pointer;
-      opacity: .8;
-    }
-    &.publication_shareBtn--facebook {
-      background-color: #3b5998;
-    }
-    &.publication_shareBtn--twitter {
-      background-color: #1da1f2;
-    }
-    &.publication_shareBtn--email {
-      background-color: $cr-teal;
-    }
-    &.publication_shareBtn--text {
-      background-color: $cr-gold;
-    }
-    .icon {
-      width: 20px;
-    }
-  }
 }
 
 .article {
