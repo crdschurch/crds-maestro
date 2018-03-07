@@ -7,26 +7,7 @@
         <div class="col-md-3 push-bottom">
             <div class="publication_share push-bottom">
                 <h5 class="control-label">Share</h5>
-                <button id="shareFB" class="publication_shareBtn publication_shareBtn--facebook">
-                    <svg class="icon" viewBox="0 0 256 256">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#facebook"></use>
-                    </svg>
-                </button>
-                <button id="shareTW" class="publication_shareBtn publication_shareBtn--twitter">
-                    <svg class="icon" viewBox="0 0 256 256">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#twitter"></use>
-                    </svg>
-                </button>
-                <button id="shareEM" class="publication_shareBtn publication_shareBtn--email">
-                    <svg class="icon" viewBox="0 0 256 256">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#facebook"></use>
-                    </svg>
-                </button>
-                <button id="shareTX" class="publication_shareBtn publication_shareBtn--text">
-                    <svg class="icon" viewBox="0 0 256 256">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#share"></use>
-                    </svg>
-                </button>
+                <div class="addthis_inline_share_toolbox"></div>
             </div>
             <div class="publication_tags">
                 <h5 class="control-label">Tags</h5>
