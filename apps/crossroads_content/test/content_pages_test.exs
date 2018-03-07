@@ -6,7 +6,6 @@ defmodule CrossroadsContentPagesTest do
   alias CrossroadsContent.FakeHttp
 
   import Mock
-  require IEx
 
   describe "When using content page caching" do
     setup_with_mocks([

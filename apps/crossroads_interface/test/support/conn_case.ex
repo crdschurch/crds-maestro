@@ -29,7 +29,17 @@ defmodule CrossroadsInterface.ConnCase do
         %{"contentBlocks" => [%{"id" => 1, "title" => "generalError"}]}
       end
 
-      def fake_error_page() do
+      def fake_not_found_page() do
+        %{"pages" => [%{
+          "content" => "<div class=\"push-top\">\n<div class=\"col-sm-5\">\n<h1 class=\"brand-font type-color page-header\">Oops.</h1>\n<h2 class=\"subheading push-bottom\">We're sorry. That page doesn't seem to exist.</h2>\n<p>Please use the navigation above or search here.</p>\n<form role=\"form\" action=\"/search\">\n<div class=\"form-group\">\n<div class=\"input-group input-group-lg\" ui-sref=\"search\" ng-click=\"ok($event)\"><input class=\"form-control input-lg\" type=\"search\" placeholder=\"Search\" name=\"q\"><span class=\"input-group-btn\"> <button type=\"submit\" class=\"btn btn-default\"> <svg viewbox=\"0 0 32 32\" class=\"icon icon-large icon-search3\"><use xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"#search3\"></use></svg></button> </span></div>\n</div>\n</form>\n<p class=\"push-top\" mce_advimageresize_id=\"Form_EditForm_Content_mce_0\"><strong>Still need help?</strong> <br>Browse our <a href=\"help\">help section</a>, <a href=\"mailto:websupport@crossroads.net\">email us</a> or give us a call at 513‑731‑7400.</p>\n</div>\n<div class=\"col-sm-7 push-top\"><img class=\"img-responsive imgix-fluid full-width\" title=\"404 Page Not Found Crushed Coffee Cup\" data-src=\"//crossroads-media.imgix.net/images/coffee-cup-crushed.jpg\" alt=\"Page not found!\" src=\"http://content.crossroads.net/\" mce_advimageresize_id=\"Form_EditForm_Content_mce_1\"></div>\n</div>",
+          "requiresAngular" => "1",
+          "title" => "Page Not Found",
+          "uRLSegment" => "page-not-found"}]}
+
+
+      end
+
+      def fake_server_error_page() do
         %{"pages" => [%{ 
           "content" => "<div class=\"push-top\">\n<div class=\"col-sm-5\">\n<h1 class=\"brand-font type-color page-header\">Oops.</h1>\n<h2 class=\"subheading push-bottom\">We're sorry. There seems to have been an issue.</h2>\n<p>Please use the navigation above or search here.</p>\n<form role=\"form\" action=\"/search\">\n<div class=\"form-group\">\n<div class=\"input-group input-group-lg\" ui-sref=\"search\" ng-click=\"ok($event)\"><input class=\"form-control input-lg\" type=\"search\" placeholder=\"Search\" name=\"q\"><span class=\"input-group-btn\"> <button type=\"submit\" class=\"btn btn-default\"> <svg viewbox=\"0 0 32 32\" class=\"icon icon-large icon-search3\"><use xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"#search3\"></use></svg></button> </span></div>\n</div>\n</form>\n<p class=\"push-top\" mce_advimageresize_id=\"Form_EditForm_Content_mce_0\"><strong>Still need help?</strong> <br>Browse our <a href=\"help\">help section</a>, <a href=\"mailto:websupport@crossroads.net\">email us</a> or give us a call at 513‑731‑7400.</p>\n</div>\n<div class=\"col-sm-7 push-top\"><img class=\"img-responsive imgix-fluid full-width\" title=\"404 Page Not Found Crushed Coffee Cup\" data-src=\"//crossroads-media.imgix.net/images/coffee-cup-crushed.jpg\" alt=\"Page not found!\" src=\"http://content.crossroads.net/\" mce_advimageresize_id=\"Form_EditForm_Content_mce_1\"></div>\n</div>",
           "requiresAngular" => "1", 
