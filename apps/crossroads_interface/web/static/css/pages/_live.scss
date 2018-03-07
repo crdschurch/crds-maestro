@@ -45,8 +45,11 @@
       }
     }
   }
-}
 
+  .list-header {
+    line-height: $headings-line-height;
+  }
+}
 
 
 
@@ -114,5 +117,9 @@
 
   [data-streamspot-player] {
     width: 100%;
+  }
+
+  .list-header {
+    line-height: $headings-line-height;
   }
 }
