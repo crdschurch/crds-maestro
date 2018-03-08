@@ -7,7 +7,7 @@
         <div class="col-md-3 push-bottom">
             <div class="publication_share push-bottom">
                 <h5 class="control-label">Share</h5>
-                <div class="addthis_inline_share_toolbox"></div>
+                <div class="addthis_sharing_toolbox"></div>
             </div>
             <div class="publication_tags">
                 <h5 class="control-label">Tags</h5>
