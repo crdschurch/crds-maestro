@@ -26,9 +26,32 @@
 }
 
 .container-fluid.sticky-top {
+  .countdown-component {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+  }
   @media screen and (max-width: $screen-sm + 100) {
     .btn-live-schedule-trigger {
       display: none;
+    }
+    .countdown {
+      flex-direction: row;
+      align-items: center;
+      padding: 0.5em 0;
+
+      .countdown-timer {
+        padding: 0;
+        li {
+          font-size: 100%;
+        }
+      }
+      .countdown-component {
+        flex-direction: column;
+        > span {
+          font-size: 90%;
+        }
+      }
     }
   }
 }
