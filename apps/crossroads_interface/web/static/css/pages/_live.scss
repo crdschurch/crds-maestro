@@ -25,6 +25,14 @@
   }
 }
 
+.container-fluid.sticky-top {
+  @media screen and (max-width: $screen-sm + 100) {
+    .btn-live-schedule-trigger {
+      display: none;
+    }
+  }
+}
+
 .page--live & {
   .card-deck {
     .card-img-top {
