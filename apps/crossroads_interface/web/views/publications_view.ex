@@ -9,9 +9,9 @@ defmodule CrossroadsInterface.PublicationsView do
     get_in(content, ["heroImg", "caption"])
   end
 
-  def convert_date_string(date) do
-    # {:ok, parsed_date} = Timex.parse(date, "{ISO:Extended:Z}", :strftime)
-    {:ok, formatted_date} = Timex.Format.DateTime.Formatters.Strftime.format(date, "%b %d, %Y")
+  def convert_date_string(date_string) do
+    {:ok, parsed_date} = Timex.parse(date_string, "{ISO:Extended}")
+    {:ok, formatted_date} = Timex.format(parsed_date, "%b %d, %Y", :strftime)
     formatted_date
   end
 
