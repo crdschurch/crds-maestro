@@ -25,7 +25,7 @@ defmodule CrossroadsContent.PublicationsClient do
 
   @doc false
   def handle_call({:articles}, _from, state) do
-    path = "/content/articles"
+    path = "/articles"
     make_call(path, state)
   end
 
@@ -36,7 +36,7 @@ defmodule CrossroadsContent.PublicationsClient do
 
   @doc false
   def handle_call({:articles, id, source}, _from, state) do
-    path = "/content/articles/#{id}/#{source}"
+    path = "/articles/#{id}/#{source}"
     make_call(path, state)
   end
 
