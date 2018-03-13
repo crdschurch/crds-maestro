@@ -10,10 +10,12 @@
                 <div class="addthis_sharing_toolbox"></div>
             </div>
             <div class="publication_tags">
-                <h5 class="control-label">Tags</h5>
-                <span class="label label-default">Men</span>
-                <span class="label label-default">Culture</span>
-                <span class="label label-default">Sexual Assault</span>
+                <%= if assigns[:article]["tags"] !== [] do %>
+                    <h5 class="control-label">Tags</h5>
+                    <%= for tag <- assigns[:article]["tags"] do %>
+                        <span class="label label-default"><%= tag %></span>
+                    <% end %>
+                <% end %>
             </div>
         </div>
         <div class="col-md-6" id="scrollDistance">
