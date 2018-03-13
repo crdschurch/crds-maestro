@@ -85,17 +85,6 @@
     }
   }
 
-  .embed-width {
-    @media screen and (min-width: $screen-md) {
-      min-width: 360px !important;
-    }
-
-    .btn-group-row .btn-option.btn-flex.btn-link {
-      padding-left: 0 !important;
-      padding-right: 0 !important;
-    }
-  }
-
   .well {
     background-color: $cr-gray-darker;
     border: none;
