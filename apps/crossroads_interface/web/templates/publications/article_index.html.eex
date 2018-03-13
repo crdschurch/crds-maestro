@@ -11,7 +11,7 @@
         <div class="card-bgImage" style="background-image: url(<%= main["image"] %>);"></div>
         <div class="card-block">
           <h4 class="card-title font-family-condensed-extra text-uppercase"><%= main["title"] %></h4>
-          <p class="card-text soft-quarter-top flush-bottom"><a class="card-author"><%= main["author"] %></a> | <span class="card-date"><%= convert_date_string(Timex.now) %></span></p>
+          <p class="card-text soft-quarter-top flush-bottom"><a class="card-author"><%= main["author"] %></a> | <span class="card-date"><%= convert_date_string(main["publishdate"]) %></span></p>
         </div>
       </a>
     </div>
@@ -23,7 +23,7 @@
           <div class="card-bgImage" style="background-image: url(<%= article["image"] %>);"></div>
           <div class="card-block">
             <h4 class="card-title font-family-condensed-extra text-uppercase"><%= article["title"] %></h4>
-            <p class="card-text"><a class="card-author"><%= article["author"] %></a> | <span class="card-date"><%= convert_date_string(Timex.now) %></span></p>
+            <p class="card-text"><a class="card-author"><%= article["author"] %></a> | <span class="card-date"><%= convert_date_string(article["publishdate"]) %></span></p>
           </div>
         </a>
       </div>

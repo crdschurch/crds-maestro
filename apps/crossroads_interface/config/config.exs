@@ -22,6 +22,7 @@ end
 
 config :crossroads_content,
   cms_server_endpoint: System.get_env("CRDS_CMS_SERVER_ENDPOINT"),
+  publications_server_endpoint: System.get_env("CRDS_PUBLICATIONS_ENDPOINT"),  
   cms_cache_ttl: 10 * 60 * 1000,
   cms_timeout: 10 * 60 * 1000,
   cms_use_cache: false
