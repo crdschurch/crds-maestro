@@ -13,7 +13,7 @@
                 <%= if assigns[:article]["tags"] !== [] do %>
                     <h5 class="control-label">Tags</h5>
                     <%= for tag <- assigns[:article]["tags"] do %>
-                        <span class="label label-default"><%= tag %></span>
+                        <span class="label label-tag"><%= tag %></span>
                     <% end %>
                 <% end %>
             </div>
