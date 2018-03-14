@@ -4,15 +4,17 @@ config :crossroads_content,
   cms_server_endpoint: System.get_env("CRDS_CMS_SERVER_ENDPOINT") || "https://contentint.crossroads.net/",
   publications_server_endpoint: System.get_env("CRDS_PUBLICATIONS_ENDPOINT") || "https://gatewayint.crossroads.net/content/api"
 
-config :crossroads_interface,	
+config :crossroads_interface,
   gateway_server_endpoint: System.get_env("CRDS_GATEWAY_SERVER_ENDPOINT") || "https://gatewayint.crossroads.net/gateway/",
   cms_client_endpoint: System.get_env("CRDS_CMS_CLIENT_ENDPOINT") || "https://contentint.crossroads.net/",
   cookie_prefix: System.get_env("CRDS_ENV") || "",
   cookie_domain: "",
   app_client_endpoint: "/",
   streamspot_id: "crossr30e3",
-  streamspot_key: "a0cb38cb-8146-47c2-b11f-6d93f4647389"
-  
+  streamspot_key: "a0cb38cb-8146-47c2-b11f-6d93f4647389",
+  google_api_key: "AIzaSyArKsBK97N0Wi-69x10OL7Sx57Fwlmu6Cs",
+  rollcall_form_id: "1rupjr7gvqUU203fwjmeUlIiVwCA8BdkD-mP6M6s3wxQ"
+
 config :mpx,
   mp_base_url: System.get_env("CRDS_MP_BASE_URL") || "https://adminint.crossroads.net"
 
