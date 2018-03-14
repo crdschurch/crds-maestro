@@ -9,7 +9,7 @@ if "#{System.get_env("MAESTRO_SSL")}" == "true" do
       certfile: "/certificates/tls.crt"]
 else
   config :crossroads_interface, CrossroadsInterface.Endpoint,
-    http: [port: 4000, otp_app: :crossroads_interface]
+    http: [port: System.get_env("MAESTRO_PORT"), otp_app: :crossroads_interface]
 end
 
 config :crossroads_interface, CrossroadsInterface.Endpoint,
