@@ -57,6 +57,19 @@
   }
 }
 
+.publication_tag {
+  display: inline-block;
+  padding: .5rem .875rem;
+  margin-bottom: .5rem;
+  font-size: .75rem;
+  font-weight: 400;
+  line-height: 1;
+  color: $cr-gray;
+  background-color: $cr-gray-lighter;
+  text-transform: capitalize;
+  border-radius: 2px;
+}
+
 .card--media {
   display: flex;
   align-items: center;
