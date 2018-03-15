@@ -1,0 +1,29 @@
+version: '3'
+services:
+  maestro:
+    image: crdschurch/crds-maestro:${DOCKER_TAG:-development}
+    build:
+      context: ../../
+      dockerfile: deployment/docker/Dockerfile-prod
+      args:
+        - CRDS_APP_CLIENT_ENDPOINT
+        - CRDS_CMS_CLIENT_ENDPOINT
+        - CRDS_CMS_SERVER_ENDPOINT
+        - CRDS_COOKIE_DOMAIN
+        - CRDS_ENV
+        - CRDS_GATEWAY_CLIENT_ENDPOINT
+        - CRDS_GATEWAY_SERVER_ENDPOINT
+        - CRDS_MP_BASE_URL
+        - CRDS_STREAMSPOT_API_KEY
+        - CRDS_STREAMSPOT_SSID
+        - MAESTRO_HOSTNAME
+        - MAESTRO_NAME_EXTENSION
+        - MAESTRO_SSL=true
+        - MIX_ENV=prod
+        - ROBOTS_TXT_FILENAME
+    container_name: crds-maestro
+    volumes:
+     - ../../certificates:/certificates
+    ports:
+     - "4000:80"
+     - "44300:443"
