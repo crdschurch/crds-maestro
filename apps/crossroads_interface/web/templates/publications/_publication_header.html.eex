@@ -1,12 +1,13 @@
 <div class="publication_header push-top">
     <div class="container">
         <div class="col-md-6 col-md-offset-3">
-            <h5 class="publication_meta metadata flush"><%= assigns[:content]["topic"] %> -
-                <span class="publication_duration"><%= assigns[:content]["duration"] %></span>
-            </h5>
-            <h2 class="publication_title section-header flush"><%= assigns[:content]["title"] %></h2>
+            <!--
+            <h5 class="publication_meta metadata flush"><%= assigns[:article]["topic"] %> -
+                <span class="publication_duration"><%= assigns[:article]["duration"] %></span>
+            </h5> -->
+            <h2 class="publication_title section-header flush-top push-half-bottom"><%= assigns[:article]["title"] %></h2>
             <div>
-                <h4 class="publication_series inline"><%= assigns[:content]["author"] %></h4> | <span class="article_date"><%= assigns[:content]["date"] %></span>
+                <h4 class="publication_series inline"><%= assigns[:article]["author"] %></h4> | <span class="article_date"><%= convert_date_string(assigns[:article]["publishdate"]) %></span>
             </div>
         </div>
     </div>

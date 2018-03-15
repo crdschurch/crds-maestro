@@ -15,13 +15,14 @@ defmodule ConfigHelper do
   defp get_environment do
     case "#{System.get_env("CRDS_ENV")}" do
       "" -> ""
-      env -> "-" <> env 
+      env -> "-" <> env
     end
   end
 end
 
 config :crossroads_content,
   cms_server_endpoint: System.get_env("CRDS_CMS_SERVER_ENDPOINT"),
+  publications_server_endpoint: System.get_env("CRDS_PUBLICATIONS_ENDPOINT") || "https://gatewayint.crossroads.net/content/api",
   cms_cache_ttl: 10 * 60 * 1000,
   cms_timeout: 10 * 60 * 1000,
   cms_use_cache: false
@@ -34,7 +35,9 @@ config :crossroads_interface,
   gateway_server_endpoint: System.get_env("CRDS_GATEWAY_SERVER_ENDPOINT"),
   app_client_endpoint: System.get_env("CRDS_APP_CLIENT_ENDPOINT"),
   streamspot_id: System.get_env("CRDS_STREAMSPOT_SSID"),
-  streamspot_key: System.get_env("CRDS_STREAMSPOT_API_KEY")
+  streamspot_key: System.get_env("CRDS_STREAMSPOT_API_KEY"),
+  google_api_key: System.get_env("CRDS_GOOGLE_API_KEY"),
+  rollcall_form_id: System.get_env("CRDS_ROLLCALL_FORM_ID")
 
 config :ssl, protocol_version: :"tlsv1.2"
 

@@ -15,9 +15,9 @@
                         <p class="card-text"><a><%= more["author"] %></a> - <%= more["date"] %></p>
                     </div>
                 </div>
-            <%= end %>
+            <% end %>
             </div>
         </div>
     </div>
 </div>
-<%= end %>
+<% end %>
