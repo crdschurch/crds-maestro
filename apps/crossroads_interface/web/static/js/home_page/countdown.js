@@ -31,11 +31,6 @@ CRDS.Countdown = class Countdown {
     this.MS_PER_MINUTE = 60000; // milliseconds
     this.TIMEZONE_OFFSET = ((new Date()).dst()) ? '-0400' : '-0500';
 
-    // Streamspot url
-    this.streamspotUrl = 'https://api.streamspot.com';
-    this.streamspotId = window.env.streamspotId;
-    this.streamspotKey = window.env.streamspotKey;
-
     if ($('.crds-countdown').length) {
       this.getStreamspotStatus();
     }
@@ -124,7 +119,7 @@ CRDS.Countdown = class Countdown {
 
   getStreamspotStatus() {
     Countdown.setLoadingStatus(true);
-    this.getEvents()
+    CRDS.Countdown.getEvents()
       .done((events) => {
         this.nextEvent = events.data.next;
         this.currentEvent = events.data.current;
@@ -140,9 +135,12 @@ CRDS.Countdown = class Countdown {
       });
   }
 
-  getEvents() {
-    const streamspotKey = this.streamspotKey;
-    const eventUrl = `${this.streamspotUrl}/broadcaster/${this.streamspotId}/broadcasts/upcomingPlusCurrent`;
+  static getEvents() {
+    const streamspotUrl = 'https://api.streamspot.com';
+    const streamspotId = window.env.streamspotId;
+    const streamspotKey = window.env.streamspotKey;
+
+    const eventUrl = `${streamspotUrl}/broadcaster/${streamspotId}/broadcasts/upcomingPlusCurrent`;
     return $.ajax({
       url: eventUrl,
       dataType: 'json',
@@ -151,6 +149,16 @@ CRDS.Countdown = class Countdown {
         request.setRequestHeader('X-API-Key', streamspotKey);
       }
     });
+  }
+
+  static isStreamLive() {
+    return new Promise((resolve, reject) => {
+      CRDS.Countdown.getEvents().done((events) => {
+        resolve(events.data.current != null);
+      }).fail((xhr, ajaxOptions, thrownError) => {
+        reject(xhr, ajaxOptions, thrownError);
+      });
+    })
   }
 
   goLive() {
