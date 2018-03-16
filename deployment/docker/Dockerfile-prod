@@ -63,5 +63,8 @@ RUN apt-get update && apt-get install -y libssl-dev
 # Copy built application over from build stage
 COPY --from=build /maestro /maestro
 
+# Set UTF-8 encoding
+ENV LANG=C.UTF-8
+
 # Start crossroads interface
 ENTRYPOINT  echo "Maestro for production started." && /maestro/_build/prod/rel/crossroads_interface/bin/crossroads_interface foreground
