@@ -49,6 +49,12 @@ RUN cd apps/crossroads_interface \
   && npm install \
   && ./node_modules/brunch/bin/brunch build --production
 
+# Run Maestro Unit Tests
+RUN mix test
+
+# Run Maestro JavaScript Unit Tests 
+RUN cd apps/crossroads_interface && npm run test
+
 # compile, digest, release Maestro
 RUN cd /maestro \
   && touch /maestro/apps/crossroads_interface/mix.exs \
