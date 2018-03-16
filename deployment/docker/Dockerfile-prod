@@ -58,6 +58,9 @@ RUN cd /maestro \
 # Stage 1, based on alpine
 FROM centos:latest
 
+#RUN apt-get update && apt-get install -y openssl libssl-dev
+RUN yum update -y && yum install -y openssl-devel
+
 # Copy built application over from build stage
 COPY --from=build /maestro /maestro
 
