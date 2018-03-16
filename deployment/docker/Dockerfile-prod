@@ -9,7 +9,11 @@ RUN mix archive.install --force https://github.com/phoenixframework/archives/raw
 
 # Install NodeJS 6.x, NPM, and bower
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
-RUN apt-get install -y -q nodejs
+RUN apt-get install -y -q nodejs inotify-tools debconf
+
+# Set Time Zone
+RUN echo "America/New_York" > /etc/timezone
+RUN dpkg-reconfigure -f noninteractive tzdata
 
 # build-time environment variables
 ARG CRDS_APP_CLIENT_ENDPOINT
@@ -25,8 +29,10 @@ ARG CRDS_STREAMSPOT_SSID
 ARG MAESTRO_HOSTNAME
 ARG MAESTRO_NAME_EXTENSION
 ARG MAESTRO_SSL
-ARG MIX_ENV
+ARG MIX_ENV=prod
 ARG ROBOTS_TXT_FILENAME
+
+ENV MIX_ENV=prod
 
 # Copy Maestro code
 COPY ./ /maestro
@@ -50,7 +56,7 @@ RUN cd apps/crossroads_interface \
   && ./node_modules/brunch/bin/brunch build --production
 
 # Run Maestro Unit Tests
-RUN mix test
+RUN cd apps/crossroads_interface && MIX_ENV=test mix deps.get && MIX_ENV=test mix test
 
 # Run Maestro JavaScript Unit Tests 
 RUN cd apps/crossroads_interface && npm run test
@@ -60,7 +66,7 @@ RUN cd /maestro \
   && touch /maestro/apps/crossroads_interface/mix.exs \
   && /usr/local/bin/mix compile \
   && /usr/local/bin/mix phoenix.digest \
-  && /usr/local/bin/mix release --env=${MIX_ENV}
+  && /usr/local/bin/mix release --env=prod
 
 # Stage 1, based on alpine
 FROM debian:jessie
