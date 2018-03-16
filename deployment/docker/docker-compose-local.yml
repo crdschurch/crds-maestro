@@ -3,13 +3,13 @@ services:
   maestro:
     build:
       context: ../../
-      dockerfile: ./deployment/docker/Dockerfile-dev
+      dockerfile: ./deployment/docker/Dockerfile-local
     image: crdschurch/crds-maestro:local
     container_name: crds-maestro
     volumes:
-     - ../../maestro:/maestro
+     - ../../:/maestro
      - ../../microclients:/maestro/apps/crossroads_interface/priv/static
     ports:
      - "4000:4000"
     env_file:
-      - docker-dev.env
+      - dev.env

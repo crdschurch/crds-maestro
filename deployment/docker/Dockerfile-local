@@ -11,14 +11,4 @@ RUN mix archive.install --force https://github.com/phoenixframework/archives/raw
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
 RUN apt-get install -y -q nodejs dos2unix
 
-# Set working directory
-WORKDIR /maestro 
-
-# copy entrypoint and make it usable
-RUN chmod u+x /maestro/entrypoint.sh
-RUN dos2unix /maestro/entrypoint.sh
-
-# clean up
-RUN apt-get -y --purge remove dos2unix && apt-get clean
-
-ENTRYPOINT ["/maestro/entrypoint-local.sh"]
+ENTRYPOINT chmod u+x /maestro/entrypoint-local.sh && dos2unix /maestro/entrypoint-local.sh && /maestro/entrypoint-local.sh

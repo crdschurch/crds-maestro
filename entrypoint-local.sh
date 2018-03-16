@@ -25,6 +25,9 @@ if [ ! -z "$FORCE_NPM_INSTALL" ] || [ ! -d /maestro/apps/crossroads_interface/no
     npm install
 fi
 
+mix local.hex --force
+mix local.rebar --force
+
 echo "Maestro for dev live watching."
 
 cd /maestro
