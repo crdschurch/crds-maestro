@@ -56,13 +56,15 @@ RUN cd /maestro \
   && /usr/local/bin/mix release --env=${MIX_ENV}
 
 # Stage 1, based on alpine
-FROM centos:latest
+FROM debian:jessie
 
-#RUN apt-get update && apt-get install -y openssl libssl-dev
-RUN yum update -y && yum install -y openssl-devel
+RUN apt-get update && apt-get install -y libssl-dev
 
 # Copy built application over from build stage
-COPY --from=build /maestro /maestro
+COPY --from=build /maestro/_build/prod/rel/crossroads_interface/ /maestro
+
+# Set UTF-8 encoding
+ENV LANG=C.UTF-8
 
 # Start crossroads interface
-ENTRYPOINT  echo "Maestro for production started." && /maestro/_build/prod/rel/crossroads_interface/bin/crossroads_interface foreground
+ENTRYPOINT  echo "Maestro for production started." && /maestro/bin/crossroads_interface foreground

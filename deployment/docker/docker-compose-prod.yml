@@ -1,7 +1,7 @@
 version: '3'
 services:
   maestro:
-    image: crdschurch/crds-maestro:${DOCKER_TAG:-multistage}
+    image: crdschurch/crds-maestro:${DOCKER_TAG:-development}
     build:
       context: ../../
       dockerfile: deployment/docker/Dockerfile-prod
