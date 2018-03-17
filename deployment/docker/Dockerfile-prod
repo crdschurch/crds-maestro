@@ -11,11 +11,7 @@ RUN mix archive.install --force https://github.com/phoenixframework/archives/raw
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
 RUN apt-get install -y -q nodejs inotify-tools debconf
 
-# Set Time Zone
-RUN echo "America/New_York" > /etc/timezone
-RUN dpkg-reconfigure -f noninteractive tzdata
-
-# build-time environment variables
+# build-process environment variables
 ARG CRDS_APP_CLIENT_ENDPOINT
 ARG CRDS_CMS_CLIENT_ENDPOINT
 ARG CRDS_CMS_SERVER_ENDPOINT
@@ -31,8 +27,14 @@ ARG MAESTRO_NAME_EXTENSION
 ARG MAESTRO_SSL
 ARG MIX_ENV=prod
 ARG ROBOTS_TXT_FILENAME
+ARG TZ
 
+# environment variables
 ENV MIX_ENV=prod
+
+# Set Time Zone
+RUN echo "${TZ}" > /etc/timezone
+RUN dpkg-reconfigure -f noninteractive tzdata
 
 # Copy Maestro code
 COPY ./ /maestro
