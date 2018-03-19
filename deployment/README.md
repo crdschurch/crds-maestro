@@ -4,7 +4,7 @@ The Maestro deployment is built on Docker and made to run on Kubernetes. Below a
 
 ## Docker
 
-All files that Docker needs to build and run exist in the Docker folder. There are `docker-compose` files for both production hosting and local development. To execute the following commands, make sure you are in the root of _crds-maestro_
+All files that Docker needs to build and run exist in the Docker folder. There are `docker-compose` files for both production hosting and local development. To execute the following commands, make sure you are in the root of _crds-maestro_. NOTE: The `local.env` file controls the environment variables.
 
   1. To build locally:
      1. Execute `docker-compose -f deployment/docker/docker-compose-local.yml` build
