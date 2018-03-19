@@ -3,7 +3,7 @@ services:
   maestro:
     image: crdschurch/crds-maestro-phoenix:${DOCKER_TAG:-development}
     build:
-      context: .
+      context: ../../
       dockerfile: deployment/docker/Dockerfile-prod
       args:
         - CRDS_APP_CLIENT_ENDPOINT
@@ -24,7 +24,7 @@ services:
         - TZ
     container_name: crds-maestro
     volumes:
-     - ./certificates:/certificates
+     - ../../certificates:/certificates
     ports:
      - "4000:80"
      - "44300:443"
