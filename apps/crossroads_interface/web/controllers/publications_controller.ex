@@ -14,7 +14,7 @@ defmodule CrossroadsInterface.PublicationsController do
       {:ok, _response_code, articles} ->
         conn
         |> put_layout("screen_width.html")
-        |> render("publications.html", %{ articles: articles,
+        |> render("article_index.html", %{ articles: articles,
           css_files: [ "/css/app.css", "/js/legacy/legacy.css" ]})
       {:error, _response_code, response_data} ->
         Logger.error("Error getting Publications | Response: Page Not Found")

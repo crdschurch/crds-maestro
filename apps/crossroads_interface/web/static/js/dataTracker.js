@@ -32,10 +32,13 @@ CRDS.DataTracker = class DataTracker {
 
   handleClick(event) {
     const el = event.currentTarget;
-    this.analytics.track('ElementClicked', {
-      Name: el.dataset.trackClick || el.id || 'Unnamed Click Event',
-      Target: el.outerHTML,
-      Type: el.nodeName
+    const name = el.dataset.trackClick || el.id || 'Unnamed Click Event';
+    const target = el.outerHTML;
+    const type = el.nodeName;
+    this.handleTrack ('ElementClicked', {
+      Name: name,
+      Target: target,
+      Type: type
     });
   }
 
@@ -43,10 +46,17 @@ CRDS.DataTracker = class DataTracker {
     event.preventDefault();
     const form = event.currentTarget;
     const searchInput = form.getElementsByTagName('input')[0];
-    this.analytics.track('SearchRequested', {
-      Name: form.dataset.trackSearch || form.id || 'Unnamed Search',
-      Target: form.outerHTML,
-      SearchTerm: searchInput.value
+    const name = form.dataset.trackSearch || form.id || 'Unnamed Search';
+    const target = form.outerHTML;
+    const search = searchInput.value;
+    this.handleTrack ('SearchRequested', {
+      Name: name,
+      Target: target,
+      SearchTerm: search
     });
+  }
+
+  handleTrack(label, properties) {
+    this.analytics.track(label, properties);
   }
 };

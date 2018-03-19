@@ -1,15 +1,79 @@
-.sixteen-nine {
-  margin: 0;
-  overflow: hidden;
-  position: inherit;
-  img {
-    display: block;
-    width: 100%;
-    /*crop to 16/9*/
-    margin:-21.875% 0;
+.jumbotron--tall {
+  @media (min-width: 767px) {
+    padding-bottom: 280px;
   }
 }
 
-.publications_feature .card {
-  transform: translateY(-30%);
+.card--article {
+  .card-bgImage {
+    width: 100%;
+    // keep at 16/9 aspect ratio
+    padding-bottom: 56.25%;
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .card-block {
+    padding: .5rem;
+    margin-right: 2rem;
+    transform: translateY(-20%);
+    background-color: $cr-white;
+
+    .card-author {
+      color: $cr-gray-dark;
+    }
+    
+    .card-date {
+      color: $cr-gray-light;
+    }
+  }
+
+  a {
+    text-decoration: none;
+  }
 }
+
+.card-deck--expanded-layout .card--article {
+  margin-bottom: 0;
+
+  @media (min-width: 570px) {
+    max-width: calc(100%/2);
+  }
+
+  @media (min-width: 767px) {
+    max-width: calc(100%/3);
+  }
+  @media (min-width: 1200px) {
+    max-width: calc(100%/4);
+  }
+}
+
+.card--feature {
+  position: relative;
+  padding-left: .5rem;
+  padding-right: .5rem;
+
+  @media (min-width: 767px) {
+    transform: translateY(-50%);
+    margin-bottom: -25%;
+  }
+
+  .card-bgImage {
+    @media (min-width: 767px) {
+      padding-bottom: 40%;
+    }
+  }
+
+  .card-block {
+    @media (min-width: 767px) {
+      width: fit-content;
+    }
+  }
+
+  .card-title {
+    @media (min-width: 767px) {
+      font-size: 3.4375rem;          
+    }  
+  }
+}
+

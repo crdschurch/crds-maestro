@@ -7,32 +7,15 @@
         <div class="col-md-3 push-bottom">
             <div class="publication_share push-bottom">
                 <h5 class="control-label">Share</h5>
-                <button id="shareFB" class="publication_shareBtn publication_shareBtn--facebook">
-                    <svg class="icon" viewBox="0 0 256 256">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#facebook"></use>
-                    </svg>
-                </button>
-                <button id="shareTW" class="publication_shareBtn publication_shareBtn--twitter">
-                    <svg class="icon" viewBox="0 0 256 256">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#twitter"></use>
-                    </svg>
-                </button>
-                <button id="shareEM" class="publication_shareBtn publication_shareBtn--email">
-                    <svg class="icon" viewBox="0 0 256 256">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#facebook"></use>
-                    </svg>
-                </button>
-                <button id="shareTX" class="publication_shareBtn publication_shareBtn--text">
-                    <svg class="icon" viewBox="0 0 256 256">
-                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/svgs/icons.svg#share"></use>
-                    </svg>
-                </button>
+                <div class="addthis_sharing_toolbox"></div>
             </div>
             <div class="publication_tags">
-                <h5 class="control-label">Tags</h5>
-                <span class="label label-default">Men</span>
-                <span class="label label-default">Culture</span>
-                <span class="label label-default">Sexual Assault</span>
+                <%= if assigns[:article]["tags"] !== [] do %>
+                    <h5 class="control-label">Tags</h5>
+                    <%= for tag <- assigns[:article]["tags"] do %>
+                        <span class="publication_tag"><%= tag %></span>
+                    <% end %>
+                <% end %>
             </div>
         </div>
         <div class="col-md-6" id="scrollDistance">
@@ -59,19 +42,6 @@
                 <% end %>
             </div>
             <% end %>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-md-offset-3">
-                <div class="article_authorBlock">
-                    <img class="article_authorAvatar img-circle" src="https://cdn-images-1.medium.com/fit/c/120/120/1*dSazj8dkkFmBVwF2LA50qw.jpeg"
-                        alt="" title="" />
-                    <p class="inline-block">
-                        <a class="article_author block"><%= assigns[:article]["author"] %></a>
-                        <span class="block">Mom to adventurous & fun crew. Prefers to sit at the kid table. Loves avocado. Loves Jesus more. Believes every kid deserves a home. Fights for the fatherless.</span>
-                    </p>
-                    <a class="btn btn-outline btn-blue inline-block" href="#">Follow</a>
-                </div>
-            </div>
         </div>
     </div>
 </div>

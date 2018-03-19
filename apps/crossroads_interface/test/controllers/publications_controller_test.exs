@@ -7,16 +7,19 @@ defmodule CrossroadsInterface.PublicationsControllerTest do
   describe "Happy path" do
     @articles [
             %{"author" => "Wayne Newton", "body" => "Body 1", "id" => "0001",
-              "image" => "https://cdn.com/jpeg1.jpg", "source" => 1,
-              "tags" => ["tag1", "tag2", "tag3"], "title" => "Title 1"},
+              "image" => "https://cdn.com/jpeg1.jpg", "source" => 1, 
+              "publishdate" => "2018-03-08T00:00:00", "tags" => 
+              ["tag1", "tag2", "tag3"], "title" => "Title 1"},
             %{"author" => "Dwayne Johnson", "body" => "Body 2", "id" => "0002",
               "image" => "https://cdn.com/jpeg2.jpg", "source" => 2,
-              "tags" => ["tag4", "tag5", "tag6"], "title" => "Title 2"}
+              "publishdate" => "2018-03-10T00:00:00", "tags" => 
+              ["tag4", "tag5", "tag6"], "title" => "Title 2"}
     ]
 
     @article %{"author" => "Wayne Newton", "body" => "Body 1", "id" => "0001",
               "image" => "https://cdn.com/jpeg1.jpg", "source" => 1,
-              "tags" => ["tag1", "tag2", "tag3"], "title" => "Title 1"}
+              "tags" => ["tag1", "tag2", "tag3"], "title" => "Title 1",
+              "publishdate" => "2018-03-08T00:00:00"}
 
     test "index_articles/2 responds with all articles", %{conn: conn} do
       with_mocks([ {PublicationsClient, [], [get_articles: fn() -> {:ok, 200, @articles} end]},
@@ -34,11 +37,11 @@ defmodule CrossroadsInterface.PublicationsControllerTest do
           %{"source" => 1, "id" => "0001" , "title" => "Title 1",
             "body" => "Body 1",
             "author" => "Wayne Newton", "image" => "https://cdn.com/jpeg1.jpg",
-            "tags" => ["tag1", "tag2", "tag3"]},
+            "tags" => ["tag1", "tag2", "tag3"], "publishdate" => "2018-03-08T00:00:00"},
           %{"source" => 2, "id" => "0002", "title" => "Title 2",
             "body" => "Body 2",
             "author" => "Dwayne Johnson", "image" => "https://cdn.com/jpeg2.jpg",
-            "tags" => ["tag4", "tag5", "tag6"]}
+            "tags" => ["tag4", "tag5", "tag6"], "publishdate" => "2018-03-10T00:00:00"}
         ]
 
         # Assert expectation
@@ -64,7 +67,7 @@ defmodule CrossroadsInterface.PublicationsControllerTest do
         actual = response.assigns.article
         expected = %{"author" => "Wayne Newton", "body" => "Body 1",
           "id" => "0001", "image" => "https://cdn.com/jpeg1.jpg",
-          "source" => 1, "tags" => ["tag1", "tag2", "tag3"],
+          "source" => 1, "tags" => ["tag1", "tag2", "tag3"], "publishdate" => "2018-03-08T00:00:00",
           "title" => "Title 1"}
 
         assert actual == expected
