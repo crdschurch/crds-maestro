@@ -4,7 +4,7 @@ services:
     build:
       context: ../../
       dockerfile: ./deployment/docker/Dockerfile-local
-    image: crdschurch/crds-maestro:local
+    image: crds-maestro-phoenix:local
     container_name: crds-maestro
     volumes:
      - ../../:/maestro
