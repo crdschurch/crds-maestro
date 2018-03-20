@@ -11,4 +11,8 @@ RUN mix archive.install --force https://github.com/phoenixframework/archives/raw
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
 RUN apt-get install -y -q nodejs dos2unix
 
+# Run hex and rebar installs
+RUN mix local.hex --force \
+  && mix local.rebar --force
+
 ENTRYPOINT chmod u+x /maestro/entrypoint-local.sh && dos2unix /maestro/entrypoint-local.sh && /maestro/entrypoint-local.sh
