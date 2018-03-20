@@ -1,0 +1,87 @@
+# Stage 0 , based on elixir
+FROM elixir:1.4.5 AS build
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# install the Phoenix Mix archive
+ENV PHOENIX_VERSION 1.1.6
+RUN mix archive.install --force https://github.com/phoenixframework/archives/raw/master/phoenix_new-$PHOENIX_VERSION.ez
+
+# Install NodeJS 6.x, NPM, and bower
+RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
+RUN apt-get install -y -q nodejs inotify-tools debconf
+
+# build-process environment variables
+ARG CRDS_APP_CLIENT_ENDPOINT
+ARG CRDS_CMS_CLIENT_ENDPOINT
+ARG CRDS_CMS_SERVER_ENDPOINT
+ARG CRDS_COOKIE_DOMAIN
+ARG CRDS_ENV
+ARG CRDS_GATEWAY_CLIENT_ENDPOINT
+ARG CRDS_GATEWAY_SERVER_ENDPOINT
+ARG CRDS_MP_BASE_URL
+ARG CRDS_STREAMSPOT_API_KEY
+ARG CRDS_STREAMSPOT_SSID
+ARG MAESTRO_HOSTNAME
+ARG MAESTRO_NAME_EXTENSION
+ARG MAESTRO_SSL
+ARG MIX_ENV=prod
+ARG ROBOTS_TXT_FILENAME
+ARG TZ
+
+# environment variables
+ENV MIX_ENV=prod
+
+# Set Time Zone
+RUN echo "${TZ}" > /etc/timezone
+RUN dpkg-reconfigure -f noninteractive tzdata
+
+# Copy Maestro code
+COPY ./ /maestro
+
+# Set working directory
+WORKDIR /maestro 
+
+# Move requested robots file
+RUN mkdir apps/crossroads_interface/priv/static/ -p \
+  && mv apache/${ROBOTS_TXT_FILENAME} apps/crossroads_interface/priv/static/
+
+# Move micro clients
+RUN mv microclients apps/crossroads_interface/priv/static
+
+# Do whacky maestro garbage
+RUN mix local.hex --force && mix local.rebar --force && mix deps.get
+
+# Build Maestro JavaScript
+RUN cd apps/crossroads_interface \
+  && npm install \
+  && ./node_modules/brunch/bin/brunch build --production
+
+# Run Maestro Unit Tests
+RUN cd apps/crossroads_interface && MIX_ENV=test mix deps.get && MIX_ENV=test mix test
+
+# Run Maestro JavaScript Unit Tests 
+RUN cd apps/crossroads_interface && npm run test
+
+# compile, digest, release Maestro
+RUN cd /maestro \
+  && touch /maestro/apps/crossroads_interface/mix.exs \
+  && /usr/local/bin/mix compile \
+  && /usr/local/bin/mix phoenix.digest \
+  && /usr/local/bin/mix release --env=prod
+
+# Stage 1, based on alpine
+FROM debian:jessie
+
+# Install dependencies
+RUN apt-get update && apt-get install -y libssl-dev
+
+# Copy built application over from build stage
+COPY --from=build /maestro/_build/prod/rel/crossroads_interface /maestro
+
+# Set UTF-8 encoding
+ENV LANG=C.UTF-8
+
+# Start crossroads interface
+ENTRYPOINT  echo "Maestro for production started." \
+  && /maestro/bin/crossroads_interface foreground
