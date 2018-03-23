@@ -47,7 +47,7 @@ RUN mkdir apps/crossroads_interface/priv/static/ -p \
   && mv apache/${ROBOTS_TXT_FILENAME} apps/crossroads_interface/priv/static/
 
 # Move micro clients
-RUN cp -r microclients/* apps/crossroads_interface/priv/static
+RUN cp -r microclients/* apps/crossroads_interface/priv/static/js
 
 # Do whacky maestro garbage
 RUN mix local.hex --force && mix local.rebar --force && mix deps.get
