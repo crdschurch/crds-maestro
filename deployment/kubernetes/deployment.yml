@@ -25,7 +25,7 @@ spec:
           secretName: crossroads-ssl
       containers:
       - name: maestro-phoenix
-        image: crdschurch/crds-maestro:$DOCKER_TAG
+        image: crdschurch/crds-maestro-phoenix:$DOCKER_TAG
         imagePullPolicy: Always
         resources:
           limits:
