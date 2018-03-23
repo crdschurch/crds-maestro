@@ -13,6 +13,6 @@ defmodule CrossroadsInterface.NotfoundController do
     |> put_layout("no_sidebar.html")
     |> put_status(404)
     |> render(CrossroadsInterface.ErrorView, "404.html",
-        %{"css_files": [ "/js/app.css", "/js/legacy/legacy.css" ]})
+        %{"css_files": [ "/css/app.css", "/js/legacy/legacy.css" ]})
    end
 end
