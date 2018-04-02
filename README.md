@@ -101,4 +101,4 @@ sudo chmod 755 /var/maestro
 8. Start the service using `sudo service maestro start`
 
 # Docker
-Please see the [crds-docker](https://github.com/crdschurch/crds-docker) repository for running local containers of Maestro
+Please see the `deployment` folder for information and instructions.
