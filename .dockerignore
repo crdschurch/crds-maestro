@@ -1,0 +1,6 @@
+deployment
+deps
+_build
+apps/crossroads_interface/deps
+apps/crossroads_interface/_build
+apps/crossroads_interface/node_modules
