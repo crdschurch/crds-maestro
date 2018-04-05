@@ -1,0 +1,18 @@
+# Elixir 1.4.2.: https://hub.docker.com/_/elixir/
+FROM elixir:1.4.5
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+# install the Phoenix Mix archive
+ENV PHOENIX_VERSION 1.1.6
+RUN mix archive.install --force https://github.com/phoenixframework/archives/raw/master/phoenix_new-$PHOENIX_VERSION.ez
+
+# Install NodeJS 6.x, NPM, and bower
+RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
+RUN apt-get install -y -q nodejs dos2unix
+
+# Run hex and rebar installs
+RUN mix local.hex --force \
+  && mix local.rebar --force
+
+ENTRYPOINT chmod u+x /maestro/entrypoint-local.sh && dos2unix /maestro/entrypoint-local.sh && /maestro/entrypoint-local.sh

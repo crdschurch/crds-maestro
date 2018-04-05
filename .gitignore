@@ -24,3 +24,4 @@ node_modules/
 .deliver/releases/
 .deliver/releases/
 /rel/*/**
+/certificates
