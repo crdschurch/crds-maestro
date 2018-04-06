@@ -17,6 +17,7 @@ defmodule CrossroadsInterface.CmsPageController do
           conn
           |> Authorized.call([])
           |> RedirectCookie.call(conn.assigns[:path])
+          |> put_resp_header("secure-page", "true")
         if conn.assigns.authorized do
           renderPage(conn, page)
         else
@@ -24,6 +25,7 @@ defmodule CrossroadsInterface.CmsPageController do
           |> redirect(to: "/signin")
         end
       true ->
+        conn |> delete_resp_header("secure-page")
         renderPage(conn, page)
     end
   end
