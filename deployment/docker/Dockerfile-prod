@@ -1,5 +1,5 @@
 # Stage 0 , based on elixir
-FROM elixir:1.4.5 AS build
+FROM elixir:1.6.3 AS build
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -27,14 +27,14 @@ ARG MAESTRO_NAME_EXTENSION
 ARG MAESTRO_SSL
 ARG MIX_ENV=prod
 ARG ROBOTS_TXT_FILENAME
-ARG TZ
+ARG TIMEZONE
 
 # environment variables
 ENV MIX_ENV=prod
 
 # Set Time Zone
-RUN echo "${TZ}" > /etc/timezone
-RUN dpkg-reconfigure -f noninteractive tzdata
+RUN unlink /etc/localtime \
+  && ln -s "/usr/share/zoneinfo/${TIMEZONE}" /etc/localtime
 
 # Copy Maestro code
 COPY ./ /maestro
@@ -72,7 +72,7 @@ RUN cd /maestro \
   && /usr/local/bin/mix release --env=prod
 
 # Stage 1, based on alpine
-FROM debian:jessie
+FROM debian:stretch
 
 # Install dependencies
 RUN apt-get update && apt-get install -y libssl-dev

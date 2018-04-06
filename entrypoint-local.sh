@@ -16,6 +16,10 @@ fi
 if [ ! -z "$FORCE_DEPS_GET" ] || [ ! -d /maestro/deps ] || [ ! "$(ls -A /maestro/deps)" ]; then
     echo "Updating Phoenix dependencies"
     cd /maestro
+    rm -rf _build/
+    rm -rf deps/
+    rm -rf apps/crossroads_interface/_build
+    rm -rf apps/crossroads_interface/deps
     mix deps.get
 fi
 
