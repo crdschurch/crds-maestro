@@ -4,11 +4,13 @@ services:
     build:
       context: ../../
       dockerfile: ./deployment/docker/Dockerfile-local
+      args:
+        - TIMEZONE
     image: crds-maestro-phoenix:local
     container_name: crds-maestro
     volumes:
      - ../../:/maestro
-     - ../../microclients:/maestro/apps/crossroads_interface/priv/static
+     - ../../microclients:/maestro/apps/crossroads_interface/priv/static/js
     ports:
      - "4000:4000"
     env_file:

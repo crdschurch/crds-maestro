@@ -1,5 +1,5 @@
-# Elixir 1.4.2.: https://hub.docker.com/_/elixir/
-FROM elixir:1.4.5
+# Elixir: https://hub.docker.com/_/elixir/
+FROM elixir:1.6.3
 
 ENV DEBIAN_FRONTEND=noninteractive
 
@@ -10,6 +10,13 @@ RUN mix archive.install --force https://github.com/phoenixframework/archives/raw
 # Install NodeJS 6.x, NPM, and bower
 RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
 RUN apt-get install -y -q nodejs dos2unix
+
+# Build args
+ARG TIMEZONE
+
+# Set Time Zone
+RUN unlink /etc/localtime \
+  && ln -s "/usr/share/zoneinfo/${TIMEZONE}" /etc/localtime
 
 # Run hex and rebar installs
 RUN mix local.hex --force \

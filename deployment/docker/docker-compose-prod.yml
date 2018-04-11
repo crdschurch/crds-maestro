@@ -21,7 +21,7 @@ services:
         - MAESTRO_SSL=true
         - MIX_ENV=prod
         - ROBOTS_TXT_FILENAME
-        - TZ
+        - TIMEZONE
     container_name: crds-maestro
     volumes:
      - ../../certificates:/certificates

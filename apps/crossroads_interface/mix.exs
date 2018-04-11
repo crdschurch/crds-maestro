@@ -42,7 +42,7 @@ defmodule CrossroadsInterface.Mixfile do
      {:crossroads_content, in_umbrella: true, runtime: false},
      {:mix_test_watch, "~> 0.2", only: :dev},
      {:mock, "~> 0.3.1", only: :test},
-     {:timex, "~> 3.0"}]
+     {:timex, "~> 3.2"}]
   end
 
   defp revision(default_version) do
