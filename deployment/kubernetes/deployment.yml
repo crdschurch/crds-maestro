@@ -35,6 +35,8 @@ spec:
             memory: "256Mi"
             cpu: "100m"
         env:
+        - name: CRDS_ENV
+          value: "$CRDS_ENV"
         - name: MIX_ENV
           value: "prod"
         - name: MAESTRO_SSL
