@@ -16,6 +16,8 @@ services:
         - CRDS_MP_BASE_URL
         - CRDS_STREAMSPOT_API_KEY
         - CRDS_STREAMSPOT_SSID
+        - CRDS_GOOGLE_API_KEY
+        - CRDS_ROLLCALL_FORM_ID
         - MAESTRO_HOSTNAME
         - MAESTRO_NAME_EXTENSION
         - MAESTRO_SSL=true
