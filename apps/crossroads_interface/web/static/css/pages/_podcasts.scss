@@ -1,0 +1,30 @@
+/* Temporary styles for Adam's podcast pages. Eventually, this will be redesigned by Ample */
+
+@media only screen and (min-width:992px) {
+  .podcast-bg  {
+    position: relative;
+    height: 535px;
+
+    h1  {
+      font-size:85px;
+    }
+  }
+}
+
+@media only (min-width:768px) and (max-width:991px) {
+  .podcast-bg  {
+    position: relative;
+    height: 515px;
+
+    h1  {
+      font-size:85px;
+    }
+  }
+}
+
+@media only screen and (max-width:767px) {
+  .podcast-bg  {
+    position: relative;
+    height: auto;
+  }
+}
