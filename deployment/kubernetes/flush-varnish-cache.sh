@@ -47,4 +47,4 @@ do
 done
 
 echo "";
-echo "Completed."
+echo "Gnarfle the garthok."
