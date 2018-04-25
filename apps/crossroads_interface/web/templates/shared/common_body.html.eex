@@ -26,16 +26,13 @@
     <script src="//d1tmclqz61gqwd.cloudfront.net/javascripts/crds-jumbotron-video-v0.2.0.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.19/webcomponents-lite.js"></script>
     <script>
-
       document.addEventListener("DOMContentLoaded", function(event) {
-      if (document.querySelector('simple-fred')) {
-        console.log('Simple FRED is present, creating a form element');
-        var script = document.createElement('script');
-        script.src = 'https://embedint.crossroads.net/fred/js/simplefred.min.js';
-        document.head.appendChild(script)
-      }
-    });
-
+        if (document.querySelector('simple-fred')) {
+          var script = document.createElement('script');
+          script.src = '<%= @embed_url %>/fred/js/simplefred.min.js';
+          document.head.insertBefore(script, document.head.childNodes[0]);
+        }
+      });
     </script>
     <script src="//d1tmclqz61gqwd.cloudfront.net/javascripts/crds-livestream-reminder-v0.0.16.js" type="text/javascript"></script>
     <script src="//d1tmclqz61gqwd.cloudfront.net/javascripts/crds-rollcall-v0.1.0.js" type="text/javascript"></script>
