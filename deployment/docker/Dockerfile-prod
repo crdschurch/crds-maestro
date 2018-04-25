@@ -8,8 +8,22 @@ ENV PHOENIX_VERSION 1.1.6
 RUN mix archive.install --force https://github.com/phoenixframework/archives/raw/master/phoenix_new-$PHOENIX_VERSION.ez
 
 # Install NodeJS 6.x, NPM, and bower
-RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
-RUN apt-get install -y -q nodejs inotify-tools debconf
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
+  apt-get install -yq nodejs build-essential inotify-tools debconf
+
+# environment variable MIX_ENV (needed pre npm and mix)
+ARG MIX_ENV=prod
+ENV MIX_ENV=prod
+
+# Install dependencies first so this layer can cache
+COPY ./mix.exs /maestro/
+COPY ./mix.lock /maestro/
+COPY ./apps/crossroads_interface/mix.exs /maestro/apps/crossroads_interface/
+COPY ./apps/crossroads_interface/mix.lock /maestro/apps/crossroads_interface/
+COPY ./apps/crossroads_interface/package.json /maestro/apps/crossroads_interface/
+COPY ./apps/crossroads_interface/package-lock.json /maestro/apps/crossroads_interface/
+RUN cd maestro && mix local.hex --force && mix local.rebar --force && mix deps.get
+RUN cd /maestro/apps/crossroads_interface && npm install && cd /maestro
 
 # build-process environment variables
 ARG CRDS_APP_CLIENT_ENDPOINT
@@ -27,12 +41,8 @@ ARG CRDS_ROLLCALL_FORM_ID
 ARG MAESTRO_HOSTNAME
 ARG MAESTRO_NAME_EXTENSION
 ARG MAESTRO_SSL
-ARG MIX_ENV=prod
 ARG ROBOTS_TXT_FILENAME
 ARG TIMEZONE
-
-# environment variables
-ENV MIX_ENV=prod
 
 # Set Time Zone
 RUN unlink /etc/localtime \
@@ -52,19 +62,17 @@ RUN mkdir apps/crossroads_interface/priv/static/ -p \
 RUN mkdir apps/crossroads_interface/priv/static/js -p \
   && cp -r microclients/* apps/crossroads_interface/priv/static/js/
 
-# Do whacky maestro garbage
-RUN mix local.hex --force && mix local.rebar --force && mix deps.get
-
 # Build Maestro JavaScript
-RUN cd apps/crossroads_interface \
-  && npm install \
-  && ./node_modules/brunch/bin/brunch build --production
+RUN cd apps/crossroads_interface && ./node_modules/brunch/bin/brunch build --production
 
 # Run Maestro Unit Tests
 RUN cd apps/crossroads_interface && MIX_ENV=test mix deps.get && MIX_ENV=test mix test
 
 # Run Maestro JavaScript Unit Tests
 RUN cd apps/crossroads_interface && npm run test
+
+# Make sure
+RUN mix deps.get 
 
 # compile, digest, release Maestro
 RUN cd /maestro \
@@ -73,7 +81,7 @@ RUN cd /maestro \
   && /usr/local/bin/mix phoenix.digest \
   && /usr/local/bin/mix release --env=prod
 
-# Stage 1, based on alpine
+# Stage 1, based on debian stretch
 FROM debian:stretch
 
 # Install dependencies
@@ -84,6 +92,13 @@ COPY --from=build /maestro/_build/prod/rel/crossroads_interface /maestro
 
 # Set UTF-8 encoding
 ENV LANG=C.UTF-8
+
+# send logs to stdout and stderr
+RUN mkdir /var/log/maestro \
+  && touch /var/log/maestro/maestro-access.log \
+  && touch /var/log/maestro/maestro-error.log \
+  && ln -sf /dev/stdout /var/log/maestro/maestro-access.log \
+	&& ln -sf /dev/stderr /var/log/maestro/maestro-error.log
 
 # Start crossroads interface
 ENTRYPOINT  echo "Maestro for production started." \
