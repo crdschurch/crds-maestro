@@ -1,7 +1,6 @@
 defmodule CrossroadsInterface.LegacyController do
   require Logger
   use CrossroadsInterface.Web, :controller
-  alias CrossroadsInterface.NotfoundController
 
   @moduledoc"""
   This controller is called from the fall through route in the router.
@@ -15,14 +14,14 @@ defmodule CrossroadsInterface.LegacyController do
   plug :put_layout, "no_header_or_footer.html"
 
   @doc """
-  When angular can't find a route, it sets a cookie unmatchedLegacyRoute=<route>
-  which in turn renders error view and the 404 template
+  Sending a list of paths to angular legacy in a cookie so it knows which routes to send back to maestro
   """
   def index(conn, params) do
     if conn.assigns[:page] != nil do
       conn |> CrossroadsInterface.CmsPageController.call(:index)
     else
-      conn  
+      conn
+      |> CrossroadsInterface.Plug.Cookie.call("maestro-pages", "group-leader,connect,groups,series,publications/articles,notfound,homepage,explore,atriumevents")
       |> render("app_root.html", %{"js_files": [
           "/js/legacy/ang.js",
           "/js/legacy/core.js",
@@ -35,5 +34,4 @@ defmodule CrossroadsInterface.LegacyController do
         ], "base_href": "/"})
     end
   end
-
 end
