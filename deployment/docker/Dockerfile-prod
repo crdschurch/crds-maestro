@@ -93,13 +93,6 @@ COPY --from=build /maestro/_build/prod/rel/crossroads_interface /maestro
 # Set UTF-8 encoding
 ENV LANG=C.UTF-8
 
-# send logs to stdout and stderr
-RUN mkdir /var/log/maestro \
-  && touch /var/log/maestro/maestro-access.log \
-  && touch /var/log/maestro/maestro-error.log \
-  && ln -sf /dev/stdout /var/log/maestro/maestro-access.log \
-	&& ln -sf /dev/stderr /var/log/maestro/maestro-error.log
-
 # Start crossroads interface
 ENTRYPOINT  echo "Maestro for production started." \
   && /maestro/bin/crossroads_interface foreground

@@ -18,12 +18,12 @@ config :crossroads_interface, CrossroadsInterface.Endpoint,
   server: true
 
 config :logger,
-  backends: [{LoggerFileBackend, :access_log}, {LoggerFileBackend, :error_log}]
+  backends: [:console, {LoggerFileBackend, :access_log}, {LoggerFileBackend, :error_log}]
 
 config :logger, :access_log,
   path: "/var/log/maestro/maestro-access.log",
   format: "$date $time $metadata[$level] $message\n",
-  level: :info
+  level: :debug
 
 config :logger, :error_log,
   path: "/var/log/maestro/maestro-error.log",
