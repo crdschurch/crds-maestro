@@ -19,6 +19,7 @@ defmodule CrossroadsInterface.LegacyController do
   which in turn renders error view and the 404 template
   """
   def index(conn, params) do
+    conn |> CrossroadsInterface.Plug.Cookie.delete("redirectingToMaestro")
     if conn.assigns[:page] != nil do
       conn |> CrossroadsInterface.CmsPageController.call(:index)
     else
