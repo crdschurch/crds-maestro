@@ -10,6 +10,12 @@ defmodule CrossroadsInterface.Plug.Cookie do
       |> put_resp_cookie(name, URI.encode(value), cookie_options)       
   end
 
+  def delete(conn, name) do
+    cookie_options = get_cookie_options()
+    conn
+      |> delete_resp_cookie(name, cookie_options)
+  end
+
   defp get_cookie_options() do
     cookie_domain = Application.get_env(:crossroads_interface, :cookie_domain)
     case String.length(cookie_domain) do
