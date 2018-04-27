@@ -1,6 +1,10 @@
 # Maestro - Crossroads Microclient Implementation in Elixir/Phoenix
 
-## Environment Setup
+# Setup
+
+## Docker - go check out the README under the folder deployment
+
+## Environment Setup (Non Docker)
 
 ### Install the latest stable version of elixir
 Follow the guide located on the [elixir site](http://elixir-lang.org/install.html).
