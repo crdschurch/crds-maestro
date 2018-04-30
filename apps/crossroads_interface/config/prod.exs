@@ -18,12 +18,17 @@ config :crossroads_interface, CrossroadsInterface.Endpoint,
   server: true
 
 config :logger,
-  backends: [{LoggerFileBackend, :debug_log}]
+  backends: [:console, {LoggerFileBackend, :access_log}, {LoggerFileBackend, :error_log}]
 
-config :logger, :debug_log,
-  path: "/var/log/maestro/maestro#{ConfigHelper.get_suffix()}.log",
+config :logger, :access_log,
+  path: "/var/log/maestro/maestro-access.log",
   format: "$date $time $metadata[$level] $message\n",
   level: :debug
+
+config :logger, :error_log,
+  path: "/var/log/maestro/maestro-error.log",
+  format: "$date $time $metadata[$level] $message\n",
+  level: :error
 
 config :phoenix, :serve_endpoints, true
 

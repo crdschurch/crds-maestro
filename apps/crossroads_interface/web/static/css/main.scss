@@ -37,6 +37,7 @@
   @import 'node_modules/crds-styles/assets/stylesheets/vendors/datepicker';
   @import 'node_modules/crds-styles/assets/stylesheets/vendors/timepicker';
   @import 'node_modules/crds-styles/assets/stylesheets/vendors/toast';
+  @import './modules/forms';
   @import './modules/legacy_footer';
   @import './modules/tab_nav';
   @import './pages/go_trips';
@@ -44,6 +45,7 @@
   @import './pages/homepage';
   @import './pages/locations';
   @import './pages/media';
+  @import './pages/podcasts';
   @import './pages/publication';
   @import './pages/publications';
   @import './pages/live';

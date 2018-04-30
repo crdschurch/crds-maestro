@@ -4,8 +4,8 @@
 <meta name="description" content="{{meta.description | htmlToPlainText | truncate : 155}}">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="//crossroads-media.s3.amazonaws.com/images/favicon/mstile-144x144.png">
-<meta name="msapplication-config" content="//crossroads-media.s3.amazonaws.com/images/favicon/browserconfig.xml">
+<meta name="msapplication-TileImage" content="//dz6ito7tas43n.cloudfront.net/images/favicon/mstile-144x144.png">
+<meta name="msapplication-config" content="//dz6ito7tas43n.cloudfront.net/images/favicon/browserconfig.xml">
 <meta name="theme-color" content="#ffffff">
 <meta name="prerender-status-code" content="{{meta.statusCode}}">
 

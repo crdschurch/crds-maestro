@@ -15,4 +15,12 @@ defmodule CrossroadsInterface.CookiePlugTest do
     assert conn.resp_cookies == %{"cookie" => %{http_only: false, value: "value", domain: ".crossroads.net"}}
   end
 
+  test "it should delete a cookie", %{conn: conn} do
+    Application.put_env(:crossroads_interface, :cookie_domain, ".crossroads.net")
+
+    conn = conn |> CrossroadsInterface.Plug.Cookie.call("cookie","value")
+    conn = conn |> CrossroadsInterface.Plug.Cookie.delete("cookie")
+    assert conn.resp_cookies != %{"cookie" => %{http_only: false, value: "value"}}
+  end
+
 end
