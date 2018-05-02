@@ -70,21 +70,6 @@ defmodule CrossroadsInterface.LegacyControllerTest do
     end
   end
 
-  test "GET /non-existent is 404 when cookie unmatchedLegacyRoute=/non-existent/", %{conn: _conn} do
-    with_mocks([ {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
-                 {CmsClient, [], [get_system_page: fn("non-existent") -> {:ok, 200, fake_system_page("")} end]},
-                 {Pages,     [], [get_page: fn(_path, _stage) -> :error end]},
-                 {CmsClient, [], [get_page: fn("/page-not-found/", false) -> {:ok, 200, fake_not_found_page()} end]},
-                 {CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
-      conn = build_conn()
-      |> put_req_header("content-type", "text/html")
-      |> put_req_cookie("unmatchedLegacyRoute", "/non-existent/")
-      |> fetch_cookies()
-      |> get("/non-existent")
-      assert html_response(conn, 404)
-    end
-  end
-
   test "GET /signin", %{conn: conn} do
     with_mocks([ {CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, fake_content_blocks()} end]},
                   {CmsClient, [], [get_system_page: fn("signin") -> {:ok, 200, fake_system_page("signin")} end]},

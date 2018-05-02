@@ -13,10 +13,11 @@ All files that Docker needs to build and run exist in the Docker folder. There a
 
   3. To build for production _(int, demo, prod)_:
      1. Execute `docker-compose -f deployment/docker/docker-compose-prod.yml` build
+     1. To run execute `docker-compose -f deployment/docker/docker-compose-prod.yml` build
 
 ## Kubernetes
 
-This document assumes you have a working Kubernetes cluster with Ingress routing and SSL certificates already configured. If not, please visit _crds-infrastructure_ for more information.
+This document assumes you have a working Kubernetes cluster with Ingress routing and SSL certificates already configured. If not, please visit the kubernetes document on google drive for more information.
 
 *All commands below assume you've processed the YML scripts and replaced appropriate environment variables.*
 

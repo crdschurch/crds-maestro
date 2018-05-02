@@ -19,6 +19,7 @@ defmodule CrossroadsInterface.Router do
     plug :accepts, ["json"]
   end
 
+  # NOTE: If you add a route here make sure you add it in the legacy_controller file in the maestro-pages cookie
   scope "/", CrossroadsInterface do
     pipe_through :browser
     get "/group-leader/*path", CrdsGroupLeaderController, :index
