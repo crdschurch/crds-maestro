@@ -8,6 +8,9 @@ echo "";
 
 DEPLOYMENT_TO_FLUSH=$1
 DEPLOYMENT_TO_CHECK=$2
+SLEEP_TIME=${3:-3s}
+ITERATIONS_BEFORE_RECHECK=${4:-3}
+ITERATIONS_BEFORE_BAIL=${5:-15}
 FAILED=0
 
 if [[ -z ${DEPLOYMENT_TO_FLUSH+x} || ${DEPLOYMENT_TO_FLUSH} = "" ]]; then
@@ -22,13 +25,25 @@ fi
 
 if [[ -n ${DEPLOYMENT_TO_CHECK} && ${DEPLOYMENT_TO_CHECK} != "" ]]; then
     NUM_REPLICAS_EXPECTED="$(kubectl get deployments --selector=app=${DEPLOYMENT_TO_CHECK} -ao jsonpath='{.items[0].spec.replicas}')"
-    NUM_REPLICAS_CURRENT="0"
-    echo "Checking replica count"
-    echo "Current Replicas: ${NUM_REPLICAS_CURRENT}/${NUM_REPLICAS_EXPECTED}"
+    NUM_REPLICAS_CURRENT="$(kubectl get deployments --selector=app=${DEPLOYMENT_TO_CHECK} -ao jsonpath='{.items[0].status.replicas}')"
+
+    CHECK_COUNTER=0
     while [ ${NUM_REPLICAS_EXPECTED} != ${NUM_REPLICAS_CURRENT} ]; do
+        sleep ${SLEEP_TIME}
+
+        if [[ ${CHECK_COUNTER} -ne 0 && $((${CHECK_COUNTER} % ${ITERATIONS_BEFORE_RECHECK})) == 0 ]]; then
+            echo "Refreshing replicas expected"
+            NUM_REPLICAS_EXPECTED="$(kubectl get deployments --selector=app=${DEPLOYMENT_TO_CHECK} -ao jsonpath='{.items[0].spec.replicas}')"
+        fi
+
         echo "Current Replicas: ${NUM_REPLICAS_CURRENT}/${NUM_REPLICAS_EXPECTED}"
         NUM_REPLICAS_CURRENT="$(kubectl get deployments --selector=app=${DEPLOYMENT_TO_CHECK} -ao jsonpath='{.items[0].status.replicas}')"
-        sleep 3s
+        CHECK_COUNTER=${CHECK_COUNTER}+1
+
+        if [[ ${CHECK_COUNTER} -gt ${ITERATIONS_BEFORE_BAIL} ]]; then
+            echo "Max iterations reached... bailing on confirming deploy has completed"
+            break
+        fi
     done
 fi
 
