@@ -33,7 +33,7 @@ defmodule CrossroadsInterface.Mixfile do
      {:phoenix_html_sanitizer, "~> 1.0.0"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:poison, "~> 3.1", override: true},
-     {:mpx, "~> 0.1.9"},
+     {:mpx, "~> 0.2.0"},
      {:credo, "~> 0.8", only: [:dev, :test], runtime: false},
      {:dialyxir, "~> 0.5", only: [:dev], runtime: false},
      {:logger_file_backend, "0.0.9"},
