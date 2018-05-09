@@ -13,6 +13,7 @@ defmodule CrossroadsInterface.Router do
     plug CrossroadsInterface.Plug.BodyClass
     plug CrossroadsInterface.Plug.CrdsStyles
     plug CrossroadsInterface.Plug.EmbedUrl
+    plug CrossroadsInterface.Plug.FredApiUrl
   end
 
   pipeline :api do
