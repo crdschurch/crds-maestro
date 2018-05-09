@@ -3,17 +3,18 @@ defmodule CrossroadsInterface.Plug.FredApiUrl do
   Determine the environment and build the fred API url.
   """
   import Plug.Conn
+  require IEx
 
-  def init(_default), do: "https://api-int.crossroads.net"
+  def init(default), do: default
 
-  def call(conn, default) do
-    :crossroads_interface
-    |> Application.get_env(:cookie_prefix, "")
-    |> case do
-      "int" -> assign(conn, :fred_api_url, default)
-      "demo" -> assign(conn, :fred_api_url, "https://api-demo.crossroads.net")
-      "" -> assign(conn, :fred_api_url, "https://api.crossroads.net")
-      _ -> assign(conn, :fred_api_url, default)
+  def call(conn, _default) do
+    environment = Application.get_env(:crossroads_interface, :cookie_prefix)
+    url = case environment do
+      "int" -> "https://api-int.crossroads.net"
+      "demo" -> "https://api-demo.crossroads.net"
+      "" -> "https://api.crossroads.net"
+      _ -> "https://api-int.crossroads.net"
     end
+    assign(conn, :fred_api_url, url)
   end
 end
