@@ -29,3 +29,6 @@ This document assumes you have a working Kubernetes cluster with Ingress routing
 ## Varnish
 
 Varnish for Maestro is set-up in our production environments. Please see the appropriate repository for configuration (UPDATE THIS LATER WITH REPOSITORY LINK)
+
+## Architecture of container
+The container is currently running nginx as a daemon and maestro as the foreground process. We did this because we wanted to be able to proxy pass through nginx to maestro so that nginx could handle any prerenderIO requests. At the time we believed this was a better solution than using a seprate nginx container.
