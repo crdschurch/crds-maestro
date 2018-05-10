@@ -1,18 +1,7 @@
 use Mix.Config
 
-if "#{System.get_env("MAESTRO_SSL")}" == "true" do
-  config :crossroads_interface, CrossroadsInterface.Endpoint,
-    http: [port: 80, otp_app: :crossroads_interface],
-    https: [port: 443,
-      otp_app: :crossroads_interface,
-      keyfile: "/certificates/tls.key",
-      certfile: "/certificates/tls.crt"]
-else
-  config :crossroads_interface, CrossroadsInterface.Endpoint,
-    http: [port: System.get_env("MAESTRO_PORT"), otp_app: :crossroads_interface]
-end
-
 config :crossroads_interface, CrossroadsInterface.Endpoint,
+  http: [port: System.get_env("MAESTRO_PORT"), otp_app: :crossroads_interface],
   url: [host: System.get_env("MAESTRO_HOSTNAME")],
   cache_static_manifest: "priv/static/manifest.json",
   server: true
