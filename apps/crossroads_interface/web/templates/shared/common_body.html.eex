@@ -18,7 +18,7 @@
       document.addEventListener("DOMContentLoaded", function(event) {
         if (document.querySelector('simple-fred')) {
           var script = document.createElement('script');
-          script.src = '<%= @embed_url %>/fred/js/simplefred.min.js';
+          script.src = '<%= @fred_api_url %>/fred/js/simplefred.min.js';
           document.head.insertBefore(script, document.head.childNodes[0]);
         }
       });
