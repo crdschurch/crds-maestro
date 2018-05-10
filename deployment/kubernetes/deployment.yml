@@ -37,8 +37,6 @@ spec:
               value: "prod"
             - name: CRDS_PRERENDER_IO_KEY
               value: "$CRDS_PRERENDER_IO_KEY"
-            - name: MAESTRO_PORT
-              value: "$MAESTRO_PORT"
           ports:
             - containerPort: 80
               name: http

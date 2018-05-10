@@ -1,7 +1,7 @@
 use Mix.Config
 
 config :crossroads_interface, CrossroadsInterface.Endpoint,
-  http: [port: System.get_env("MAESTRO_PORT"), otp_app: :crossroads_interface],
+  http: [port: 8000, otp_app: :crossroads_interface],
   url: [host: System.get_env("MAESTRO_HOSTNAME")],
   cache_static_manifest: "priv/static/manifest.json",
   server: true

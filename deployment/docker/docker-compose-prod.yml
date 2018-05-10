@@ -22,11 +22,9 @@ services:
         - MAESTRO_NAME_EXTENSION
         - MIX_ENV=prod
         - ROBOTS_TXT_FILENAME
-        - MAESTRO_PORT=${MAESTRO_PORT:-8000}
         - TIMEZONE
     container_name: crds-maestro
     ports:
       - "8000:80"
     environment:
       - CRDS_PRERENDER_IO_KEY
-      - MAESTRO_PORT=${MAESTRO_PORT:-8000}
