@@ -8,15 +8,20 @@ CRDS.DataTracker = class DataTracker {
     this.clickTrackable = undefined;
     this.searchTrackable = undefined;
 
-    var int;
-    var waitForAnalytics = function() {
-      if(typeof analytics !== "undefined") {
-        clearInterval(int);
-        this.analytics = analytics;
-        this.init();
-      }
-    }.bind(this);
-    int = setInterval(function() { waitForAnalytics(); }, 100);
+    if(typeof analytics === "undefined") {
+      var int;
+      var waitForAnalytics = function() {
+        if(typeof analytics !== "undefined") {
+          clearInterval(int);
+          this.analytics = analytics;
+          this.init();
+        }
+      }.bind(this);
+      int = setInterval(function() { waitForAnalytics(); }, 100);
+    } else {
+      this.analytics = analytics;
+      this.init();
+    }
   }
 
   init() {
