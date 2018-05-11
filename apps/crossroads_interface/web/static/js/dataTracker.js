@@ -7,8 +7,21 @@ CRDS.DataTracker = class DataTracker {
   constructor() {
     this.clickTrackable = undefined;
     this.searchTrackable = undefined;
-    this.analytics = analytics;
-    this.init();
+
+    if(typeof analytics === "undefined") {
+      var int;
+      var waitForAnalytics = function() {
+        if(typeof analytics !== "undefined") {
+          clearInterval(int);
+          this.analytics = analytics;
+          this.init();
+        }
+      }.bind(this);
+      int = setInterval(function() { waitForAnalytics(); }, 100);
+    } else {
+      this.analytics = analytics;
+      this.init();
+    }
   }
 
   init() {
