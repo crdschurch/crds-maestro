@@ -14,17 +14,31 @@ defmodule CrossroadsInterface.CrdsGroupsController do
   plug CrossroadsInterface.Plug.CrdsStyles, "crds-styles"
 
   def index(conn, _params) do
-    conn
-      |> CrossroadsInterface.Plug.RedirectCookie.call("/groups/search")
-      |> render("app_root.html", %{"js_files": [
-        "/js/crds_connect/inline.bundle.js",
-        "/js/crds_connect/polyfills.bundle.js",
-        "/js/crds_connect/styles.bundle.js",
-        "/js/crds_connect/main.bundle.js",
-        ], "css_files": [
-          "/js/legacy/legacy.css",
-          "/js/crds_connect/styles.bundle.css"
-        ]})
+    if conn.query_string == "" do
+      conn
+        |> CrossroadsInterface.Plug.RedirectCookie.call("/groups/search")
+        |> render("app_root.html", %{"js_files": [
+          "/js/crds_connect/inline.bundle.js",
+          "/js/crds_connect/polyfills.bundle.js",
+          "/js/crds_connect/styles.bundle.js",
+          "/js/crds_connect/main.bundle.js",
+          ], "css_files": [
+            "/js/legacy/legacy.css",
+            "/js/crds_connect/styles.bundle.css"
+          ]})
+    else
+      conn
+        |> CrossroadsInterface.Plug.RedirectCookie.call("/groups/search", conn.query_string)
+        |> render("app_root.html", %{"js_files": [
+          "/js/crds_connect/inline.bundle.js",
+          "/js/crds_connect/polyfills.bundle.js",
+          "/js/crds_connect/styles.bundle.js",
+          "/js/crds_connect/main.bundle.js"
+          ], "css_files": [
+            "/js/legacy/legacy.css",
+            "/js/crds_connect/styles.bundle.css"
+          ]})
+    end
   end
 
 end
