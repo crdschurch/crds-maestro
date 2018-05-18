@@ -5,7 +5,6 @@ defmodule CrossroadsInterface.CrdsConnectController do
   use CrossroadsInterface.Web, :controller
   require Logger
   require File
-  require IEx
 
   plug :put_layout, "screen_width.html"
   plug CrossroadsInterface.Plug.BaseHref, "/connect"
