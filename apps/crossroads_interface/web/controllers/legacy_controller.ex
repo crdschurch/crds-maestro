@@ -22,6 +22,7 @@ defmodule CrossroadsInterface.LegacyController do
     else
       conn
       |> CrossroadsInterface.Plug.Cookie.call("maestro-pages", "group-leader,connect,groups,series,publications/articles,notfound,homepage,explore,atriumevents")
+      |> CrossroadsInterface.Plug.GroupsToSignin.call()
       |> render("app_root.html", %{"js_files": [
           "/js/legacy/ang.js",
           "/js/legacy/core.js",

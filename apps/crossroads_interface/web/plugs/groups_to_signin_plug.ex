@@ -10,11 +10,21 @@ defmodule CrossroadsInterface.Plug.GroupsToSignin do
   # arbitrary parameter with no significance in groups.
   """
   import Plug.Conn
-  require IEx
 
   def init(default), do: default
 
   def call(conn) do
+    case checkIfTargetingSignin(conn) do
+      true -> addReferringCookieIfFromGroups(conn)
+      false -> conn
+    end
+  end
+
+  defp checkIfTargetingSignin(conn) do
+    conn.request_path =~ "/signin"
+  end
+
+  defp addReferringCookieIfFromGroups(conn) do
     case List.keyfind(conn.req_headers, "referer", 0) do
       {"referer", referer} -> addGroupsReferringCookie(referer, conn)
       nil -> conn
