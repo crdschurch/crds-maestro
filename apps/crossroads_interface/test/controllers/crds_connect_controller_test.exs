@@ -35,14 +35,4 @@ defmodule CrossroadsInterface.CrdsConnectControllerTest do
       assert conn.resp_cookies == %{"redirectUrl" => %{http_only: false, value: "/connect", domain: ".crossroads.net"}, "params" => %{domain: ".crossroads.net", http_only: false, value: ""}}
     end
   end
-
-  test "GET /connect should set params cookie on routes with params", %{conn: conn} do
-    with_mocks([ {CrossroadsContent.CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, @content_block_call} end]},
-                 {CrossroadsContent.CmsClient, [], [get_system_page: fn("connect") -> {:ok, 200, @system_page_response} end]},
-                 {CrossroadsContent.CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do
-      Application.put_env(:crossroads_interface, :cookie_domain, ".crossroads.net")
-      conn = get conn, "/connect?hello=world"
-      assert conn.resp_cookies == %{"redirectUrl" => %{http_only: false, value: "/connect", domain: ".crossroads.net"}, "params" => %{domain: ".crossroads.net", http_only: false, value: "hello=world"}}
-    end
-  end
 end
