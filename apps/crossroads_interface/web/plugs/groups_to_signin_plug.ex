@@ -10,7 +10,6 @@ defmodule CrossroadsInterface.Plug.GroupsToSignin do
   # arbitrary parameter with no significance in groups.
   """
   import Plug.Conn
-  require IEx
 
   def init(default), do: default
 
