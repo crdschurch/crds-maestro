@@ -22,12 +22,15 @@ defmodule CrossroadsInterface.Plug.GroupsToSignin do
   end
 
   defp checkIfTargetingSignin(conn) do
-    Logger.debug("requestPath: #{conn.request_path}")
-    Logger.debug("requestPath includes /signin: #{conn.request_path =~ "/signin"}")
+    Logger.debug("GROUPS2SIGNINPLUG: does requestPath string \"#{conn.request_path}\" include string \"/signin\"? : #{conn.request_path =~ "/signin"}")
     conn.request_path =~ "/signin"
   end
 
   defp addReferringCookieIfFromGroups(conn) do
+    case List.keyfind(conn.req_headers, "referer", 0) do
+      {"referer", referer} -> Logger.debug("GROUPS2SIGNINPLUG: referer: #{referer}")
+      nil -> Logger.debug(Logger.debug("GROUPS2SIGNINPLUG: referer: null"))
+    end
     case List.keyfind(conn.req_headers, "referer", 0) do
       {"referer", referer} -> addGroupsReferringCookie(referer, conn)
       nil -> conn
@@ -35,7 +38,7 @@ defmodule CrossroadsInterface.Plug.GroupsToSignin do
   end
 
   defp addGroupsReferringCookie(referer, conn) do
-    Logger.debug("referer includes /groups/search: #{referer =~ "/groups/search"}")
+    Logger.debug("GROUPS2SIGNINPLUG: referer includes /groups/search: #{referer =~ "/groups/search"}")
     case (referer =~ "/groups/search") do
       true -> CrossroadsInterface.Plug.RedirectCookie.call(conn, handleShowOnboardingParam(referer))
       false -> conn
@@ -43,7 +46,7 @@ defmodule CrossroadsInterface.Plug.GroupsToSignin do
   end
 
   defp handleShowOnboardingParam(referer) do
-    Logger.debug("referer: #{referer}")
+    Logger.debug("GROUPS2SIGNINPLUG: referer: #{referer}")
     case (referer =~ "?") do
       true -> referer
       false -> "#{referer}?showOnboarding=false"
