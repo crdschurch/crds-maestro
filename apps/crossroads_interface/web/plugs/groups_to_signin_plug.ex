@@ -22,6 +22,7 @@ defmodule CrossroadsInterface.Plug.GroupsToSignin do
   end
 
   defp checkIfTargetingSignin(conn) do
+    Logger.debug("requestPath: #{conn.request_pat}")
     Logger.debug("requestPath includes /signin: #{conn.request_path =~ "/signin"}")
     conn.request_path =~ "/signin"
   end
