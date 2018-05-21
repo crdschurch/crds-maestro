@@ -10,6 +10,7 @@ defmodule CrossroadsInterface.Plug.GroupsToSignin do
   # arbitrary parameter with no significance in groups.
   """
   import Plug.Conn
+  import Logger
 
   def init(default), do: default
 
@@ -21,6 +22,7 @@ defmodule CrossroadsInterface.Plug.GroupsToSignin do
   end
 
   defp checkIfTargetingSignin(conn) do
+    Logger.debug("requestPath includes /signin: #{conn.request_path =~ "/signin"}")
     conn.request_path =~ "/signin"
   end
 
@@ -32,6 +34,7 @@ defmodule CrossroadsInterface.Plug.GroupsToSignin do
   end
 
   defp addGroupsReferringCookie(referer, conn) do
+    Logger.debug("referer includes /groups/search: #{referer =~ "/groups/search"}")
     case (referer =~ "/groups/search") do
       true -> CrossroadsInterface.Plug.RedirectCookie.call(conn, handleShowOnboardingParam(referer))
       false -> conn
@@ -39,6 +42,7 @@ defmodule CrossroadsInterface.Plug.GroupsToSignin do
   end
 
   defp handleShowOnboardingParam(referer) do
+    Logger.debug("referer: #{referer}")
     case (referer =~ "?") do
       true -> referer
       false -> "#{referer}?showOnboarding=false"
