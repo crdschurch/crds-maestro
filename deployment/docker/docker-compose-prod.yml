@@ -25,6 +25,6 @@ services:
         - TIMEZONE
     container_name: crds-maestro
     ports:
-      - "8000:80"
+      - "8000:8000"
     environment:
       - CRDS_PRERENDER_IO_KEY
