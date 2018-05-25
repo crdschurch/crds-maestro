@@ -1,4 +1,5 @@
-deployment
+deployment/docker
+deployment/kubernetes
 deps
 _build
 apps/crossroads_interface/deps

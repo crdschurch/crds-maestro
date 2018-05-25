@@ -18,7 +18,24 @@
       document.addEventListener("DOMContentLoaded", function(event) {
         if (document.querySelector('simple-fred')) {
           var script = document.createElement('script');
-          script.src = '<%= @embed_url %>/fred/js/simplefred.min.js';
+          script.src = '<%= @fred_api_url %>/fred/js/simplefred.min.js';
+          document.head.insertBefore(script, document.head.childNodes[0]);
+        }
+      });
+      window.addEventListener("DOMContentLoaded", function(event) {
+        if (document.querySelector('simple-fred') || document.querySelector('roll-call') || document.querySelector('livestream-reminder')) {
+          var script = document.createElement('script');
+          script.src = '//cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.19/webcomponents-lite.js';
+          document.head.insertBefore(script, document.head.childNodes[0]);
+        }
+        if (document.querySelector('livestream-reminder')) {
+          var script = document.createElement('script');
+              script.src = '//d1tmclqz61gqwd.cloudfront.net/javascripts/crds-livestream-reminder-v0.0.16.js';
+          document.head.insertBefore(script, document.head.childNodes[0]);
+        }
+        if (document.querySelector('roll-call')) {
+          var script = document.createElement('script');
+              script.src = '//d1tmclqz61gqwd.cloudfront.net/javascripts/crds-rollcall-v0.1.0.js';
           document.head.insertBefore(script, document.head.childNodes[0]);
         }
       });

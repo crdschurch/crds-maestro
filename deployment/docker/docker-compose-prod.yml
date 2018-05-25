@@ -20,13 +20,11 @@ services:
         - CRDS_ROLLCALL_FORM_ID
         - MAESTRO_HOSTNAME
         - MAESTRO_NAME_EXTENSION
-        - MAESTRO_SSL=true
         - MIX_ENV=prod
         - ROBOTS_TXT_FILENAME
         - TIMEZONE
     container_name: crds-maestro
-    volumes:
-     - ../../certificates:/certificates
     ports:
-     - "8000:80"
-     - "44300:443"
+      - "8000:8000"
+    environment:
+      - CRDS_PRERENDER_IO_KEY

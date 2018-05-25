@@ -19,32 +19,39 @@ spec:
       labels:
         app: maestro-phoenix
     spec:
-      volumes:
-      - name: maestro-phoenix-ssl-vol
-        secret:
-          secretName: crossroads-ssl
       containers:
-      - name: maestro-phoenix
-        image: crdschurch/crds-maestro-phoenix:$DOCKER_TAG
-        imagePullPolicy: Always
-        resources:
-          limits:
-            memory: "512Mi"
-            cpu: "400m"
-          requests:
-            memory: "256Mi"
-            cpu: "100m"
-        env:
-        - name: CRDS_ENV
-          value: "$CRDS_ENV"
-        - name: MIX_ENV
-          value: "prod"
-        - name: MAESTRO_SSL
-          value: "true"
-        ports:
-        - containerPort: 80
-          name: http
-        volumeMounts:
-        - name: maestro-phoenix-ssl-vol
-          mountPath: "/certificates"
-          readOnly: true
+        - name: maestro-phoenix
+          image: crdschurch/crds-maestro-phoenix:$DOCKER_TAG
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "400m"
+            requests:
+              memory: "256Mi"
+              cpu: "100m"
+          env:
+            - name: CRDS_ENV
+              value: "$CRDS_ENV"
+            - name: MIX_ENV
+              value: "prod"
+            - name: CRDS_PRERENDER_IO_KEY
+              value: "$CRDS_PRERENDER_IO_KEY"
+          ports:
+            - containerPort: 8000
+              name: cowboy
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8000
+            initialDelaySeconds: 1
+            timeoutSeconds: 3
+            successThreshold: 1
+            periodSeconds: 3
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8000
+            initialDelaySeconds: 20
+            timeoutSeconds: 5
+            periodSeconds: 20
