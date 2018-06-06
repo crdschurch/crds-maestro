@@ -26,7 +26,7 @@ defmodule CrossroadsInterface.CrdsConnectControllerTest do
     end
   end
 
-  test "GET /connect should set redirectUrl cookie", %{conn: conn} do
+  test "GET /connect should set redirectUrl cookie on route without params", %{conn: conn} do
     with_mocks([ {CrossroadsContent.CmsClient, [], [get_content_blocks: fn() -> {:ok, 200, @content_block_call} end]},
                  {CrossroadsContent.CmsClient, [], [get_system_page: fn("connect") -> {:ok, 200, @system_page_response} end]},
                  {CrossroadsContent.CmsClient, [], [get_site_config: fn(1) -> {:ok, 200, %{}} end]} ]) do

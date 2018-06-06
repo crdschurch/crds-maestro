@@ -40,7 +40,6 @@ ARG CRDS_GOOGLE_API_KEY
 ARG CRDS_ROLLCALL_FORM_ID
 ARG MAESTRO_HOSTNAME
 ARG MAESTRO_NAME_EXTENSION
-ARG MAESTRO_SSL
 ARG ROBOTS_TXT_FILENAME
 ARG TIMEZONE
 
@@ -87,12 +86,18 @@ FROM debian:stretch
 # Install dependencies
 RUN apt-get update && apt-get install -y libssl-dev
 
+#FROM nginx:latest # This was an attempt to run nginx in the background
+
+# Copy nginx config
+#COPY ./deployment/nginx.conf /etc/nginx/conf.d/default.conf # No longer running nginx in background
+
 # Copy built application over from build stage
 COPY --from=build /maestro/_build/prod/rel/crossroads_interface /maestro
 
 # Set UTF-8 encoding
 ENV LANG=C.UTF-8
 
-# Start crossroads interface
-ENTRYPOINT  echo "Maestro for production started." \
-  && /maestro/bin/crossroads_interface foreground
+COPY ./deployment/entrypoint.sh /
+
+# Run entrypoint
+ENTRYPOINT  chmod u+x entrypoint.sh && ./entrypoint.sh
