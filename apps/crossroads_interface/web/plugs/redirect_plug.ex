@@ -7,6 +7,7 @@ defmodule CrossroadsInterface.Redirect do
   @spec call(Plug.Conn.t, Keyword.t) :: Plug.Conn.t
   def call(conn, opts) do
     conn
+    |> put_status(:moved_permanently)
     |> Phoenix.Controller.redirect(opts)
     |> halt()
   end

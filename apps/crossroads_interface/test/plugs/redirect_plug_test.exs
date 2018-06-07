@@ -13,8 +13,13 @@ defmodule CrossroadsInterface.RedirectPlugTest do
   test "redirects to 'bazshiz' when a call for 'foobar' is made." do
     conn = call(Router, :get, "/foobar")
 
-    assert conn.status == 302
     assert String.contains?(conn.resp_body, "href=\"/bazshiz\"")
+  end
+
+  test "redirects usinga HTTP status code of 301" do
+    conn = call(Router, :get, "/foobar")
+
+    assert conn.status == 301
   end
 
   defp call(router, verb, path) do
