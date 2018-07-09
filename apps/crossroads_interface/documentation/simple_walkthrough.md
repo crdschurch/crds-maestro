@@ -1,10 +1,11 @@
 # Crossroads Interface - Basics
 
-The Elixir Phoenix framework, with which Maestro is built, follows an MVC pattern
-similar to ASP.NET MVC, Ruby on Rails, etc. Maestro only utilizes the V(iew) and the
-C(ontroller) aspects of the Phoenix framework. This particular guide is meant to
-introduce you to the basic flow of logic in the request/response cycle when Maestro
-is handling a call to one of its endpoints.
+The [Elixir Phoenix framework](http://phoenixframework.org/), with which Maestro
+is built, follows an MVC pattern similar to ASP.NET MVC, Ruby on Rails, etc.
+Maestro only utilizes the V(iew) and the C(ontroller) aspects of the Phoenix
+framework. This particular guide is meant to introduce you to the basic flow
+of logic in the request/response cycle when Maestro is handling a call to one
+of its endpoints.
 
 ## Routing (/web/router.ex)
 
