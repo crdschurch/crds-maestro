@@ -26,8 +26,8 @@
     * [templates/](#templates)
     * [views/](#views)
     * [gettext.ex](#gettext)
-    * [router.ex](#router.ex)
-    * [web.ex](#web.ex)
+    * [router.ex](#router)
+    * [web.ex](#web)
   * [brunch-config.js](#brunch-config)
   * [karma.conf.js](#karma-conf)
   * [mix.exs](#mix.exs)
@@ -131,3 +131,61 @@ Views are responsible for rendering templates, but they also can contain functio
 definitions that help with taking raw data and make it easier for templates to
 consume that data. For more information on Elixir Phoenix Views, please read more
 [here](https://hexdocs.pm/phoenix/views.html).
+
+## gettext
+A file that enables Internationalization within the application. Currently this is
+not leveraged at all.
+
+## router
+`router.ex` is where all routing definitions exist. There are a couple of things
+going on in this file. First,
+[pipelines](https://hexdocs.pm/phoenix/routing.html#pipelines) are defined; one for
+`:browser` and one for `:api`. Within these pipelines a number of plugs are called.
+The plugs that are not prefixed with `CrossroadsInterface.Plug` are built into the
+Elixir Phoenix framework. Those that are prefixed with `CrossroadsInterface.Plug` are
+custom plugs written by the Crossroads organization developers. Currently the `:api`
+pipeline is not actively used in this project. Pipelines get run each time before
+a match to a route is made.
+
+The second thing that is happening in this file is that of route definitions. The
+syntax for defining a route is as follows:
+
+[html verb] "/url/string/to/match?with=parameters", (NameOfController,
+{:name_of_action}
+
+It is important to define any routes from most specific to least specific, otherwise
+there will be unexpected matching of a route like `/my/super/cool/route/` to `/my/`.
+
+## web
+`web.ex` gives a file access to `model`, `controller`, `view`, `router`, and `channel`
+functionality. You can see its use in the various controller files as:
+
+`use CrossroadsInterface.Web, :controller`.
+
+You can also see its use in the `router.ex` file.
+
+# brunch-config
+Brunch is an asset build tool with built in linting. The brunch-config.js file is
+configuration for the build tool.
+
+# karma-conf
+As we have a few modules of JavaScript code defined in the Maestro project, there are
+unit tests present for those modules. The karma.conf.js file serves as configuration
+for the Karma test runner for those tests.
+
+# mix.exs
+Similar to a JavaScript `package.json` file, the mix.exs file is where project
+metadata is defined, as well project dependencies.
+
+# mix.lock
+A lock file for the dependency versions in the project.
+
+# package-lock
+A lock file for JavaScript dependencies
+
+# package.json
+A file that defines JavaScript dependencies that the code uses.
+
+# readme
+A file that describes the project and the steps necessary to get it set up and
+running.
