@@ -1,4 +1,4 @@
-*Elixir Syntax Crash Course*
+# Elixir Syntax Crash Course
 
 - Returns in elixir are implicit and are based on the last evaluated line
   within a function body. For example:
