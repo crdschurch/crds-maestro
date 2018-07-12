@@ -1,8 +1,9 @@
 # Microclients Served By Maestro
 
-- [Group Leader Application](https://github.com/crdschurch/group-leader-application)
-- [Crossroads Finder](https://github.com/crdschurch/crds-connect)
-- [SRFP Assessment](https://github.com/crdschurch/srfp-assessment)
+- `/group-leader`: [Group Leader Application](https://github.com/crdschurch/group-leader-application)
+- `/finder`: [Connect](https://github.com/crdschurch/crds-connect)
+- `/groups`: [Connect](https://github.com/crdschurch/crds-connect)
+- `/srfp`: [SRFP Assessment](https://github.com/crdschurch/srfp-assessment)
 
 # How to set up a Microclient in Maestro for local development
 
