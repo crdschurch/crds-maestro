@@ -69,7 +69,9 @@
         <% end %>
     <% end %>
     <%# used for feature flags %>
+    <script src="https://s3.amazonaws.com/crossroads-assets/javascripts/vue.min.js"></script>
     <script src="https://s3.amazonaws.com/crossroads-assets/javascripts/feature-flag-v0.1.0.min.js"></script>
+    
     <link rel='stylesheet' href='https://unpkg.com/formiojs@latest/dist/formio.full.min.css'>
     <%= if assigns[:base_href] do %>
       <base href="<%= @base_href %>">
