@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="crossroads">
   <head>
+    <meta name="Maestro" content="This page was rendered with Maestro">
     <%= render_existing CrossroadsInterface.SharedView, @meta_template, assigns %>
     <%= render CrossroadsInterface.SharedView, "common_head.html", assigns %>
     <%= render_existing @view_module, "head.html", assigns %>
