@@ -69,10 +69,10 @@
         <% end %>
     <% end %>
     <%# used for feature flags %>
+    <!-- Load web component polyfill for firefox and IE https://github.com/webcomponents/webcomponentsjs -->
+    <script src="https://s3.amazonaws.com/crossroads-assets/javascripts/webcomponents-bundle.js"></script>
     <script src="https://s3.amazonaws.com/crossroads-assets/javascripts/vue.min.js"></script>
     <script src="https://s3.amazonaws.com/crossroads-assets/javascripts/feature-flag-v0.1.0.min.js"></script>
-    <!-- Load web component polyfill for firefox and IE https://github.com/webcomponents/webcomponentsjs -->
-    <script src="https://s3.amazonaws.com/crossroads-assets/javascripts/custom-elements.min.js"></script>
     <script>
       window.featureFlags = {
         config: {
