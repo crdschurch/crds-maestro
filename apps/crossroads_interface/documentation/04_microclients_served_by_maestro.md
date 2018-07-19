@@ -4,6 +4,7 @@
 - `/finder`: [Connect](https://github.com/crdschurch/crds-connect)
 - `/groups`: [Connect](https://github.com/crdschurch/crds-connect)
 - `/srfp`: [SRFP Assessment](https://github.com/crdschurch/srfp-assessment)
+- `/*`: [Legacy | crds-angular](https://github.com/crdschurch/crds-angular)
 
 # How to set up a Microclient in Maestro for local development
 
