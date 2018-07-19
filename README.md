@@ -3,11 +3,11 @@
 # Documentation
 
 Documentation for this project lives
-[here](https://github.com/crdschurch/crds-maestro/documentation/) for the top level Maestro directory,
-[here](https://github.com/crdschurch/crds-maestro/apps/crossroads_content/documentation/) for the
-CrossroadsContent module, and
-[here](https://github.com/crdschurch/crds-maestro/apps/crossroads_content/documentation/)
-for the CrossroadsInterface module.
+at `/documentation/` for an overview of elixir, phoenix, and common phoenix commands,
+at `/apps/crossroads_interface/documentation/` for the CrossroadsInterface portion of
+the Maestro project, and at
+`/apps/crossroads_content/documentation/`
+for the CrossroadsContent module.
 
 # Setup
 
