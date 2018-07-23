@@ -68,6 +68,19 @@
             <link href="<%= static_path(@conn, script_file)%>" type="text/css" rel="stylesheet" />
         <% end %>
     <% end %>
+    <%# used for feature flags %>
+    <!-- Load web component polyfill for firefox and IE https://github.com/webcomponents/webcomponentsjs -->
+    <script src="https://s3.amazonaws.com/crossroads-assets/javascripts/webcomponents-bundle.js"></script>
+    <script src="https://s3.amazonaws.com/crossroads-assets/javascripts/vue.min.js"></script>
+    <script src="https://s3.amazonaws.com/crossroads-assets/javascripts/feature-flag-v0.1.0.min.js"></script>
+    <script>
+      window.featureFlags = {
+        config: {
+          host: "https://8k97vbzbrk.execute-api.us-east-1.amazonaws.com/int/feature-flags/feature/${feature}/contact/${contactId}"
+        }
+      }
+    </script>
+    
     <link rel='stylesheet' href='https://unpkg.com/formiojs@latest/dist/formio.full.min.css'>
     <%= if assigns[:base_href] do %>
       <base href="<%= @base_href %>">
