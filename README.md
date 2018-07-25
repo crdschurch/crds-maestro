@@ -1,5 +1,14 @@
 # Maestro - Crossroads Microclient Implementation in Elixir/Phoenix
 
+# Documentation
+
+Documentation for this project lives
+at `/documentation/` for an overview of elixir, phoenix, and common phoenix commands,
+at `/apps/crossroads_interface/documentation/` for the CrossroadsInterface portion of
+the Maestro project, and at
+`/apps/crossroads_content/documentation/`
+for the CrossroadsContent module.
+
 # Setup
 
 ## Docker - go check out the README under the folder deployment

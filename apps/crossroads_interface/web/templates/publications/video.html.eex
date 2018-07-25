@@ -1,6 +1,0 @@
-<div class="publication">
-    <%= render CrossroadsInterface.PublicationsView, "_publication_header.html", assigns %>
-    <%= render CrossroadsInterface.PublicationsView, "_video_body.html", assigns %>
-    <%= render CrossroadsInterface.PublicationsView, "_publication_footer.html", assigns %>
-</div>
-<%= render CrossroadsInterface.PublicationsView, "_publication_scripts.html", assigns %>
