@@ -6,7 +6,7 @@ defmodule CrossroadsInterface.ProxyContentControllerTest do
 #  @valid %{"pages" => [%{"id" => 239, "link" => "\/some-real-page\/"}]}
   #@invalid %{"error" => "nothing there"}
 
-  #@valid_content_blocks %{"contentBlocks" => [%{"id" => 1, "title" => "generalError"}]}
+  #@valid_content_blocks %{"contentblocks" => [%{"id" => 1, "title" => "generalError"}]}
 
   #test "request a page that exists at /proxy/content//api/Pages?link=/some-real-page/", %{conn: conn} do
     #with_mock Pages, [get_page: fn(_page, _show_stage) -> {:ok, 200, @valid } end] do
@@ -26,7 +26,7 @@ defmodule CrossroadsInterface.ProxyContentControllerTest do
 
   #test "request content blocks and get 200", %{conn: conn} do
     #with_mock Pages, [get_content_blocks: fn() -> {:ok, 200, @valid_content_blocks} end] do
-      #conn = get conn, "/proxy/content//api/ContentBlock"
+      #conn = get conn, "/proxy/content/api/contentblock"
       #assert json_response(conn, 200) == @valid_content_blocks
       #assert called Pages.get_content_blocks()
     #end

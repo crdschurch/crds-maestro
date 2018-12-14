@@ -2,7 +2,7 @@ defmodule CrossroadsInterface.CrdsConnectControllerTest do
   use CrossroadsInterface.ConnCase
   import Mock
 
-  @content_block_call %{"contentBlocks" => [%{"id" => 1, "title" => "generalError"}]}
+  @content_block_call %{"contentblocks" => [%{"id" => 1, "title" => "generalError"}]}
 
   @system_page_response %{"systemPages" => [%{"bodyClasses" => nil,
                                               "card" => "summary",
