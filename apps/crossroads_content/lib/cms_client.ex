@@ -61,7 +61,7 @@ defmodule CrossroadsContent.CmsClient do
 
   @doc false
   def handle_call({:content_blocks}, _from, state) do
-    path = "ContentBlock"
+    path = "contentblock"
     make_cached_call(path, state)
   end
 
