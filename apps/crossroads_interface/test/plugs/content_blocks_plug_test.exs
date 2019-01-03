@@ -3,7 +3,7 @@ defmodule CrossroadsInterface.Plugs.ContentBlocksTest do
   alias CrossroadsContent.CmsClient
   import Mock
 
-  @content_block_call %{"contentBlocks" => [%{"id" => 1, "title" => "generalError"}]}
+  @content_block_call %{"contentblocks" => [%{"id" => 1, "title" => "generalError"}]}
   @valid [%{"id" => 1, "title" => "generalError"}]
   @invalid []
 

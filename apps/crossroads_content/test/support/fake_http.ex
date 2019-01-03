@@ -66,8 +66,8 @@ defmodule CrossroadsContent.FakeHttp do
     }}
   end
 
-  def get("/api/ContentBlock") do
-    {:ok, %HTTPoison.Response{ status_code: 200, body: "{\"contentBlocks\": [{\"id\":1,\"title\":\"generalError\",\"content\":\"<p><strong>Oh no!<\\/strong> Looks like there's and error. Pleas fix and try again.<\\/p>\", \"type\":\"error\",\"category\":\"common\",\"className\":\"ContentBlock\"}]}"}} 
+  def get("/api/contentblock") do
+    {:ok, %HTTPoison.Response{ status_code: 200, body: "{\"contentblocks\": [{\"id\":1,\"title\":\"generalError\",\"content\":\"<p><strong>Oh no!<\\/strong> Looks like there's and error. Pleas fix and try again.<\\/p>\", \"type\":\"error\",\"category\":\"common\",\"className\":\"contentblock\"}]}"}} 
   end
 
   def get("/api/SystemPage/?StateName=login") do

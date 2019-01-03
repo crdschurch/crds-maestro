@@ -26,7 +26,7 @@ defmodule CrossroadsInterface.ConnCase do
       @endpoint CrossroadsInterface.Endpoint
 
       def fake_content_blocks() do
-        %{"contentBlocks" => [%{"id" => 1, "title" => "generalError"}]}
+        %{"contentblocks" => [%{"id" => 1, "title" => "generalError"}]}
       end
 
       def fake_not_found_page() do
