@@ -8,7 +8,7 @@ defmodule ContentHelpers do
   @spec content_blocks :: [map]
   def content_blocks do
     case CmsClient.get_content_blocks do
-      {:ok, 200, body} -> Map.get(body, "contentBlocks", [])
+      {:ok, 200, body} -> Map.get(body, "contentblocks", [])
       {_, _, _} -> []
     end
   end

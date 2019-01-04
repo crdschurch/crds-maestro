@@ -80,7 +80,7 @@ defmodule CrossroadsContent.CmsClientTest do
       {result, status, body} = CmsClient.get_content_blocks
       assert status == 200
       assert result == :ok
-      content_blocks = body["contentBlocks"]
+      content_blocks = body["contentblocks"]
       assert Enum.at(content_blocks, 0)["id"] == 1
     end
   end
@@ -138,14 +138,14 @@ defmodule CrossroadsContent.CmsClientTest do
   test "it should set cached value on new call" do
     with_mock HTTPoison, [get: fn(url,_headers, _options) -> FakeHttp.get(url) end] do      
       CmsClient.get_content_blocks
-      assert Cachex.exists?(:cms_cache, "ContentBlock")
+      assert Cachex.exists?(:cms_cache, "contentblock")
     end
   end
 
   test "it should return cached value when available" do
     with_mock HTTPoison, [get: fn(url,_headers, _options) -> FakeHttp.get(url) end] do      
       cached_response = {:ok, 200, "cached_body"}
-      Cachex.set(:cms_cache, "ContentBlock", cached_response)
+      Cachex.set(:cms_cache, "contentblock", cached_response)
       {result, status, body} = CmsClient.get_content_blocks
       assert result == :ok
       assert status == 200
